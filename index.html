@@ -135,6 +135,38 @@
     </div>
   </section>
 
+  <!-- UPGRADE SECTION -->
+  <section id="upgrade" class="upgrade">
+    <div class="upgrade-inner">
+      <div class="upgrade-left">
+        <h2>Pilr will upgrade your<br><span class="upgrade-rotate" id="upgrade-rotate">Focus</span></h2>
+      </div>
+      <div class="upgrade-right">
+        <div class="upgrade-item">
+          <div class="upgrade-bar"></div>
+          <div class="upgrade-text">
+            <h3>TSA Approved</h3>
+            <p>Fully compliant with TSA guidelines on pill and powder quantities, so you can fly with your full stack, hassle-free.</p>
+          </div>
+        </div>
+        <div class="upgrade-item">
+          <div class="upgrade-bar"></div>
+          <div class="upgrade-text">
+            <h3>Modular</h3>
+            <p>Stack as many pods as you need — mix and match to build a system that fits your routine.</p>
+          </div>
+        </div>
+        <div class="upgrade-item">
+          <div class="upgrade-bar"></div>
+          <div class="upgrade-text">
+            <h3>BPA Free</h3>
+            <p>Built from Tritan™ TX, a durable, BPA-free material with zero microplastics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- WHY SECTION -->
   <section id="why" class="why">
     <div class="why-inner">
@@ -688,6 +720,16 @@
         card.classList.toggle('is-revealed');
       });
     });
+
+    var upgradeWords = ['Focus', 'Travel', 'Routine', 'Recovery'];
+    var upgradeEl = document.getElementById('upgrade-rotate');
+    if (upgradeEl) {
+      var upgradeIndex = 0;
+      setInterval(function() {
+        upgradeIndex = (upgradeIndex + 1) % upgradeWords.length;
+        upgradeEl.textContent = upgradeWords[upgradeIndex];
+      }, 2000);
+    }
   </script>
 </body>
 </html>

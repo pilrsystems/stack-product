@@ -69,16 +69,38 @@
   <!-- PRODUCT HERO -->
   <div class="product-hero">
     <div class="product-images-col">
-      <img class="product-main-img" src="images/lifestyle_section/Hand Render.png" alt="The Classic Stack" />
+      <div class="product-hero-img-frame">
+        <img class="product-main-img" src="images/lifestyle_section/Hand Render.png" alt="The Classic Stack" />
+      </div>
+      <div class="product-secondary-images">
+        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-placeholder-img">Product photo</div>
+      </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <h1 class="product-page-title">The Classic Stack</h1>
-      <p class="product-page-tagline">The complete starter system for your routine.</p>
-
-      <div class="product-variant-row">
-        <div class="product-color-dot"></div>
-        <span class="product-variant-label">Black — $45</span>
+      <div class="product-title-row">
+        <h1 class="product-page-title">The Classic Stack</h1>
+        <span class="product-title-price">$45</span>
       </div>
+      <div class="product-reviews-bar">
+        <div class="product-reviews-stars">
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <span class="product-reviews-count">4,728 Reviews</span>
+      </div>
+      <p class="product-page-tagline">the complete starter system for your routine.</p>
+      <ul class="product-feature-list">
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
+      </ul>
+
       <div class="product-info-sections">
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
@@ -291,25 +313,14 @@
     })
   </script>
   <script>
-    const stickyBar=document.getElementById('product-sticky-bar'),infoInner=document.getElementById('product-info-inner');
-    const hero=document.querySelector('.product-hero'),NAV_H=76;
-    let maxOff=0;
-    function initHero(){
-      const vpH=Math.min(window.innerHeight,932);
-      const imgCardBottom=document.querySelector('.product-images-col').getBoundingClientRect().bottom;
-      const offerBox=document.querySelector('.offer-box');
-      if(offerBox){maxOff=Math.max(0,offerBox.getBoundingClientRect().bottom-imgCardBottom);}
-      else{maxOff=Math.max(0,infoInner.scrollHeight-(vpH-NAV_H));}
-      hero.style.gridTemplateRows=(vpH-NAV_H+maxOff)+'px';
-      const pilrSection=document.querySelector('.pilr-system-section');
-      if(pilrSection)pilrSection.style.marginTop='-'+maxOff+'px';
+    const stickyBar=document.getElementById('product-sticky-bar');
+    function syncHeroHeight(){
+      var imgCol=document.querySelector('.product-images-col');
+      var infoCol=document.querySelector('.product-info-col');
+      if(imgCol&&infoCol){infoCol.style.minHeight=imgCol.getBoundingClientRect().height+'px';}
     }
-    function updateScroll(){
-      infoInner.style.transform='translateY(-'+Math.min(window.scrollY,maxOff)+'px)';
-    }
-    initHero();
-    window.addEventListener('scroll',updateScroll,{passive:true});
-    updateScroll();
+    syncHeroHeight();
+    window.addEventListener('resize',syncHeroHeight);
     var _addBtn=document.querySelector('.product-btn-add');
     if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
 
