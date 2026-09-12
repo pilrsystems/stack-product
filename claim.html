@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claim Your Discount — PILR</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
+  <style>
+    .claim-page {
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .claim-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 2rem 5rem;
+    }
+
+    .claim-card {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .claim-logo {
+      height: 32px;
+      width: auto;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .claim-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .claim-headline {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .claim-headline strong {
+      font-weight: 700;
+    }
+
+    .claim-sub {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+
+    .claim-panel {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid rgba(66,85,99,0.12);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .claim-panel form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .claim-field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .claim-panel input[type="text"],
+    .claim-panel input[type="email"],
+    .claim-panel textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid rgba(66,85,99,0.2);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+
+    .claim-panel textarea { min-height: 110px; }
+
+    .claim-panel input:focus,
+    .claim-panel textarea:focus {
+      border-color: #5e6e7a;
+    }
+
+    /* Honeypot — hidden from real visitors, still reachable by bots that fill every field */
+    .claim-hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* ── Star rating (CSS-only, radios in reverse order) ── */
+    .claim-stars {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 0.25rem;
+    }
+
+    .claim-stars input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .claim-stars label {
+      font-size: 1.8rem;
+      line-height: 1;
+      color: rgba(66,85,99,0.25);
+      cursor: pointer;
+      transition: color 0.15s;
+      margin: 0;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .claim-stars input:checked ~ label,
+    .claim-stars label:hover,
+    .claim-stars label:hover ~ label {
+      color: #d99a3d;
+    }
+
+    .claim-panel .btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      background: #5e6e7a;
+      color: #FAFAF8;
+      border: none;
+      padding: 0.85rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .claim-panel .btn:hover:not(:disabled) { background: #4a5a67; }
+    .claim-panel .btn:disabled { opacity: 0.6; cursor: default; }
+
+    .claim-msg {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .claim-msg--error {
+      background: rgba(196,90,90,0.08);
+      color: #a04a4a;
+    }
+
+    .claim-msg--success {
+      background: rgba(94,110,122,0.08);
+      color: #5e6e7a;
+    }
+
+    .claim-legal {
+      font-size: 0.7rem;
+      color: rgba(66,85,99,0.45);
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .claim-main { padding: 6rem 1.25rem 4rem; }
+      .claim-headline { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="nav">
+    <a href="./index.html" class="nav-logo">
+      <img src="images/logov3-cropped.png" alt="Pilr" class="nav-logo-img">
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="claim-page">
+    <div class="claim-main">
+      <div class="claim-card">
+
+        <img src="./images/logov3-cropped.png" alt="Pilr" class="claim-logo" />
+        <div class="claim-eyebrow">Leave a Review</div>
+        <h1 class="claim-headline">Tell us how<br><strong>Pilr's working out.</strong></h1>
+        <p class="claim-sub">Share an honest review of your Pilr — good, bad, or in between — and we'll send you a one-time 30% off code for your next order.</p>
+
+        <div class="claim-panel">
+          <form id="claim-form" novalidate>
+            <div class="claim-field claim-hp" aria-hidden="true">
+              <label for="claim-company">Company</label>
+              <input type="text" id="claim-company" name="company" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="claim-field">
+              <label for="claim-name">Name</label>
+              <input type="text" id="claim-name" name="name" placeholder="Jane Doe" required />
+            </div>
+
+            <div class="claim-field">
+              <label for="claim-email">Email used on your Pilr order</label>
+              <input type="email" id="claim-email" name="email" placeholder="you@email.com" required />
+            </div>
+
+            <div class="claim-field">
+              <label>Rating</label>
+              <div class="claim-stars" id="claim-stars">
+                <input type="radio" name="rating" id="claim-star5" value="5" required /><label for="claim-star5" title="5 stars">★</label>
+                <input type="radio" name="rating" id="claim-star4" value="4" /><label for="claim-star4" title="4 stars">★</label>
+                <input type="radio" name="rating" id="claim-star3" value="3" /><label for="claim-star3" title="3 stars">★</label>
+                <input type="radio" name="rating" id="claim-star2" value="2" /><label for="claim-star2" title="2 stars">★</label>
+                <input type="radio" name="rating" id="claim-star1" value="1" /><label for="claim-star1" title="1 star">★</label>
+              </div>
+            </div>
+
+            <div class="claim-field">
+              <label for="claim-review">Your review</label>
+              <textarea id="claim-review" name="reviewText" placeholder="What's your routine been like with Pilr?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn" id="claim-submit-btn">Submit Review &amp; Claim 30% Off</button>
+          </form>
+
+          <p class="claim-msg claim-msg--error" id="claim-error"></p>
+          <p class="claim-msg claim-msg--success" id="claim-success">You're all set — redirecting you to checkout with your code applied…</p>
+
+          <p class="claim-legal">One discount per customer. Reviews reflect real, honest experiences — rating has no bearing on whether the discount is issued. By submitting, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-bottom"><div class="site-footer-inner"><span class="site-footer-copy">© Pilr 2026.</span></div></div>
+  </footer>
+
+  <script>
+    const claimForm     = document.getElementById('claim-form')
+    const claimBtn      = document.getElementById('claim-submit-btn')
+    const claimErrorEl  = document.getElementById('claim-error')
+    const claimSuccessEl = document.getElementById('claim-success')
+
+    function showError(message) {
+      claimErrorEl.textContent = message
+      claimErrorEl.style.display = 'block'
+      claimSuccessEl.style.display = 'none'
+    }
+
+    claimForm.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      claimErrorEl.style.display = 'none'
+      claimSuccessEl.style.display = 'none'
+
+      const formData = new FormData(claimForm)
+      const rating = formData.get('rating')
+      if (!rating) {
+        showError('Please choose a star rating.')
+        return
+      }
+
+      const payload = {
+        name: formData.get('name')?.trim(),
+        email: formData.get('email')?.trim(),
+        rating: Number(rating),
+        reviewText: formData.get('reviewText')?.trim(),
+        company: formData.get('company'), // honeypot — should always be empty
+      }
+
+      claimBtn.disabled = true
+      claimBtn.textContent = 'Submitting…'
+
+      try {
+        const res = await fetch('/api/claim-review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+        const data = await res.json().catch(() => ({}))
+
+        if (!res.ok) {
+          showError(data.message || "Something went wrong — please try again in a moment.")
+          claimBtn.disabled = false
+          claimBtn.textContent = 'Submit Review & Claim 30% Off'
+          return
+        }
+
+        claimForm.style.display = 'none'
+        claimSuccessEl.style.display = 'block'
+        window.location.href = `https://pilrsystems.com/discount/${encodeURIComponent(data.code)}?redirect=/collections/all`
+      } catch (err) {
+        console.error('[claim-review] request failed:', err)
+        showError("Something went wrong — please try again in a moment.")
+        claimBtn.disabled = false
+        claimBtn.textContent = 'Submit Review & Claim 30% Off'
+      }
+    })
+  </script>
+</body>
+</html>

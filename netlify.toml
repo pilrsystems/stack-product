@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Lets the frontend call a clean path (POST /api/claim-review) instead of
+# the raw /.netlify/functions/... URL.
+[[redirects]]
+  from = "/api/claim-review"
+  to = "/.netlify/functions/claim-review"
+  status = 200
+  force = true

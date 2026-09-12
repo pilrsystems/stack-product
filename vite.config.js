@@ -24,6 +24,7 @@ export default defineConfig({
         singleLid: resolve(__dirname, 'single-lid.html'),
         whyPilr: resolve(__dirname, 'why-pilr.html'),
         stack: resolve(__dirname, 'stack.html'),
+        claim: resolve(__dirname, 'claim.html'),
       },
     },
   },

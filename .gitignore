@@ -28,3 +28,8 @@ dist-ssr
 
 # Netlify CLI local state
 .netlify/
+
+# Secrets — never commit real Admin API tokens
+.env
+.env.*
+!.env.example
