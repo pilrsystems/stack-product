@@ -25,6 +25,7 @@ export default defineConfig({
         whyPilr: resolve(__dirname, 'why-pilr.html'),
         stack: resolve(__dirname, 'stack.html'),
         claim: resolve(__dirname, 'claim.html'),
+        routineProblem: resolve(__dirname, 'the-routine-problem.html'),
       },
     },
   },
