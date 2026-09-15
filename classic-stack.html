@@ -7,6 +7,99 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
+  <!-- ─────────────────────────────────────────────────────────────
+       BUY COLUMN — page-scoped, classic-stack.html only. Every rule
+       below is scoped under #product-info-inner so it can't affect
+       the other five product pages that share style.css. No new
+       colors or fonts: every value here is copied from an existing
+       .product-*/.offer-* rule already in style.css (#5e6e7a,
+       #7a8a94, rgba(66,85,99,x), 'Helvetica Neue' stack). The only
+       new things are a handful of layout-only rules and a couple of
+       small classes for content this page didn't have a component
+       for yet (price on its own line, spec/size-guide rows). Listed
+       in full at the end of this task.
+  ────────────────────────────────────────────────────────────── -->
+  <style>
+    /* Product photo grid — same radius/aspect-ratio/fill color as
+       .product-hero-img-frame (18px, 3/2, #EFEDE9) so real photos
+       match the placeholder look they replace. */
+    .product-secondary-img {
+      background: #EFEDE9; border-radius: 18px; aspect-ratio: 3 / 2; overflow: hidden;
+    }
+    .product-secondary-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Zone 4 — price, own line. Same size/weight the site already
+       used for a price next to the title (.product-title-price:
+       1.5rem / 400 / letter-spacing -0.025em) — only the color
+       changes, from that rule's muted #7a8a94 to #5e6e7a (already
+       used everywhere else in this column for non-greyed emphasis),
+       since price must not read as greyed out. */
+    #product-info-inner .bc-price {
+      font-size: 1.5rem; font-weight: 700; color: #5e6e7a;
+      letter-spacing: -0.025em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-price-strike {
+      font-size: 1.1rem; font-weight: 400; color: #9aa7ae;
+      text-decoration: line-through; margin-left: 0.5rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    /* Zones 5 & 8 — small muted lines. Identical recipe to the
+       existing .offer-item-price (0.9rem / #7a8a94). */
+    #product-info-inner .bc-note {
+      font-size: 0.9rem; color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-note-guarantee { text-align: center; }
+
+    /* Zone 7 — same button, same fill/type, new position. Its
+       existing flex:1 was written for growing horizontally inside
+       .product-qty-cart-row; as a direct column child that property
+       instead stretches it vertically, so it's neutralized here.
+       Corners rounded to match .product-hero-img-frame (18px), the
+       first product image's radius. */
+    #product-info-inner > .product-btn-add { flex: none; border-radius: 18px; }
+
+    /* Zone 10 — accordion body copy, not italic (the existing
+       .product-accordion-sub is italic and meant for a one-line sub-
+       caption, so it isn't reused directly) and label/value rows for
+       Specs and Size guide, which have no existing component. Both
+       copy the exact font-size/color already used for accordion
+       secondary text (0.82rem / #7a8a94). */
+    #product-info-inner .bc-accordion-text {
+      font-size: 0.82rem; color: #7a8a94; line-height: 1.6; margin: 0 0 0.6rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-accordion-text:last-child { margin-bottom: 0; }
+    #product-info-inner .bc-spec-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      font-size: 0.82rem; color: #7a8a94; line-height: 1.8;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-spec-row span:first-child { color: #5e6e7a; }
+
+    /* Zone 11 — same card border/eyebrow/row/Add-button the old
+       "Exclusive Offers" box used, square corners only. Arrow links
+       reuse the existing #5e6e7a link color; no new icon. */
+    #product-info-inner .offer-box { border-radius: 0; border: none; }
+    #product-info-inner .offer-item-img { border-radius: 0; }
+    #product-info-inner .offer-item-add { border-radius: 0; }
+    /* Three rows now share one card; .offer-item itself only ever
+       had internal (thumbnail/text/control) gap before. Divider
+       reuses the same hairline color as .product-accordion's border. */
+    #product-info-inner .offer-item + .offer-item {
+      margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(66,85,99,0.15);
+    }
+    #product-info-inner .bc-offer-arrow {
+      color: #5e6e7a; font-size: 1rem; flex-shrink: 0; text-decoration: none;
+    }
+
+    /* Single column at every breakpoint; this rule lives only in
+       this page's own <style> block, not in style.css, so it has no
+       effect on the other product pages. */
+    @media (max-width: 900px) {
+      .product-hero { grid-template-columns: 1fr; }
+    }
+  </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
@@ -17,7 +110,7 @@
   <div class="product-sticky-bar" id="product-sticky-bar">
     <div class="product-sticky-img"><img src="images/lifestyle_section/Hand Render.png" alt="The Classic Stack" /></div>
     <div class="product-sticky-info"><span class="product-sticky-name">The Classic Stack</span>
-    <span class="product-sticky-price">$45</span>
+    <span class="product-sticky-price">$54</span>
   </div>
     <button class="product-sticky-cta">ADD TO CART</button>
   </div>
@@ -73,17 +166,19 @@
         <img class="product-main-img" src="images/lifestyle_section/Hand Render.png" alt="The Classic Stack" />
       </div>
       <div class="product-secondary-images">
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-secondary-img"><img src="images/lifestyle_section/Suitcase Top View.jpg" alt="Classic Stack pods on a suitcase" /></div>
+        <div class="product-secondary-img"><img src="images/lifestyle_section/Pack Stack Go Box.jpg" alt="Classic Stack in its packaging" /></div>
+        <div class="product-secondary-img"><img src="images/lifestyle_section/Packed Suitcase.jpg" alt="Classic Stack packed alongside travel essentials" /></div>
+        <div class="product-secondary-img"><img src="images/lifestyle_section/Supplement Comparison.jpg" alt="Classic Stack pods next to full-size supplement bottles" /></div>
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <div class="product-title-row">
-        <h1 class="product-page-title">The Classic Stack</h1>
-        <span class="product-title-price">$45</span>
-      </div>
+      <!-- 1. Title -->
+      <h1 class="product-page-title">Classic Stack</h1>
+
+      <!-- 2. Reviews — present only when reviewCount > 0. This
+           page's count is 4,728, so the block is included; a page
+           with reviewCount = 0 should omit this <div> entirely. -->
       <div class="product-reviews-bar">
         <div class="product-reviews-stars">
           <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -94,54 +189,89 @@
         </div>
         <span class="product-reviews-count">4,728 Reviews</span>
       </div>
-      <p class="product-page-tagline">the complete starter system for your routine.</p>
-      <ul class="product-feature-list">
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
-      </ul>
 
+      <!-- 3. Description -->
+      <p class="product-page-tagline">one system for small pills, large capsules, and powders. includes travel scooper for your powders</p>
+
+      <!-- 4. Price, own line -->
+      <p class="bc-price">$54<span class="bc-price-strike">$69</span></p>
+
+      <!-- 7. Primary button — the only filled button in this column -->
+      <button class="product-btn-add">ADD TO CART</button>
+
+      <!-- 8. Guarantee line -->
+      <p class="bc-note bc-note-guarantee">lifetime guarantee. 30-day returns.</p>
+
+      <!-- 9. Buy Now deleted -->
+
+      <!-- 10. Three accordions -->
       <div class="product-info-sections">
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
-            <span>Details &amp; Size</span>
+            <span>Specs</span>
             <span class="product-accordion-icon">+</span>
           </button>
           <div class="product-accordion-panel">
-            <p class="product-accordion-sub">See what fits in each pod</p>
-            <a href="#" class="product-info-link"><span>Full Size Guide</span><span>&rarr;</span></a>
+            <div class="bc-spec-row"><span>Material</span><span>PCTG Eastman Tritan&trade; TX1001</span></div>
+            <div class="bc-spec-row"><span>Finish</span><span>VDI-12 matte &mdash; Deep Slate</span></div>
+            <div class="bc-spec-row"><span>Housing</span><span>Polypropylene</span></div>
+            <div class="bc-spec-row"><span>Internal volume</span><span>82.2 / 141.3 / 180.6 mL</span></div>
+            <div class="bc-spec-row"><span>Compliance</span><span>FDA 21 CFR 177.1580 &middot; NSF/ANSI 51</span></div>
+            <div class="bc-spec-row"><span>Care</span><span>Dishwasher safe, top rack. Refill indefinitely.</span></div>
           </div>
         </div>
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
-            <span>Customize Your Stack</span>
+            <span>Size guide</span>
             <span class="product-accordion-icon">+</span>
           </button>
           <div class="product-accordion-panel">
-            <p class="product-accordion-sub">Pick the pods that fit your routine</p>
-            <a href="./build-your-system.html" class="product-info-link"><span>Build Your System</span><span>&rarr;</span></a>
+            <p class="bc-accordion-text">What each pod actually holds, from our capacity testing:</p>
+            <div class="bc-spec-row"><span>Creatine</span><span>70&ndash;75 g</span></div>
+            <div class="bc-spec-row"><span>Collagen</span><span>~60 g</span></div>
+            <div class="bc-spec-row"><span>Fish oil</span><span>17 capsules</span></div>
+            <div class="bc-spec-row"><span>Magnesium</span><span>26 capsules</span></div>
+            <div class="bc-spec-row"><span>CoQ10</span><span>10 capsules</span></div>
+            <div class="bc-spec-row"><span>Vitamin D3</span><span>35 capsules</span></div>
+          </div>
+        </div>
+        <div class="product-accordion">
+          <button class="product-accordion-trigger" aria-expanded="false">
+            <span>Travel &amp; TSA</span>
+            <span class="product-accordion-icon">+</span>
+          </button>
+          <div class="product-accordion-panel">
+            <p class="bc-accordion-text">TSA flags powders in carry-on above 350 mL (12 oz) for additional screening. Every pilr pod holds 180.6 mL or less, so a full stack clears without it. Pills and capsules have no carry-on quantity limit.</p>
           </div>
         </div>
       </div>
-      <div class="product-qty-cart-row">
-        <div class="product-qty-ctrl">
-          <button class="product-qty-btn" id="qty-minus">−</button>
-          <span class="product-qty-val" id="qty-val">1</span>
-          <button class="product-qty-btn" id="qty-plus">+</button>
-        </div>
-        <button class="product-btn-add">ADD TO CART</button>
-      </div>
-      <button class="product-btn-buy">BUY NOW</button>
 
+      <!-- 11. Add-ons -->
       <div class="offer-box">
-        <p class="offer-box-eyebrow">Exclusive Offers</p>
+        <p class="offer-box-eyebrow">Complete your system</p>
+        <div class="offer-item">
+          <div class="offer-item-img"><img src="images/lifestyle_section/Powder Pod Render.png" alt="" /></div>
+          <div class="offer-item-info">
+            <p class="offer-item-name">Add more pods</p>
+            <p class="offer-item-price">Stack deeper, pay less per pod</p>
+          </div>
+          <a href="./catalog.html" class="bc-offer-arrow" aria-label="Shop pods">&rarr;</a>
+        </div>
+        <div class="offer-item">
+          <div class="offer-item-img"><img src="images/lifestyle_section/Build Your System.png" alt="" /></div>
+          <div class="offer-item-info">
+            <p class="offer-item-name">Customize your stack</p>
+            <p class="offer-item-price">Any combination of pods</p>
+          </div>
+          <a href="./build-your-system.html" class="bc-offer-arrow" aria-label="Build your system">&rarr;</a>
+        </div>
         <div class="offer-item">
           <div class="offer-item-img"><img src="images/lifestyle_section/Scooper.png" alt="Pilr Travel Scooper" /></div>
           <div class="offer-item-info">
-            <p class="offer-item-name">Pilr Travel Scooper</p>
-            <p class="offer-item-price">$11</p>
+            <p class="offer-item-name">Spare Travel Scooper</p>
+            <p class="offer-item-price">$11 &middot; stainless steel</p>
           </div>
-          <button class="offer-item-add">ADD TO CART</button>
+          <button class="offer-item-add">Add</button>
         </div>
       </div>
     </div></div>
@@ -324,11 +454,6 @@
     var _addBtn=document.querySelector('.product-btn-add');
     if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
 
-    // Quantity
-    let qty = 1
-    document.getElementById('qty-minus').addEventListener('click', () => { if (qty > 1) { qty--; document.getElementById('qty-val').textContent = qty } })
-    document.getElementById('qty-plus').addEventListener('click', () => { qty++; document.getElementById('qty-val').textContent = qty })
-
     // Product accordions
     document.querySelectorAll('.product-acc-trigger').forEach(btn => {
       btn.addEventListener('click', () => btn.closest('.product-acc-item').classList.toggle('open'))
@@ -342,7 +467,7 @@
   <script src="./pilr-cart.js"></script>
   <script>
     ;(function() {
-      var PRODUCT = { id: 'classic-stack', title: 'The Classic Stack', price: 45, image: 'images/lifestyle_section/Hand Render.png' }
+      var PRODUCT = { id: 'classic-stack', title: 'The Classic Stack', price: 54, image: 'images/lifestyle_section/Hand Render.png' }
       var SCOOPER = { id: 'travel-scooper', title: 'Pilr Travel Scooper', price: 11, image: 'images/lifestyle_section/Scooper.png' }
 
       function flashBtn(btn, original) {
@@ -352,7 +477,7 @@
       }
 
       document.querySelector('.product-btn-add').addEventListener('click', function() {
-        PilrCart.add(PRODUCT, qty)
+        PilrCart.add(PRODUCT, 1)
         flashBtn(this, 'ADD TO CART')
       })
 
@@ -361,14 +486,9 @@
         flashBtn(this, 'ADD TO CART')
       })
 
-      document.querySelector('.product-btn-buy').addEventListener('click', function() {
-        PilrCart.add(PRODUCT, qty)
-        window.location.href = './cart.html'
-      })
-
       document.querySelector('.offer-item-add').addEventListener('click', function() {
         PilrCart.add(SCOOPER, 1)
-        flashBtn(this, 'ADD TO CART')
+        flashBtn(this, 'Add')
       })
     })()
   </script>
