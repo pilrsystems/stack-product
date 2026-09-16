@@ -1,6 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  --radius: 2px;
   --bg: #FAFAF8;
   --surface: #FAFAF8;
   --border: #E5E4DF;
@@ -89,7 +90,7 @@ body {
   background: #5e6e7a !important;
   color: #FAFAF8 !important;
   padding: 0.45rem 1rem !important;
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 
 .nav-cta-link:hover {
@@ -181,7 +182,7 @@ body {
 .nav-drop-tile {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  border-radius: var(--radius);
   overflow: hidden;
   text-decoration: none;
   background: #F3F2EE;
@@ -234,7 +235,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -287,7 +288,7 @@ body {
   align-items: center;
   gap: 0;
   padding: 0.35rem 0.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius);
   background: transparent;
   transition: opacity 0.2s;
 }
@@ -298,7 +299,7 @@ body {
   width: 88px;
   height: 88px;
   flex-shrink: 0;
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: #e4e2de;
   overflow: hidden;
   display: flex;
@@ -410,7 +411,7 @@ body {
   line-height: 1;
   min-width: 16px;
   height: 16px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -482,9 +483,9 @@ body {
 }
 
 .stub-eyebrow {
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -538,9 +539,10 @@ body {
 }
 
 .hero-eyebrow {
-  font-size: 0.74rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #FAFAF8;
   position: relative;
   margin-bottom: -0.6rem;
@@ -597,9 +599,9 @@ body {
 .btn {
   display: inline-block;
   padding: 0.85rem 2rem;
-  font-size: 0.8rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
   border: none;
@@ -612,7 +614,6 @@ body {
   background: rgba(94, 110, 122, 0.7);
   color: #FAFAF8;
   border-radius: 0;
-  text-transform: none;
 }
 
 .btn--dark:hover { opacity: 0.8; }
@@ -621,7 +622,6 @@ body {
   background: #FAFAF8;
   color: #5e6e7a;
   border-radius: 0;
-  text-transform: none;
 }
 .btn--white:hover { background: #eeecea; }
 
@@ -635,6 +635,18 @@ body {
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+.bas-cta-btn, .pod-back-btn {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bas-cat-label, .builder-common-stack-label, .pod-detail-examples-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* Legacy .btn class (used by popup forms) */
@@ -677,7 +689,7 @@ body {
 
 .trust-star-badge {
   background: #FAFAF8;
-  border-radius: 3px;
+  border-radius: var(--radius);
   padding: 0.15rem 0.14rem;
   color: #5e6e7a;
   font-size: 0.6rem;
@@ -747,7 +759,7 @@ body {
   flex-direction: column;
   background: transparent;
   border: none;
-  border-radius: 14px;
+  border-radius: var(--radius);
   text-decoration: none;
   color: #5e6e7a;
   transition: transform 0.2s ease;
@@ -768,11 +780,12 @@ body {
   background: rgba(94, 110, 122, 0.7);
   color: #fff;
   border: 1px solid #fff;
-  font-size: 0.68rem;
+  font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   padding: 0.25rem 0.65rem;
-  border-radius: 20px;
+  border-radius: var(--radius);
 }
 
 .shop-card-img {
@@ -785,7 +798,7 @@ body {
   overflow: hidden;
   padding: 2rem;
   background: #F5F5F5;
-  border-radius: 18px;
+  border-radius: var(--radius);
   position: relative;
 }
 
@@ -875,7 +888,7 @@ body {
   font-weight: 500;
   letter-spacing: 0.02em;
   padding: 0.25rem 0.65rem;
-  border-radius: 20px;
+  border-radius: var(--radius);
 }
 
 .catalog-main .shop-card-info {
@@ -943,7 +956,7 @@ body {
 
 .upgrade-bar {
   width: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius);
   background: #5e6e7a;
   flex-shrink: 0;
 }
@@ -1001,7 +1014,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: var(--radius);
   display: block;
 }
 
@@ -1012,9 +1025,10 @@ body {
 }
 
 .why-label {
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #5e6e7a;
   margin-bottom: 1.25rem;
 }
@@ -1045,7 +1059,8 @@ body {
 }
 
 .why-accordion-label {
-  font-size: 1rem; font-weight: 500; color: #5e6e7a;
+  font-size: 0.75rem; font-weight: 500; color: #5e6e7a;
+  letter-spacing: 0.14em; text-transform: uppercase;
   display: flex; align-items: center; gap: 0.75rem;
 }
 
@@ -1128,7 +1143,7 @@ body {
   aspect-ratio: 3 / 4;
   border: none;
   padding: 0;
-  border-radius: 8px;
+  border-radius: var(--radius);
   overflow: hidden;
   background: rgba(94, 110, 122, 0.7);
   cursor: pointer;
@@ -1247,7 +1262,7 @@ body {
   width: 320px;
   aspect-ratio: 450 / 570;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: var(--radius);
 }
 
 .lifestyle-card img {
@@ -1291,7 +1306,7 @@ body {
   width: calc(100% - 6rem);
   max-width: 1160px;
   margin: 0 auto 8rem;
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -1366,9 +1381,10 @@ body {
 }
 
 .pilr-diff-label {
-  font-size: 1rem;
+  font-size: 0.6875rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #FAFAF8;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0;
@@ -1426,9 +1442,10 @@ body {
 }
 
 .build-text .build-eyebrow {
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #5e6e7a;
   margin-bottom: 0.6rem;
 }
@@ -1451,7 +1468,7 @@ body {
 }
 
 .build-img {
-  border-radius: 4px;
+  border-radius: var(--radius);
   overflow: hidden;
   align-self: end;
 }
@@ -1476,14 +1493,14 @@ body {
   max-width: 1280px;
   margin: 0 auto;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .community-img {
   position: relative;
   overflow: hidden;
-  border-radius: 14px 0 0 14px;
+  border-radius: var(--radius) 0 0 var(--radius);
   background: transparent;
 }
 
@@ -1588,9 +1605,9 @@ body {
 }
 
 .section-eyebrow {
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 0.75rem;
@@ -1857,7 +1874,7 @@ body {
 .payment-icon {
   width: 38px;
   height: 24px;
-  border-radius: 4px;
+  border-radius: var(--radius);
   box-shadow: 0 1px 3px rgba(0,0,0,0.25);
 }
 
@@ -2011,6 +2028,9 @@ body {
   width: 100%;
   text-align: center;
   display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .cart-legal-row {
@@ -2092,7 +2112,7 @@ body {
   align-items: stretch;
   background: #FAFAF8;
   border: 1px solid rgba(66,85,99,0.15);
-  border-radius: 16px;
+  border-radius: var(--radius);
   overflow: hidden;
   max-width: 640px;
   width: 100%;
@@ -2119,9 +2139,9 @@ body {
 }
 
 .popup-eyebrow {
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(66,85,99,0.55);
   margin-bottom: 0.85rem;
@@ -2160,7 +2180,7 @@ body {
   flex: 1;
   background: #FFFFFF;
   border: 1px solid rgba(66,85,99,0.25);
-  border-radius: 4px;
+  border-radius: var(--radius);
   padding: 0.65rem 1rem;
   color: #5e6e7a;
   font-family: inherit;
@@ -2176,7 +2196,7 @@ body {
   flex: 1;
   background: #FFFFFF;
   border: 1px solid rgba(66,85,99,0.25);
-  border-radius: 4px;
+  border-radius: var(--radius);
   padding: 0.65rem 1rem;
   font-size: 0.875rem;
   color: #5e6e7a;
@@ -2233,7 +2253,7 @@ body {
   flex: 1;
   border: 1px solid rgba(66,85,99,0.25);
   border-right: none;
-  border-radius: 4px 0 0 4px;
+  border-radius: var(--radius) 0 0 var(--radius);
 }
 
 .phone-country-select {
@@ -2246,7 +2266,7 @@ body {
   font-family: inherit;
   outline: none;
   cursor: pointer;
-  border-radius: 4px 0 0 4px;
+  border-radius: var(--radius) 0 0 var(--radius);
 }
 
 .phone-country-select option {
@@ -2488,8 +2508,10 @@ body {
   background: transparent;
   color: #5e6e7a;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.6875rem;
   font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: background 0.18s, color 0.18s, border-color 0.18s;
 }
@@ -2577,9 +2599,9 @@ body {
 
 .catalog-hero-eyebrow {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #5e6e7a;
   margin: 0 0 0.85rem;
@@ -2612,7 +2634,7 @@ body {
 
 .product-sticky-bar {
   position: fixed; bottom: 2rem; left: 2rem; z-index: 98;
-  background: #fff; border-radius: 18px;
+  background: #fff; border-radius: var(--radius);
   box-shadow: 0 8px 32px rgba(40,55,65,0.14), 0 2px 8px rgba(40,55,65,0.07);
   padding: 0.85rem 1rem 0.85rem 0.85rem;
   display: flex; align-items: center; gap: 1rem;
@@ -2622,7 +2644,7 @@ body {
 }
 .product-sticky-bar.is-visible { transform: translateY(0); pointer-events: auto; }
 .product-sticky-img {
-  width: 68px; height: 68px; border-radius: 10px; background: #F3F2EE;
+  width: 68px; height: 68px; border-radius: var(--radius); background: #F3F2EE;
   overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
 }
 .product-sticky-img img { width: 100%; height: 100%; object-fit: contain; }
@@ -2643,13 +2665,13 @@ body {
   display: flex; flex-direction: column; gap: 1rem;
 }
 .product-hero-img-frame {
-  background: #EFEDE9; border-radius: 18px; aspect-ratio: 3 / 2;
+  background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 3 / 2;
   display: flex; align-items: center; justify-content: center; padding: 1.5rem;
 }
 .product-main-img { display: block; max-width: 92%; max-height: 92%; object-fit: contain; }
 .product-secondary-images { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .product-placeholder-img {
-  background: #EFEDE9; border-radius: 18px; aspect-ratio: 3 / 2;
+  background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 3 / 2;
   border: 1px dashed rgba(94,110,122,0.35);
   display: flex; align-items: center; justify-content: center;
   color: #9aa7ae; font-size: 0.7rem; text-align: center; padding: 1rem;
@@ -2666,7 +2688,6 @@ body {
 .product-page-tagline {
   font-size: 0.98rem; color: #7a8a94; margin: 0; line-height: 1.5;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-style: italic;
 }
 .product-reviews-bar {
   display: flex; align-items: center; gap: 0.37rem;
@@ -2706,7 +2727,7 @@ body {
 .product-accordion-trigger {
   width: 100%; display: flex; align-items: center; justify-content: space-between;
   padding: 1.1rem 0; background: none; border: none; cursor: pointer;
-  font-size: 1rem; font-weight: 600; color: #5e6e7a; text-align: left;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5e6e7a; text-align: left;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-accordion-icon {
@@ -2721,14 +2742,15 @@ body {
 }
 .product-accordion-panel.is-open { max-height: 220px; padding-bottom: 1.25rem; }
 .product-accordion-sub {
-  font-size: 0.82rem; font-style: italic; color: #7a8a94; margin-bottom: 0.75rem;
+  font-size: 0.82rem; color: #7a8a94; margin-bottom: 0.75rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-info-link {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.7rem 1rem;
-  border: 1.5px solid rgba(66,85,99,0.2); border-radius: 10px;
-  font-size: 0.85rem; font-weight: 500; color: #5e6e7a; text-decoration: none;
+  border: 1.5px solid rgba(66,85,99,0.2); border-radius: var(--radius);
+  font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #5e6e7a; text-decoration: none;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transition: border-color 0.15s;
 }
@@ -2751,27 +2773,27 @@ body {
 
 .product-btn-add {
   flex: 1; padding: 0.7rem 1rem; background: rgba(66,85,99,0.7); color: #fff;
-  border: none; border-radius: 0; font-size: 0.88rem; font-weight: 600;
+  border: none; border-radius: 0; font-size: 0.6875rem; font-weight: 600;
   cursor: pointer; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  letter-spacing: 0.04em; transition: opacity 0.15s; text-align: center;
+  letter-spacing: 0.14em; text-transform: uppercase; transition: opacity 0.15s; text-align: center;
 }
 .product-btn-buy {
   display: block; width: 100%; padding: 1rem; background: #5e6e7a; color: #fff;
-  border: none; border-radius: 0; font-size: 0.88rem; font-weight: 600;
+  border: none; border-radius: 0; font-size: 0.6875rem; font-weight: 600;
   cursor: pointer; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  letter-spacing: 0.04em; transition: opacity 0.15s; text-align: center;
+  letter-spacing: 0.14em; text-transform: uppercase; transition: opacity 0.15s; text-align: center;
 }
 .product-btn-add:hover, .product-btn-buy:hover { opacity: 0.88; }
 
-.offer-box { border: 1.5px solid rgba(66,85,99,0.15); border-radius: 12px; padding: 1.25rem 1.5rem; }
+.offer-box { border: 1.5px solid rgba(66,85,99,0.15); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
 .offer-box-eyebrow {
-  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.14em;
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em;
   text-transform: uppercase; color: #7a8a94; margin-bottom: 1rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .offer-item { display: flex; align-items: center; gap: 1rem; }
 .offer-item-img {
-  width: 70px; height: 70px; border-radius: 8px; background: #F3F2EE;
+  width: 70px; height: 70px; border-radius: var(--radius); background: #F3F2EE;
   overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
 }
 .offer-item-img img { width: 100%; height: 100%; object-fit: contain; }
@@ -2780,7 +2802,8 @@ body {
 .offer-item-price { font-size: 0.9rem; color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .offer-item-add {
   padding: 0.5rem 1.1rem; border: 1.5px solid rgba(66,85,99,0.25);
-  border-radius: 20px; background: none; font-size: 0.78rem; font-weight: 500;
+  border-radius: var(--radius); background: none; font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
   color: #5e6e7a; cursor: pointer; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; white-space: nowrap;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
@@ -2791,12 +2814,13 @@ body {
 .pilr-system-section { padding: 7rem 3rem 4rem; text-align: center; background: var(--bg); max-width: 1440px; margin: 0 auto; width: 100%; }
 .pilr-system-eyebrow {
   font-size: 2rem; font-weight: 500; letter-spacing: 0.18em;
-  text-transform: uppercase; color: #5e6e7a; margin-bottom: 0.75rem;
+  color: #5e6e7a; margin-bottom: 0.75rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .pilr-system-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 1.25rem; color: #7a8a94; margin-bottom: 4.5rem;
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #7a8a94; margin-bottom: 4.5rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .pilr-system-pods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 4rem; max-width: 980px; margin: 0 auto; }
@@ -2814,7 +2838,7 @@ body {
   display: grid; grid-template-columns: 1fr 1fr; align-items: center;
   gap: 5rem; max-width: 1100px; margin: 0 auto; padding: 7rem 3rem;
 }
-.built-routine-img img { width: 100%; height: auto; display: block; border-radius: 16px; }
+.built-routine-img img { width: 100%; height: auto; display: block; border-radius: var(--radius); }
 .built-routine-title {
   font-size: 2.4rem; font-weight: 500; color: #5e6e7a;
   line-height: 1.15; margin-bottom: 1rem;
@@ -2831,24 +2855,24 @@ body {
   padding: 0.7rem 0; border-bottom: 1px solid #E5E4DF;
 }
 .built-routine-item {
-  font-size: 0.8rem; letter-spacing: 0.07em; color: #5e6e7a; font-weight: 500;
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5e6e7a; font-weight: 500;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .built-routine-val {
-  font-size: 0.8rem; color: #7a8a94;
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .built-routine-btn {
   position: relative; display: inline-block; align-self: center;
   padding: 0.7rem 3.5rem; border: 1.5px solid #5e6e7a; border-radius: 0;
-  background: transparent; color: #5e6e7a; font-size: 0.72rem;
-  letter-spacing: 0.07em; cursor: pointer; text-align: center;
+  background: transparent; color: #5e6e7a; font-size: 0.6875rem;
+  letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-align: center;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500;
 }
 .built-routine-btn:hover { background: #5e6e7a; color: #fff; }
 .built-routine-btn svg { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); display: block; }
 
-.product-benefits { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid #E5E4DF; border-radius: 20px; overflow: hidden; margin: 0 auto 4rem; background: #FAFAF8; max-width: 1380px; width: calc(100% - 6rem); }
+.product-benefits { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid #E5E4DF; border-radius: var(--radius); overflow: hidden; margin: 0 auto 4rem; background: #FAFAF8; max-width: 1380px; width: calc(100% - 6rem); }
 .product-benefits-text { padding: 3.5rem 3.5rem 2rem; display: flex; flex-direction: column; justify-content: center; }
 .product-benefits-title {
   font-size: 2.1rem; font-weight: 500; color: #5e6e7a;
@@ -2917,9 +2941,9 @@ body {
 .rp-inner { max-width: 720px; margin: 0 auto; }
 
 .rp-eyebrow {
-  font-size: 0.65rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--rp-slate);
   margin-bottom: 0.75rem;
@@ -3015,8 +3039,8 @@ body {
   margin-bottom: 1.25rem;
 }
 .rp-chart-threshold-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.02em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(66, 85, 99, 0.65);
 }
@@ -3057,8 +3081,9 @@ body {
 }
 
 .rp-chart-col-value {
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   font-weight: 600;
+  letter-spacing: 0.14em;
   color: var(--rp-slate);
   margin-bottom: 0.4rem;
   font-variant-numeric: tabular-nums;
@@ -3069,12 +3094,14 @@ body {
   width: 40px;
   max-width: 60%;
   background: var(--rp-slate);
-  border-radius: 3px 3px 0 0;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .rp-chart-col-name {
   margin-top: 0.6rem;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--rp-slate);
 }
 
@@ -3085,7 +3112,7 @@ body {
 .rp-image-slot {
   background: #EFEDE9;
   border: 1px dashed rgba(66, 85, 99, 0.35);
-  border-radius: 12px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3143,7 +3170,7 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   transition: opacity 0.2s;
 }
 .rp-cta:hover { opacity: 0.85; }
