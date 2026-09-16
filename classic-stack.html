@@ -20,13 +20,17 @@
        in full at the end of this task.
   ────────────────────────────────────────────────────────────── -->
   <style>
-    /* Product photo grid — same radius/aspect-ratio/fill color as
-       .product-hero-img-frame (18px, 3/2, #EFEDE9) so real photos
-       match the placeholder look they replace. */
+    /* Product photo grid — same radius/fill color as the global
+       .product-hero-img-frame (18px, #EFEDE9), but square (1:1) on
+       this page only, via the .page-classic-stack scope on <body>
+       so the other five product pages keep their 3:2 frames. */
+    .page-classic-stack .product-hero-img-frame { aspect-ratio: 1 / 1; }
     .product-secondary-img {
-      background: #EFEDE9; border-radius: 18px; aspect-ratio: 3 / 2; overflow: hidden;
+      background: #EFEDE9; border-radius: 18px; aspect-ratio: 1 / 1; overflow: hidden;
     }
-    .product-secondary-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .product-secondary-img img, .product-secondary-img video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
 
     /* Zone 4 — price, own line. Same size/weight the site already
        used for a price next to the title (.product-title-price:
@@ -104,7 +108,7 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
 </head>
-<body>
+<body class="page-classic-stack">
 
   <!-- STICKY PRODUCT BAR -->
   <div class="product-sticky-bar" id="product-sticky-bar">
@@ -163,13 +167,16 @@
   <div class="product-hero">
     <div class="product-images-col">
       <div class="product-hero-img-frame">
-        <img class="product-main-img" src="images/lifestyle_section/Hand Render.png" alt="The Classic Stack" />
+        <img class="product-main-img" src="images/lifestyle_section/Classic Stack Render 1.png" alt="The Classic Stack" />
       </div>
       <div class="product-secondary-images">
-        <div class="product-secondary-img"><img src="images/lifestyle_section/Suitcase Top View.jpg" alt="Classic Stack pods on a suitcase" /></div>
-        <div class="product-secondary-img"><img src="images/lifestyle_section/Pack Stack Go Box.jpg" alt="Classic Stack in its packaging" /></div>
+        <div class="product-secondary-img"><img src="images/lifestyle_section/Classic Stack Render 2.png" alt="The Classic Stack, exploded view of all three pods" /></div>
+        <div class="product-secondary-img"><img src="images/lifestyle_section/Classic Stack Render 3.png" alt="The Classic Stack, close-up on the lid" /></div>
         <div class="product-secondary-img"><img src="images/lifestyle_section/Packed Suitcase.jpg" alt="Classic Stack packed alongside travel essentials" /></div>
         <div class="product-secondary-img"><img src="images/lifestyle_section/Supplement Comparison.jpg" alt="Classic Stack pods next to full-size supplement bottles" /></div>
+        <div class="product-secondary-img product-secondary-img--video">
+          <video src="images/lifestyle_section/Classic Stack Video.mp4" autoplay muted loop playsinline></video>
+        </div>
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
