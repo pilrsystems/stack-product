@@ -901,6 +901,7 @@ body {
 
 .catalog-main .shop-card-info p {
   font-size: 0.9rem;
+  min-height: 2.7rem;
 }
 
 .catalog-main .shop-price {
