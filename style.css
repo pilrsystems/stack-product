@@ -903,6 +903,18 @@ body {
   font-size: 0.9rem;
 }
 
+/* Catalog cards: fix the image box to a set proportion instead of
+   letting it flex to fill whatever space the description leaves over,
+   so image size stays consistent regardless of description length. */
+.catalog-main .shop-card {
+  aspect-ratio: unset;
+}
+
+.catalog-main .shop-card-img {
+  flex: none;
+  aspect-ratio: 6 / 5;
+}
+
 .catalog-main .shop-price {
   font-size: 1rem;
 }
