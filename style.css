@@ -2667,6 +2667,7 @@ body {
 .product-hero-img-frame {
   background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 3 / 2;
   display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+  min-height: 0; min-width: 0; overflow: hidden;
 }
 .product-main-img { display: block; max-width: 92%; max-height: 92%; object-fit: contain; }
 .product-secondary-images { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -2813,7 +2814,7 @@ body {
 
 .pilr-system-section { padding: 7rem 3rem 4rem; text-align: center; background: var(--bg); max-width: 1440px; margin: 0 auto; width: 100%; }
 .pilr-system-eyebrow {
-  font-size: 2rem; font-weight: 500; letter-spacing: 0.18em;
+  font-size: 2rem; font-weight: 500; letter-spacing: -0.02em;
   color: #5e6e7a; margin-bottom: 0.75rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

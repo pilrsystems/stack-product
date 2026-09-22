@@ -20,31 +20,11 @@
        in full at the end of this task.
   ────────────────────────────────────────────────────────────── -->
   <style>
-    /* Product photo grid — same radius/fill color as the global
-       .product-hero-img-frame (18px, #EFEDE9), but square (1:1) on
-       this page only, via the .page-classic-stack scope on <body>
-       so the other five product pages keep their 3:2 frames. */
-    .page-classic-stack .product-hero-img-frame { aspect-ratio: 1 / 1; }
-    .product-secondary-img {
-      background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 1 / 1; overflow: hidden;
-    }
-    .product-secondary-img img, .product-secondary-img video {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-
-    /* Zone 4 — price, own line. Same size/weight the site already
-       used for a price next to the title (.product-title-price:
-       1.5rem / 400 / letter-spacing -0.025em) — only the color
-       changes, from that rule's muted #7a8a94 to #5e6e7a (already
-       used everywhere else in this column for non-greyed emphasis),
-       since price must not read as greyed out. */
-    #product-info-inner .bc-price {
-      font-size: 1.5rem; font-weight: 700; color: #5e6e7a;
-      letter-spacing: -0.025em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
+    /* Struck-through original price next to .product-title-price,
+       sized like the same pattern already used on catalog cards
+       (.shop-price-strike: small, muted, no extra weight). */
     #product-info-inner .bc-price-strike {
-      font-size: 1.1rem; font-weight: 400; color: #9aa7ae;
-      text-decoration: line-through; margin-left: 0.5rem;
+      font-size: 0.85rem; color: #a3aeb5; text-decoration: line-through;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
@@ -53,7 +33,22 @@
     #product-info-inner .bc-note {
       font-size: 0.9rem; color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    #product-info-inner .bc-note-guarantee { text-align: left; }
+    /* Guarantee badges — LABEL register (uppercase, letterspaced),
+       tight to the Add to Cart button above, reusing the same
+       checkmark icon as the Powder Pod feature list. */
+    #product-info-inner .bc-guarantees {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    #product-info-inner .bc-guarantee-item {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-guarantee-item svg { width: 12px; height: 12px; }
+    #product-info-inner .bc-guarantee-divider {
+      width: 3px; height: 3px; border-radius: 50%; background: #c3ccd1; flex-shrink: 0;
+    }
 
     /* New — finish name under the title. Same LABEL treatment used
        elsewhere on this page (.bc-spec-row): uppercase, 0.14em,
@@ -111,6 +106,120 @@
        effect on the other product pages. */
     @media (max-width: 900px) {
       .product-hero { grid-template-columns: 1fr; }
+    }
+
+    /* TSA — full-width, page background, sits directly above the
+       Comparison section. Text column reuses the exact type recipe
+       from .built-routine-title/-desc/-row/-item/-val; compact
+       section with a fixed-width, uncropped photo. */
+    .tsa-section {
+      display: grid; grid-template-columns: 300px 1fr; align-items: center;
+      gap: 144px; max-width: 1100px; margin: 0 auto; padding: 48px 3rem;
+      min-height: 460px; box-sizing: border-box;
+      background: var(--bg);
+    }
+    .tsa-photo { width: 300px; }
+    .tsa-photo img { width: 300px; height: auto; border-radius: 22px; display: block; }
+    .tsa-title {
+      font-size: 2.4rem; font-weight: 500; color: #5e6e7a;
+      line-height: 1.15; margin: 0 0 1rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .tsa-desc {
+      font-size: 0.95rem; color: #7a8a94; line-height: 1.65; margin: 0 0 2rem;
+      max-width: 460px;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .tsa-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.7rem 0; border-bottom: 1px solid #E5E4DF;
+    }
+    .tsa-item {
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5e6e7a; font-weight: 700;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .tsa-val {
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    @media (max-width: 760px) {
+      .tsa-section { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem; min-height: 0; }
+      .tsa-photo { margin: 0 auto; }
+    }
+
+    /* BUILT TO LAST — mirror of the TSA section (text/photo swapped),
+       same outer padding/gap/min-height conventions. Spec labels
+       reuse the exact .tsa-item recipe; spec descriptions reuse the
+       exact .bc-accordion-text recipe (0.82rem/#7a8a94/1.6). */
+    .btl-section {
+      display: grid; grid-template-columns: 1fr 300px; align-items: center;
+      gap: 144px; max-width: 1100px; margin: 0 auto; padding: 48px 3rem;
+      min-height: 460px; box-sizing: border-box;
+      background: var(--bg);
+    }
+    .btl-photo {
+      width: 300px; height: 400px; border-radius: 22px; overflow: hidden;
+      background: rgba(122,138,148,0.12);
+    }
+    .btl-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .btl-specs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      column-gap: 56px; row-gap: 44px; margin-top: 1.5rem;
+    }
+    .btl-spec-label {
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5e6e7a; font-weight: 700;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 0 0 0.4rem;
+    }
+    .btl-spec-desc {
+      font-size: 0.82rem; color: #7a8a94; line-height: 1.6; margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    @media (max-width: 760px) {
+      .btl-section { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem; min-height: 0; }
+      .btl-photo { margin: 0 auto; }
+      .btl-specs { grid-template-columns: 1fr; }
+    }
+
+    /* COMPARISON — full-width, matches the page's own background,
+       sits between the "Stay consistent, anywhere." benefits section
+       and the FAQ. Headers/labels are normal-case body text now, not
+       the LABEL register; only the pilr logo is scaled up as the
+       featured column. Reuses the site's existing border/bg tokens
+       (#E5E4DF, rgba(66,85,99,0.15), --radius, --bg). */
+    .comparison-section { background: var(--bg); padding: 5rem 3rem; }
+    .comparison-table {
+      display: grid; grid-template-columns: 1.6fr repeat(3, 1fr);
+      max-width: 900px; margin: 0 auto;
+      border: 1.5px solid #E5E4DF; border-radius: var(--radius); overflow: hidden;
+      background: #fff;
+    }
+    .comparison-cell {
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem 1rem; border-bottom: 1px solid rgba(66,85,99,0.15);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .comparison-table > .comparison-cell:nth-last-child(-n+4) { border-bottom: none; }
+    .comparison-header {
+      font-size: 0.94rem; color: #7a8a94; font-weight: 600; text-align: center;
+      background: #FAFAF8; border-bottom: 1px solid rgba(66,85,99,0.15);
+    }
+    .comparison-header--pilr { gap: 0.4rem; }
+    .comparison-logo { height: 26px; width: auto; display: block; }
+    .comparison-label {
+      justify-content: flex-start; text-align: left;
+      font-size: 0.94rem; color: #5e6e7a;
+    }
+    .comparison-check { display: block; }
+    .comparison-dash { width: 14px; height: 2px; border-radius: 1px; background: rgba(122,138,148,0.4); display: block; }
+    /* Featured column — faint slate tint on every cell in the pilr
+       column (header + all 8 rows): 2nd of every 5 grid children. */
+    .comparison-table > .comparison-cell:nth-child(4n+2) { background: rgba(94,110,122,0.06); }
+    .comparison-table > .comparison-header.comparison-header--pilr { background: rgba(94,110,122,0.1); }
+    @media (max-width: 760px) {
+      .comparison-section { padding: 3rem 1.25rem; }
+      .comparison-table { grid-template-columns: 1.3fr repeat(3, 0.9fr); font-size: 0.9em; }
+      .comparison-cell { padding: 0.75rem 0.5rem; }
     }
   </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
@@ -176,55 +285,27 @@
   <div class="product-hero">
     <div class="product-images-col">
       <div class="product-hero-img-frame">
-        <img class="product-main-img" src="images/lifestyle_section/Classic Stack Render 1.png" alt="The Classic Stack" />
+        <img class="product-main-img" src="images/lifestyle_section/Classic Stack Render 6.png" alt="The Classic Stack" />
       </div>
       <div class="product-secondary-images">
-        <div class="product-secondary-img"><img src="images/lifestyle_section/Classic Stack Render 2.png" alt="The Classic Stack, exploded view of all three pods" /></div>
-        <div class="product-secondary-img"><img src="images/lifestyle_section/Classic Stack Render 3.png" alt="The Classic Stack, close-up on the lid" /></div>
-        <div class="product-secondary-img"><img src="images/lifestyle_section/Packed Suitcase.jpg" alt="Classic Stack packed alongside travel essentials" /></div>
-        <div class="product-secondary-img"><img src="images/lifestyle_section/Supplement Comparison.jpg" alt="Classic Stack pods next to full-size supplement bottles" /></div>
-        <div class="product-secondary-img product-secondary-img--video">
-          <video src="images/lifestyle_section/Classic Stack Video.mp4" autoplay muted loop playsinline></video>
-        </div>
+        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-placeholder-img">Product photo</div>
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <!-- 1. Title -->
-      <h1 class="product-page-title">Classic stack</h1>
+      <!-- 1. Title + price -->
+      <div class="product-title-row">
+        <h1 class="product-page-title">Classic Stack</h1>
+        <span class="product-title-price">$54 <span class="bc-price-strike">$69</span></span>
+      </div>
 
       <!-- 2. Finish name -->
       <p class="bc-finish">Matte Black</p>
 
-      <!-- 2. Reviews — present only when reviewCount > 0. This
-           page's count is 4,728, so the block is included; a page
-           with reviewCount = 0 should omit this <div> entirely. -->
-      <div class="product-reviews-bar">
-        <div class="product-reviews-stars">
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        </div>
-        <span class="product-reviews-count">4,728 Reviews</span>
-      </div>
-
-      <!-- 3. Description -->
-      <p class="product-page-tagline">One system for small pills, large capsules, and powders.</p>
-
-      <!-- 4. Price, own line -->
-      <p class="bc-price">$54<span class="bc-price-strike">$69</span></p>
-
-      <!-- 6. Scooper note -->
-      <p class="bc-note">stainless steel Travel scooper included.</p>
-
-      <!-- 7. Primary button — the only filled button in this column -->
-      <button class="product-btn-add">ADD TO CART</button>
-
-      <!-- 8. Guarantee line -->
-      <p class="bc-note bc-note-guarantee">lifetime guarantee. 30-day returns.</p>
-
-      <!-- 9. Buy Now deleted -->
+      <!-- 4. Description -->
+      <p class="product-page-tagline">One system for small pills, large capsules, and powders. Includes stainless steel travel scooper.</p>
 
       <!-- 10. Three accordions -->
       <div class="product-info-sections">
@@ -235,11 +316,9 @@
           </button>
           <div class="product-accordion-panel">
             <div class="bc-spec-row"><span>Material</span><span>PCTG Eastman Tritan&trade; TX1001</span></div>
-            <div class="bc-spec-row"><span>Finish</span><span>VDI-12 matte &mdash; Deep Slate</span></div>
-            <div class="bc-spec-row"><span>Housing</span><span>Polypropylene</span></div>
             <div class="bc-spec-row"><span>Internal volume</span><span>82.2 / 141.3 / 180.6 mL</span></div>
-            <div class="bc-spec-row"><span>Compliance</span><span>FDA 21 CFR 177.1580 &middot; NSF/ANSI 51</span></div>
-            <div class="bc-spec-row"><span>Care</span><span>Dishwasher safe, top rack. Refill indefinitely.</span></div>
+            <div class="bc-spec-row"><span>Compliance</span><span>BPA-FREE &middot; FDA 21 CFR 177.1580</span></div>
+            <div class="bc-spec-row"><span>Care</span><span>Dishwasher safe, top rack.</span></div>
           </div>
         </div>
         <div class="product-accordion">
@@ -258,6 +337,18 @@
           </div>
         </div>
       </div>
+
+      <!-- 7. Primary button — the only filled button in this column -->
+      <button class="product-btn-add">ADD TO CART</button>
+
+      <!-- 8. Guarantee line -->
+      <div class="bc-guarantees">
+        <span class="bc-guarantee-item">Lifetime guarantee</span>
+        <span class="bc-guarantee-divider"></span>
+        <span class="bc-guarantee-item">30-day returns</span>
+      </div>
+
+      <!-- 9. Buy Now deleted -->
 
       <!-- 11. Add-ons -->
       <div class="offer-box">
@@ -282,13 +373,101 @@
     </div></div>
   </div>
 
+  <!-- LIFESTYLE IMAGE -->
+  <section class="built-routine-section"><div class="built-routine-content"><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><button class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="Pilr lifestyle" /></div></section>
+
+  <!-- TSA -->
+  <section class="tsa-section">
+    <div class="tsa-photo"><img src="images/lifestyle_section/TSA Binshot.jpg" alt="Pilr pods packed in a TSA bin" /></div>
+    <div class="tsa-content">
+      <h2 class="tsa-title">Built to travel</h2>
+      <p class="tsa-desc">TSA flags any powder container over 350 mL (12 oz) for extra screening. Every pilr pod comes in well under that. Stack as many as your routine needs, and each one clears on the same terms.</p>
+      <div class="tsa-table">
+        <div class="tsa-row"><span class="tsa-item">Powder pod</span><span class="tsa-val">180.6 mL &mdash; under the threshold</span></div>
+        <div class="tsa-row"><span class="tsa-item">Stacked pods</span><span class="tsa-val">Compliant, no limits</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT TO LAST -->
+  <section class="btl-section">
+    <div class="btl-content">
+      <h2 class="tsa-title">Built to last</h2>
+      <div class="btl-specs">
+        <div>
+          <p class="btl-spec-label">BPA-free</p>
+          <p class="btl-spec-desc">Molded from Tritan &mdash; the material trusted for water bottles and lab equipment.</p>
+        </div>
+        <div>
+          <p class="btl-spec-label">Leakproof</p>
+          <p class="btl-spec-desc">An airtight seal. Nothing gets in, nothing gets out.</p>
+        </div>
+        <div>
+          <p class="btl-spec-label">Temperature resistant</p>
+          <p class="btl-spec-desc">Heat, cold, humidity &mdash; the seal holds regardless.</p>
+        </div>
+        <div>
+          <p class="btl-spec-label">Drop resistant</p>
+          <p class="btl-spec-desc">Survives a fall that would ruin anything else.</p>
+        </div>
+      </div>
+    </div>
+    <div class="btl-photo"><img src="images/lifestyle_section/Built to Last Airport.jpg" alt="Pilr pod in a backpack side pocket at the airport" /></div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="comparison-section">
+    <div class="comparison-table">
+      <div class="comparison-cell comparison-header"></div>
+      <div class="comparison-cell comparison-header comparison-header--pilr"><img src="images/logov3-cropped.png" alt="Pilr" class="comparison-logo" /></div>
+      <div class="comparison-cell comparison-header">7-day pill organizers</div>
+      <div class="comparison-cell comparison-header">Ziploc bags</div>
+
+      <div class="comparison-cell comparison-label">TSA-compliant</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">Leakproof seal</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">Modular, fits all your supplements</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">BPA-free</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">Capsules &amp; powders, one system</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">Built to last</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">Space-efficient</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+
+      <div class="comparison-cell comparison-label">Temperature resistant</div>
+      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+    </div>
+  </section>
+
   <!-- THE PILR SYSTEM -->
   <section class="pilr-system-section">
-    <p class="pilr-system-eyebrow">The pilr system</p>
-    <p class="pilr-system-badge">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      TSA-Compliant
-    </p>
+    <p class="pilr-system-eyebrow">The classic stack</p>
     <div class="pilr-system-pods">
       <div>
         <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img" src="images/lifestyle_section/Powder Pod Render.png" alt="Powder Pod" /></div>
@@ -307,35 +486,6 @@
       </div>
     </div>
   </section>
-
-  <!-- LIFESTYLE IMAGE -->
-  <section class="built-routine-section"><div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="Pilr lifestyle" /></div><div class="built-routine-content"><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><button class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></section>
-
-  <!-- BENEFITS -->
-  <div class="product-benefits">
-    <div class="product-benefits-text">
-      <h2 class="product-benefits-title">Stay consistent, anywhere.</h2>
-      <p class="product-benefits-desc">Designed to store your powders &amp; pills in one seamless system. Built to move with you and keep your routine on track, no matter where you are.</p>
-      <div class="product-benefits-icons">
-        <div class="product-benefit-item">
-          <div class="benefit-icon-wrap"><img class="product-benefit-icon" src="images/lifestyle_section/suitcase.svg" alt="TSA Compliant" width="48" height="48" /></div>
-          <p class="product-benefit-name">TSA compliant</p>
-          <p class="product-benefit-desc">Designed for travel and to fit in any bag</p>
-        </div>
-        <div class="product-benefit-item">
-          <div class="benefit-icon-wrap"><svg class="product-benefit-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#5e6e7a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="6" rx="2"/><line x1="12" y1="8" x2="12" y2="9.5"/><rect x="2" y="9.5" width="20" height="6" rx="2"/><line x1="12" y1="15.5" x2="12" y2="17"/><rect x="2" y="17" width="20" height="6" rx="2"/></svg></div>
-          <p class="product-benefit-name">Modular system</p>
-          <p class="product-benefit-desc">Mix and match pods to fit your routine</p>
-        </div>
-        <div class="product-benefit-item">
-          <div class="benefit-icon-wrap"><img class="product-benefit-icon" src="images/lifestyle_section/Leakproof.svg" alt="Leakproof Pods" width="57" height="57" style="transform: translate(-5px, 6px);" /></div>
-          <p class="product-benefit-name">Leakproof pods</p>
-          <p class="product-benefit-desc">No spills, no mess, no compromises</p>
-        </div>
-      </div>
-    </div>
-    <div class="product-benefits-img"><img src="images/lifestyle_section/Full Render Product.png" alt="Pilr System" /></div>
-  </div>
 
   <!-- FAQ -->
   <div class="product-faq">
@@ -449,13 +599,6 @@
   </script>
   <script>
     const stickyBar=document.getElementById('product-sticky-bar');
-    function syncHeroHeight(){
-      var imgCol=document.querySelector('.product-images-col');
-      var infoCol=document.querySelector('.product-info-col');
-      if(imgCol&&infoCol){infoCol.style.minHeight=imgCol.getBoundingClientRect().height+'px';}
-    }
-    syncHeroHeight();
-    window.addEventListener('resize',syncHeroHeight);
     var _addBtn=document.querySelector('.product-btn-add');
     if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
 

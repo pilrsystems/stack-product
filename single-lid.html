@@ -58,7 +58,7 @@
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
       <div class="product-title-row">
-        <h1 class="product-page-title">Single lid</h1>
+        <h1 class="product-page-title">Single Lid</h1>
         <span class="product-title-price">$7</span>
       </div>
       <div class="product-reviews-bar">
@@ -165,13 +165,6 @@
   <script>
     const navEl=document.querySelector('nav.nav'),shopAllLi=document.querySelector('.nav-has-dropdown'),shopDropdown=document.querySelector('.nav-dropdown'),dimOverlay=document.getElementById('nav-dim-overlay');let dropOpen=false,dropCloseTimer=null;function openDrop(){clearTimeout(dropCloseTimer);dropCloseTimer=null;shopAllLi.classList.add('dropdown-active');dimOverlay.classList.add('active');dropOpen=true}function closeDrop(){clearTimeout(dropCloseTimer);dropCloseTimer=null;shopAllLi.classList.remove('dropdown-active');dimOverlay.classList.remove('active');dropOpen=false}dimOverlay.addEventListener('click',closeDrop);function inZone(x,y){const li=shopAllLi.getBoundingClientRect(),dd=shopDropdown.getBoundingClientRect();if(x>=li.left&&x<=li.right&&y>=li.top&&y<=li.bottom)return true;if(y>=dd.top&&y<=dd.bottom)return true;if(y>li.bottom&&y<dd.top)return true;return false}shopAllLi.addEventListener('mouseenter',openDrop);document.addEventListener('mousemove',(e)=>{if(!dropOpen)return;if(inZone(e.clientX,e.clientY)){clearTimeout(dropCloseTimer);dropCloseTimer=null}else if(!dropCloseTimer){dropCloseTimer=setTimeout(closeDrop,150)}});
     const stickyBar=document.getElementById('product-sticky-bar');
-    function syncHeroHeight(){
-      var imgCol=document.querySelector('.product-images-col');
-      var infoCol=document.querySelector('.product-info-col');
-      if(imgCol&&infoCol){infoCol.style.minHeight=imgCol.getBoundingClientRect().height+'px';}
-    }
-    syncHeroHeight();
-    window.addEventListener('resize',syncHeroHeight);
     var _addBtn=document.querySelector('.product-btn-add');
     if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
     let qty=1;document.getElementById('qty-minus').addEventListener('click',()=>{if(qty>1){qty--;document.getElementById('qty-val').textContent=qty}});document.getElementById('qty-plus').addEventListener('click',()=>{qty++;document.getElementById('qty-val').textContent=qty});
