@@ -20,6 +20,12 @@
        in full at the end of this task.
   ────────────────────────────────────────────────────────────── -->
   <style>
+    /* Product photos are shot at the frame's own 3:2 ratio, so they
+       should fill it edge to edge instead of sitting padded/inset
+       inside it like the placeholder state did. */
+    .product-hero-img-frame { padding: 0; }
+    .product-main-img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: cover; }
+
     /* Struck-through original price next to .product-title-price,
        sized like the same pattern already used on catalog cards
        (.shop-price-strike: small, muted, no extra weight). */
@@ -58,6 +64,11 @@
       color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
+    /* Title → ratings is tighter than the parent's default 1rem flex
+       gap (halved); ratings → finish and everything below keep the
+       normal spacing. */
+    #product-info-inner .product-reviews-bar { margin-top: -0.5rem; }
+
     /* Zone 7 — same button, same fill/type, new position. Its
        existing flex:1 was written for growing horizontally inside
        .product-qty-cart-row; as a direct column child that property
@@ -88,9 +99,17 @@
     /* Zone 11 — same card border/eyebrow/row/Add-button the old
        "Exclusive Offers" box used, square corners only. Arrow links
        reuse the existing #5e6e7a link color; no new icon. */
-    #product-info-inner .offer-box { border-radius: 0; border: none; }
+    #product-info-inner .offer-box { border-radius: 0; border: none; padding: 1.25rem 0; }
     #product-info-inner .offer-item-img { border-radius: 0; }
     #product-info-inner .offer-item-add { border-radius: 0; }
+    /* Scooper price — sits between the description and the Add
+       button instead of folded into the description line. Same
+       recipe as .offer-item-price (0.9rem / #7a8a94), just its own
+       element so it doesn't wrap with the button. */
+    #product-info-inner .bc-offer-price {
+      font-size: 0.9rem; color: #7a8a94; flex-shrink: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
     /* Three rows now share one card; .offer-item itself only ever
        had internal (thumbnail/text/control) gap before. Divider
        reuses the same hairline color as .product-accordion's border. */
@@ -285,27 +304,41 @@
   <div class="product-hero">
     <div class="product-images-col">
       <div class="product-hero-img-frame">
-        <img class="product-main-img" src="images/lifestyle_section/Classic Stack Render 6.png" alt="The Classic Stack" />
+        <img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 1.png" alt="The Classic Stack" />
       </div>
       <div class="product-secondary-images">
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
+        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 2.png" alt="The Classic Stack, disassembled into its stacking pods" /></div>
+        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 3.png" alt="The Classic Stack, angled product view" /></div>
+        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 4.png" alt="The Classic Stack, close-up on the lid" /></div>
+        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 5.png" alt="The Classic Stack, held in hand" /></div>
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <!-- 1. Title + price -->
-      <div class="product-title-row">
-        <h1 class="product-page-title">Classic Stack</h1>
-        <span class="product-title-price">$54 <span class="bc-price-strike">$69</span></span>
+      <!-- 1. Title -->
+      <h1 class="product-page-title">Classic Stack</h1>
+
+      <div class="product-reviews-bar">
+        <div class="product-reviews-stars">
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <span class="product-reviews-count">4,728 Reviews</span>
       </div>
 
       <!-- 2. Finish name -->
       <p class="bc-finish">Matte Black</p>
 
+      <!-- 3. Price -->
+      <p class="product-title-price">$54 <span class="bc-price-strike">$69</span></p>
+
       <!-- 4. Description -->
       <p class="product-page-tagline">One system for small pills, large capsules, and powders. Includes stainless steel travel scooper.</p>
+
+      <!-- 7. Primary button — the only filled button in this column -->
+      <button class="product-btn-add">ADD TO CART</button>
 
       <!-- 10. Three accordions -->
       <div class="product-info-sections">
@@ -338,9 +371,6 @@
         </div>
       </div>
 
-      <!-- 7. Primary button — the only filled button in this column -->
-      <button class="product-btn-add">ADD TO CART</button>
-
       <!-- 8. Guarantee line -->
       <div class="bc-guarantees">
         <span class="bc-guarantee-item">Lifetime guarantee</span>
@@ -356,8 +386,8 @@
         <div class="offer-item">
           <div class="offer-item-img"><img src="images/lifestyle_section/Build Your System.png" alt="" /></div>
           <div class="offer-item-info">
-            <p class="offer-item-name">need a bigger stack?</p>
-            <p class="offer-item-price">add pods, pay less</p>
+            <p class="offer-item-name">Extra Pods</p>
+            <p class="offer-item-price">Stack more, pay less per pod.</p>
           </div>
           <a href="./build-your-system.html?stack=classic-stack" class="bc-offer-arrow" aria-label="Build your system">&rarr;</a>
         </div>
@@ -365,8 +395,9 @@
           <div class="offer-item-img"><img src="images/lifestyle_section/Scooper.png" alt="Pilr Travel Scooper" /></div>
           <div class="offer-item-info">
             <p class="offer-item-name">Powder Scooper</p>
-            <p class="offer-item-price">$11 &middot; stainless steel</p>
+            <p class="offer-item-price">Custom stainless steel scooper built to travel with your powders.</p>
           </div>
+          <span class="bc-offer-price">$11</span>
           <button class="offer-item-add">Add</button>
         </div>
       </div>
