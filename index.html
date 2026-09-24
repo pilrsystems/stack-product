@@ -136,33 +136,39 @@
     </div>
   </section>
 
-  <!-- UPGRADE SECTION -->
-  <section id="upgrade" class="upgrade">
-    <div class="upgrade-inner">
-      <div class="upgrade-left">
-        <h2>Your routine, intact.</h2>
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="how-inner">
+      <div class="how-left">
+        <p class="how-eyebrow">How it works</p>
+        <h2 class="how-title">One simple system.</h2>
+        <div class="how-step how-step--first">
+          <div class="how-step-bar"></div>
+          <div class="how-step-body">
+            <div class="how-step-head"><span class="how-step-num">01</span><h3 class="how-step-title">Pack</h3></div>
+            <p class="how-step-desc">Load each pod with your pills and powders.</p>
+          </div>
+        </div>
+        <div class="how-step how-step--second">
+          <div class="how-step-bar"></div>
+          <div class="how-step-body">
+            <div class="how-step-head"><span class="how-step-num">02</span><h3 class="how-step-title">Stack</h3></div>
+            <p class="how-step-desc">Twist all your pods together into one system.</p>
+          </div>
+        </div>
+        <div class="how-step how-step--third">
+          <div class="how-step-bar"></div>
+          <div class="how-step-body">
+            <div class="how-step-head"><span class="how-step-num">03</span><h3 class="how-step-title">Go</h3></div>
+            <p class="how-step-desc">Thats it.</p>
+          </div>
+        </div>
       </div>
-      <div class="upgrade-right">
-        <div class="upgrade-item">
-          <div class="upgrade-bar"></div>
-          <div class="upgrade-text">
-            <h3>Under the TSA powder limit</h3>
-            <p>every pod holds under 180.6 ml, against a 350 ml carry-on powder threshold. not a workaround — a dimension.</p>
-          </div>
-        </div>
-        <div class="upgrade-item">
-          <div class="upgrade-bar"></div>
-          <div class="upgrade-text">
-            <h3>Modular</h3>
-            <p>stack as many pods as you need — mix and match to build a system that fits your routine.</p>
-          </div>
-        </div>
-        <div class="upgrade-item">
-          <div class="upgrade-bar"></div>
-          <div class="upgrade-text">
-            <h3>BPA free</h3>
-            <p>built from eastman tritan™ tx1001. bpa-free and dishwasher safe.</p>
-          </div>
+      <div class="how-right">
+        <div class="how-photo" id="how-photo">
+          <img class="how-photo-slide is-active" src="images/lifestyle_section/How It Works Photo 1.png" alt="Classic Stack held in hand" />
+          <img class="how-photo-slide" src="images/lifestyle_section/How It Works Photo 2.png" alt="Classic Stack packed into a travel bag" />
+          <img class="how-photo-slide" src="images/lifestyle_section/How It Works Photo 3.png" alt="Classic Stack next to store-bought supplement bottles" />
         </div>
       </div>
     </div>
@@ -213,6 +219,21 @@
     </div>
   </section>
 
+  <!-- MOVES SECTION — rotating lifestyle photo, placeholder placement
+       under "What we make, and why" for now. -->
+  <section class="moves-section">
+    <div class="moves-viewport">
+      <div class="moves-frame" id="moves-frame">
+        <img class="moves-slide is-active" src="images/lifestyle_section/Airport Pic HQ 1.jpg" alt="" />
+        <img class="moves-slide" src="images/lifestyle_section/Packed Suitcase.jpg" alt="" />
+        <img class="moves-slide" src="images/lifestyle_section/Backpack Pocket Pic.png" alt="" />
+        <img class="moves-slide" src="images/lifestyle_section/About Film Pic.JPG" alt="" />
+        <div class="moves-overlay"></div>
+        <p class="moves-caption">Built for the way you actually move.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- PILR DIFFERENCE BANNER -->
   <section class="pilr-diff">
     <div class="pilr-diff-inner">
@@ -234,7 +255,7 @@
         <div class="pilr-diff-feat-item">
           <img class="pilr-diff-icon" src="images/Modular_Design_section/BPA Free Icon.png" alt="" />
           <div class="pilr-diff-text">
-            <p class="pilr-diff-label">100% BPA-free</p>
+            <p class="pilr-diff-label"><span class="pilr-diff-label-num">100</span>% BPA-free</p>
             <p class="pilr-diff-sublabel">built with clean materials</p>
           </div>
         </div>
@@ -366,7 +387,6 @@
     </div>
     </div>
   </section>
-
 
   <!-- FEATURES BAR -->
   <!-- FOOTER TOP (dark) -->
@@ -722,6 +742,22 @@
         card.classList.toggle('is-revealed');
       });
     });
+  </script>
+  <script>
+    (function() {
+      function rotate(containerId, slideClass, intervalMs) {
+        var slides = document.querySelectorAll('#' + containerId + ' .' + slideClass);
+        if (slides.length < 2) return;
+        var current = 0;
+        setInterval(function() {
+          slides[current].classList.remove('is-active');
+          current = (current + 1) % slides.length;
+          slides[current].classList.add('is-active');
+        }, intervalMs);
+      }
+      rotate('moves-frame', 'moves-slide', 4000);
+      rotate('how-photo', 'how-photo-slide', 3000);
+    })();
   </script>
 </body>
 </html>
