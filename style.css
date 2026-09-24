@@ -1253,6 +1253,110 @@ body {
   transition: opacity 0.3s ease;
 }
 
+/* ── CAPACITY SECTION (copy) overrides ──────
+   Scoped to #capacity-2 only, so edits here never touch the original
+   #capacity section above it. */
+#capacity-2 .capacity-card {
+  background: transparent;
+}
+
+/* Bottom-align the pods instead of centering them — the three pod
+   images differ in height, so a centered object-fit leaves their
+   bottoms at different heights. Anchoring to bottom gives every pod
+   the same baseline regardless of its own height. */
+#capacity-2 .capacity-card img {
+  object-position: bottom;
+  /* Slightly more padding than the original's 2.5rem shrinks what
+     object-fit:contain renders, a bit smaller across all three pods
+     equally — their relative sizes (and the Powder Pod's extra scale,
+     applied on top) stay the same. */
+  padding: 2.85rem;
+}
+
+/* Shorter card box than the original's 3/4 — with the background
+   rectangle gone and the pod bottom-anchored, the original tall box
+   left a lot of visible blank space above each pod. Square (not
+   landscape) keeps the pod's own width still the limiting dimension
+   for object-fit:contain, same as the original box did, so the pod
+   renders at the same size — just with the excess vertical room
+   trimmed off instead of shrinking the image itself. */
+#capacity-2 .capacity-card {
+  aspect-ratio: 1 / 1;
+}
+
+/* The white "01 Powders" label was designed to sit on the blue
+   background rectangle; with that gone (transparent card) it's nearly
+   invisible against the page. Hide it — the same title still shows in
+   the hover overlay. */
+#capacity-2 .capacity-card-label {
+  display: none;
+}
+
+/* The Powder Pod photo is portrait (taller than wide), so in a square
+   box it hits the height limit before using the full width like the
+   other two (near-square) pods do — rendering visibly smaller.
+   Scale it up to match, anchored to the bottom so it keeps the same
+   baseline as Big pills / Small pills. */
+#capacity-2 img[alt="Powders"] {
+  transform: scale(1.15);
+  transform-origin: bottom center;
+}
+
+/* The Pill Pod photo has a hair more transparent padding baked into
+   the bottom of the image itself than the other two, so object-fit's
+   bottom-anchoring doesn't land it on quite the same visual baseline.
+   Nudge it down slightly to compensate. */
+#capacity-2 img[alt="Small pills"] {
+  transform: translateY(6px);
+}
+
+/* Push the whole card row down slightly for a bit more breathing room
+   under the heading — moves all three pods together, so their sizes
+   and relative bottom-alignment stay exactly as they are. */
+#capacity-2 .capacity-cards {
+  margin-top: 4rem;
+}
+
+/* Caption under each card, outside the button so it isn't part of the
+   hover/click reveal — same slate color and weight as the section
+   heading, just smaller. Negative margin pulls it up into the card's
+   own bottom padding (empty space left by object-fit:contain), without
+   touching the image's own padding/position/size at all. */
+#capacity-2 .capacity-card-caption {
+  margin-top: -2.8rem;
+  text-align: center;
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: #5e6e7a;
+}
+
+/* The hover-overlay title and ingredient list were white, designed to
+   sit on the blue background rectangle; with that gone they're nearly
+   invisible against the page. Same slate blue used everywhere else in
+   this section. */
+#capacity-2 .capacity-card-title {
+  color: #5e6e7a;
+}
+
+#capacity-2 .capacity-card-overlay .why-accordion-rows li {
+  color: rgba(94, 110, 122, 0.88);
+  font-size: 0.81rem;
+}
+
+/* Center the overlay content horizontally — the base .capacity-card
+   is text-align:left and the overlay is a plain flex column, so the
+   title and ingredient list default to full-width/left-aligned. */
+#capacity-2 .capacity-card-overlay {
+  align-items: center;
+  text-align: center;
+}
+
+#capacity-2 .capacity-card-title {
+  justify-content: center;
+  transform: translateX(-10px);
+  font-size: 1.1rem;
+}
+
 .capacity-card:hover img,
 .capacity-card.is-revealed img {
   opacity: 0.12;
@@ -1829,8 +1933,13 @@ body {
 }
 
 /* ── FOOTER TOP (dark) ────────────────────── */
+/* Solid, not translucent rgba(77,96,112,.7) — that value only composites
+   consistently when the exact same thing sits behind it everywhere it's
+   used; solid guarantees .footer-top and .site-footer always match,
+   regardless of context. Same hex the rgba used, at its blended value
+   over the page background (#FAFAF8), so the look is unchanged. */
 .footer-top {
-  background: rgba(77, 96, 112, 0.7);
+  background: #818E99;
   padding: 3rem 3rem 2.5rem;
   color: #FFFFFF;
 }
@@ -1940,8 +2049,9 @@ body {
 .footer-col ul a:hover { color: #FFFFFF; }
 
 /* ── SITE FOOTER ──────────────────────────── */
+/* Solid — matches .footer-top's color exactly. See note above. */
 .site-footer {
-  background: rgba(77, 96, 112, 0.7);
+  background: #818E99;
 }
 
 .site-footer-social-row {
