@@ -2238,6 +2238,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   height: 100%;
   object-fit: cover;
   display: block;
+  /* Matches the card's own radius — without this, Chrome can render a
+     thin seam line through a transformed (scaled/shifted) image, the
+     same rendering quirk fixed on the Explore Routine cards. */
+  border-radius: var(--radius);
 }
 
 .blog-card-img img[src*="Airport Asset"] {
@@ -2245,11 +2249,11 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .blog-card-img img[src*="Gym Back Card"] {
-  transform: scale(1.2) translateY(-40px);
+  transform: scale(1.2) translateY(-57px);
 }
 
 .blog-card-img img[src*="TSA Bin Bottom"] {
-  transform: scale(1.1) translateY(20px);
+  transform: scale(1.1) translateY(-45px);
 }
 
 .blog-card-img img[src*="Build Your Own System"] {
@@ -2265,21 +2269,21 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 1.1rem 1.25rem 1.25rem;
+  padding: 0.9rem 1.25rem 1.1rem;
   /* Frosted-glass effect — the photo is still visible underneath,
      just heavily blurred, so the title/button stay legible over any
      photo without hiding the image behind a flat panel. */
   background: rgba(20, 20, 20, 0.32);
-  backdrop-filter: blur(20px) saturate(1.15);
-  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
 }
 
 .blog-card-title {
-  font-size: 1.35rem;
-  font-weight: 600;
+  font-size: 1.45rem;
+  font-weight: 550;
   color: #FFFFFF;
   line-height: 1.3;
-  margin-bottom: 2.1rem;
+  margin-bottom: 1.6rem;
 }
 
 .blog-card-btn {
@@ -2289,20 +2293,26 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   width: 100%;
   gap: 0.4rem;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 999px;
+  border-radius: var(--radius);
   padding: 0.65rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
   color: #FFFFFF;
   background: transparent;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .blog-card-btn-arrow {
   transition: transform 0.2s ease;
 }
 
-.blog-card:hover .blog-card-btn-arrow {
+.blog-card-btn:hover .blog-card-btn-arrow {
   transform: translateX(3px);
+}
+
+.blog-card-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .blog-carousel-nav {

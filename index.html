@@ -278,77 +278,51 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section class="how-section">
-    <div class="how-inner">
-      <div class="how-left">
-        <p class="how-eyebrow">How it works</p>
-        <h2 class="how-word" id="how-word">Pack</h2>
-        <div class="how-step-line">
-          <span class="how-step-num" id="how-step-num">01</span>
-          <p class="how-step-desc" id="how-step-desc">Load each pod with your pills and powders.</p>
-        </div>
-      </div>
-      <div class="how-right">
-        <div class="how-photo" id="how-photo">
-          <img class="how-photo-slide is-active" data-step="0" src="images/lifestyle_section/How It Works - Pack.png" alt="Pack" />
-          <img class="how-photo-slide" data-step="1" src="images/lifestyle_section/How It Works - Stack.png" alt="Stack" />
-          <img class="how-photo-slide" data-step="2" src="images/lifestyle_section/How It Works - Go.png" alt="Go" />
-          <div class="how-dots" id="how-dots">
-            <button type="button" class="how-dot is-active" data-step="0" aria-label="Step 1: Pack"></button>
-            <button type="button" class="how-dot" data-step="1" aria-label="Step 2: Stack"></button>
-            <button type="button" class="how-dot" data-step="2" aria-label="Step 3: Go"></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- BLOG SECTION — horizontal scrolling card carousel, styled after
        a reference layout. Cards are placeholders (blank image boxes,
        generic copy) until real blog content is ready. -->
   <section class="blog-section">
     <div class="blog-section-inner">
       <div class="blog-section-header">
-        <h2 class="blog-section-title">From the blog</h2>
+        <h2 class="blog-section-title">Explore pilr</h2>
       </div>
       <div class="blog-carousel-wrap">
         <div class="blog-carousel" id="blog-carousel">
-          <a href="#" class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Build Your Own System.JPG" alt="" /></div>
+          <div class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/TSA Bin Bottom.jpg" alt="" /></div>
             <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Post title goes here</h3>
-              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+              <h3 class="blog-card-title">Carry-on Ready</h3>
+              <a href="./classic-stack.html" class="blog-card-btn">Shop The Classic Stack <span class="blog-card-btn-arrow">→</span></a>
             </div>
-          </a>
-          <a href="#" class="blog-card">
+          </div>
+          <div class="blog-card">
             <div class="blog-card-img"><img src="images/lifestyle_section/Gym Back Card.JPG" alt="" /></div>
             <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Post title goes here</h3>
-              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+              <h3 class="blog-card-title">Always With You</h3>
+              <a href="./catalog.html#section-single-pods" class="blog-card-btn">Shop All Pods <span class="blog-card-btn-arrow">→</span></a>
             </div>
-          </a>
-          <a href="#" class="blog-card">
+          </div>
+          <div class="blog-card">
             <div class="blog-card-img"><img src="images/lifestyle_section/Graduation Pic.jpg" alt="" /></div>
             <div class="blog-card-overlay">
               <h3 class="blog-card-title">Behind The Brand</h3>
-              <span class="blog-card-btn">Meet The Founders <span class="blog-card-btn-arrow">→</span></span>
+              <a href="#" class="blog-card-btn">Meet The Founders <span class="blog-card-btn-arrow">→</span></a>
             </div>
-          </a>
-          <a href="#" class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/TSA Bin Bottom.jpg" alt="" /></div>
+          </div>
+          <div class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/Build Your Own System.JPG" alt="" /></div>
             <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Post title goes here</h3>
-              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+              <h3 class="blog-card-title">The Routine Problem</h3>
+              <a href="./why-pilr.html" class="blog-card-btn">Why pilr <span class="blog-card-btn-arrow">→</span></a>
             </div>
-          </a>
-          <a href="#" class="blog-card">
+          </div>
+          <div class="blog-card">
             <div class="blog-card-img"><img src="images/lifestyle_section/Airport Asset.png" alt="" /></div>
             <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Post title goes here</h3>
-              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+              <h3 class="blog-card-title">How It Works</h3>
+              <a href="./faq.html" class="blog-card-btn">FAQs <span class="blog-card-btn-arrow">→</span></a>
             </div>
-          </a>
+          </div>
         </div>
         <div class="blog-carousel-nav">
           <button class="blog-carousel-arrow blog-carousel-arrow--prev" aria-label="Previous post">‹</button>
@@ -706,61 +680,6 @@
         btn.nextElementSibling.classList.toggle('is-open', !expanded);
       });
     });
-  </script>
-  <script>
-    (function() {
-      var steps = [
-        { word: 'Pack', num: '01', desc: 'Load each pod with your pills and powders.' },
-        { word: 'Stack', num: '02', desc: 'Twist all your pods together into one system.' },
-        { word: 'Go', num: '03', desc: "That's it." }
-      ];
-      var section = document.querySelector('.how-section');
-      if (!section) return;
-      var wordEl = document.getElementById('how-word');
-      var numEl = document.getElementById('how-step-num');
-      var descEl = document.getElementById('how-step-desc');
-      var slides = document.querySelectorAll('#how-photo .how-photo-slide');
-      var dots = document.querySelectorAll('#how-dots .how-dot');
-      var current = 0;
-      var timer = null;
-
-      function show(index) {
-        current = index;
-        var step = steps[current];
-        wordEl.textContent = step.word;
-        numEl.textContent = step.num;
-        descEl.textContent = step.desc;
-        slides.forEach(function(slide) {
-          slide.classList.toggle('is-active', slide.getAttribute('data-step') === String(current));
-        });
-        dots.forEach(function(dot) {
-          dot.classList.toggle('is-active', dot.getAttribute('data-step') === String(current));
-        });
-      }
-
-      function next() { show((current + 1) % steps.length); }
-
-      function start() {
-        stop();
-        timer = setInterval(next, 3000);
-      }
-      function stop() {
-        if (timer) { clearInterval(timer); timer = null; }
-      }
-
-      dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-          show(Number(dot.getAttribute('data-step')));
-          start();
-        });
-      });
-
-      section.addEventListener('mouseenter', stop);
-      section.addEventListener('mouseleave', start);
-
-      show(0);
-      start();
-    })();
   </script>
   <script>
     (function() {
