@@ -189,7 +189,7 @@
       <h2 class="explore-routine-title">Built around your routine</h2>
       <div class="explore-routine-grid">
         <a href="./catalog.html#section-single-pods" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/Gym Bag.JPG" alt="Individual pods" /></div>
+          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 11.jpg" alt="Individual pods" /></div>
           <div class="explore-routine-caption">
             <span>Individual pods</span>
             <span class="explore-routine-arrow">→</span>
@@ -203,7 +203,7 @@
           </div>
         </a>
         <a href="./build-your-system.html" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/Suitcase Lifestyle.png" alt="Build your own" /></div>
+          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 7.jpg" alt="Build your own" /></div>
           <div class="explore-routine-caption">
             <span>Build your own</span>
             <span class="explore-routine-arrow">→</span>
@@ -283,34 +283,22 @@
     <div class="how-inner">
       <div class="how-left">
         <p class="how-eyebrow">How it works</p>
-        <h2 class="how-title">One simple system.</h2>
-        <div class="how-step how-step--first">
-          <div class="how-step-bar"></div>
-          <div class="how-step-body">
-            <div class="how-step-head"><span class="how-step-num">01</span><h3 class="how-step-title">Pack</h3></div>
-            <p class="how-step-desc">Load each pod with your pills and powders.</p>
-          </div>
-        </div>
-        <div class="how-step how-step--second">
-          <div class="how-step-bar"></div>
-          <div class="how-step-body">
-            <div class="how-step-head"><span class="how-step-num">02</span><h3 class="how-step-title">Stack</h3></div>
-            <p class="how-step-desc">Twist all your pods together into one system.</p>
-          </div>
-        </div>
-        <div class="how-step how-step--third">
-          <div class="how-step-bar"></div>
-          <div class="how-step-body">
-            <div class="how-step-head"><span class="how-step-num">03</span><h3 class="how-step-title">Go</h3></div>
-            <p class="how-step-desc">Thats it.</p>
-          </div>
+        <h2 class="how-word" id="how-word">Pack</h2>
+        <div class="how-step-line">
+          <span class="how-step-num" id="how-step-num">01</span>
+          <p class="how-step-desc" id="how-step-desc">Load each pod with your pills and powders.</p>
         </div>
       </div>
       <div class="how-right">
         <div class="how-photo" id="how-photo">
-          <img class="how-photo-slide is-active" src="images/lifestyle_section/How It Works Photo 1.png" alt="Classic Stack held in hand" />
-          <img class="how-photo-slide" src="images/lifestyle_section/How It Works Photo 2.png" alt="Classic Stack packed into a travel bag" />
-          <img class="how-photo-slide" src="images/lifestyle_section/How It Works Photo 3.png" alt="Classic Stack next to store-bought supplement bottles" />
+          <img class="how-photo-slide is-active" data-step="0" src="images/lifestyle_section/How It Works - Pack.png" alt="Pack" />
+          <img class="how-photo-slide" data-step="1" src="images/lifestyle_section/How It Works - Stack.png" alt="Stack" />
+          <img class="how-photo-slide" data-step="2" src="images/lifestyle_section/How It Works - Go.png" alt="Go" />
+          <div class="how-dots" id="how-dots">
+            <button type="button" class="how-dot is-active" data-step="0" aria-label="Step 1: Pack"></button>
+            <button type="button" class="how-dot" data-step="1" aria-label="Step 2: Stack"></button>
+            <button type="button" class="how-dot" data-step="2" aria-label="Step 3: Go"></button>
+          </div>
         </div>
       </div>
     </div>
@@ -667,17 +655,57 @@
   </script>
   <script>
     (function() {
-      function rotate(containerId, slideClass, intervalMs) {
-        var slides = document.querySelectorAll('#' + containerId + ' .' + slideClass);
-        if (slides.length < 2) return;
-        var current = 0;
-        setInterval(function() {
-          slides[current].classList.remove('is-active');
-          current = (current + 1) % slides.length;
-          slides[current].classList.add('is-active');
-        }, intervalMs);
+      var steps = [
+        { word: 'Pack', num: '01', desc: 'Load each pod with your pills and powders.' },
+        { word: 'Stack', num: '02', desc: 'Twist all your pods together into one system.' },
+        { word: 'Go', num: '03', desc: "That's it." }
+      ];
+      var section = document.querySelector('.how-section');
+      if (!section) return;
+      var wordEl = document.getElementById('how-word');
+      var numEl = document.getElementById('how-step-num');
+      var descEl = document.getElementById('how-step-desc');
+      var slides = document.querySelectorAll('#how-photo .how-photo-slide');
+      var dots = document.querySelectorAll('#how-dots .how-dot');
+      var current = 0;
+      var timer = null;
+
+      function show(index) {
+        current = index;
+        var step = steps[current];
+        wordEl.textContent = step.word;
+        numEl.textContent = step.num;
+        descEl.textContent = step.desc;
+        slides.forEach(function(slide) {
+          slide.classList.toggle('is-active', slide.getAttribute('data-step') === String(current));
+        });
+        dots.forEach(function(dot) {
+          dot.classList.toggle('is-active', dot.getAttribute('data-step') === String(current));
+        });
       }
-      rotate('how-photo', 'how-photo-slide', 3000);
+
+      function next() { show((current + 1) % steps.length); }
+
+      function start() {
+        stop();
+        timer = setInterval(next, 3000);
+      }
+      function stop() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          show(Number(dot.getAttribute('data-step')));
+          start();
+        });
+      });
+
+      section.addEventListener('mouseenter', stop);
+      section.addEventListener('mouseleave', start);
+
+      show(0);
+      start();
     })();
   </script>
 </body>
