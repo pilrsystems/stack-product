@@ -97,6 +97,20 @@
       opacity: 0.7;
     }
     .ea-legal a { color: inherit; text-decoration: underline; }
+    .ea-sms-consent {
+      margin-top: 0.75rem;
+      color: var(--text);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    .ea-sms-consent a { color: var(--text); text-decoration: underline; }
+    .ea-phone-error {
+      margin: 0.5rem 0;
+      color: #ffb4a8;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
 
     /* Phone step */
     .ea-phone-sub {
@@ -572,9 +586,10 @@
     overlay.addEventListener('click', closeMenu)
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
 
-    function logConsent(value, source) {
+    function logConsent(value, source, phone = null) {
       const record = {
         email: value,
+        ...(phone ? { phone } : {}),
         consent_given: true,
         timestamp: new Date().toISOString(),
         page_url: window.location.href,
@@ -582,14 +597,18 @@
         terms_version: '2026-03-24',
         source,
       }
-      const existing = JSON.parse(localStorage.getItem('pilr_consent_log') || '[]')
-      existing.push(record)
-      localStorage.setItem('pilr_consent_log', JSON.stringify(existing))
+      try {
+        const existing = JSON.parse(localStorage.getItem('pilr_consent_log') || '[]')
+        existing.push(record)
+        localStorage.setItem('pilr_consent_log', JSON.stringify(existing))
+      } catch (err) {
+        console.warn('[Consent] local log unavailable:', err)
+      }
     }
 
     const eaStep = document.getElementById('ea-step')
 
-    function showPhoneStep() {
+    function showPhoneStep(email) {
       eaStep.innerHTML = `
         <p class="ea-phone-sub">Add your number to be first to know when we launch — plus get a <strong>FREE custom stainless steel scooper</strong> with your first order.</p>
         <form id="ea-phone-form">
@@ -609,7 +628,8 @@
             <button type="submit" class="btn">Text me</button>
           </div>
         </form>
-        <p class="ea-legal" style="margin-top:0.75rem">Agree to recurring marketing texts from Pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
+        <p class="ea-phone-error" id="ea-phone-error" role="alert" aria-live="polite"></p>
+        <p class="ea-sms-consent">By clicking TEXT ME, you agree to receive recurring automated marketing texts from Pilr. Not a condition of purchase. Msg frequency varies. Msg &amp; data rates may apply. Reply HELP for help, STOP to cancel. <a href="https://pilr.myklpages.com/p/mobile-terms-of-service" target="_blank" rel="noopener noreferrer">Terms</a> &amp; <a href="https://pilrsystems.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy</a>.</p>
       `
       document.getElementById('ea-phone-form').addEventListener('submit', async e => {
         e.preventDefault()
@@ -617,15 +637,19 @@
         const rawNumber   = e.target.querySelector('input[type="tel"]').value.trim()
         const phone       = countryCode + rawNumber
         const btn         = e.target.querySelector('button[type="submit"]')
+        const error       = document.getElementById('ea-phone-error')
         btn.disabled = true
         btn.textContent = 'Saving…'
-        logConsent(phone, 'early_access_page_phone')
         try {
-          await window.subscribePhoneToKlaviyo(phone)
+          await window.subscribePhoneToKlaviyo(phone, email, 'RSVKC7', 'Early Access Page')
+          logConsent(email, 'early_access_page_phone', phone)
+          eaStep.innerHTML = '<p class="ea-success">You\'re on the list. Talk soon.</p>'
         } catch (err) {
           console.warn('[Klaviyo] phone subscribe error:', err)
+          error.textContent = 'We couldn\'t save your number. Please check it and try again.'
+          btn.disabled = false
+          btn.textContent = 'Text me'
         }
-        eaStep.innerHTML = '<p class="ea-success">You\'re on the list. Talk soon.</p>'
       })
     }
 
@@ -646,7 +670,7 @@
       }
       window._learnq = window._learnq || []
       window._learnq.push(['identify', { '$email': email }])
-      showPhoneStep()
+      showPhoneStep(email)
     })
 
     document.getElementById('ea-cta-form').addEventListener('submit', async e => {

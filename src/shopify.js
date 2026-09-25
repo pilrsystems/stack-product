@@ -303,7 +303,7 @@ async function klaviyoPost(body) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'revision': '2023-12-15',
+      'revision': '2026-07-15',
     },
     body: JSON.stringify(body),
   });
@@ -330,24 +330,35 @@ export async function subscribeEmailToKlaviyo(email) {
   });
 }
 
-export async function subscribePhoneToKlaviyo(rawPhone) {
-  // Strip everything to digits, prepend + for E.164
-  const phone = '+' + rawPhone.replace(/\D/g, '');
+export async function subscribePhoneToKlaviyo(rawPhone, email, listId = KLAVIYO_SMS_LIST, customSource = 'SMS Popup') {
+  const phoneDigits = rawPhone.replace(/\D/g, '');
+  if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+    throw new Error('Phone number must be in E.164 format.');
+  }
+  const phone = `+${phoneDigits}`;
 
   await klaviyoPost({
     data: {
       type: 'subscription',
       attributes: {
-        custom_source: 'SMS Popup',
+        custom_source: customSource,
         profile: {
           data: {
             type: 'profile',
-            attributes: { phone_number: phone },
+            attributes: {
+              ...(email ? { email } : {}),
+              phone_number: phone,
+              subscriptions: {
+                sms: {
+                  marketing: { consent: 'SUBSCRIBED' },
+                },
+              },
+            },
           },
         },
       },
       relationships: {
-        list: { data: { type: 'list', id: KLAVIYO_SMS_LIST } },
+        list: { data: { type: 'list', id: listId } },
       },
     },
   });
