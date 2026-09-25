@@ -99,12 +99,13 @@
     .ea-legal a { color: inherit; text-decoration: underline; }
     .ea-sms-consent {
       margin-top: 0.75rem;
-      color: var(--text);
+      color: var(--muted);
       font-size: 0.8rem;
       line-height: 1.6;
-      opacity: 0.9;
+      opacity: 0.8;
+      text-align: center;
     }
-    .ea-sms-consent a { color: var(--text); text-decoration: underline; }
+    .ea-sms-consent a { color: inherit; text-decoration: underline; }
     .ea-phone-error {
       margin: 0.5rem 0;
       color: #ffb4a8;
@@ -115,9 +116,14 @@
     /* Phone step */
     .ea-phone-sub {
       font-size: 0.9rem;
-      color: var(--muted);
+      color: var(--text);
       line-height: 1.6;
       margin-bottom: 1.25rem;
+    }
+    .ea-card h1.ea-step-title {
+      font-size: 1.75rem;
+      white-space: normal;
+      text-align: left;
     }
     .ea-phone-row {
       display: flex;
@@ -609,8 +615,12 @@
     const eaStep = document.getElementById('ea-step')
 
     function showPhoneStep(email) {
+      const heading = document.querySelector('.ea-card h1')
+      heading.textContent = 'Step 2 of 2 - Almost There'
+      heading.classList.add('ea-step-title')
+      document.querySelector('.ea-card-sub').remove()
       eaStep.innerHTML = `
-        <p class="ea-phone-sub">Add your number to be first to know when we launch — plus get a <strong>FREE custom stainless steel scooper</strong> with your first order.</p>
+        <p class="ea-phone-sub">FREE stainless steel scooper for your powder pod when you add your phone number!</p>
         <form id="ea-phone-form">
           <div class="ea-phone-row">
             <select aria-label="Country code">
@@ -625,11 +635,11 @@
               <option value="+55">+55</option>
             </select>
             <input type="tel" placeholder="000-000-0000" required />
-            <button type="submit" class="btn">Text me</button>
+            <button type="submit" class="btn">UNLOCK FREE SCOOPER</button>
           </div>
         </form>
         <p class="ea-phone-error" id="ea-phone-error" role="alert" aria-live="polite"></p>
-        <p class="ea-sms-consent">By clicking TEXT ME, you agree to receive recurring automated marketing texts from Pilr. Not a condition of purchase. Msg frequency varies. Msg &amp; data rates may apply. Reply HELP for help, STOP to cancel. <a href="https://pilr.myklpages.com/p/mobile-terms-of-service" target="_blank" rel="noopener noreferrer">Terms</a> &amp; <a href="https://pilrsystems.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy</a>.</p>
+        <p class="ea-sms-consent">By clicking UNLOCK FREE SCOOPER, you agree to receive recurring automated marketing texts from Pilr. Not a condition of purchase. Msg frequency varies. Msg &amp; data rates may apply. Reply HELP for help, STOP to cancel. <a href="https://pilr.myklpages.com/p/mobile-terms-of-service" target="_blank" rel="noopener noreferrer">Terms</a> &amp; <a href="https://pilrsystems.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy</a>.</p>
       `
       document.getElementById('ea-phone-form').addEventListener('submit', async e => {
         e.preventDefault()
@@ -643,12 +653,16 @@
         try {
           await window.subscribePhoneToKlaviyo(phone, email, 'RSVKC7', 'Early Access Page')
           logConsent(email, 'early_access_page_phone', phone)
-          eaStep.innerHTML = '<p class="ea-success">You\'re on the list. Talk soon.</p>'
+          document.querySelector('.ea-phone-sub').textContent = '✅ FREE stainless steel scooper for your powder pod when you add your phone number!'
+          e.target.remove()
+          document.getElementById('ea-phone-error').remove()
+          document.querySelector('.ea-sms-consent').remove()
+          eaStep.insertAdjacentHTML('beforeend', '<p class="ea-success">You\'re on the list. Talk soon.</p>')
         } catch (err) {
           console.warn('[Klaviyo] phone subscribe error:', err)
           error.textContent = 'We couldn\'t save your number. Please check it and try again.'
           btn.disabled = false
-          btn.textContent = 'Text me'
+          btn.textContent = 'UNLOCK FREE SCOOPER'
         }
       })
     }
