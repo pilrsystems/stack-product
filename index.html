@@ -304,6 +304,60 @@
     </div>
   </section>
 
+  <!-- BLOG SECTION — horizontal scrolling card carousel, styled after
+       a reference layout. Cards are placeholders (blank image boxes,
+       generic copy) until real blog content is ready. -->
+  <section class="blog-section">
+    <div class="blog-section-inner">
+      <div class="blog-section-header">
+        <h2 class="blog-section-title">From the blog</h2>
+      </div>
+      <div class="blog-carousel-wrap">
+        <div class="blog-carousel" id="blog-carousel">
+          <a href="#" class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/Build Your Own System.JPG" alt="" /></div>
+            <div class="blog-card-overlay">
+              <h3 class="blog-card-title">Post title goes here</h3>
+              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+            </div>
+          </a>
+          <a href="#" class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/Gym Back Card.JPG" alt="" /></div>
+            <div class="blog-card-overlay">
+              <h3 class="blog-card-title">Post title goes here</h3>
+              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+            </div>
+          </a>
+          <a href="#" class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/Graduation Pic.jpg" alt="" /></div>
+            <div class="blog-card-overlay">
+              <h3 class="blog-card-title">Behind The Brand</h3>
+              <span class="blog-card-btn">Meet The Founders <span class="blog-card-btn-arrow">→</span></span>
+            </div>
+          </a>
+          <a href="#" class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/TSA Bin Bottom.jpg" alt="" /></div>
+            <div class="blog-card-overlay">
+              <h3 class="blog-card-title">Post title goes here</h3>
+              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+            </div>
+          </a>
+          <a href="#" class="blog-card">
+            <div class="blog-card-img"><img src="images/lifestyle_section/Airport Asset.png" alt="" /></div>
+            <div class="blog-card-overlay">
+              <h3 class="blog-card-title">Post title goes here</h3>
+              <span class="blog-card-btn">Read Blog Post <span class="blog-card-btn-arrow">→</span></span>
+            </div>
+          </a>
+        </div>
+        <div class="blog-carousel-nav">
+          <button class="blog-carousel-arrow blog-carousel-arrow--prev" aria-label="Previous post">‹</button>
+          <button class="blog-carousel-arrow blog-carousel-arrow--next" aria-label="Next post">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURES BAR -->
   <!-- FOOTER TOP (dark) -->
   <div class="footer-top">
@@ -706,6 +760,25 @@
 
       show(0);
       start();
+    })();
+  </script>
+  <script>
+    (function() {
+      var track = document.getElementById('blog-carousel');
+      var prev = document.querySelector('.blog-carousel-arrow--prev');
+      var next = document.querySelector('.blog-carousel-arrow--next');
+      if (!track || !prev || !next) return;
+      function step() {
+        var card = track.querySelector('.blog-card');
+        var gap = parseFloat(getComputedStyle(track).gap) || 0;
+        return card ? card.getBoundingClientRect().width + gap : 300;
+      }
+      prev.addEventListener('click', function() {
+        track.scrollBy({ left: -step(), behavior: 'smooth' });
+      });
+      next.addEventListener('click', function() {
+        track.scrollBy({ left: step(), behavior: 'smooth' });
+      });
     })();
   </script>
 </body>
