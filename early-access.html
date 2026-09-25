@@ -653,11 +653,11 @@
         try {
           await window.subscribePhoneToKlaviyo(phone, email, 'RSVKC7', 'Early Access Page')
           logConsent(email, 'early_access_page_phone', phone)
-          document.querySelector('.ea-phone-sub').textContent = '✅ FREE stainless steel scooper for your powder pod when you add your phone number!'
+          heading.textContent = 'You\'re on the list'
+          document.querySelector('.ea-phone-sub').textContent = 'Launching soon!'
           e.target.remove()
           document.getElementById('ea-phone-error').remove()
           document.querySelector('.ea-sms-consent').remove()
-          eaStep.insertAdjacentHTML('beforeend', '<p class="ea-success">You\'re on the list. Talk soon.</p>')
         } catch (err) {
           console.warn('[Klaviyo] phone subscribe error:', err)
           error.textContent = 'We couldn\'t save your number. Please check it and try again.'
