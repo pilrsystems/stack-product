@@ -1136,7 +1136,7 @@ body {
 }
 
 .why-right h2 {
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -1215,12 +1215,12 @@ body {
 }
 
 .explore-routine-inner {
-  max-width: 1160px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
 .explore-routine-title {
-  font-size: clamp(1.7rem, 3.3vw, 2.65rem);
+  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
   font-weight: 500;
   letter-spacing: -0.02em;
   color: #5e6e7a;
@@ -1243,6 +1243,47 @@ body {
   aspect-ratio: 3 / 2;
   background: #EFEDE9;
   border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.explore-routine-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+  /* Matches the parent's radius — without this, Chrome can flash thin
+     seam lines at the rounded top/bottom edges while the clip mask
+     and the scaling image recalculate on different frames during the
+     hover transition. */
+  border-radius: var(--radius);
+}
+
+/* Classic Stack photo needed its own zoom/crop to frame the suitcase
+   and pod — tuned for that image specifically, not a general rule for
+   every card's photo. */
+a[href="./classic-stack.html"] .explore-routine-img img {
+  transform: scale(1.75) translateY(-28px) translateX(52px);
+}
+a[href="./classic-stack.html"]:hover .explore-routine-img img {
+  transform: scale(1.79) translateY(-28px) translateX(52px);
+}
+
+a[href="./build-your-system.html"] .explore-routine-img img {
+  /* Slight scale gives the shift some room to work with — without it,
+     the box's overflow:hidden would just clip a gap at the top instead
+     of revealing more of the photo. */
+  transform: scale(1.12) translateY(10px);
+}
+a[href="./build-your-system.html"]:hover .explore-routine-img img {
+  transform: scale(1.16) translateY(10px);
+}
+
+a[href="./catalog.html#section-single-pods"] .explore-routine-img img {
+  transform: scale(1.2) translateY(-18px);
+}
+a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
+  transform: scale(1.24) translateY(-18px);
 }
 
 .explore-routine-caption {
@@ -1258,10 +1299,14 @@ body {
 .explore-routine-arrow {
   color: #7a8a94;
   transition: transform 0.2s ease;
+  /* The → glyph's own advance width runs past its visual tip, so at
+     rest it reads as overshooting the image's right edge. Pull it in
+     to align, then slide past that on hover same as before. */
+  transform: translateX(-3px);
 }
 
 .explore-routine-card:hover .explore-routine-arrow {
-  transform: translateX(3px);
+  transform: translateX(0px);
 }
 
 @media (max-width: 900px) {
@@ -1275,7 +1320,7 @@ body {
 }
 
 .capacity-inner {
-  max-width: 1160px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -1284,7 +1329,7 @@ body {
 }
 
 .capacity-inner h2 {
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -1326,6 +1371,10 @@ body {
 /* ── CAPACITY SECTION (copy) overrides ──────
    Scoped to #capacity-2 only, so edits here never touch the original
    #capacity section above it. */
+#capacity-2 {
+  padding-top: 2.5rem;
+}
+
 #capacity-2 .capacity-card {
   background: transparent;
 }
