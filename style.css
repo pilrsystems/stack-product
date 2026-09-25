@@ -1074,6 +1074,7 @@ body {
 .how-photo-slide {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; opacity: 0; transition: opacity 1.2s ease;
+  transform: scale(1.08) translateX(-15px);
 }
 .how-photo-slide.is-active { opacity: 1; }
 @media (max-width: 900px) {
@@ -1099,6 +1100,8 @@ body {
 
 .why-left {
   height: 700px;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .why-left img {
@@ -1107,6 +1110,7 @@ body {
   object-fit: cover;
   border-radius: var(--radius);
   display: block;
+  transform: scale(1.1) translateX(-15px);
 }
 
 .why-right {
@@ -1115,6 +1119,11 @@ body {
   /* Vertically centered against .why-left's fixed 700px photo,
      same treatment as .how-left is centered against .how-photo. */
   align-self: center;
+  /* Bleed left into the column gap, widening the box rather than
+     shifting it, so the right edge (and everything's wrap width)
+     stays anchored — only the left starting point moves. */
+  margin-left: -24px;
+  width: calc(100% + 24px);
 }
 
 .why-label {
@@ -1199,6 +1208,67 @@ body {
 .why-inner--reverse .why-left { order: 2; }
 .why-inner--reverse .why-right { order: 1; }
 
+/* ── EXPLORE ROUTINE ──────────────────────── */
+.explore-routine {
+  padding: 4.5rem 3rem 6rem;
+  background: var(--bg);
+}
+
+.explore-routine-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.explore-routine-title {
+  font-size: clamp(1.7rem, 3.3vw, 2.65rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+  margin-bottom: 2.5rem;
+}
+
+.explore-routine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.explore-routine-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.explore-routine-img {
+  aspect-ratio: 3 / 2;
+  background: #EFEDE9;
+  border-radius: var(--radius);
+}
+
+.explore-routine-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #5e6e7a;
+}
+
+.explore-routine-arrow {
+  color: #7a8a94;
+  transition: transform 0.2s ease;
+}
+
+.explore-routine-card:hover .explore-routine-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 900px) {
+  .explore-routine { padding: 4rem 1.5rem; }
+  .explore-routine-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
 .capacity {
   padding: 0 3rem 4rem;
   background: var(--bg);
@@ -1258,6 +1328,14 @@ body {
    #capacity section above it. */
 #capacity-2 .capacity-card {
   background: transparent;
+}
+
+/* Cards are now <a> links (each goes to its product page) instead of
+   <button>s, so reset the default link underline/color it would
+   otherwise pick up. */
+#capacity-2 .capacity-card {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Bottom-align the pods instead of centering them — the three pod
@@ -1325,8 +1403,10 @@ body {
 #capacity-2 .capacity-card-caption {
   margin-top: -2.8rem;
   text-align: center;
-  font-size: 1.22rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 575;
+  letter-spacing: 0.14rem;
+  text-transform: uppercase;
   color: #5e6e7a;
 }
 
