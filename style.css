@@ -1259,21 +1259,29 @@ body {
 /* Classic Stack photo needed its own zoom/crop to frame the suitcase
    and pod — tuned for that image specifically, not a general rule for
    every card's photo. */
+a[href="./classic-stack.html"] .explore-routine-img img {
+  transform: scale(1.85) translateY(-35px) translateX(44px);
+}
 a[href="./classic-stack.html"]:hover .explore-routine-img img {
-  transform: scale(1.04);
+  transform: scale(1.89) translateY(-35px) translateX(44px);
 }
 
+a[href="./build-your-system.html"] .explore-routine-img img {
+  transform: scale(1.55) translateY(-43px);
+}
 a[href="./build-your-system.html"]:hover .explore-routine-img img {
-  transform: scale(1.04);
+  transform: scale(1.59) translateY(-43px);
 }
 
 a[href="./catalog.html#section-single-pods"] .explore-routine-img img {
-  /* Crops out a thin dark vertical edge baked into the source photo's
-     right side. */
-  transform: scale(1.1);
+  /* Small zoom gives the horizontal shift room to work with — the
+     source photo is portrait and the box is landscape, so cover is
+     already cropping top/bottom, with no side slack to shift into
+     otherwise. */
+  transform: scale(1.01) translateX(-4px);
 }
 a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
-  transform: scale(1.14);
+  transform: scale(1.05) translateX(-4px);
 }
 
 .explore-routine-caption {
