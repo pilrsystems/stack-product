@@ -831,7 +831,7 @@ body {
 }
 
 .shop-card-info h3 {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
   color: #5e6e7a;
@@ -851,14 +851,14 @@ body {
 }
 
 .shop-card-info p {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #5e6e7a;
   line-height: 1.5;
   margin-bottom: 0.65rem;
 }
 
 .shop-price {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: #5e6e7a;
 }
@@ -3036,6 +3036,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-filter-bar {
   display: flex;
+  justify-content: center;
   gap: 0.5rem;
   padding: 2rem 0 0;
   flex-wrap: wrap;
@@ -3044,6 +3045,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .catalog-filter-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem 1.1rem;
   border-radius: 0;
@@ -3073,7 +3075,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   width: 12px;
   height: 20px;
   flex-shrink: 0;
-  display: inline-block;
+  display: none;
 }
 
 .catalog-filter-icon *,
@@ -3109,11 +3111,12 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-section-header {
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .catalog-section-title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 1.55rem;
+  font-size: 1.85rem;
   font-weight: 500;
   color: #5e6e7a;
   margin: 0 0 0.4rem;
@@ -3121,7 +3124,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-section-desc {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #7a8a94;
   margin: 0;
   line-height: 1.5;
