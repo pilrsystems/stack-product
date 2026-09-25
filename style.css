@@ -3038,7 +3038,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  padding: 2rem 0 0;
+  padding: 0 0 3rem;
   flex-wrap: wrap;
 }
 
@@ -3138,14 +3138,14 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-hero {
   text-align: center;
-  padding: 12rem 1rem 3rem;
+  padding: 11rem 1rem 3rem;
   max-width: 100%;
   margin: 0 auto;
 }
 
 .catalog-hero-eyebrow {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -3156,12 +3156,12 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-hero-title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 2.9rem;
+  font-size: 3.2rem;
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: #5e6e7a;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
   white-space: nowrap;
   text-align: center;
 }
