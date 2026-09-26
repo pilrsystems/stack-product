@@ -2225,6 +2225,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: block;
   text-decoration: none;
   color: inherit;
+  /* Shrinks the card's own box (so it takes up 5% less layout space)
+     and scales everything inside it proportionally — text, padding,
+     button — in one step, rather than recalculating every value. */
+  zoom: 0.95;
 }
 
 .blog-card-img {
