@@ -202,7 +202,13 @@
       transition: color 0.2s ease;
     }
     #product-info-inner .pod-add-offer-title {
-      font-weight: 700; color: #5e6e7a; transition: color 0.2s ease;
+      font-size: 0.9rem; font-weight: 700; color: #5e6e7a; transition: color 0.2s ease;
+    }
+    /* Pill/Hybrid/Powder row names — matched to .pod-add-offer-title's
+       size (the Classic Stack row) so all four rows read at the same
+       scale. */
+    #product-info-inner .pod-add-row:not(.pod-add-offer-row) .pod-add-row-name {
+      font-size: 0.9rem;
     }
     #product-info-inner .pod-add-offer-sub {
       display: block; font-size: 0.8rem; font-weight: 400; color: #7a8a94; margin-top: 0.15rem;
