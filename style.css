@@ -2614,7 +2614,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-break-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 500;
   color: #46545e;
   line-height: 1.2;
   margin-bottom: 2.5rem;
@@ -2651,7 +2651,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-break-panel {
   display: none;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.9fr 1.15fr;
   gap: 4rem;
   align-items: center;
 }
@@ -2701,12 +2701,31 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-break-panel-list li:last-child { border-bottom: none; }
 
 .wp-break-panel-img {
-  aspect-ratio: 4 / 3.5;
+  aspect-ratio: 3 / 4;
+  max-width: 430px;
+  max-height: 573px;
+  margin: 0 auto;
   background: #E7E6E2;
   border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.wp-break-panel-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.wp-break-panel-img img[src*="Packing Why Pilr"] {
+  transform: scale(1.08);
+}
+
+.wp-break-panel-img img[src*="Transit Why Pilr"] {
+  transform: scale(1.03);
 }
 
 .wp-break-panel-img-placeholder {
@@ -2744,7 +2763,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-system-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 500;
   color: #46545e;
   line-height: 1.2;
   margin-bottom: 3rem;
@@ -2757,6 +2776,16 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   margin-bottom: 3rem;
 }
 
+.wp-system-card {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.wp-system-card:hover {
+  transform: translateY(-3px);
+}
+
 .wp-system-card-img {
   aspect-ratio: 1 / 1.1;
   background: #EAE9E5;
@@ -2765,11 +2794,28 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
+  padding: 1.5rem;
+  overflow: hidden;
+  transition: background 0.2s ease;
 }
 
-.wp-system-card-img span {
-  font-size: 0.85rem;
-  color: #7a8a94;
+.wp-system-card:hover .wp-system-card-img {
+  background: #E0DFDA;
+}
+
+.wp-system-card-img img {
+  transition: transform 0.3s ease;
+}
+
+.wp-system-card:hover .wp-system-card-img img {
+  transform: scale(1.05);
+}
+
+.wp-system-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .wp-system-card-title {
@@ -2816,9 +2862,20 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   color: #5e6e7a;
 }
 
-.wp-system-pairing strong {
+.wp-system-pairing-link {
   color: #46545e;
   font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.wp-system-pairing-link:hover {
+  opacity: 0.65;
+}
+
+.wp-system-pairing strong {
+  color: #46545e;
+  font-weight: 500;
 }
 
 .wp-system-pairing-arrow {
@@ -2843,9 +2900,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 0.8fr 1.6fr;
   gap: 4rem;
-  align-items: start;
+  align-items: center;
 }
 
 .wp-materials-eyebrow {
@@ -2859,7 +2916,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-materials-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 500;
   color: #46545e;
   line-height: 1.2;
   margin-bottom: 1.25rem;
@@ -2869,6 +2926,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-size: 1rem;
   color: #5e6e7a;
   line-height: 1.6;
+  max-width: 400px;
 }
 
 .wp-materials-cards {
@@ -2880,20 +2938,21 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-materials-card {
   background: var(--bg);
   border-radius: var(--radius);
-  padding: 1.25rem;
+  padding: 1rem 1.4rem;
+  text-align: center;
 }
 
 .wp-materials-card-title {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: #46545e;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
 }
 
 .wp-materials-card-def {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #7a8a94;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 @media (max-width: 900px) {
@@ -2922,14 +2981,16 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-comparison-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 500;
   color: #46545e;
   line-height: 1.2;
   margin-bottom: 2.5rem;
 }
 
 .wp-comparison-table-wrap {
-  overflow-x: auto;
+  overflow: hidden;
+  border: 1px solid rgba(66, 85, 99, 0.15);
+  border-radius: var(--radius);
 }
 
 .wp-comparison-table {
@@ -2942,7 +3003,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-size: 0.95rem;
   font-weight: 700;
   color: #46545e;
-  padding: 0 0 0.85rem;
+  padding: 1.1rem 0 0.85rem;
   border-bottom: 2px solid #5e6e7a;
   white-space: nowrap;
 }
@@ -2955,6 +3016,15 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   white-space: nowrap;
 }
 
+.wp-comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.wp-comparison-table th:first-child,
+.wp-comparison-table td:first-child {
+  padding-left: 1.75rem;
+}
+
 .wp-comparison-table td:first-child {
   white-space: normal;
   padding-right: 2rem;
@@ -2962,7 +3032,47 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-comparison-table th:not(:first-child),
 .wp-comparison-table td:not(:first-child) {
-  padding-left: 3rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  text-align: center;
+}
+
+.wp-comparison-table th:last-child,
+.wp-comparison-table td:last-child {
+  padding-right: 1.75rem;
+}
+
+.wp-comparison-table th:nth-child(2),
+.wp-comparison-table td:nth-child(2) {
+  background: #EFEDE9;
+}
+
+.wp-comparison-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.wp-comparison-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #818E99;
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.wp-comparison-check svg {
+  width: 10px;
+  height: 10px;
+}
+
+.wp-comparison-dash {
+  color: #b7c0c7;
 }
 
 .wp-comparison-yes {
@@ -2995,7 +3105,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-faq-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 500;
   color: #46545e;
   line-height: 1.2;
 }
