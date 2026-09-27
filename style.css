@@ -2354,6 +2354,759 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .blog-card { flex-basis: 200px; }
 }
 
+/* ── WHY PILR HERO (new page, in progress) ─── */
+.wp-hero {
+  padding: 9rem 3rem 4rem;
+  background: var(--bg);
+}
+
+.wp-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.wp-hero-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1.5rem;
+}
+
+.wp-hero-headline {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #46545e;
+  margin-bottom: 1.5rem;
+}
+
+.wp-hero-support {
+  font-size: 1.1rem;
+  color: #5e6e7a;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  max-width: 460px;
+}
+
+.wp-hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.wp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.wp-btn--dark {
+  background: #818E99;
+  color: #FFFFFF;
+}
+.wp-btn--dark:hover { opacity: 0.85; }
+
+.wp-btn--outline {
+  background: transparent;
+  border: 1px solid rgba(70, 84, 94, 0.4);
+  color: #46545e;
+}
+.wp-btn--outline:hover { background: rgba(70, 84, 94, 0.06); }
+
+.wp-hero-image {
+  aspect-ratio: 4 / 5;
+  background: #EAE9E5;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wp-hero-image-placeholder {
+  font-size: 0.85rem;
+  color: #7a8a94;
+  text-align: center;
+  line-height: 1.6;
+  padding: 2rem;
+}
+
+@media (max-width: 900px) {
+  .wp-hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+.wp-stats {
+  background: #818E99;
+  padding: 5rem 3rem;
+}
+
+.wp-stats-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.wp-stat {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 1.5rem;
+}
+
+.wp-stat-number {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.wp-stat-number sup {
+  font-size: 0.4em;
+  margin-left: 0.15em;
+}
+
+.wp-stat-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .wp-stats-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+.wp-science {
+  padding: 6rem 3rem;
+  background: var(--bg);
+}
+
+.wp-science-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.wp-science-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1rem;
+}
+
+.wp-science-headline {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 500;
+  color: #46545e;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.wp-science-body {
+  font-size: 1rem;
+  color: #5e6e7a;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.wp-science-tiein {
+  font-size: 1rem;
+  color: #46545e;
+  font-weight: 600;
+}
+
+.wp-science-card {
+  border: 1px solid rgba(66, 85, 99, 0.15);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+
+.wp-science-card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #46545e;
+  margin-bottom: 1.25rem;
+}
+
+.wp-science-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.wp-science-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.wp-science-list-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #46545e;
+  flex-shrink: 0;
+}
+
+.wp-science-list-text {
+  font-size: 0.9rem;
+  color: #5e6e7a;
+  line-height: 1.5;
+}
+
+.wp-science-sources {
+  font-size: 0.85rem;
+  color: #46545e;
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .wp-science-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+.wp-break {
+  padding: 6rem 3rem;
+  background: #F0F0EE;
+}
+
+.wp-break-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wp-break-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1rem;
+}
+
+.wp-break-headline {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #46545e;
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
+}
+
+.wp-break-tabs {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(66, 85, 99, 0.15);
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.wp-break-tab {
+  background: none;
+  border: none;
+  padding: 0 0 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #7a8a94;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s ease;
+}
+
+.wp-break-tab.is-active {
+  color: #46545e;
+  font-weight: 600;
+  border-bottom-color: #46545e;
+}
+
+.wp-break-tab:hover { color: #46545e; }
+
+.wp-break-panel {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.wp-break-panel.is-active { display: grid; }
+
+.wp-break-panel-title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #46545e;
+  margin-bottom: 1rem;
+}
+
+.wp-break-panel-friction {
+  font-size: 1rem;
+  color: #5e6e7a;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.wp-break-panel-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #46545e;
+  margin-bottom: 0.5rem;
+}
+
+.wp-break-panel-list {
+  list-style: none;
+}
+
+.wp-break-panel-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(66, 85, 99, 0.12);
+  font-size: 0.95rem;
+  color: #5e6e7a;
+}
+
+.wp-break-panel-list li:last-child { border-bottom: none; }
+
+.wp-break-panel-img {
+  aspect-ratio: 4 / 3.5;
+  background: #E7E6E2;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wp-break-panel-img-placeholder {
+  font-size: 0.85rem;
+  color: #7a8a94;
+  text-align: center;
+  line-height: 1.6;
+  padding: 2rem;
+}
+
+@media (max-width: 900px) {
+  .wp-break-panel { grid-template-columns: 1fr; }
+  .wp-break-tabs { gap: 1.25rem; }
+}
+
+.wp-system {
+  padding: 6rem 3rem;
+  background: var(--bg);
+}
+
+.wp-system-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wp-system-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1rem;
+}
+
+.wp-system-headline {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #46545e;
+  line-height: 1.2;
+  margin-bottom: 3rem;
+}
+
+.wp-system-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.wp-system-card-img {
+  aspect-ratio: 1 / 1.1;
+  background: #EAE9E5;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.wp-system-card-img span {
+  font-size: 0.85rem;
+  color: #7a8a94;
+}
+
+.wp-system-card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #46545e;
+  margin-bottom: 0.5rem;
+}
+
+.wp-system-card-spec {
+  font-size: 0.9rem;
+  color: #5e6e7a;
+  margin-bottom: 0.35rem;
+}
+
+.wp-system-card-built {
+  font-size: 0.9rem;
+  color: #5e6e7a;
+}
+
+.wp-system-pairings {
+  border: 1px solid rgba(66, 85, 99, 0.15);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+}
+
+.wp-system-pairings-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #46545e;
+  margin-bottom: 1.25rem;
+}
+
+.wp-system-pairings-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+}
+
+.wp-system-pairing {
+  font-size: 0.95rem;
+  color: #5e6e7a;
+}
+
+.wp-system-pairing strong {
+  color: #46545e;
+  font-weight: 600;
+}
+
+.wp-system-pairing-arrow {
+  color: #7a8a94;
+  margin: 0 0.25rem;
+}
+
+@media (max-width: 900px) {
+  .wp-system-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .wp-system-grid { grid-template-columns: 1fr; }
+}
+
+.wp-materials {
+  padding: 6rem 3rem;
+  background: #F0F0EE;
+}
+
+.wp-materials-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.wp-materials-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1rem;
+}
+
+.wp-materials-headline {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #46545e;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.wp-materials-body {
+  font-size: 1rem;
+  color: #5e6e7a;
+  line-height: 1.6;
+}
+
+.wp-materials-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.wp-materials-card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.wp-materials-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #46545e;
+  margin-bottom: 0.4rem;
+}
+
+.wp-materials-card-def {
+  font-size: 0.85rem;
+  color: #7a8a94;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .wp-materials-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .wp-materials-cards { grid-template-columns: 1fr; }
+}
+
+.wp-comparison {
+  padding: 6rem 3rem;
+  background: var(--bg);
+}
+
+.wp-comparison-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wp-comparison-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1rem;
+}
+
+.wp-comparison-headline {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #46545e;
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
+}
+
+.wp-comparison-table-wrap {
+  overflow-x: auto;
+}
+
+.wp-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.wp-comparison-table th {
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #46545e;
+  padding: 0 0 0.85rem;
+  border-bottom: 2px solid #5e6e7a;
+  white-space: nowrap;
+}
+
+.wp-comparison-table td {
+  font-size: 0.95rem;
+  color: #5e6e7a;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(66, 85, 99, 0.12);
+  white-space: nowrap;
+}
+
+.wp-comparison-table td:first-child {
+  white-space: normal;
+  padding-right: 2rem;
+}
+
+.wp-comparison-table th:not(:first-child),
+.wp-comparison-table td:not(:first-child) {
+  padding-left: 3rem;
+}
+
+.wp-comparison-yes {
+  color: #46545e;
+  font-weight: 600;
+}
+
+.wp-faq {
+  padding: 6rem 3rem;
+  background: #F0F0EE;
+}
+
+.wp-faq-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.wp-faq-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 1rem;
+}
+
+.wp-faq-headline {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #46545e;
+  line-height: 1.2;
+}
+
+.wp-faq-item {
+  border-bottom: 1px solid rgba(66, 85, 99, 0.15);
+}
+
+.wp-faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1.35rem 0;
+  font-size: 1rem;
+  color: #46545e;
+  text-align: left;
+}
+
+.wp-faq-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: #5e6e7a;
+  transition: transform 0.2s ease;
+}
+
+.wp-faq-item.is-active .wp-faq-icon {
+  transform: rotate(45deg);
+}
+
+.wp-faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.wp-faq-answer p {
+  overflow: hidden;
+  font-size: 0.9rem;
+  color: #5e6e7a;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.wp-faq-item.is-active .wp-faq-answer {
+  grid-template-rows: 1fr;
+}
+
+.wp-faq-item.is-active .wp-faq-answer p {
+  padding-bottom: 1.35rem;
+}
+
+@media (max-width: 900px) {
+  .wp-faq-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.wp-footnotes {
+  padding: 2.5rem 3rem;
+  background: var(--bg);
+}
+
+.wp-footnotes-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wp-footnotes-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+}
+
+.wp-footnotes-chevron {
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.wp-footnotes-toggle.is-active .wp-footnotes-chevron {
+  transform: rotate(180deg);
+}
+
+.wp-footnotes-list {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.wp-footnotes-list.is-active {
+  grid-template-rows: 1fr;
+}
+
+.wp-footnotes-list-inner {
+  overflow: hidden;
+  list-style: none;
+  counter-reset: footnote;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1.75rem;
+  margin: 0;
+}
+
+.wp-footnotes-list-inner li {
+  counter-increment: footnote;
+  font-size: 0.85rem;
+  color: #7a8a94;
+  line-height: 1.5;
+}
+
+.wp-footnotes-list-inner li::before {
+  content: counter(footnote) ". ";
+}
+
 /* ── SITE FOOTER ──────────────────────────── */
 /* Solid — matches .footer-top's color exactly. See note above. */
 .site-footer {

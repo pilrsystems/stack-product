@@ -10,433 +10,6 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
-  <style>
-
-    /* ─────────────────────────────────────────────
-       1. HERO
-    ───────────────────────────────────────────── */
-    .wp-hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 560px;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-    }
-
-    .wp-hero-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .wp-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(30,44,56,0.72) 0%, rgba(30,44,56,0.1) 55%, transparent 100%);
-    }
-
-    .wp-hero-text {
-      position: relative;
-      z-index: 2;
-      padding: 0 6rem 2.5rem;
-      max-width: 1100px;
-    }
-
-    .wp-hero-headline {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(2rem, 3.8vw, 3.4rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: #FAFAF8;
-      margin-bottom: 1.25rem;
-    }
-
-    .wp-hero-sub {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: rgba(250,250,248,0.7);
-    }
-
-    /* ─────────────────────────────────────────────
-       2. HOW IT WORKS
-    ───────────────────────────────────────────── */
-    .wp-how {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 6rem 3rem 4rem;
-      text-align: center;
-    }
-
-    .wp-how-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 1100px;
-      margin-bottom: 3.5rem;
-    }
-
-    .wp-eyebrow {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #5e6e7a;
-      opacity: 0.6;
-      margin-bottom: 1.25rem;
-    }
-
-    .wp-heading {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(1.75rem, 2.8vw, 2.5rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      color: #5e6e7a;
-      margin-bottom: 1.75rem;
-    }
-
-    .wp-body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.85;
-      color: #5e6e7a;
-      opacity: 0.7;
-      max-width: 900px;
-    }
-
-
-    /* ─────────────────────────────────────────────
-       3. PROOF STAT
-    ───────────────────────────────────────────── */
-    .wp-stat {
-      background: #5e6e7a;
-      padding: 7rem 3rem;
-      text-align: center;
-    }
-
-    .wp-stat-number {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(5rem, 14vw, 11rem);
-      font-weight: 200;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      color: #FAFAF8;
-      margin-bottom: 1.5rem;
-    }
-
-    .wp-stat-label {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: rgba(250,250,248,0.65);
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* ─────────────────────────────────────────────
-       4. COMPARISON CHART
-    ───────────────────────────────────────────── */
-    .wp-compare {
-      padding: 7rem 6rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .wp-compare .wp-body {
-      margin-top: 1rem;
-      margin-bottom: 4rem;
-      max-width: 560px;
-    }
-
-    .wp-chart {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .wp-chart-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .wp-chart-label {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #5e6e7a;
-      opacity: 0.6;
-    }
-
-    .wp-chart-bar-wrap {
-      height: 10px;
-      background: rgba(66,85,99,0.1);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .wp-chart-bar {
-      height: 100%;
-      border-radius: var(--radius);
-      background: #5e6e7a;
-      transition: width 1s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .wp-chart-bar--pilr    { width: 92%; background: #5e6e7a; }
-    .wp-chart-bar--bottles { width: 28%; background: rgba(66,85,99,0.25); }
-    .wp-chart-bar--generic { width: 48%; background: rgba(66,85,99,0.25); }
-
-    .wp-chart-axis-label {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.6875rem;
-      color: #5e6e7a;
-      opacity: 0.4;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-top: 1.5rem;
-      text-align: right;
-    }
-
-    /* ─────────────────────────────────────────────
-       5. CREDIBILITY
-    ───────────────────────────────────────────── */
-    .wp-cred {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 60vh;
-      border-top: 1px solid rgba(66,85,99,0.12);
-    }
-
-    .wp-cred-img {
-      overflow: hidden;
-    }
-
-    .wp-cred-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-
-    .wp-cred-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem 6rem 5rem 5rem;
-    }
-
-    /* ─────────────────────────────────────────────
-       6. QUALITY REASSURANCE
-    ───────────────────────────────────────────── */
-    .wp-quality {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 65vh;
-      border-top: 1px solid rgba(66,85,99,0.12);
-    }
-
-    .wp-quality-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem 5rem 5rem 6rem;
-    }
-
-    .wp-quality-img {
-      padding: 2rem 4rem 2rem 0;
-      overflow: hidden;
-    }
-
-    .wp-quality-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      border-radius: var(--radius);
-    }
-
-    /* ─────────────────────────────────────────────
-       7. CTA
-    ───────────────────────────────────────────── */
-    .wp-cta {
-      padding: 7rem 3rem;
-      text-align: center;
-      border-top: 1px solid rgba(66,85,99,0.12);
-    }
-
-    .wp-cta-headline {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
-      font-weight: 300;
-      letter-spacing: -0.025em;
-      color: #5e6e7a;
-      margin-bottom: 0.75rem;
-    }
-
-    .wp-cta-sub {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.9rem;
-      color: #5e6e7a;
-      opacity: 0.6;
-      margin-bottom: 2.5rem;
-    }
-
-    .wp-cta-btn {
-      display: inline-block;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: #FAFAF8;
-      background: #5e6e7a;
-      padding: 1rem 2.5rem;
-      border-radius: var(--radius);
-      transition: background 0.2s;
-    }
-
-    .wp-cta-btn:hover {
-      background: #4a5a67;
-    }
-
-    /* ─────────────────────────────────────────────
-       8. PRODUCT TABLE
-    ───────────────────────────────────────────── */
-    .wp-table-section {
-      padding: 5rem 6rem 7rem;
-      border-top: 1px solid rgba(66,85,99,0.12);
-    }
-
-    .wp-table-section .wp-eyebrow {
-      margin-bottom: 0.75rem;
-    }
-
-    .wp-table-section .wp-heading {
-      margin-bottom: 3rem;
-    }
-
-    .wp-table-wrap {
-      overflow-x: auto;
-    }
-
-    .wp-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-
-    .wp-table th,
-    .wp-table td {
-      text-align: left;
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid rgba(66,85,99,0.1);
-      vertical-align: top;
-    }
-
-    .wp-table thead th {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #5e6e7a;
-      padding-bottom: 1.25rem;
-    }
-
-    .wp-table thead th:first-child {
-      color: transparent;
-    }
-
-    .wp-table tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    .wp-table tbody td:first-child {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #5e6e7a;
-      opacity: 0.55;
-      white-space: nowrap;
-    }
-
-    .wp-table tbody td {
-      font-size: 0.88rem;
-      color: #5e6e7a;
-      opacity: 0.8;
-      line-height: 1.6;
-    }
-
-    /* ─────────────────────────────────────────────
-       RESPONSIVE
-    ───────────────────────────────────────────── */
-    @media (max-width: 700px) {
-      .wp-hero-text {
-        padding: 0 1.5rem 3.5rem;
-      }
-
-      .wp-how {
-        padding: 4rem 1.5rem 3rem;
-      }
-
-      .wp-cred,
-      .wp-quality {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-
-      .wp-cred-text,
-      .wp-quality-text {
-        padding: 3rem 1.5rem;
-        order: 2;
-      }
-
-      .wp-cred-img {
-        order: 1;
-        height: 55vw;
-      }
-
-      .wp-quality-img {
-        order: 1;
-        height: 55vw;
-        padding: 1.5rem 1.5rem 0;
-      }
-
-      .wp-compare {
-        padding: 4rem 1.5rem;
-      }
-
-      .wp-stat {
-        padding: 4rem 1.5rem;
-      }
-
-      .wp-cta {
-        padding: 4rem 1.5rem;
-      }
-
-      .wp-table-section {
-        padding: 3rem 1.5rem 5rem;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -502,147 +75,325 @@
     </div>
   </nav>
 
-  <!-- 1. HERO -->
+  <!-- Page content cleared — being redesigned. Nav and footer kept intact. -->
+
+  <!-- WHY PILR HERO -->
   <section class="wp-hero">
-    <video class="wp-hero-video" autoplay muted loop playsinline>
-      <source src="./images/lifestyle_section/Home Page Video.mp4" type="video/mp4">
-    </video>
-    <div class="wp-hero-overlay"></div>
-    <div class="wp-hero-text">
-      <h1 class="wp-hero-headline">Your routine shouldn't fall apart the moment you leave home.</h1>
-      <p class="wp-hero-sub">One lid. Three pods. A system built to move with you.</p>
-    </div>
-  </section>
-
-  <!-- 2. HOW IT WORKS -->
-  <section class="wp-how">
-    <div class="wp-how-text">
-      <div class="wp-eyebrow">How It Works</div>
-      <h2 class="wp-heading">Three pods. One system.</h2>
-      <p class="wp-body">Pill, Hybrid, and Powder — three pods, each built for the different forms your supplements take. Add what your stack needs. Remove what it doesn't. Consistency isn't about willpower. It's about having a system that travels as well as you do.</p>
-    </div>
-    <section class="pilr-system-section" style="padding-top:0; border-top:none;">
-      <div class="pilr-system-pods">
-        <div>
-          <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img" src="images/lifestyle_section/Powder Pod Render.png" alt="Powder Pod" /></div>
-          <p class="pilr-system-pod-name">Powder pod</p>
-          <p class="pilr-system-pod-desc">Powder-sealed tight</p>
-        </div>
-        <div>
-          <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img pilr-system-pod-img--lower" src="images/lifestyle_section/Hybrid Pod.png" alt="Hybrid Pod" /></div>
-          <p class="pilr-system-pod-name">Hybrid pod</p>
-          <p class="pilr-system-pod-desc">For medium &amp; large sized capsules</p>
-        </div>
-        <div>
-          <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img pilr-system-pod-img--lower-pill" src="images/lifestyle_section/Pill Pod.png" alt="Pill Pod" /></div>
-          <p class="pilr-system-pod-name">Pill pod</p>
-          <p class="pilr-system-pod-desc">Built for smaller capsules</p>
+    <div class="wp-hero-inner">
+      <div class="wp-hero-copy">
+        <p class="wp-hero-eyebrow">Why pilr</p>
+        <h1 class="wp-hero-headline">Routines don't break. They get left behind.</h1>
+        <p class="wp-hero-support">One system for every supplement you take, built to travel with you.</p>
+        <div class="wp-hero-actions">
+          <a href="./build-your-system.html" class="wp-btn wp-btn--dark">Build Your System</a>
+          <a href="./the-routine-problem.html" class="wp-btn wp-btn--outline">See how it works</a>
         </div>
       </div>
-    </section>
-  </section>
-
-  <!-- 3. PROOF STAT -->
-  <section class="wp-stat">
-    <div class="wp-stat-number">[X]%</div>
-    <p class="wp-stat-label">Pilr consolidates a full routine into a stack that fits in a palm, tested against the way people actually pack — not a shelf.</p>
-  </section>
-
-  <!-- 4. COMPARISON CHART -->
-  <section class="wp-compare">
-    <div class="wp-eyebrow">The Difference</div>
-    <h2 class="wp-heading">Built for the trip, not the shelf.</h2>
-    <p class="wp-body">Loose bottles and sandwich bags weren't designed for travel — they were designed for a bathroom cabinet. Pilr was designed for a carry-on.</p>
-
-    <div class="wp-chart">
-      <div class="wp-chart-row">
-        <div class="wp-chart-label">Pilr</div>
-        <div class="wp-chart-bar-wrap"><div class="wp-chart-bar wp-chart-bar--pilr"></div></div>
-      </div>
-      <div class="wp-chart-row">
-        <div class="wp-chart-label">Generic Organizer</div>
-        <div class="wp-chart-bar-wrap"><div class="wp-chart-bar wp-chart-bar--generic"></div></div>
-      </div>
-      <div class="wp-chart-row">
-        <div class="wp-chart-label">Loose Bottles</div>
-        <div class="wp-chart-bar-wrap"><div class="wp-chart-bar wp-chart-bar--bottles"></div></div>
+      <div class="wp-hero-image">
+        <span class="wp-hero-image-placeholder">Hero image<br>Classic Stack on a hotel nightstand, early light</span>
       </div>
     </div>
-    <div class="wp-chart-axis-label">Space efficiency →</div>
   </section>
 
-  <!-- 5. CREDIBILITY -->
-  <section class="wp-cred">
-    <div class="wp-cred-img">
-      <img src="./images/lifestyle_section/Render Image 1.png" alt="Pilr engineering" />
-    </div>
-    <div class="wp-cred-text">
-      <div class="wp-eyebrow">Credibility</div>
-      <h2 class="wp-heading">Designed with the same rigor as the routines it holds.</h2>
-      <p class="wp-body">Every dimension of Pilr was engineered, not assumed. The pod system is [patent-pending], built from Tritan TX1001, a BPA-free, food-safe material chosen for its clarity and durability. Each pod is precision injection-molded to hold its thread interchangeably across the entire line, so any lid fits any pod, every time.</p>
-    </div>
-  </section>
-
-  <!-- 6. QUALITY REASSURANCE -->
-  <section class="wp-quality">
-    <div class="wp-quality-text">
-      <div class="wp-eyebrow">Quality</div>
-      <h2 class="wp-heading">Finished the way it's built.</h2>
-      <p class="wp-body">A matte Deep Slate exterior, a weight in the hand that feels considered rather than accidental. Pilr is finished to the same standard as the objects you already trust with your routine — because a system you'll use every day should hold up to being used every day.</p>
-    </div>
-    <div class="wp-quality-img">
-      <img src="./images/lifestyle_section/Hand Holding Pic.JPG" alt="Pilr finish and feel" />
+  <!-- STAT BAND -->
+  <section class="wp-stats">
+    <div class="wp-stats-inner">
+      <div class="wp-stat">
+        <div class="wp-stat-number">3 in 4<sup>1</sup></div>
+        <p class="wp-stat-desc">Americans take dietary supplements.</p>
+      </div>
+      <div class="wp-stat">
+        <div class="wp-stat-number">66 days<sup>2</sup></div>
+        <p class="wp-stat-desc">The average time to build a daily habit.</p>
+      </div>
+      <div class="wp-stat">
+        <div class="wp-stat-number">[X]%<sup>3</sup></div>
+        <p class="wp-stat-desc">[Pilr survey] of supplement users stop taking them when they travel.</p>
+      </div>
     </div>
   </section>
 
-  <!-- 7. CTA -->
-  <section class="wp-cta">
-    <h2 class="wp-cta-headline">Join early access.</h2>
-    <p class="wp-cta-sub">Be first to know when Pilr launches on Kickstarter.</p>
-    <a href="./early-access.html" class="wp-cta-btn">Join Early Access →</a>
+  <!-- THE SCIENCE -->
+  <section class="wp-science">
+    <div class="wp-science-inner">
+      <div class="wp-science-copy">
+        <p class="wp-science-eyebrow">The science</p>
+        <h2 class="wp-science-headline">Habits live in places.</h2>
+        <p class="wp-science-body">Research on habit shows routines are triggered by context: the same shelf, the same counter, the same time. Change the setting and the habit loses its trigger, unless the cues come with you.<sup>4</sup></p>
+        <p class="wp-science-tiein">Pilr is the cue you bring.</p>
+      </div>
+      <div class="wp-science-card">
+        <p class="wp-science-card-label">What the research shows</p>
+        <ol class="wp-science-list">
+          <li><span class="wp-science-list-num">01</span><span class="wp-science-list-text">Habits formed in one setting often don't survive a move to another.<sup>4</sup></span></li>
+          <li><span class="wp-science-list-num">02</span><span class="wp-science-list-text">When familiar cues reappear, the old habit returns quickly.<sup>4</sup></span></li>
+          <li><span class="wp-science-list-num">03</span><span class="wp-science-list-text">A single missed day doesn't undo a habit. Repeated disruption does.<sup>2</sup></span></li>
+        </ol>
+        <a href="#" class="wp-science-sources">View sources</a>
+      </div>
+    </div>
   </section>
 
-  <!-- 8. PRODUCT TABLE -->
-  <section class="wp-table-section">
-    <div class="wp-eyebrow">The System</div>
-    <h2 class="wp-heading">Find your pod.</h2>
-    <div class="wp-table-wrap">
-      <table class="wp-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Pill Pod</th>
-            <th>Hybrid Pod</th>
-            <th>Powder Pod</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Best for</td>
-            <td>Capsules and tablets</td>
-            <td>Splitting doses, AM/PM routines</td>
-            <td>Scoopable powders</td>
-          </tr>
-          <tr>
-            <td>Capacity</td>
-            <td>[X ml / X capsules]</td>
-            <td>[X ml, divided]</td>
-            <td>[X ml]</td>
-          </tr>
-          <tr>
-            <td>Ideal trip</td>
-            <td>[Weekend / Week]</td>
-            <td>[Weekend / Week]</td>
-            <td>[Weekend / Week]</td>
-          </tr>
-          <tr>
-            <td>Occasion</td>
-            <td>Daily vitamins, travel days</td>
-            <td>Split-dose routines, layovers</td>
-            <td>Pre-workout, greens, collagen</td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- WHERE ROUTINES BREAK (tabbed) -->
+  <section class="wp-break">
+    <div class="wp-break-inner">
+      <p class="wp-break-eyebrow">Where routines break</p>
+      <h2 class="wp-break-headline">Every trip has five weak points.</h2>
+      <div class="wp-break-tabs" id="wp-break-tabs">
+        <button class="wp-break-tab is-active" data-tab="packing" type="button">Packing</button>
+        <button class="wp-break-tab" data-tab="transit" type="button">Transit</button>
+        <button class="wp-break-tab" data-tab="arrival" type="button">Arrival</button>
+        <button class="wp-break-tab" data-tab="mornings" type="button">Mornings away</button>
+        <button class="wp-break-tab" data-tab="coming-home" type="button">Coming home</button>
+      </div>
+      <div class="wp-break-content">
+        <div class="wp-break-panel is-active" data-panel="packing">
+          <div class="wp-break-panel-copy">
+            <h3 class="wp-break-panel-title">Packing</h3>
+            <p class="wp-break-panel-friction">Bulk tubs, Ziploc bags, and guesswork about how much to bring.</p>
+            <p class="wp-break-panel-label">How Pilr answers</p>
+            <ul class="wp-break-panel-list">
+              <li>Pills and powders in one system</li>
+              <li>Pods sized for a trip, not a pantry</li>
+              <li>Engraved scooper for measured doses</li>
+            </ul>
+          </div>
+          <div class="wp-break-panel-img">
+            <span class="wp-break-panel-img-placeholder">Lifestyle image<br>one per tab</span>
+          </div>
+        </div>
+        <div class="wp-break-panel" data-panel="transit">
+          <div class="wp-break-panel-copy">
+            <h3 class="wp-break-panel-title">Transit</h3>
+            <p class="wp-break-panel-friction">Content coming soon.</p>
+            <p class="wp-break-panel-label">How Pilr answers</p>
+            <ul class="wp-break-panel-list">
+              <li>Content coming soon</li>
+            </ul>
+          </div>
+          <div class="wp-break-panel-img">
+            <span class="wp-break-panel-img-placeholder">Lifestyle image<br>one per tab</span>
+          </div>
+        </div>
+        <div class="wp-break-panel" data-panel="arrival">
+          <div class="wp-break-panel-copy">
+            <h3 class="wp-break-panel-title">Arrival</h3>
+            <p class="wp-break-panel-friction">Content coming soon.</p>
+            <p class="wp-break-panel-label">How Pilr answers</p>
+            <ul class="wp-break-panel-list">
+              <li>Content coming soon</li>
+            </ul>
+          </div>
+          <div class="wp-break-panel-img">
+            <span class="wp-break-panel-img-placeholder">Lifestyle image<br>one per tab</span>
+          </div>
+        </div>
+        <div class="wp-break-panel" data-panel="mornings">
+          <div class="wp-break-panel-copy">
+            <h3 class="wp-break-panel-title">Mornings away</h3>
+            <p class="wp-break-panel-friction">Content coming soon.</p>
+            <p class="wp-break-panel-label">How Pilr answers</p>
+            <ul class="wp-break-panel-list">
+              <li>Content coming soon</li>
+            </ul>
+          </div>
+          <div class="wp-break-panel-img">
+            <span class="wp-break-panel-img-placeholder">Lifestyle image<br>one per tab</span>
+          </div>
+        </div>
+        <div class="wp-break-panel" data-panel="coming-home">
+          <div class="wp-break-panel-copy">
+            <h3 class="wp-break-panel-title">Coming home</h3>
+            <p class="wp-break-panel-friction">Content coming soon.</p>
+            <p class="wp-break-panel-label">How Pilr answers</p>
+            <ul class="wp-break-panel-list">
+              <li>Content coming soon</li>
+            </ul>
+          </div>
+          <div class="wp-break-panel-img">
+            <span class="wp-break-panel-img-placeholder">Lifestyle image<br>one per tab</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE SYSTEM -->
+  <section class="wp-system">
+    <div class="wp-system-inner">
+      <p class="wp-system-eyebrow">The system</p>
+      <h2 class="wp-system-headline">One lid. Every pod.</h2>
+      <div class="wp-system-grid">
+        <div class="wp-system-card">
+          <div class="wp-system-card-img"><span>Pod render</span></div>
+          <h3 class="wp-system-card-title">Pill Pod</h3>
+          <p class="wp-system-card-spec">~12.9 mL</p>
+          <p class="wp-system-card-built">Built for: [capsules, tablets]</p>
+        </div>
+        <div class="wp-system-card">
+          <div class="wp-system-card-img"><span>Pod render</span></div>
+          <h3 class="wp-system-card-title">Hybrid Pod</h3>
+          <p class="wp-system-card-spec">~21.6 mL</p>
+          <p class="wp-system-card-built">Built for: [two supplements, one pod]</p>
+        </div>
+        <div class="wp-system-card">
+          <div class="wp-system-card-img"><span>Pod render</span></div>
+          <h3 class="wp-system-card-title">Powder Pod</h3>
+          <p class="wp-system-card-spec">~183.5 mL</p>
+          <p class="wp-system-card-built">Built for: [creatine, greens, protein]</p>
+        </div>
+        <div class="wp-system-card">
+          <div class="wp-system-card-img"><span>Lid render</span></div>
+          <h3 class="wp-system-card-title">Universal Lid</h3>
+          <p class="wp-system-card-spec">Fits every pod</p>
+          <p class="wp-system-card-built">Built for: [sealing, stacking]</p>
+        </div>
+      </div>
+      <div class="wp-system-pairings">
+        <p class="wp-system-pairings-label">Stacks · Pairing module</p>
+        <div class="wp-system-pairings-row">
+          <p class="wp-system-pairing"><strong>Pill Pod + Powder Pod</strong> <span class="wp-system-pairing-arrow">→</span> The Classic Stack</p>
+          <p class="wp-system-pairing"><strong>[Pod + Pod]</strong> <span class="wp-system-pairing-arrow">→</span> [Stack name]</p>
+          <p class="wp-system-pairing"><strong>[Pod + Pod]</strong> <span class="wp-system-pairing-arrow">→</span> [Stack name]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section class="wp-materials">
+    <div class="wp-materials-inner">
+      <div class="wp-materials-copy">
+        <p class="wp-materials-eyebrow">Materials</p>
+        <h2 class="wp-materials-headline">Made from Tritan.</h2>
+        <p class="wp-materials-body">Why the material was chosen, in two sentences.</p>
+      </div>
+      <div class="wp-materials-cards">
+        <div class="wp-materials-card">
+          <p class="wp-materials-card-title">Tritan TX1001</p>
+          <p class="wp-materials-card-def">[Glossary definition]</p>
+        </div>
+        <div class="wp-materials-card">
+          <p class="wp-materials-card-title">BPA-free</p>
+          <p class="wp-materials-card-def">[Glossary definition]</p>
+        </div>
+        <div class="wp-materials-card">
+          <p class="wp-materials-card-title">[Food-contact]</p>
+          <p class="wp-materials-card-def">[Pending colorant documentation]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="wp-comparison">
+    <div class="wp-comparison-inner">
+      <p class="wp-comparison-eyebrow">Comparison</p>
+      <h2 class="wp-comparison-headline">[Comparison headline]</h2>
+      <div class="wp-comparison-table-wrap">
+        <table class="wp-comparison-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Ziploc bags</th>
+              <th>Pill organizer</th>
+              <th>Pilr</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pills and powders together</td>
+              <td>[ ]</td>
+              <td>[ ]</td>
+              <td class="wp-comparison-yes">Yes</td>
+            </tr>
+            <tr>
+              <td>Pods stack and interchange</td>
+              <td>[ ]</td>
+              <td>[ ]</td>
+              <td class="wp-comparison-yes">Yes</td>
+            </tr>
+            <tr>
+              <td>One lid fits every pod</td>
+              <td>[ ]</td>
+              <td>[ ]</td>
+              <td class="wp-comparison-yes">Yes</td>
+            </tr>
+            <tr>
+              <td>[Row]</td>
+              <td>[ ]</td>
+              <td>[ ]</td>
+              <td>[ ]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="wp-faq">
+    <div class="wp-faq-inner">
+      <div class="wp-faq-copy">
+        <p class="wp-faq-eyebrow">FAQ</p>
+        <h2 class="wp-faq-headline">Questions</h2>
+      </div>
+      <div class="wp-faq-list" id="wp-faq-list">
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>Is Pilr TSA friendly?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Content coming soon.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>How many days does the Classic Stack hold?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Content coming soon.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>What is Tritan?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Content coming soon.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>Why does consistency matter?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Content coming soon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTNOTES -->
+  <section class="wp-footnotes">
+    <div class="wp-footnotes-inner">
+      <button class="wp-footnotes-toggle" type="button" id="wp-footnotes-toggle">
+        <span>Sources (4)</span>
+        <span class="wp-footnotes-chevron">⌄</span>
+      </button>
+      <div class="wp-footnotes-list" id="wp-footnotes-list">
+        <ol class="wp-footnotes-list-inner">
+          <li>Council for Responsible Nutrition, 2024 Consumer Survey on Dietary Supplements, conducted by Ipsos.</li>
+          <li>Lally P, et al. How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 2010. 96 volunteers over 12 weeks.</li>
+          <li>[Pilr survey of n early-access members, month year.]</li>
+          <li>Wood W, Tam L, Guerrero Witt M. Changing circumstances, disrupting habits. Journal of Personality and Social Psychology, 2005.</li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -774,6 +525,43 @@
       else { nav.classList.remove('nav--hidden') }
       lastY = y
     }, { passive: true })
+  </script>
+  <script>
+    (function() {
+      var tabs = document.querySelectorAll('#wp-break-tabs .wp-break-tab')
+      var panels = document.querySelectorAll('.wp-break-panel')
+      if (!tabs.length) return
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var target = tab.getAttribute('data-tab')
+          tabs.forEach(function(t) { t.classList.toggle('is-active', t === tab) })
+          panels.forEach(function(p) { p.classList.toggle('is-active', p.getAttribute('data-panel') === target) })
+        })
+      })
+    })()
+  </script>
+  <script>
+    (function() {
+      var items = document.querySelectorAll('#wp-faq-list .wp-faq-item')
+      if (!items.length) return
+      items.forEach(function(item) {
+        var btn = item.querySelector('.wp-faq-question')
+        btn.addEventListener('click', function() {
+          item.classList.toggle('is-active')
+        })
+      })
+    })()
+  </script>
+  <script>
+    (function() {
+      var toggle = document.getElementById('wp-footnotes-toggle')
+      var list = document.getElementById('wp-footnotes-list')
+      if (!toggle || !list) return
+      toggle.addEventListener('click', function() {
+        toggle.classList.toggle('is-active')
+        list.classList.toggle('is-active')
+      })
+    })()
   </script>
 </body>
 </html>
