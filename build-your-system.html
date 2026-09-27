@@ -212,17 +212,71 @@
   </div>
 
   <!-- FAQ -->
-  <div class="product-faq">
-    <h2 class="product-faq-title">Frequently asked questions</h2>
-    <div class="faq-list">
-      <div class="faq-item"><button class="faq-trigger">How much powder does the Powder Pod hold?<svg class="faq-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></button><div class="faq-answer"><p class="faq-answer-content">The Powder Pod is sized to hold about a week's supply of most powders — greens, creatine, and collagen. For protein powder, you may need multiple pods.</p></div></div>
-      <div class="faq-item"><button class="faq-trigger">Can I customize which pods come in my stack?<svg class="faq-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></button><div class="faq-answer"><p class="faq-answer-content">Yes — head to Build Your System to mix and match individual pod types and quantities for a fully custom configuration.</p></div></div>
-      <div class="faq-item"><button class="faq-trigger">How do I clean my Pilr pods?<svg class="faq-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></button><div class="faq-answer"><p class="faq-answer-content">All Pilr pods are dishwasher-safe on the top rack. For a deeper clean, unscrew the lid and rinse with warm water and a drop of dish soap.</p></div></div>
-      <div class="faq-item"><button class="faq-trigger">Can I bring Pilr through airport security?<svg class="faq-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></button><div class="faq-answer"><p class="faq-answer-content">Yes, Pilr pods are TSA-compliant. Powders may be subject to additional screening for quantities over 12oz.</p></div></div>
-      <div class="faq-item"><button class="faq-trigger">How long does shipping take?<svg class="faq-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></button><div class="faq-answer"><p class="faq-answer-content">Standard shipping takes 3–5 business days. Expedited options are available at checkout.</p></div></div>
-      <div class="faq-item"><button class="faq-trigger">Can I buy replacement pods individually?<svg class="faq-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></button><div class="faq-answer"><p class="faq-answer-content">Yes — all individual pods are available in the Single Pods section of the shop.</p></div></div>
+    <!-- FAQ -->
+  <section class="wp-faq">
+    <div class="wp-faq-inner">
+      <div class="wp-faq-copy">
+        <p class="wp-faq-eyebrow">FAQ</p>
+        <h2 class="wp-faq-headline">Questions</h2>
+      </div>
+      <div class="wp-faq-list" id="wp-faq-list">
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>How much powder does the Powder Pod hold?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>The Powder Pod is sized to hold about a week's supply of most powders — greens, creatine, and collagen. For protein powder, you may need multiple pods.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>Can I customize which pods come in my stack?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Yes — head to Build Your System to mix and match individual pod types and quantities for a fully custom configuration.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>How do I clean my Pilr pods?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>All Pilr pods are dishwasher-safe on the top rack. For a deeper clean, unscrew the lid and rinse with warm water and a drop of dish soap.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>Can I bring Pilr through airport security?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Yes, Pilr pods are TSA-compliant. Powders may be subject to additional screening for quantities over 12oz.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>How long does shipping take?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Standard shipping takes 3–5 business days. Expedited options are available at checkout.</p>
+          </div>
+        </div>
+        <div class="wp-faq-item">
+          <button class="wp-faq-question" type="button">
+            <span>Can I buy replacement pods individually?</span>
+            <span class="wp-faq-icon">+</span>
+          </button>
+          <div class="wp-faq-answer">
+            <p>Yes — all individual pods are available in the Single Pods section of the shop.</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- FOOTER TOP -->
   <div class="footer-top"><div class="footer-top-inner">
@@ -341,9 +395,6 @@
       document.getElementById('system-selector').scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
     document.getElementById('bas-summary-change').addEventListener('click', window.showBysSelector)
-    document.querySelectorAll('.faq-trigger').forEach(btn =>
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'))
-    )
 
     document.getElementById('bys-footer-email-form').addEventListener('submit', async e => {
       e.preventDefault()
@@ -390,5 +441,17 @@
     })
   </script>
 
+  <script>
+    (function() {
+      var items = document.querySelectorAll('#wp-faq-list .wp-faq-item')
+      if (!items.length) return
+      items.forEach(function(item) {
+        var btn = item.querySelector('.wp-faq-question')
+        btn.addEventListener('click', function() {
+          item.classList.toggle('is-active')
+        })
+      })
+    })()
+  </script>
 </body>
 </html>

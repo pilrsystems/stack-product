@@ -3124,14 +3124,14 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   border: none;
   cursor: pointer;
   padding: 1.35rem 0;
-  font-size: 1rem;
+  font-size: 0.92rem;
   color: #46545e;
   text-align: left;
 }
 
 .wp-faq-icon {
   flex-shrink: 0;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: #5e6e7a;
   transition: transform 0.2s ease;
 }
