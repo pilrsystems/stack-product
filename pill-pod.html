@@ -8,9 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
   <!-- Buy column tweaks to match classic-stack.html's layout: guarantee
-       line under the accordions, and the single Add to Cart button
-       (no qty stepper) rounded to the site radius instead of stretched
-       flat by its old flex:1 row context. -->
+       line under the accordions. Add to Cart keeps the site's normal
+       full-width, flat, center-text button style (.product-btn-add
+       as-is), same as hybrid-pod.html/powder-pod.html. -->
   <style>
     #product-info-inner .bc-guarantees {
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -24,13 +24,22 @@
     #product-info-inner .bc-guarantee-divider {
       width: 3px; height: 3px; border-radius: 50%; background: #c3ccd1; flex-shrink: 0;
     }
-    #product-info-inner > .product-btn-add { flex: none; border-radius: var(--radius); }
+    /* Title → ratings sits closer than the parent's default 1rem flex
+       gap, same -0.7rem used on classic-stack.html. */
+    #product-info-inner .product-reviews-bar { margin-top: -0.7rem; }
+    /* Trims the 1rem flex gap #product-info-inner puts between every
+       child down to a small sliver, instead of the full 1rem gap
+       above the "Add a Pod" box. */
+    #product-info-inner .product-btn-add { width: 100%; margin-top: -0.85rem; }
     /* Finish name under the title — same label recipe classic-stack
        uses (.bc-finish): uppercase, 0.14em, 11px, slate. */
     #product-info-inner .bc-finish {
       font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
+    /* Feature bullets read a size too large next to the rest of the
+       sidebar copy (tagline, finish label) — shrink them down. */
+    #product-info-inner .product-feature-list li { font-size: 0.82rem; }
     /* Accordion spec rows + intro copy — same recipe as classic-stack's
        .bc-spec-row/.bc-accordion-text. */
     #product-info-inner .bc-accordion-text {
@@ -57,128 +66,147 @@
       color: #5e6e7a; font-size: 1rem; flex-shrink: 0; text-decoration: none;
     }
 
-    /* "Add a Pod" — white bordered quick-add box above Add to Cart.
-       Every color/font here is one already used elsewhere on this
-       page (#5e6e7a text, #7a8a94 muted, rgba(66,85,99,x) borders,
-       var(--radius), .product-btn-add, .offer-box/.offer-item), not
-       the reference screenshots' own styling — those were only a
-       layout guide. */
+    /* "Add a Pod" — collapsed by default: just a trigger row reading
+       "Add a Pod" with a plus icon (styled like the site's other
+       accordions — .product-accordion-trigger/-icon — icon rotates
+       45deg into an "x" on open). Opening it reveals the flat pod
+       rows list below, no white card: background is the page's own
+       --bg token (the site's cream), not a hardcoded color. Fonts/
+       colors otherwise reuse what's already on this page (#5e6e7a
+       text, #7a8a94 muted, rgba(66,85,99,0.15) hairline dividers). */
+    /* Same thin card treatment as the site's .offer-box ("Complete
+       your system"), so this reads as its own distinct block from
+       Add to Cart below it — background stays the page's own --bg
+       token, not white like .offer-box's page-background fallback. */
     #product-info-inner .pod-add {
-      background: #fff; border: 1.5px solid rgba(66,85,99,0.2); border-radius: var(--radius);
-      overflow: hidden;
+      background: var(--bg); border: 1.5px solid rgba(66,85,99,0.15); border-radius: 0;
+      padding: 0 1.5rem;
     }
-    /* Once open, the collapsed bordered button disappears (hidden
-       below) and the panel takes over as a flat, borderless list —
-       matching the expanded reference's look, which has no card
-       outline, just hairline dividers between rows. */
-    #product-info-inner .pod-add.is-open { border-color: transparent; }
     #product-info-inner .pod-add-trigger {
-      /* Same padding/font recipe as .product-btn-add (0.7rem/1rem,
-         0.6875rem/600/0.14em/uppercase) so the collapsed box matches
-         Add to Cart's exact height, and centered like that button
-         rather than left-aligned. Relative so the icon can be pinned
-         to the far left independently of the centered label. */
       width: 100%; position: relative; display: flex; align-items: center; justify-content: center;
-      padding: 0.55rem 1rem; background: none; border: none; cursor: pointer; text-align: center;
+      padding: 0.7rem 0; background: none; border: none; cursor: pointer; text-align: center;
     }
-    #product-info-inner .pod-add-icon {
-      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
-      color: #5e6e7a; line-height: 1; font-size: 1rem; transition: transform 0.25s ease;
+    #product-info-inner .pod-add-trigger-icon {
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; line-height: 1; color: #5e6e7a;
+      transition: transform 0.25s ease;
     }
-    #product-info-inner .pod-add.is-open .pod-add-trigger { display: none; }
-
-    /* Expanded panel — flat list (no card border once open, see
-       .pod-add.is-open above), hairline dividers between rows, same
-       fonts/colors as the rest of the page throughout: #5e6e7a for
-       names/emphasis, #7a8a94 for muted copy, rgba(66,85,99,0.15) for
-       the dividers, var(--radius) for the qty/plus controls. */
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-icon { transform: translateY(-50%) rotate(45deg); }
+    #product-info-inner .pod-add-trigger-note {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      font-size: 0.7rem; font-weight: 400; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-note { display: none; }
+    /* Closed = "Add a Pod" (original label). Open = swaps to the
+       discount-tier summary instead — only one of the two is ever
+       shown, toggled by the trigger's aria-expanded state. */
+    /* Same text size/weight/tracking as .product-btn-add ("Add to
+       Cart") below it, just kept in the page's blue instead of the
+       button's white — the box itself stays white, only the text
+       color differs. */
+    #product-info-inner .pod-add-trigger-label--closed {
+      font-size: 0.6875rem; font-weight: 600; color: #5e6e7a;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-trigger-label--open {
+      display: none; font-size: 0.78rem; font-weight: 400; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-label--closed { display: none; }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-label--open { display: inline; }
     #product-info-inner .pod-add-panel {
       max-height: 0; overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
+      transition: max-height 0.3s ease;
     }
-    #product-info-inner .pod-add-panel.is-open { max-height: 600px; padding-bottom: 0.25rem; }
-    #product-info-inner .pod-add-panel-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.1rem 0; border-top: 1px solid rgba(66,85,99,0.15);
-    }
-    #product-info-inner .pod-add-panel-title {
-      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
-      color: #5e6e7a; margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    #product-info-inner .pod-add-panel-close {
-      background: none; border: none; padding: 0; cursor: pointer;
-      font-size: 1.2rem; line-height: 1; color: #9aa7ae;
-    }
+    /* Visible (not hidden) once fully open, so the Classic Stack row's
+       hover state below can bleed past its own box on hover instead
+       of getting clipped by the collapse animation's overflow. */
+    #product-info-inner .pod-add-panel.is-open { max-height: 600px; overflow: visible; }
     #product-info-inner .pod-add-row {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 1rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 0;
+      border-top: 1px solid rgba(66,85,99,0.15);
     }
-    #product-info-inner .pod-add-row-control { flex-shrink: 0; }
-    #product-info-inner .pod-add-plus-btn {
-      width: 34px; height: 34px; border: 1.5px solid rgba(66,85,99,0.25); border-radius: var(--radius);
-      background: none; color: #5e6e7a; font-size: 1rem; line-height: 1; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+    /* Quantity control is plain text — no border, no box. Fixed width
+       so the pod name lines up whether it reads "+" or "− 2 +". */
+    #product-info-inner .pod-add-row-qty {
+      flex-shrink: 0; width: 58px; display: flex; align-items: center; gap: 0.45rem;
     }
-    #product-info-inner .pod-add-row.is-selected .pod-add-plus-btn { display: none; }
-    #product-info-inner .pod-add-qty {
-      display: none; align-items: center;
-      border: 1.5px solid rgba(66,85,99,0.25); border-radius: var(--radius); overflow: hidden;
-    }
-    #product-info-inner .pod-add-row.is-selected .pod-add-qty { display: flex; }
     #product-info-inner .pod-add-qty-btn {
-      width: 30px; height: 32px; background: none; border: none; cursor: pointer;
-      font-size: 0.9rem; color: #5e6e7a; display: flex; align-items: center; justify-content: center;
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-size: 1rem; line-height: 1; color: #5e6e7a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
+    #product-info-inner .pod-add-row[data-qty="0"] .pod-add-qty-minus,
+    #product-info-inner .pod-add-row[data-qty="0"] .pod-add-qty-val { display: none; }
     #product-info-inner .pod-add-qty-val {
-      width: 26px; text-align: center; font-size: 0.85rem; font-weight: 600; color: #5e6e7a;
+      min-width: 14px; text-align: center; font-size: 0.9rem; font-weight: 600; color: #5e6e7a;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #product-info-inner .pod-add-row-name {
-      flex: 1; font-size: 0.95rem; font-weight: 600; color: #5e6e7a; margin: 0;
+      flex: 0 0 auto; font-size: 0.95rem; font-weight: 400; color: #5e6e7a; margin: 0;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    #product-info-inner .pod-add-row-off { font-weight: 400; color: #7a8a94; }
     #product-info-inner .pod-add-row-price {
-      flex-shrink: 0; text-align: right; margin: 0;
+      flex-shrink: 0; text-align: right; margin: 0 0 0 auto;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #product-info-inner .pod-add-row-strike {
       font-size: 0.85rem; color: #9aa7ae; text-decoration: line-through; margin-right: 0.35rem;
     }
     #product-info-inner .pod-add-row-strike.is-hidden { display: none; }
+    /* Classic Stack row shows sale price first, struck-through price
+       after it (reverse of the pod rows above), so the margin flips
+       to the other side. */
+    #product-info-inner .pod-add-row-strike--after { margin-right: 0; margin-left: 0.35rem; }
     #product-info-inner .pod-add-row-sale { font-size: 0.95rem; font-weight: 700; color: #5e6e7a; }
-    #product-info-inner .pod-add-submit {
-      width: 100%; margin-top: 1.1rem; padding: 0.85rem 1rem;
-      background: none; border: 1.5px solid #5e6e7a; border-radius: var(--radius);
-      color: #5e6e7a; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      cursor: pointer; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      transition: background 0.15s, color 0.15s;
-    }
-    #product-info-inner .pod-add-submit:hover { background: #5e6e7a; color: #fff; }
 
-    #product-info-inner .pod-add-upsell {
-      display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
-      padding: 1.1rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+    /* "Complete the stack" offer — a 4th row under Powder Pod, same
+       .pod-add-row layout/divider/price styling as the pod rows above
+       it. No qty stepper (it's a single bundle, not a per-unit add-on)
+       — the empty .pod-add-row-qty spacer just keeps its name column
+       aligned with the pod rows' names. The whole row links out to
+       classic-stack.html. */
+    #product-info-inner .pod-add-offer-row {
+      /* Bottom padding here (not on the button) so this breathing
+         room only shows up when the panel is open — the collapsed
+         trigger still sits flush against Add to Cart, since this
+         padding is clipped away with the rest of the panel when
+         closed. */
+      text-decoration: none; cursor: pointer; padding-bottom: 1.1rem;
+      border-radius: var(--radius);
+      transition: transform 0.2s ease, background 0.2s ease, padding 0.2s ease, margin 0.2s ease;
     }
-    #product-info-inner .pod-add-upsell-title {
-      font-size: 0.9rem; color: #5e6e7a; margin: 0 0 0.2rem;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* Hover lifts it slightly and fills it with the site's solid CTA
+       blue (#5e6e7a, same as .product-btn-buy) — same "comes out a
+       bit" treatment .shop-card uses elsewhere on the site. */
+    #product-info-inner .pod-add-offer-row:hover {
+      /* Exact same fill as the Add to Cart button (.product-btn-add's
+         rgba(66,85,99,0.7), not a solid color). Negative margin +
+         matching padding expands the row a bit wider than its resting
+         width while keeping the text/price in the same place. */
+      transform: translateY(-3px);
+      background: rgba(66,85,99,0.7);
+      padding-left: 0.75rem; padding-right: 0.75rem;
+      margin-left: -0.75rem; margin-right: -0.75rem;
     }
-    #product-info-inner .pod-add-upsell-title strong { font-weight: 700; }
-    #product-info-inner .pod-add-upsell-sub {
-      font-size: 0.82rem; color: #7a8a94; margin: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    #product-info-inner .pod-add-offer-row:hover .pod-add-offer-badge,
+    #product-info-inner .pod-add-offer-row:hover .pod-add-offer-title,
+    #product-info-inner .pod-add-offer-row:hover .pod-add-offer-sub,
+    #product-info-inner .pod-add-offer-row:hover .pod-add-row-sale { color: #fff; }
+    #product-info-inner .pod-add-offer-row:hover .pod-add-row-strike { color: rgba(255,255,255,0.6); }
+    #product-info-inner .pod-add-offer-badge {
+      display: block; font-size: 0.5rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #7a8a94; margin-bottom: 0.25rem;
+      transition: color 0.2s ease;
     }
-    #product-info-inner .pod-add-upsell-actions {
-      display: flex; align-items: center; gap: 1rem; flex-shrink: 0; padding-top: 0.15rem;
+    #product-info-inner .pod-add-offer-title {
+      font-weight: 700; color: #5e6e7a; transition: color 0.2s ease;
     }
-    #product-info-inner .pod-add-upsell-link {
-      font-size: 0.85rem; font-weight: 600; color: #5e6e7a; text-decoration: underline;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    #product-info-inner .pod-add-upsell-dismiss {
-      background: none; border: none; padding: 0; cursor: pointer;
-      font-size: 0.85rem; color: #9aa7ae; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    #product-info-inner .pod-add-offer-sub {
+      display: block; font-size: 0.8rem; font-weight: 400; color: #7a8a94; margin-top: 0.15rem;
+      transition: color 0.2s ease;
     }
   </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
@@ -231,7 +259,10 @@
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <h1 class="product-page-title">Pill Pod</h1>
+      <div class="product-title-row">
+        <h1 class="product-page-title">Pill Pod</h1>
+        <span class="product-title-price">$20</span>
+      </div>
       <div class="product-reviews-bar">
         <div class="product-reviews-stars">
           <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -243,71 +274,59 @@
         <span class="product-reviews-count">4,728 Reviews</span>
       </div>
       <p class="bc-finish">Matte Black</p>
-      <p class="product-title-price">$20</p>
-      <p class="product-page-tagline">for your capsules, tablets &amp; gummies.</p>
+      <p class="product-page-tagline">three dividers for your little capsules, tablets &amp; gummies.</p>
+      <ul class="product-feature-list">
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
+      </ul>
 
       <div class="pod-add" id="pod-add">
         <button type="button" class="pod-add-trigger" id="pod-add-trigger" aria-expanded="false" aria-controls="pod-add-panel">
-          <span class="pod-add-icon" id="pod-add-icon">+</span>
-          <span class="pod-add-label">Add a Pod</span>
+          <span class="pod-add-trigger-icon">+</span>
+          <span class="pod-add-trigger-label--closed">Add a Pod</span>
+          <span class="pod-add-trigger-label--open">Stack more, save more — up to 28% off.</span>
+          <span class="pod-add-trigger-note">(up to 28% off)</span>
         </button>
         <div class="pod-add-panel" id="pod-add-panel">
-          <div class="pod-add-panel-head">
-            <p class="pod-add-panel-title">Add a Pod</p>
-            <button type="button" class="pod-add-panel-close" id="pod-add-panel-close" aria-label="Close">&times;</button>
+          <div class="pod-add-row" data-qty="1" data-pod-id="pill-pod" data-pod-title="Pill pod" data-pod-image="images/lifestyle_section/Pill Pod.png">
+            <p class="pod-add-row-name">Pill Pod</p>
+            <div class="pod-add-row-qty">
+              <button type="button" class="pod-add-qty-btn pod-add-qty-minus" data-action="minus" aria-label="Decrease Pill Pod quantity">&minus;</button>
+              <span class="pod-add-qty-val">1</span>
+              <button type="button" class="pod-add-qty-btn pod-add-qty-plus" data-action="plus" aria-label="Increase Pill Pod quantity">+</button>
+            </div>
+            <p class="pod-add-row-price"><span class="pod-add-row-strike is-hidden">$20</span><span class="pod-add-row-sale">$20</span></p>
           </div>
 
-          <div class="pod-add-row is-selected" data-pod-id="pill-pod" data-pod-title="Pill pod" data-pod-list-price="20" data-pod-image="images/lifestyle_section/Pill Pod.png">
-            <div class="pod-add-row-control">
-              <button type="button" class="pod-add-plus-btn" aria-label="Add Pill Pod">+</button>
-              <div class="pod-add-qty">
-                <button type="button" class="pod-add-qty-btn" data-action="minus" aria-label="Decrease quantity">&minus;</button>
-                <span class="pod-add-qty-val">1</span>
-                <button type="button" class="pod-add-qty-btn" data-action="plus" aria-label="Increase quantity">+</button>
-              </div>
+          <div class="pod-add-row" data-qty="0" data-pod-id="hybrid-pod" data-pod-title="Hybrid pod" data-pod-image="images/lifestyle_section/Hybrid Pod.png">
+            <p class="pod-add-row-name">Hybrid Pod</p>
+            <div class="pod-add-row-qty">
+              <button type="button" class="pod-add-qty-btn pod-add-qty-minus" data-action="minus" aria-label="Decrease Hybrid Pod quantity">&minus;</button>
+              <span class="pod-add-qty-val">0</span>
+              <button type="button" class="pod-add-qty-btn pod-add-qty-plus" data-action="plus" aria-label="Increase Hybrid Pod quantity">+</button>
             </div>
-            <p class="pod-add-row-name">Pill Pod <span class="pod-add-row-off"></span></p>
-            <p class="pod-add-row-price"><span class="pod-add-row-strike">$20</span><span class="pod-add-row-sale">$20.00</span></p>
+            <p class="pod-add-row-price"><span class="pod-add-row-strike is-hidden">$23</span><span class="pod-add-row-sale">$23</span></p>
           </div>
 
-          <div class="pod-add-row" data-pod-id="hybrid-pod" data-pod-title="Hybrid pod" data-pod-list-price="23" data-pod-image="images/lifestyle_section/Hybrid Pod.png">
-            <div class="pod-add-row-control">
-              <button type="button" class="pod-add-plus-btn" aria-label="Add Hybrid Pod">+</button>
-              <div class="pod-add-qty">
-                <button type="button" class="pod-add-qty-btn" data-action="minus" aria-label="Decrease quantity">&minus;</button>
-                <span class="pod-add-qty-val">1</span>
-                <button type="button" class="pod-add-qty-btn" data-action="plus" aria-label="Increase quantity">+</button>
-              </div>
+          <div class="pod-add-row" data-qty="0" data-pod-id="powder-pod" data-pod-title="Powder pod" data-pod-image="images/lifestyle_section/Powder Pod Render.png">
+            <p class="pod-add-row-name">Powder Pod</p>
+            <div class="pod-add-row-qty">
+              <button type="button" class="pod-add-qty-btn pod-add-qty-minus" data-action="minus" aria-label="Decrease Powder Pod quantity">&minus;</button>
+              <span class="pod-add-qty-val">0</span>
+              <button type="button" class="pod-add-qty-btn pod-add-qty-plus" data-action="plus" aria-label="Increase Powder Pod quantity">+</button>
             </div>
-            <p class="pod-add-row-name">Hybrid Pod <span class="pod-add-row-off"></span></p>
-            <p class="pod-add-row-price"><span class="pod-add-row-strike">$23</span><span class="pod-add-row-sale">$23.00</span></p>
+            <p class="pod-add-row-price"><span class="pod-add-row-strike is-hidden">$29</span><span class="pod-add-row-sale">$29</span></p>
           </div>
 
-          <div class="pod-add-row" data-pod-id="powder-pod" data-pod-title="Powder pod" data-pod-list-price="26" data-pod-image="images/lifestyle_section/Powder Pod Render.png">
-            <div class="pod-add-row-control">
-              <button type="button" class="pod-add-plus-btn" aria-label="Add Powder Pod">+</button>
-              <div class="pod-add-qty">
-                <button type="button" class="pod-add-qty-btn" data-action="minus" aria-label="Decrease quantity">&minus;</button>
-                <span class="pod-add-qty-val">1</span>
-                <button type="button" class="pod-add-qty-btn" data-action="plus" aria-label="Increase quantity">+</button>
-              </div>
-            </div>
-            <p class="pod-add-row-name">Powder Pod <span class="pod-add-row-off"></span></p>
-            <p class="pod-add-row-price"><span class="pod-add-row-strike">$26</span><span class="pod-add-row-sale">$26.00</span></p>
-          </div>
-
-          <button type="button" class="pod-add-submit" id="pod-add-submit">ADD 1 POD &mdash; $20.00</button>
-
-          <div class="pod-add-upsell" id="pod-add-upsell">
-            <div class="pod-add-upsell-text">
-              <p class="pod-add-upsell-title">Complete the stack &mdash; <strong>$54</strong></p>
-              <p class="pod-add-upsell-sub">3 pods, includes a travel scooper.</p>
-            </div>
-            <div class="pod-add-upsell-actions">
-              <a href="./classic-stack.html" class="pod-add-upsell-link">Add &rarr;</a>
-              <button type="button" class="pod-add-upsell-dismiss" id="pod-add-dismiss">No thanks</button>
-            </div>
-          </div>
+          <a href="./classic-stack.html" class="pod-add-row pod-add-offer-row">
+            <p class="pod-add-row-name">
+              <span class="pod-add-offer-badge">Best Value</span>
+              <span class="pod-add-offer-title">Classic Stack</span>
+              <span class="pod-add-offer-sub">All 3 pods, includes free powder scooper.</span>
+            </p>
+            <p class="pod-add-row-price"><span class="pod-add-row-sale">$54</span><span class="pod-add-row-strike pod-add-row-strike--after">$72</span></p>
+          </a>
         </div>
       </div>
 
@@ -416,95 +435,83 @@
   <script src="./pilr-cart.js"></script>
   <script>
     ;(function(){
-      var PRODUCT={id:'pill-pod',title:'Pill pod',price:20,image:'images/lifestyle_section/Pill Pod.png'};
+      // Base prices for this product plus its add-on pods, and the
+      // quantity discount curve, kept in one place on this page so
+      // both the "Add to Cart" button and the pod rows below read
+      // from a single source instead of duplicating numbers. There is
+      // no shared pricing config elsewhere in the codebase yet — each
+      // product page hardcodes its own price inline — so this is
+      // scoped to this page until that's centralized.
+      var POD_BASE_PRICE = { 'pill-pod': 20, 'hybrid-pod': 23, 'powder-pod': 29 };
+      var DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]; // index = total add-on pods, 6+ capped at index 6
+      function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)]; }
+      // Whole-dollar prices show with no cents ($20), discounted
+      // prices that land on a fraction still show cents ($20.70).
+      function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); }
+
+      var PRODUCT={id:'pill-pod',title:'Pill pod',price:POD_BASE_PRICE['pill-pod'],image:'images/lifestyle_section/Pill Pod.png'};
       var SCOOPER={id:'travel-scooper',title:'Pilr travel scooper',price:11,image:'images/lifestyle_section/Scooper.png'};
       function flashBtn(btn,orig){btn.textContent='Added ✓';btn.disabled=true;setTimeout(function(){btn.textContent=orig;btn.disabled=false},1200);}
-      document.getElementById('product-btn-add-main').addEventListener('click',function(){PilrCart.add(PRODUCT,1);flashBtn(this,'ADD TO CART');});
       document.querySelector('.product-sticky-cta').addEventListener('click',function(){PilrCart.add(PRODUCT,1);flashBtn(this,'ADD TO CART');});
       document.querySelector('.offer-item-add').addEventListener('click',function(){PilrCart.add(SCOOPER,1);flashBtn(this,'ADD TO CART');});
 
-      // "Add a Pod" — expand/collapse, each row is its own pod with a
-      // quantity stepper (starts at 0 = just a "+" button; tapping it
-      // reveals -/qty/+ and sets qty to 1). Rows list each pod's real
-      // base price (Pill $20, Hybrid $23, Powder $26 — pulled from their
-      // own pages). The discount applied is a tiered quantity curve based
-      // on the total number of pods across all rows in this bundle
-      // (1: 0%, 2: 10%, 3: 15%, 4: 20%, 5: 25%, 6+: 28% capped), not a
-      // flat per-pod discount.
-      var podAdd = document.getElementById('pod-add');
+      // "Add a Pod" — collapsed by default behind a trigger row
+      // ("Add a Pod" + plus icon); opening it reveals the flat list of
+      // pod rows. The Pill Pod row starts at qty 1, not 0, since this
+      // IS the Pill Pod PDP — it stands in for the base product rather
+      // than sitting alongside a separate one, so there's no double
+      // add. Hybrid/Powder start at qty 0 as pure add-ons. The
+      // discount tier is driven by the TOTAL quantity across all three
+      // rows combined (so the base Pill Pod counts as pod #1 toward
+      // the curve), re-pricing every row together as the total crosses
+      // a threshold. "Add to Cart" stays visible whether the panel is
+      // open or collapsed, and adds exactly what each row's qty says.
       var podAddTrigger = document.getElementById('pod-add-trigger');
       var podAddPanel = document.getElementById('pod-add-panel');
-      var podAddClose = document.getElementById('pod-add-panel-close');
-      var podAddRows = document.querySelectorAll('.pod-add-row');
-      var podAddSubmit = document.getElementById('pod-add-submit');
-      var podAddUpsell = document.getElementById('pod-add-upsell');
-      var podAddDismiss = document.getElementById('pod-add-dismiss');
-      var upsellDismissed = false;
+      var podAddRows = document.querySelectorAll('.pod-add-row[data-pod-id]');
+      var podAddSubmit = document.getElementById('product-btn-add-main');
 
-      function openPanel(open) {
+      podAddTrigger.addEventListener('click', function() {
+        var open = podAddTrigger.getAttribute('aria-expanded') !== 'true';
         podAddTrigger.setAttribute('aria-expanded', String(open));
-        podAdd.classList.toggle('is-open', open);
         podAddPanel.classList.toggle('is-open', open);
+      });
+
+      function rowQty(row) { return Number(row.dataset.qty); }
+
+      function setRowQty(row, qty) {
+        qty = Math.max(0, qty);
+        row.dataset.qty = String(qty);
+        row.querySelector('.pod-add-qty-val').textContent = String(qty);
       }
 
-      podAddTrigger.addEventListener('click', function() { openPanel(true); });
-      podAddClose.addEventListener('click', function() { openPanel(false); });
-
-      function rowQty(row) {
-        return row.classList.contains('is-selected') ? Number(row.querySelector('.pod-add-qty-val').textContent) : 0;
-      }
-
-      // Tiered quantity discount curve, keyed on total pods in the bundle.
-      function discountForQty(qty) {
-        if (qty >= 6) return 0.28;
-        if (qty === 5) return 0.25;
-        if (qty === 4) return 0.20;
-        if (qty === 3) return 0.15;
-        if (qty === 2) return 0.10;
-        return 0;
-      }
-
-      function updateSubmit() {
+      function updateWidget() {
         var totalQty = 0;
         podAddRows.forEach(function(row) { totalQty += rowQty(row); });
         var discount = discountForQty(totalQty);
-        var totalPrice = 0;
+        var addOnTotal = 0;
 
         podAddRows.forEach(function(row) {
-          var listPrice = Number(row.dataset.podListPrice);
+          var listPrice = POD_BASE_PRICE[row.dataset.podId];
           var salePrice = listPrice * (1 - discount);
-          totalPrice += rowQty(row) * salePrice;
+          addOnTotal += rowQty(row) * salePrice;
 
-          row.querySelector('.pod-add-row-sale').textContent = '$' + salePrice.toFixed(2);
+          row.querySelector('.pod-add-row-sale').textContent = formatPrice(salePrice);
           row.querySelector('.pod-add-row-strike').classList.toggle('is-hidden', discount === 0);
-          row.querySelector('.pod-add-row-off').textContent = discount > 0 ? '(' + Math.round(discount * 100) + '% off)' : '';
         });
 
-        podAddSubmit.textContent = totalQty > 0
-          ? 'ADD ' + totalQty + ' POD' + (totalQty > 1 ? 'S' : '') + ' — $' + totalPrice.toFixed(2)
-          : 'ADD A POD';
+        podAddSubmit.textContent = totalQty > 1 ? 'ADD TO CART — ' + formatPrice(addOnTotal) : 'ADD TO CART';
         podAddSubmit.disabled = totalQty === 0;
       }
 
       podAddRows.forEach(function(row) {
-        row.querySelector('.pod-add-plus-btn').addEventListener('click', function() {
-          row.classList.add('is-selected');
-          row.querySelector('.pod-add-qty-val').textContent = '1';
-          updateSubmit();
+        row.querySelector('.pod-add-qty-plus').addEventListener('click', function() {
+          setRowQty(row, rowQty(row) + 1);
+          updateWidget();
         });
-        row.querySelectorAll('.pod-add-qty-btn').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var valEl = row.querySelector('.pod-add-qty-val');
-            var qty = Number(valEl.textContent);
-            qty = btn.dataset.action === 'plus' ? qty + 1 : qty - 1;
-            if (qty <= 0) {
-              row.classList.remove('is-selected');
-              valEl.textContent = '1';
-            } else {
-              valEl.textContent = String(qty);
-            }
-            updateSubmit();
-          });
+        row.querySelector('.pod-add-qty-minus').addEventListener('click', function() {
+          setRowQty(row, rowQty(row) - 1);
+          updateWidget();
         });
       });
 
@@ -515,7 +522,7 @@
         podAddRows.forEach(function(row) {
           var qty = rowQty(row);
           if (qty > 0) {
-            var salePrice = Number(row.dataset.podListPrice) * (1 - discount);
+            var salePrice = POD_BASE_PRICE[row.dataset.podId] * (1 - discount);
             PilrCart.add({ id: row.dataset.podId, title: row.dataset.podTitle, price: salePrice, image: row.dataset.podImage }, qty);
           }
         });
@@ -523,12 +530,7 @@
         flashBtn(podAddSubmit, orig);
       });
 
-      podAddDismiss.addEventListener('click', function() {
-        upsellDismissed = true;
-        podAddUpsell.style.display = 'none';
-      });
-
-      updateSubmit();
+      updateWidget();
     })();
   </script>
   <script>
