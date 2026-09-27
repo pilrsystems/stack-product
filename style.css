@@ -4244,7 +4244,11 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .pilr-system-section { padding: 7rem 3rem 4rem; text-align: center; background: var(--bg); max-width: 1440px; margin: 0 auto; width: 100%; }
 .pilr-system-eyebrow {
-  font-size: 2rem; font-weight: 500; letter-spacing: -0.02em;
+  /* Same recipe as .why-label — the eyebrow used elsewhere on the
+     site (600/0.14em/uppercase/#5e6e7a), sized up from the standard
+     11px since this one stands alone as a section header. */
+  font-size: 1.7rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #5e6e7a; margin-bottom: 0.75rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -4259,7 +4263,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .pilr-system-pod-img { width: auto; max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
 .pilr-system-pod-img--lower { transform: translateY(9px); max-width: 87%; }
 .pilr-system-pod-img--lower-pill { transform: translateY(16px); max-width: 87%; }
-.pilr-system-pod-name { font-size: 1.2rem; font-weight: 600; color: #5e6e7a; margin-bottom: 0.25rem; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.pilr-system-pod-name { font-size: 1.2rem; font-weight: 600; color: #5e6e7a; margin-bottom: 0.25rem; text-transform: capitalize; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .pilr-system-pod-desc { font-size: 0.9rem; color: #7a8a94; line-height: 1.4; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 .product-lifestyle { width: 100%; overflow: hidden; }
