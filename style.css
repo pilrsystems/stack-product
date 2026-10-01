@@ -4653,3 +4653,40 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .rp-chart-bar-track { height: 130px; }
   .rp-split { grid-template-columns: 1fr; }
 }
+
+/* ── PRODUCT PAGE COMPARISON TABLE ───────────────────────────
+   Shared version of classic-stack.html's comparison table, reused
+   across the individual product pages in place of the old "Stay
+   consistent, anywhere." benefits section. */
+.comparison-section { background: var(--bg); padding: 5rem 3rem; }
+.comparison-table {
+  display: grid; grid-template-columns: 1.6fr repeat(3, 1fr);
+  max-width: 900px; margin: 0 auto;
+  border: 1.5px solid #E5E4DF; border-radius: var(--radius); overflow: hidden;
+  background: #fff;
+}
+.comparison-cell {
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem 1rem; border-bottom: 1px solid rgba(66,85,99,0.15);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.comparison-table > .comparison-cell:nth-last-child(-n+4) { border-bottom: none; }
+.comparison-header {
+  font-size: 0.94rem; color: #7a8a94; font-weight: 600; text-align: center;
+  background: #FAFAF8; border-bottom: 1px solid rgba(66,85,99,0.15);
+}
+.comparison-header--pilr { gap: 0.4rem; }
+.comparison-logo { height: 26px; width: auto; display: block; }
+.comparison-label {
+  justify-content: flex-start; text-align: left;
+  font-size: 0.94rem; color: #5e6e7a;
+}
+.comparison-check { display: block; }
+.comparison-dash { width: 14px; height: 2px; border-radius: 1px; background: rgba(122,138,148,0.4); display: block; }
+.comparison-table > .comparison-cell:nth-child(4n+2) { background: rgba(94,110,122,0.06); }
+.comparison-table > .comparison-header.comparison-header--pilr { background: rgba(94,110,122,0.1); }
+@media (max-width: 760px) {
+  .comparison-section { padding: 3rem 1.25rem; }
+  .comparison-table { grid-template-columns: 1.3fr repeat(3, 0.9fr); font-size: 0.9em; }
+  .comparison-cell { padding: 0.75rem 0.5rem; }
+}
