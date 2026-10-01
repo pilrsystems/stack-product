@@ -32,12 +32,16 @@ const SUPPLEMENTS = {
 }
 
 // ── Individual pod GLB paths ─────────────────────────────────
+// Extracted from stack-bottle.glb (the homepage hero model's four
+// named parts — see extract-pods.mjs) since that model's geometry
+// looks noticeably better than the original Configurations set. Each
+// export has the rotation + 1000x scale correction already baked in,
+// so it drops into the exact same transform chain below unmodified.
 const POD_GLBS = {
-  'Pill Pod':   './models/Configurations/pill_module_260520.glb',
-  'Hybrid Pod': './models/Configurations/hybrid_pod_260520.glb',
-  'Powder Pod': './models/Configurations/powder_pod_260520.glb',
+  'Pill Pod':   './models/Configurations/Pill%20Pod%20New.glb',
+  'Hybrid Pod': './models/Configurations/Hybrid%20Pod%20New.glb',
+  'Powder Pod': './models/Configurations/Powder%20Pod%20New.glb',
 }
-const DIVIDER_GLB = './models/Configurations/divider_2026_0520.glb'
 
 const POD_INFO = {
   'Pill Pod': {
@@ -206,9 +210,13 @@ async function buildStack(podTypes, onReady) {
       metalness: 0.0,
     })
 
-    // Load all pods in parallel; also load divider for each Hybrid Pod
+    // Load all pods in parallel. The new Hybrid Pod GLB (extracted from
+    // stack-bottle.glb) already has its own internal divider wall
+    // modeled in, unlike the old Configurations Hybrid Pod which was an
+    // empty shell needing a separate divider_2026_0520.glb piece added
+    // on top — doing that here now would overlay a second, perpendicular
+    // wall and make the pod look like it has 4 compartments instead of 2.
     const podGltfs = await Promise.all(podTypes.map(t => loadPod(POD_GLBS[t])))
-    const dividerGltf = podTypes.includes('Hybrid Pod') ? await loadPod(DIVIDER_GLB) : null
 
     // A newer buildStack call started while we were loading — discard this result
     if (mySeq !== buildSeq) {
@@ -216,17 +224,7 @@ async function buildStack(podTypes, onReady) {
       return
     }
 
-    const gltfs = podGltfs.map((gltf, i) => {
-      if (podTypes[i] === 'Hybrid Pod' && dividerGltf) {
-        const dividerScene = dividerGltf.scene.clone()
-        dividerScene.traverse(m => { if (m.isMesh) m.material = darkMat })
-        dividerScene.position.y = 0.05
-        gltf.scene.add(dividerScene)
-      }
-      return gltf
-    })
-
-    const podScenes = gltfs.map(gltf => {
+    const podScenes = podGltfs.map(gltf => {
       const s = gltf.scene
       s.traverse(m => {
         if (m.isMesh) {
