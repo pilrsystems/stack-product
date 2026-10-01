@@ -32,13 +32,17 @@ const SUPPLEMENTS = {
 }
 
 // ── Individual pod GLB paths ─────────────────────────────────
-// Extracted from stack-bottle.glb (the homepage hero model's four
-// named parts — see extract-pods.mjs) since that model's geometry
-// looks noticeably better than the original Configurations set. Each
-// export has the rotation + 1000x scale correction already baked in,
-// so it drops into the exact same transform chain below unmodified.
+// Hybrid/Powder extracted from stack-bottle.glb (the homepage hero
+// model's four named parts — see extract-pods.mjs) since that model's
+// geometry looks noticeably better than the original Configurations
+// set. Each export has the rotation + 1000x scale correction already
+// baked in, so it drops into the exact same transform chain below
+// unmodified. Pill Pod stays on the original Configurations asset —
+// stack-bottle.glb's Pill Pod reflects an older product design that
+// still has a dispenser-flap cutout, which the real product no
+// longer has.
 const POD_GLBS = {
-  'Pill Pod':   './models/Configurations/Pill%20Pod%20New.glb',
+  'Pill Pod':   './models/Configurations/pill_module_260520.glb',
   'Hybrid Pod': './models/Configurations/Hybrid%20Pod%20New.glb',
   'Powder Pod': './models/Configurations/Powder%20Pod%20New.glb',
 }
