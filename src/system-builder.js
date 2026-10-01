@@ -49,19 +49,19 @@ const POD_GLBS = {
 
 const POD_INFO = {
   'Pill Pod': {
-    desc: 'Carries a full week of small and medium-sized capsules — organized across 3 compartments for easy access.',
-    specs: ['Easy Dispense & Loading Mechanism', 'Height: 1 in.'],
-    examples: 'Vitamin D, Zinc, Multivitamins…',
+    desc: 'Built for the small capsules you take every day. Three compartments, a full week, one pod.',
+    specs: ['[Size] mL'],
+    examples: 'Vitamin D, Zinc, Multivitamins, etc.',
   },
   'Hybrid Pod': {
-    desc: 'Organize a week\'s supply of larger pill supplements.',
-    specs: ['2 compartments for large capsules', 'Height: 2 in.'],
-    examples: 'Fish Oil, Magnesium, Electrolytes, Creatine…',
+    desc: 'Built to carry a week\'s supply of medium and large capsules.',
+    specs: ['[Size] mL'],
+    examples: 'Fish Oil, Magnesium, Ashwagandha, etc.',
   },
   'Powder Pod': {
-    desc: 'Store a full week\'s supply of your go-to powders. 1 or 10? Stack as many as you\'d like.',
-    specs: ['Fits Pilr Travel Scooper', 'Height: 2.5 in.'],
-    examples: 'Pre-Workout, Collagen, Greens Powder…',
+    desc: 'Stores your daily powders.',
+    specs: ['[Size] mL'],
+    examples: 'Creatine, Pre-Workout, Greens Powder',
   },
 }
 

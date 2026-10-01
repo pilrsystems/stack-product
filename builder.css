@@ -161,15 +161,6 @@ body.system-page {
   font-weight: 600;
   color: #5e6e7a;
   letter-spacing: 0.02em;
-  padding-left: 0.85rem;
-  position: relative;
-}
-
-.pod-detail-specs li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
-  opacity: 0.4;
 }
 
 .pod-detail-examples-label {
