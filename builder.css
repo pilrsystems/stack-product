@@ -802,6 +802,10 @@ body.system-page {
   margin-bottom: 1.5rem;
   padding: 1.05rem 2rem;
   font-size: 0.78rem;
+  /* Solid match for the footer's #818E99 — overrides .btn--dark's
+     translucent rgba(94,110,122,0.7), which only blends to roughly this
+     color over this panel's own off-white background, not an exact one. */
+  background: #818E99;
 }
 
 /* Detail view — pod panel overlays selector */
@@ -1019,9 +1023,9 @@ body.system-page {
 }
 
 .bas-top-section .supp-chip.selected {
-  background: #5e6e7a;
+  background: #818E99;
   color: #FAFAF8;
-  border-color: #5e6e7a;
+  border-color: #818E99;
 }
 
 /* Footer row: count + CTA */
@@ -1045,7 +1049,7 @@ body.system-page {
   width: 100%;
   max-width: 480px;
   padding: 1.05rem 2rem;
-  background: #5e6e7a;
+  background: #818E99;
   color: #FAFAF8;
   border: none;
   border-radius: var(--radius);
