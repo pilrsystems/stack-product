@@ -40,6 +40,7 @@
     /* Feature bullets read a size too large next to the rest of the
        sidebar copy (tagline, finish label) — shrink them down. */
     #product-info-inner .product-feature-list li { font-size: 0.82rem; }
+    #product-info-inner .product-feature-check { width: 13px; height: 13px; }
     /* Accordion spec rows + intro copy — same recipe as classic-stack's
        .bc-spec-row/.bc-accordion-text. */
     #product-info-inner .bc-accordion-text {
@@ -176,26 +177,16 @@
          closed. */
       text-decoration: none; cursor: pointer; padding-bottom: 1.1rem;
       border-radius: var(--radius);
-      transition: transform 0.2s ease, background 0.2s ease, padding 0.2s ease, margin 0.2s ease;
+      transform-origin: center;
+      transition: transform 0.2s ease;
     }
-    /* Hover lifts it slightly and fills it with the site's solid CTA
-       blue (#5e6e7a, same as .product-btn-buy) — same "comes out a
-       bit" treatment .shop-card uses elsewhere on the site. */
+    /* A bigger, more visible "pop" than a plain lift — scales the
+       whole row up a touch (so the text reads larger) plus a soft
+       shadow to sell the elevation, still no background/text-color
+       change. */
     #product-info-inner .pod-add-offer-row:hover {
-      /* Exact same fill as the Add to Cart button (.product-btn-add's
-         rgba(66,85,99,0.7), not a solid color). Negative margin +
-         matching padding expands the row a bit wider than its resting
-         width while keeping the text/price in the same place. */
-      transform: translateY(-3px);
-      background: rgba(66,85,99,0.7);
-      padding-left: 0.75rem; padding-right: 0.75rem;
-      margin-left: -0.75rem; margin-right: -0.75rem;
+      transform: translateY(-6px) scale(1.035);
     }
-    #product-info-inner .pod-add-offer-row:hover .pod-add-offer-badge,
-    #product-info-inner .pod-add-offer-row:hover .pod-add-offer-title,
-    #product-info-inner .pod-add-offer-row:hover .pod-add-offer-sub,
-    #product-info-inner .pod-add-offer-row:hover .pod-add-row-sale { color: #fff; }
-    #product-info-inner .pod-add-offer-row:hover .pod-add-row-strike { color: rgba(255,255,255,0.6); }
     #product-info-inner .pod-add-offer-badge {
       display: block; font-size: 0.5rem; font-weight: 600; letter-spacing: 0.14em;
       text-transform: uppercase; color: #7a8a94; margin-bottom: 0.25rem;
