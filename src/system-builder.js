@@ -211,6 +211,75 @@ function loadPod(url) {
   return new Promise((resolve, reject) => loader.load(url, resolve, undefined, reject))
 }
 
+// ── Dedicated measurement rig ────────────────────────────────
+// A private, never-rendered copy of outerGroup/stackGroup's rest
+// transform chain, used only to measure each pod's bounding box.
+// Measuring against the LIVE outerGroup/stackGroup (like this used to)
+// ties the result to whatever those groups' current state happens to
+// be: (1) outerGroup's own tilt is intentional and reproduced here, but
+// once idle rotation starts running between builds its rotation.y
+// drifts, so the exact same pod could measure slightly differently
+// depending on when it's measured; (2) when a build gets superseded
+// mid-flight, a later call's cleanup detaches *its* stackGroup from
+// outerGroup, so outerGroup.updateMatrixWorld() silently no-ops for
+// that now-orphaned subtree and the pod's rotation never reaches
+// matrixWorld — corrupting the measurement (it ends up reading an
+// unrotated cross-section instead of the true height). This rig is
+// never attached to the live scene and nothing else ever touches it,
+// so neither problem can happen here.
+const measureOuter = new THREE.Group()
+measureOuter.rotation.z = OUTER_REST_ROT_Z
+measureOuter.rotation.x = OUTER_REST_ROT_X
+const measureStack = new THREE.Group()
+measureStack.scale.setScalar(isMobile ? 18.5 : 16.5)
+measureStack.rotation.x = THREE.MathUtils.degToRad(90)
+measureOuter.add(measureStack)
+measureOuter.updateMatrixWorld(true)
+const measureInvMat = new THREE.Matrix4().copy(measureStack.matrixWorld).invert()
+
+// Rotates a pod -90° around X (so its height axis lands on stackGroup's
+// -Z, which after stackGroup's own rotation.x=90 maps to world +Y) and
+// centers it at x=0, y=0, measuring entirely within the private rig
+// above. Mutates `s` in place (rotation + centering) and returns its
+// resulting local zMin/zMax — safe to call for any pod, raced build or
+// not, since nothing else can run between these synchronous steps.
+function measurePod(s) {
+  measureStack.add(s)
+  s.rotation.x = THREE.MathUtils.degToRad(-90)
+  measureOuter.updateMatrixWorld(true)
+  const worldBox = new THREE.Box3().setFromObject(s)
+  const localBox = worldBox.clone().applyMatrix4(measureInvMat)
+
+  s.position.x -= (localBox.min.x + localBox.max.x) / 2
+  s.position.y -= (localBox.min.y + localBox.max.y) / 2
+  measureOuter.updateMatrixWorld(true)
+  const wb2 = new THREE.Box3().setFromObject(s)
+  const lb2 = wb2.clone().applyMatrix4(measureInvMat)
+
+  measureStack.remove(s)
+  return { zMin: Math.min(lb2.min.z, lb2.max.z), zMax: Math.max(lb2.min.z, lb2.max.z) }
+}
+
+// OVERLAP below is derived from the *shortest* pod type's height, so it
+// stays a true session constant only once every type has been measured
+// at least once. The default stack's own build normally fills this in
+// within well under a second of page load, but a selection whose build
+// finishes first — e.g. one that skips Pill Pod, whose Draco-compressed
+// GLB decodes slower than the others — would otherwise compute OVERLAP
+// from an incomplete (and so inflated) minimum for that one build. This
+// tops up whatever's missing before OVERLAP gets computed.
+async function ensureAllHeights() {
+  const missing = Object.keys(POD_GLBS).filter(t => !(t in HEIGHT_CACHE))
+  if (!missing.length) return
+  const gltfs = await Promise.all(missing.map(t => loadPod(POD_GLBS[t])))
+  gltfs.forEach((gltf, i) => {
+    const type = missing[i]
+    if (type in HEIGHT_CACHE) return   // filled in by someone else while we were loading
+    const { zMin, zMax } = measurePod(gltf.scene)
+    HEIGHT_CACHE[type] = Math.abs(zMax - zMin)
+  })
+}
+
 // ── Build stack from individual pod GLBs ─────────────────────
 async function buildStack(podTypes, onReady) {
   const mySeq = ++buildSeq   // claim this build slot; any prior in-flight build is now stale
@@ -253,15 +322,12 @@ async function buildStack(podTypes, onReady) {
     // empty shell needing a separate divider_2026_0520.glb piece added
     // on top — doing that here now would overlay a second, perpendicular
     // wall and make the pod look like it has 4 compartments instead of 2.
-    const podGltfs = await Promise.all(podTypes.map(t => loadPod(POD_GLBS[t])))
+    const [podGltfs] = await Promise.all([
+      Promise.all(podTypes.map(t => loadPod(POD_GLBS[t]))),
+      ensureAllHeights(),
+    ])
 
-    // A newer buildStack call started while we were loading — discard this result
-    if (mySeq !== buildSeq) {
-      document.getElementById('system-loading')?.classList.add('hidden')
-      return
-    }
-
-    const podScenes = podGltfs.map(gltf => {
+    const podData = podGltfs.map((gltf, i) => {
       const s = gltf.scene
       s.traverse(m => {
         if (m.isMesh) {
@@ -269,33 +335,14 @@ async function buildStack(podTypes, onReady) {
           m.material   = darkMat
         }
       })
+
+      // Rotates -90° and centers x/y, measured via the private rig above —
+      // see measurePod for why that matters. Leaves s's rotation/position
+      // set correctly for when it gets added to the real stackGroup below.
+      const { zMin, zMax } = measurePod(s)
       stackGroup.add(s)
-      return s
-    })
-    outerGroup.updateMatrixWorld(true)
 
-    const invMat = new THREE.Matrix4().copy(stackGroup.matrixWorld).invert()
-    const podData = podScenes.map((s, i) => {
-      // Rotate each pod -90° around X so height axis goes along stackGroup -Z
-      // which after stackGroup rotation.x=90 maps to world +Y (upright)
-      s.rotation.x = THREE.MathUtils.degToRad(-90)
-      outerGroup.updateMatrixWorld(true)
-
-      const worldBox = new THREE.Box3().setFromObject(s)
-      const localBox = worldBox.clone().applyMatrix4(invMat)
-
-      // Center pod at x=0, y=0 in stackGroup so all pods share the same axis
-      const cx = (localBox.min.x + localBox.max.x) / 2
-      const cy = (localBox.min.y + localBox.max.y) / 2
-      s.position.x -= cx
-      s.position.y -= cy
-
-      // Re-measure after centering
-      outerGroup.updateMatrixWorld(true)
-      const wb2 = new THREE.Box3().setFromObject(s)
-      const lb2 = wb2.clone().applyMatrix4(invMat)
-
-      const height = Math.abs(lb2.max.z - lb2.min.z)
+      const height = Math.abs(zMax - zMin)
       // Cache every pod type's measured height the first time we see it.
       // The default stack (Pill + Hybrid + Powder) loads on page load,
       // before any selection is possible, so by the time the user picks
@@ -303,12 +350,22 @@ async function buildStack(podTypes, onReady) {
       // below for why that matters.
       if (!(podTypes[i] in HEIGHT_CACHE)) HEIGHT_CACHE[podTypes[i]] = height
 
-      return {
-        scene: s,
-        zMin:  Math.min(lb2.min.z, lb2.max.z),
-        zMax:  Math.max(lb2.min.z, lb2.max.z),
-      }
+      return { scene: s, zMin, zMax }
     })
+
+    // A newer buildStack call started while we were loading — discard this
+    // result. Checked *after* HEIGHT_CACHE is populated above (not before
+    // the loads) so a build that gets superseded mid-flight — e.g. the
+    // very first page-load call, if the user clicks a chip before its GLBs
+    // finish — still records whatever pod heights it measured instead of
+    // silently dropping them. Previously Pill Pod could end up permanently
+    // missing from HEIGHT_CACHE for the rest of the session whenever that
+    // happened, skewing the stacking math for any selection that didn't
+    // happen to include a Pill Pod.
+    if (mySeq !== buildSeq) {
+      document.getElementById('system-loading')?.classList.add('hidden')
+      return
+    }
 
     // Per-type center fraction: Pill Pod geometry sits toward the top of its BB
     // so we bias the center upward to close the gap it creates below
