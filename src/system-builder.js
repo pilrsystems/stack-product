@@ -310,40 +310,60 @@ async function buildStack(podTypes, onReady) {
       }
     })
 
-    // Gap between pod centers. Previously based on Math.min() of only the
-    // *currently selected* pods' heights, so the gap visibly changed
-    // depending on which pod types happened to be in the stack (e.g.
-    // Powder+Hybrid used Hybrid's height instead of Pill Pod's, since Pill
-    // Pod wasn't in that selection) — HEIGHT_CACHE instead remembers every
-    // pod type's height across the whole session, so this is always the
-    // same global minimum (Pill Pod's height) regardless of what's
-    // currently selected, matching the gap the default Classic Stack
-    // shows on first load.
-    const TIGHT       = 0.72
-    const naturalStep = Math.min(...Object.values(HEIGHT_CACHE)) * TIGHT
-    // Cap total stack height so unusually large selections (many
-    // duplicate pods) still fit the canvas instead of overflowing it.
-    const MAX_HEIGHT = 0.26
-    const maxStep    = podData.length > 1 ? MAX_HEIGHT / (podData.length - 1) : naturalStep
-    const step       = Math.min(naturalStep, maxStep)
-
-    const totalHeight = step * (podData.length - 1)
-    let stackZ = totalHeight / 2
-
     // Per-type center fraction: Pill Pod geometry sits toward the top of its BB
     // so we bias the center upward to close the gap it creates below
     const CENTER_BIAS = { 'Pill Pod': 0.72, 'Hybrid Pod': 0.5, 'Powder Pod': 0.5 }
 
-    for (let i = 0; i < podData.length; i++) {
-      const { scene: s, zMin, zMax } = podData[i]
+    // Half-extent of each pod above/below its own bias-weighted center.
+    // The pods physically nest into each other (each one's connector slides
+    // into the next), so neighboring bounding boxes are *meant* to overlap
+    // along the stack axis — what needs to stay constant is that overlap
+    // depth, not the raw center-to-center distance. A flat center-to-center
+    // step (the old approach) only gives a constant overlap when neighboring
+    // pods share the same height/bias — it silently broke the moment two
+    // Pill Pods ended up adjacent (bias=0.72 leaves Pill Pod a tiny
+    // 0.28-of-height half-span above its own center), so that pair nested
+    // only half as deep as every other pod-to-pod boundary and visibly
+    // read as a gap where the others looked fused.
+    const halfExtents = podData.map((d, i) => {
       const bias     = CENTER_BIAS[podTypes[i]] ?? 0.5
-      const bbCenter = zMin + (zMax - zMin) * bias
+      const bbCenter = d.zMin + (d.zMax - d.zMin) * bias
+      return { above: bbCenter - d.zMin, below: d.zMax - bbCenter, bbCenter }
+    })
 
-      s.position.z = stackZ - bbCenter
+    // HEIGHT_CACHE remembers every pod type's height across the whole
+    // session (not just the current selection) so this stays a session
+    // constant regardless of what's currently selected — matching the
+    // nesting depth the default Classic Stack shows on first load.
+    const OVERLAP = Math.min(...Object.values(HEIGHT_CACHE)) * 0.63
+
+    // Sum of the fixed half-extents at every boundary — the total stack
+    // height is this minus (n-1) * whatever overlap depth we end up using.
+    let sumHalfExtents = 0
+    for (let i = 0; i < podData.length - 1; i++) {
+      sumHalfExtents += halfExtents[i].above + halfExtents[i + 1].below
+    }
+
+    // Cap total stack height so unusually large selections (many
+    // duplicate pods) still fit the canvas instead of overflowing it —
+    // nest them deeper (more overlap) rather than shrinking the pods.
+    const MAX_HEIGHT = 0.26
+    const overlapUsed = podData.length > 1
+      ? Math.max(OVERLAP, (sumHalfExtents - MAX_HEIGHT) / (podData.length - 1))
+      : OVERLAP
+
+    const totalHeight = sumHalfExtents - overlapUsed * (podData.length - 1)
+    let stackZ = totalHeight / 2
+
+    for (let i = 0; i < podData.length; i++) {
+      const { scene: s } = podData[i]
+      s.position.z = stackZ - halfExtents[i].bbCenter
       outerGroup.updateMatrixWorld(true)
 
       sections.push({ mesh: s, restZ: s.position.z })
-      stackZ -= step
+      if (i < podData.length - 1) {
+        stackZ -= (halfExtents[i].above + halfExtents[i + 1].below) - overlapUsed
+      }
     }
 
     modelLoaded = true
