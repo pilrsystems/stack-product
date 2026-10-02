@@ -37,10 +37,15 @@
       font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
+    #product-info-inner .product-title-price { font-weight: 700; margin-top: -0.6rem; margin-bottom: -0.6rem; }
     /* Feature bullets read a size too large next to the rest of the
        sidebar copy (tagline, finish label) — shrink them down. */
-    #product-info-inner .product-feature-list li { font-size: 0.82rem; }
-    #product-info-inner .product-feature-check { width: 13px; height: 13px; }
+    #product-info-inner .product-feature-list { gap: 0.2rem; margin-bottom: 0.4rem; padding-left: 0.4rem; }
+    #product-info-inner .product-feature-list li { color: #7a8a94; }
+    #product-info-inner .product-feature-list li { font-size: 0.75rem; }
+    /* Outlined circle + checkmark, same slate color (#5e6e7a) already
+       used everywhere else on this page — no fill, just a stroke. */
+    #product-info-inner .product-feature-check { flex-shrink: 0; }
     /* Accordion spec rows + intro copy — same recipe as classic-stack's
        .bc-spec-row/.bc-accordion-text. */
     #product-info-inner .bc-accordion-text {
@@ -256,10 +261,7 @@
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <div class="product-title-row">
-        <h1 class="product-page-title">Pill Pod</h1>
-        <span class="product-title-price">$20</span>
-      </div>
+      <h1 class="product-page-title">Pill Pod</h1>
       <div class="product-reviews-bar">
         <div class="product-reviews-stars">
           <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -268,14 +270,14 @@
           <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
         </div>
-        <span class="product-reviews-count">4,728 Reviews</span>
+        <span class="product-reviews-count">126 Reviews</span>
       </div>
-      <p class="bc-finish">Matte Black</p>
-      <p class="product-page-tagline">three dividers for your little capsules, tablets &amp; gummies.</p>
+      <p class="product-title-price">$20</p>
+      <p class="product-page-tagline">Three dividers for your little capsules, tablets &amp; gummies.</p>
       <ul class="product-feature-list">
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
 
       <div class="pod-add" id="pod-add">
