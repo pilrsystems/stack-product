@@ -97,7 +97,8 @@ let currentPodTypes = []
 // Latest pod counts/total — read by the "Add to Cart" click handler so
 // it doesn't need to recompute calcPods() itself.
 let currentPodCounts   = { pillPods: 0, hybridPods: 0, powderPods: 0 }
-let currentCartTotal   = 0
+let currentCartTotal     = 0
+let currentCartListTotal = 0   // sum of the struck-through list prices, for the Add to Cart button
 let isClassicStackCart = false
 let lastPodKey      = ''
 let buildSeq        = 0   // incremented on each buildStack call; stale builds abort on completion
@@ -776,7 +777,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 
   if (total === 0) {
     el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
-    currentCartTotal   = 0
+    currentCartTotal     = 0
+    currentCartListTotal = 0
     isClassicStackCart = false
     updateCartButton()
     return
@@ -832,7 +834,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
       ${addBtnHtml}
     </div>`
 
-    currentCartTotal = CLASSIC_STACK.price
+    currentCartTotal     = CLASSIC_STACK.price
+    currentCartListTotal = CLASSIC_STACK_LIST_PRICE
     updateCartButton()
 
     el.querySelectorAll('.sys-acc-header').forEach(btn => {
@@ -855,6 +858,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   const discount = discountForQty(total)
 
   let cartTotal = 0
+  let listTotal = 0
 
   function makeRow(podName, supps, category, ids) {
     const label     = supps.join(', ')
@@ -864,6 +868,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
     const listPrice = POD_BASE_PRICE[podName]
     const salePrice = listPrice * (1 - discount)
     cartTotal += salePrice
+    listTotal += listPrice
     const priceHtml = discount > 0
       ? `<span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(listPrice)}</span>${formatPrice(salePrice)}</span>`
       : `<span class="sys-acc-price">${formatPrice(listPrice)}</span>`
@@ -905,7 +910,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   rows += `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
   el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
 
-  currentCartTotal = cartTotal
+  currentCartTotal     = cartTotal
+  currentCartListTotal = listTotal
   updateCartButton()
 
   el.querySelectorAll('.sys-acc-header').forEach(btn => {
@@ -933,8 +939,16 @@ function updateCartButton() {
   const btn = document.getElementById('system-add-to-cart-btn')
   if (!btn) return
   const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods
-  btn.disabled   = totalQty === 0
-  btn.textContent = totalQty > 0 ? 'Add to Cart — ' + formatPrice(currentCartTotal) : 'Add to Cart'
+  btn.disabled = totalQty === 0
+  if (totalQty === 0) {
+    btn.textContent = 'Add to Cart'
+    return
+  }
+  const hasDiscount = currentCartListTotal - currentCartTotal > 0.001
+  const priceHtml   = hasDiscount
+    ? `<span class="cart-btn-price-strike">${formatPrice(currentCartListTotal)}</span> ${formatPrice(currentCartTotal)}`
+    : formatPrice(currentCartTotal)
+  btn.innerHTML = 'Add to Cart — ' + priceHtml
 }
 
 document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
@@ -961,10 +975,10 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
   }
 
   const btn  = this
-  const orig = btn.textContent
+  const orig = btn.innerHTML
   btn.textContent = 'Added ✓'
   btn.disabled = true
-  setTimeout(() => { btn.textContent = orig; btn.disabled = false }, 1200)
+  setTimeout(() => { btn.innerHTML = orig; btn.disabled = false }, 1200)
 })
 
 function updateSystem() {

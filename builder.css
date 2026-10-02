@@ -1164,6 +1164,13 @@ body.system-page {
   margin-right: 0.35rem;
 }
 
+.cart-btn-price-strike {
+  font-weight: 400;
+  text-decoration: line-through;
+  opacity: 0.6;
+  margin-right: 0.3em;
+}
+
 .sys-acc-chevron {
   flex-shrink: 0;
   transition: transform 0.2s ease;
