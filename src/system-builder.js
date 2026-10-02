@@ -126,11 +126,16 @@ scene.background = new THREE.Color(0xFAFAF8)
 const CAMERA_REST_POS    = new THREE.Vector3(0, 0.4, 6.1)
 const CAMERA_REST_TARGET = new THREE.Vector3(0, 0, 0)
 
-// Returns the ideal camera Z so the full stack fits in the viewport
+// Returns the ideal camera Z so the full stack fits in the viewport.
+// ZOOM pulls the camera uniformly closer (same ratio at every pod count,
+// so taller stacks still back off exactly as before relative to shorter
+// ones — only the baseline distance changes) to make the pods read a
+// bit bigger / more foreground, without touching how they're spaced.
+const ZOOM = 0.88
 function idealCameraZ(podCount) {
-  if (podCount <= 1) return 4.7
-  if (podCount === 2) return 5.0
-  return 4.7 + (podCount - 1) * 0.72   // 3→6.1, 4→6.8, 5→7.6
+  if (podCount <= 1) return 4.7 * ZOOM
+  if (podCount === 2) return 5.0 * ZOOM
+  return (4.7 + (podCount - 1) * 0.72) * ZOOM   // 3→6.1, 4→6.8, 5→7.6 (pre-zoom)
 }
 
 const camera = new THREE.PerspectiveCamera(40, CW / CH, 0.1, 50)
