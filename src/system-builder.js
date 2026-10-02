@@ -158,6 +158,11 @@ scene.add(outerGroup)
 let sections        = []
 let modelLoaded     = false
 let currentGlbScene = null
+// Measured pod height per type, keyed by pod name — populated the first
+// time each type loads (see buildStack). Lets the stacking gap stay
+// constant across different selections instead of depending on which
+// pod type happens to be shortest in the *current* selection.
+const HEIGHT_CACHE  = {}
 
 // ── Label state ──────────────────────────────────────────────
 let labelEls     = []
@@ -242,7 +247,7 @@ async function buildStack(podTypes, onReady) {
     outerGroup.updateMatrixWorld(true)
 
     const invMat = new THREE.Matrix4().copy(stackGroup.matrixWorld).invert()
-    const podData = podScenes.map(s => {
+    const podData = podScenes.map((s, i) => {
       // Rotate each pod -90° around X so height axis goes along stackGroup -Z
       // which after stackGroup rotation.x=90 maps to world +Y (upright)
       s.rotation.x = THREE.MathUtils.degToRad(-90)
@@ -262,6 +267,14 @@ async function buildStack(podTypes, onReady) {
       const wb2 = new THREE.Box3().setFromObject(s)
       const lb2 = wb2.clone().applyMatrix4(invMat)
 
+      const height = Math.abs(lb2.max.z - lb2.min.z)
+      // Cache every pod type's measured height the first time we see it.
+      // The default stack (Pill + Hybrid + Powder) loads on page load,
+      // before any selection is possible, so by the time the user picks
+      // anything this cache already holds all three — see HEIGHT_CACHE
+      // below for why that matters.
+      if (!(podTypes[i] in HEIGHT_CACHE)) HEIGHT_CACHE[podTypes[i]] = height
+
       return {
         scene: s,
         zMin:  Math.min(lb2.min.z, lb2.max.z),
@@ -269,11 +282,19 @@ async function buildStack(podTypes, onReady) {
       }
     })
 
-    // Use the smallest pod's bounding box as the uniform step, and
-    // place each pod by its BB center — this equalises gaps across pod types
-    const TIGHT      = 0.72
-    const naturalStep = Math.min(...podData.map(d => (d.zMax - d.zMin))) * TIGHT
-    // Cap total stack height so all pods always fit in the canvas
+    // Gap between pod centers. Previously based on Math.min() of only the
+    // *currently selected* pods' heights, so the gap visibly changed
+    // depending on which pod types happened to be in the stack (e.g.
+    // Powder+Hybrid used Hybrid's height instead of Pill Pod's, since Pill
+    // Pod wasn't in that selection) — HEIGHT_CACHE instead remembers every
+    // pod type's height across the whole session, so this is always the
+    // same global minimum (Pill Pod's height) regardless of what's
+    // currently selected, matching the gap the default Classic Stack
+    // shows on first load.
+    const TIGHT       = 0.72
+    const naturalStep = Math.min(...Object.values(HEIGHT_CACHE)) * TIGHT
+    // Cap total stack height so unusually large selections (many
+    // duplicate pods) still fit the canvas instead of overflowing it.
     const MAX_HEIGHT = 0.26
     const maxStep    = podData.length > 1 ? MAX_HEIGHT / (podData.length - 1) : naturalStep
     const step       = Math.min(naturalStep, maxStep)
