@@ -87,52 +87,7 @@
   </nav>
   <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
 
-  <!-- PAGE HEADER WRAPPER (nav offset + selector + summary bar) -->
-  <div class="bas-page-header">
-
-    <!-- Compact summary bar (shown after BUILD MY SYSTEM clicked) -->
-    <div class="bas-summary-bar" id="bas-summary-bar">
-      <div class="bas-summary-bar-inner">
-        <p class="bas-summary-text">Your selections: <strong id="bas-summary-picks"></strong></p>
-        <button class="bas-summary-change" id="bas-summary-change">Change</button>
-      </div>
-    </div>
-
-    <!-- TOP SECTION: Full-width supplement selector -->
-    <section class="bas-top-section" id="system-selector">
-      <div class="bas-top-inner">
-
-        <h1 class="bas-title">Build Your System</h1>
-        <p class="bas-desc">Pick your daily supplements below. Select as many or as few as you'd like, then hit Build My System.</p>
-
-        <p class="bas-section-q">What do you take?</p>
-
-        <div class="bas-category-block">
-          <div class="bas-cat-label">POWDERS</div>
-          <div class="supp-chips" id="powders-row"></div>
-        </div>
-
-        <div class="bas-category-block">
-          <div class="bas-cat-label">LARGE CAPSULES &amp; SOFTGELS</div>
-          <div class="supp-chips" id="hybrid-row"></div>
-        </div>
-
-        <div class="bas-category-block">
-          <div class="bas-cat-label">PILLS &amp; SMALL CAPSULES</div>
-          <div class="supp-chips" id="pills-row"></div>
-        </div>
-
-        <div class="bas-footer-row">
-          <div class="supp-selected-count" id="selected-count"></div>
-          <button class="bas-cta-btn" id="bas-build-btn">BUILD MY SYSTEM</button>
-        </div>
-
-      </div>
-    </section>
-
-  </div><!-- end bas-page-header -->
-
-  <!-- CANVAS + SUMMARY -->
+  <!-- CANVAS + SIDEBAR (Build Your System / Edit Your System tabs) -->
   <div class="system-layout" id="system-layout">
 
     <!-- 3D Canvas -->
@@ -152,7 +107,7 @@
       <div id="system-labels" class="blabel-container"></div>
     </div>
 
-    <!-- Pod detail panel (overlays selector on pod click) -->
+    <!-- Pod detail panel (overlays canvas on pod click) -->
     <div class="pod-detail-panel" id="pod-detail-panel">
       <div class="pod-detail-name" id="pod-detail-name"></div>
       <div class="pod-detail-desc" id="pod-detail-desc"></div>
@@ -161,16 +116,62 @@
       <div class="pod-detail-examples" id="pod-detail-examples"></div>
     </div>
 
-    <!-- RIGHT: System Summary -->
-    <aside class="system-summary">
-      <div class="system-summary-inner">
-        <h2 class="sys-edit-title">Edit your system</h2>
-        <p class="sys-edit-desc">Add, remove, and edit the pods in your system below.</p>
-        <div id="system-summary-content" class="system-summary-content">
-          <p class="system-empty-state">Select your supplements<br>to build your system.</p>
+    <!-- RIGHT: Build Your System / Edit Your System accordion -->
+    <aside class="system-sidebar">
+
+      <!-- Build Your System — open on page load -->
+      <div class="sys-panel open" id="system-selector">
+        <button type="button" class="sys-panel-header" id="sys-build-header">
+          <span class="sys-panel-header-text">
+            <h1 class="sys-panel-header-title">Build Your System</h1>
+            <span class="sys-panel-header-hint" id="sys-build-hint"></span>
+          </span>
+          <svg class="sys-panel-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sys-panel-body">
+          <p class="bas-desc">Pick your daily supplements below. Select as many or as few as you'd like, then hit Build My System.</p>
+
+          <p class="bas-section-q">What do you take?</p>
+
+          <div class="bas-category-block">
+            <div class="bas-cat-label">POWDERS</div>
+            <div class="supp-chips" id="powders-row"></div>
+          </div>
+
+          <div class="bas-category-block">
+            <div class="bas-cat-label">LARGE CAPSULES &amp; SOFTGELS</div>
+            <div class="supp-chips" id="hybrid-row"></div>
+          </div>
+
+          <div class="bas-category-block">
+            <div class="bas-cat-label">PILLS &amp; SMALL CAPSULES</div>
+            <div class="supp-chips" id="pills-row"></div>
+          </div>
+
+          <div class="bas-footer-row">
+            <div class="supp-selected-count" id="selected-count"></div>
+            <button class="bas-cta-btn" id="bas-build-btn">BUILD MY SYSTEM</button>
+          </div>
         </div>
-        <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Add to Cart</button>
       </div>
+
+      <!-- Edit Your System — collapsed on page load -->
+      <div class="sys-panel" id="sys-panel-edit">
+        <button type="button" class="sys-panel-header" id="sys-edit-header">
+          <span class="sys-panel-header-text">
+            <h2 class="sys-panel-header-title">Edit Your System</h2>
+          </span>
+          <svg class="sys-panel-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="sys-panel-body">
+          <p class="sys-edit-desc">Add, remove, and edit the pods in your system below.</p>
+          <div id="system-summary-content" class="system-summary-content">
+            <p class="system-empty-state">Select your supplements<br>to build your system.</p>
+          </div>
+          <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Add to Cart</button>
+        </div>
+      </div>
+
     </aside>
 
   </div>
@@ -408,32 +409,56 @@
     // Only the summary "Get Early Access" button triggers the popup
     document.querySelectorAll('.js-early-access').forEach(btn => btn.addEventListener('click', showBysPopup))
 
-    // BUILD MY SYSTEM — collapse selector, reveal canvas
+    // ── Build Your System / Edit Your System accordion ──────────
+    // Exactly one of the two panels is "open" (full body visible) at a
+    // time; the other collapses to just its header row. Both panels
+    // live in the sidebar next to the canvas, which already updates
+    // live on every chip click regardless of which panel is open — this
+    // toggle is purely about which panel's content is showing, so people
+    // never have to scroll between picking supplements and seeing the
+    // stack/pricing update.
+    const buildPanel = document.getElementById('system-selector')
+    const editPanel  = document.getElementById('sys-panel-edit')
+
+    function openPanel(panel) {
+      [buildPanel, editPanel].forEach(p => p.classList.toggle('open', p === panel))
+    }
+
+    document.getElementById('sys-build-header').addEventListener('click', () => openPanel(buildPanel))
+    document.getElementById('sys-edit-header').addEventListener('click', () => openPanel(editPanel))
+
+    // BUILD MY SYSTEM — collapse Build panel, expand Edit panel
     document.getElementById('bas-build-btn').addEventListener('click', function() {
       const selectedChips = [...document.querySelectorAll('.supp-chip.selected')]
       if (selectedChips.length === 0) return
+      openPanel(editPanel)
+    })
+
+    // "Add another supplement +" inside the Edit panel (wired by
+    // system-builder.js via window.showBysSelector) — collapse Edit
+    // panel, expand Build panel.
+    window.showBysSelector = function() {
+      openPanel(buildPanel)
+    }
+
+    // Collapsed Build panel header shows a running list of what's
+    // picked so far. Delegated on the panel itself (not the individual
+    // .supp-chip buttons) since those are rendered later by the
+    // deferred module script — this still catches every click on them
+    // once they exist.
+    function updateBuildHint() {
+      const selectedChips = [...document.querySelectorAll('.supp-chip.selected')]
+      const hint = document.getElementById('sys-build-hint')
+      if (selectedChips.length === 0) { hint.textContent = ''; return }
       const names = selectedChips.map(el => el.textContent.trim())
       const MAX = 3
       const shown = names.slice(0, MAX).join(', ')
-      const more = names.length - MAX
-      document.getElementById('bas-summary-picks').textContent =
-        shown + (more > 0 ? ' +' + more + ' more' : '')
-      document.getElementById('system-selector').hidden = true
-      const bar = document.getElementById('bas-summary-bar')
-      bar.classList.add('visible')
-      const navH = 70
-      const pad  = 20
-      const top  = bar.getBoundingClientRect().top + window.scrollY - navH - pad
-      window.scrollTo({ top, behavior: 'smooth' })
-    })
-
-    // Change — re-expand selector (also callable from the module)
-    window.showBysSelector = function() {
-      document.getElementById('system-selector').hidden = false
-      document.getElementById('bas-summary-bar').classList.remove('visible')
-      document.getElementById('system-selector').scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const more  = names.length - MAX
+      hint.textContent = shown + (more > 0 ? ' +' + more + ' more' : '')
     }
-    document.getElementById('bas-summary-change').addEventListener('click', window.showBysSelector)
+    buildPanel.addEventListener('click', e => {
+      if (e.target.closest('.supp-chip')) updateBuildHint()
+    })
 
     document.getElementById('bys-footer-email-form').addEventListener('submit', async e => {
       e.preventDefault()
