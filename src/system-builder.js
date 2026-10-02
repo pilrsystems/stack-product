@@ -47,6 +47,17 @@ const POD_GLBS = {
   'Powder Pod': './models/Configurations/Powder%20Pod%20New.glb',
 }
 
+// ── Pricing ────────────────────────────────────────────────────
+// Same base prices and tiered quantity discount curve as the "Add a
+// Pod" widget on the single-pod product pages (pill-pod.html etc.) —
+// kept in sync manually since there's no shared pricing config in the
+// codebase yet; see pill-pod.html for the source of truth.
+const POD_BASE_PRICE  = { 'Pill Pod': 20, 'Hybrid Pod': 23, 'Powder Pod': 29 }
+const POD_CART_ID     = { 'Pill Pod': 'pill-pod', 'Hybrid Pod': 'hybrid-pod', 'Powder Pod': 'powder-pod' }
+const DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28] // index = total pods, 6+ capped at index 6
+function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)] }
+function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) }
+
 const POD_INFO = {
   'Pill Pod': {
     desc: 'Built for the small capsules you take every day. Three compartments, a full week, one pod.',
@@ -71,6 +82,10 @@ const FLY_OFFSET  = 2.0
 // ── Selection state ──────────────────────────────────────────
 const selected = { powders: new Set(), hybrid: new Set(), pills: new Set() }
 let currentPodTypes = []
+// Latest pod counts/total — read by the "Add to Cart" click handler so
+// it doesn't need to recompute calcPods() itself.
+let currentPodCounts = { pillPods: 0, hybridPods: 0, powderPods: 0 }
+let currentCartTotal = 0
 let lastPodKey      = ''
 let buildSeq        = 0   // incremented on each buildStack call; stale builds abort on completion
 
@@ -667,8 +682,12 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   const el    = document.getElementById('system-summary-content')
   const total = pillPods + hybridPods + powderPods
 
+  currentPodCounts = { pillPods, hybridPods, powderPods }
+
   if (total === 0) {
     el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
+    currentCartTotal = 0
+    updateCartButton()
     return
   }
 
@@ -679,17 +698,30 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   const hybridNames = hybridIds.map(id => SUPPLEMENTS.hybrid.find(s => s.id === id).label)
   const powderNames = powderIds.map(id => SUPPLEMENTS.powders.find(s => s.id === id).label)
 
+  // Same tiered quantity discount as the product pages' "Add a Pod"
+  // widget — driven by the TOTAL pod count across all three types.
+  const discount = discountForQty(total)
+
   const chevron = `<svg class="sys-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`
 
+  let cartTotal = 0
+
   function makeRow(podName, supps, category, ids) {
-    const label    = supps.join(', ')
-    const imgSrc   = POD_IMAGES[podName] || ''
-    const spec     = POD_SPECS[podName]  || ''
-    const idsAttr  = JSON.stringify(ids || [])
+    const label     = supps.join(', ')
+    const imgSrc    = POD_IMAGES[podName] || ''
+    const spec      = POD_SPECS[podName]  || ''
+    const idsAttr   = JSON.stringify(ids || [])
+    const listPrice = POD_BASE_PRICE[podName]
+    const salePrice = listPrice * (1 - discount)
+    cartTotal += salePrice
+    const priceHtml = discount > 0
+      ? `<span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(listPrice)}</span>${formatPrice(salePrice)}</span>`
+      : `<span class="sys-acc-price">${formatPrice(listPrice)}</span>`
     return `<div class="sys-acc-row">
       <button class="sys-acc-header">
         <span class="sys-acc-dot"></span>
         <span class="sys-acc-name">${podName} <span class="sys-acc-supp">— <em>${label}</em></span></span>
+        ${priceHtml}
         ${chevron}
       </button>
       <div class="sys-acc-body">
@@ -723,6 +755,9 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   rows += `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
   el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
 
+  currentCartTotal = cartTotal
+  updateCartButton()
+
   el.querySelectorAll('.sys-acc-header').forEach(btn => {
     btn.addEventListener('click', () => btn.closest('.sys-acc-row').classList.toggle('open'))
   })
@@ -742,6 +777,41 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 
   document.getElementById('sys-acc-add-btn')?.addEventListener('click', () => window.showBysSelector?.())
 }
+
+// ── Add to Cart ────────────────────────────────────────────────
+function updateCartButton() {
+  const btn = document.getElementById('system-add-to-cart-btn')
+  if (!btn) return
+  const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods
+  btn.disabled   = totalQty === 0
+  btn.textContent = totalQty > 0 ? 'Add to Cart — ' + formatPrice(currentCartTotal) : 'Add to Cart'
+}
+
+document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
+  const { pillPods, hybridPods, powderPods } = currentPodCounts
+  const total = pillPods + hybridPods + powderPods
+  if (total === 0) return
+
+  const discount = discountForQty(total)
+  const counts = { 'Pill Pod': pillPods, 'Hybrid Pod': hybridPods, 'Powder Pod': powderPods }
+  Object.keys(counts).forEach(podName => {
+    const qty = counts[podName]
+    if (qty === 0) return
+    const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
+    window.PilrCart?.add({
+      id:    POD_CART_ID[podName],
+      title: podName,
+      price: salePrice,
+      image: POD_IMAGES[podName],
+    }, qty)
+  })
+
+  const btn  = this
+  const orig = btn.textContent
+  btn.textContent = 'Added ✓'
+  btn.disabled = true
+  setTimeout(() => { btn.textContent = orig; btn.disabled = false }, 1200)
+})
 
 function updateSystem() {
   const { powderPods, hybridPods, pillPods } = calcPods()

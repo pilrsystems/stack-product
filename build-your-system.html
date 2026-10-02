@@ -169,7 +169,7 @@
         <div id="system-summary-content" class="system-summary-content">
           <p class="system-empty-state">Select your supplements<br>to build your system.</p>
         </div>
-        <button type="button" class="btn system-cta js-early-access">Get Early Access</button>
+        <button type="button" class="btn system-cta" id="system-add-to-cart-btn" disabled>Add to Cart</button>
       </div>
     </aside>
 
@@ -374,6 +374,7 @@
     })
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
   </script>
+  <script src="./pilr-cart.js"></script>
   <script type="module" src="/src/system-builder.js"></script>
   <script type="module" src="/src/shopify.js"></script>
 

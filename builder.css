@@ -688,7 +688,7 @@ body.system-page {
   font-family: 'Inter', sans-serif;
   letter-spacing: 0.02em;
   padding: 5px 13px;
-  border-radius: 20px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   cursor: pointer;
   background: transparent;
@@ -1007,7 +1007,7 @@ body.system-page {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 0.85rem;
   padding: 7px 16px;
-  border-radius: 100px;
+  border-radius: var(--radius);
 }
 
 .bas-top-section .supp-chip:hover:not(.selected) {
@@ -1045,7 +1045,7 @@ body.system-page {
   background: #5e6e7a;
   color: #FAFAF8;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -1132,6 +1132,22 @@ body.system-page {
 }
 
 .sys-acc-supp { color: #7a8a94; }
+
+.sys-acc-price {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5e6e7a;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.sys-acc-price-strike {
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: #9aa7ae;
+  text-decoration: line-through;
+  margin-right: 0.35rem;
+}
 
 .sys-acc-chevron {
   flex-shrink: 0;
