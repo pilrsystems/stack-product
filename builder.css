@@ -731,7 +731,8 @@ body.system-page {
 }
 
 .system-summary-content {
-  flex: 1;
+  /* No flex:1 — the button should sit right under the pod list instead
+     of being pushed to the bottom of the full-height panel. */
 }
 
 .system-empty-state {
@@ -1132,6 +1133,20 @@ body.system-page {
 }
 
 .sys-acc-supp { color: #7a8a94; }
+
+.sys-acc-bundle-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #5e6e7a;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
 
 .sys-acc-price {
   flex-shrink: 0;

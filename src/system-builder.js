@@ -58,6 +58,18 @@ const DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28] // index = total po
 function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)] }
 function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) }
 
+// Exactly one Pill + one Hybrid + one Powder Pod is its own bundle (the
+// same product classic-stack.html sells), priced below the generic
+// tiered discount — not derived from DISCOUNT_BY_QTY. The instant the
+// selection becomes anything else (a 4th pod, a duplicate, one type
+// missing), this stops applying and the normal per-pod pricing takes
+// over again.
+const CLASSIC_STACK = {
+  id: 'classic-stack', title: 'Classic Stack', price: 54,
+  image: 'images/lifestyle_section/Hand Render.png',
+}
+const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Pill Pod'] + POD_BASE_PRICE['Hybrid Pod'] + POD_BASE_PRICE['Powder Pod']
+
 const POD_INFO = {
   'Pill Pod': {
     desc: 'Built for the small capsules you take every day. Three compartments, a full week, one pod.',
@@ -84,8 +96,9 @@ const selected = { powders: new Set(), hybrid: new Set(), pills: new Set() }
 let currentPodTypes = []
 // Latest pod counts/total — read by the "Add to Cart" click handler so
 // it doesn't need to recompute calcPods() itself.
-let currentPodCounts = { pillPods: 0, hybridPods: 0, powderPods: 0 }
-let currentCartTotal = 0
+let currentPodCounts   = { pillPods: 0, hybridPods: 0, powderPods: 0 }
+let currentCartTotal   = 0
+let isClassicStackCart = false
 let lastPodKey      = ''
 let buildSeq        = 0   // incremented on each buildStack call; stale builds abort on completion
 
@@ -673,9 +686,9 @@ const POD_IMAGES = {
   'Powder Pod': 'images/lifestyle_section/Powder Pod Render.png',
 }
 const POD_SPECS = {
-  'Pill Pod':   'Holds up to 3 pill & small capsule supplements',
-  'Hybrid Pod': 'Holds up to 2 large capsule or softgel supplements',
-  'Powder Pod': 'Holds up to ~75g of powder',
+  'Pill Pod':   '[pending mL]',
+  'Hybrid Pod': '[pending mL]',
+  'Powder Pod': '[pending mL]',
 }
 
 function updateSummary(pillPods, hybridPods, powderPods) {
@@ -686,7 +699,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 
   if (total === 0) {
     el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
-    currentCartTotal = 0
+    currentCartTotal   = 0
+    isClassicStackCart = false
     updateCartButton()
     return
   }
@@ -698,11 +712,70 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   const hybridNames = hybridIds.map(id => SUPPLEMENTS.hybrid.find(s => s.id === id).label)
   const powderNames = powderIds.map(id => SUPPLEMENTS.powders.find(s => s.id === id).label)
 
+  const chevron = `<svg class="sys-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`
+
+  const isClassicStack = pillPods === 1 && hybridPods === 1 && powderPods === 1
+  isClassicStackCart = isClassicStack
+
+  if (isClassicStack) {
+    const addBtnHtml = `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
+    el.innerHTML = `<div class="sys-acc-list">
+      <div class="sys-acc-row">
+        <button class="sys-acc-header">
+          <span class="sys-acc-dot"></span>
+          <span class="sys-acc-name"><span class="sys-acc-bundle-badge">Best Value</span>The Classic Stack</span>
+          <span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(CLASSIC_STACK_LIST_PRICE)}</span>${formatPrice(CLASSIC_STACK.price)}</span>
+          ${chevron}
+        </button>
+        <div class="sys-acc-body">
+          <div class="sys-acc-expanded">
+            <div class="sys-acc-pod-img-wrap">
+              <img src="${CLASSIC_STACK.image}" alt="The Classic Stack" class="sys-acc-pod-img" />
+            </div>
+            <div class="sys-acc-pod-info">
+              <div class="sys-acc-info-field">
+                <span class="sys-acc-info-label">Pill Pod</span>
+                <span class="sys-acc-info-value">${pillNames.join(', ')}</span>
+              </div>
+              <div class="sys-acc-info-field">
+                <span class="sys-acc-info-label">Hybrid Pod</span>
+                <span class="sys-acc-info-value">${hybridNames.join(', ')}</span>
+              </div>
+              <div class="sys-acc-info-field">
+                <span class="sys-acc-info-label">Powder Pod</span>
+                <span class="sys-acc-info-value">${powderNames.join(', ')}</span>
+              </div>
+              <div class="sys-acc-pod-actions">
+                <button class="sys-acc-remove" id="sys-acc-remove-bundle">× Remove Stack</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${addBtnHtml}
+    </div>`
+
+    currentCartTotal = CLASSIC_STACK.price
+    updateCartButton()
+
+    el.querySelectorAll('.sys-acc-header').forEach(btn => {
+      btn.addEventListener('click', () => btn.closest('.sys-acc-row').classList.toggle('open'))
+    })
+    document.getElementById('sys-acc-remove-bundle')?.addEventListener('click', e => {
+      e.stopPropagation()
+      selected.pills.clear()
+      selected.hybrid.clear()
+      selected.powders.clear()
+      document.querySelectorAll('.supp-chip.selected').forEach(chip => chip.classList.remove('selected'))
+      updateSystem()
+    })
+    document.getElementById('sys-acc-add-btn')?.addEventListener('click', () => window.showBysSelector?.())
+    return
+  }
+
   // Same tiered quantity discount as the product pages' "Add a Pod"
   // widget — driven by the TOTAL pod count across all three types.
   const discount = discountForQty(total)
-
-  const chevron = `<svg class="sys-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`
 
   let cartTotal = 0
 
@@ -792,19 +865,23 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
   const total = pillPods + hybridPods + powderPods
   if (total === 0) return
 
-  const discount = discountForQty(total)
-  const counts = { 'Pill Pod': pillPods, 'Hybrid Pod': hybridPods, 'Powder Pod': powderPods }
-  Object.keys(counts).forEach(podName => {
-    const qty = counts[podName]
-    if (qty === 0) return
-    const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
-    window.PilrCart?.add({
-      id:    POD_CART_ID[podName],
-      title: podName,
-      price: salePrice,
-      image: POD_IMAGES[podName],
-    }, qty)
-  })
+  if (isClassicStackCart) {
+    window.PilrCart?.add(CLASSIC_STACK, 1)
+  } else {
+    const discount = discountForQty(total)
+    const counts = { 'Pill Pod': pillPods, 'Hybrid Pod': hybridPods, 'Powder Pod': powderPods }
+    Object.keys(counts).forEach(podName => {
+      const qty = counts[podName]
+      if (qty === 0) return
+      const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
+      window.PilrCart?.add({
+        id:    POD_CART_ID[podName],
+        title: podName,
+        price: salePrice,
+        image: POD_IMAGES[podName],
+      }, qty)
+    })
+  }
 
   const btn  = this
   const orig = btn.textContent
