@@ -32,18 +32,18 @@ const SUPPLEMENTS = {
 }
 
 // ── Individual pod GLB paths ─────────────────────────────────
-// Hybrid/Powder extracted from stack-bottle.glb (the homepage hero
+// Big Pill/Powder extracted from stack-bottle.glb (the homepage hero
 // model's four named parts — see extract-pods.mjs) since that model's
 // geometry looks noticeably better than the original Configurations
 // set. Each export has the rotation + 1000x scale correction already
 // baked in, so it drops into the exact same transform chain below
-// unmodified. Pill Pod stays on the original Configurations asset —
-// stack-bottle.glb's Pill Pod reflects an older product design that
+// unmodified. Small Pill Pod stays on the original Configurations asset —
+// stack-bottle.glb's Small Pill Pod reflects an older product design that
 // still has a dispenser-flap cutout, which the real product no
 // longer has.
 const POD_GLBS = {
-  'Pill Pod':   './models/Configurations/pill_module_260520.glb',
-  'Hybrid Pod': './models/Configurations/Hybrid%20Pod%20New.glb',
+  'Small Pill Pod':   './models/Configurations/pill_module_260520.glb',
+  'Big Pill Pod': './models/Configurations/Hybrid%20Pod%20New.glb',
   'Powder Pod': './models/Configurations/Powder%20Pod%20New.glb',
 }
 
@@ -52,13 +52,13 @@ const POD_GLBS = {
 // Pod" widget on the single-pod product pages (pill-pod.html etc.) —
 // kept in sync manually since there's no shared pricing config in the
 // codebase yet; see pill-pod.html for the source of truth.
-const POD_BASE_PRICE  = { 'Pill Pod': 20, 'Hybrid Pod': 23, 'Powder Pod': 29 }
-const POD_CART_ID     = { 'Pill Pod': 'pill-pod', 'Hybrid Pod': 'hybrid-pod', 'Powder Pod': 'powder-pod' }
+const POD_BASE_PRICE  = { 'Small Pill Pod': 20, 'Big Pill Pod': 23, 'Powder Pod': 29 }
+const POD_CART_ID     = { 'Small Pill Pod': 'pill-pod', 'Big Pill Pod': 'hybrid-pod', 'Powder Pod': 'powder-pod' }
 const DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28] // index = total pods, 6+ capped at index 6
 function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)] }
 function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) }
 
-// Exactly one Pill + one Hybrid + one Powder Pod is its own bundle (the
+// Exactly one Small Pill + one Big Pill + one Powder Pod is its own bundle (the
 // same product classic-stack.html sells), priced below the generic
 // tiered discount — not derived from DISCOUNT_BY_QTY. The instant the
 // selection becomes anything else (a 4th pod, a duplicate, one type
@@ -68,15 +68,15 @@ const CLASSIC_STACK = {
   id: 'classic-stack', title: 'Classic Stack', price: 54,
   image: 'images/lifestyle_section/Hand Render.png',
 }
-const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Pill Pod'] + POD_BASE_PRICE['Hybrid Pod'] + POD_BASE_PRICE['Powder Pod']
+const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Small Pill Pod'] + POD_BASE_PRICE['Big Pill Pod'] + POD_BASE_PRICE['Powder Pod']
 
 const POD_INFO = {
-  'Pill Pod': {
+  'Small Pill Pod': {
     desc: 'Built for the small capsules you take every day. Three compartments, a full week, one pod.',
     specs: ['[Size] mL'],
     examples: 'Vitamin D, Zinc, Multivitamins, etc.',
   },
-  'Hybrid Pod': {
+  'Big Pill Pod': {
     desc: 'Built to carry a week\'s supply of medium and large capsules.',
     specs: ['[Size] mL'],
     examples: 'Fish Oil, Magnesium, Ashwagandha, etc.',
@@ -270,7 +270,7 @@ function measurePod(s) {
 // stays a true session constant only once every type has been measured
 // at least once. The default stack's own build normally fills this in
 // within well under a second of page load, but a selection whose build
-// finishes first — e.g. one that skips Pill Pod, whose Draco-compressed
+// finishes first — e.g. one that skips Small Pill Pod, whose Draco-compressed
 // GLB decodes slower than the others — would otherwise compute OVERLAP
 // from an incomplete (and so inflated) minimum for that one build. This
 // tops up whatever's missing before OVERLAP gets computed.
@@ -322,9 +322,9 @@ async function buildStack(podTypes, onReady) {
       metalness: 0.0,
     })
 
-    // Load all pods in parallel. The new Hybrid Pod GLB (extracted from
+    // Load all pods in parallel. The new Big Pill Pod GLB (extracted from
     // stack-bottle.glb) already has its own internal divider wall
-    // modeled in, unlike the old Configurations Hybrid Pod which was an
+    // modeled in, unlike the old Configurations Big Pill Pod which was an
     // empty shell needing a separate divider_2026_0520.glb piece added
     // on top — doing that here now would overlay a second, perpendicular
     // wall and make the pod look like it has 4 compartments instead of 2.
@@ -350,7 +350,7 @@ async function buildStack(podTypes, onReady) {
 
       const height = Math.abs(zMax - zMin)
       // Cache every pod type's measured height the first time we see it.
-      // The default stack (Pill + Hybrid + Powder) loads on page load,
+      // The default stack (Small Pill + Big Pill + Powder) loads on page load,
       // before any selection is possible, so by the time the user picks
       // anything this cache already holds all three — see HEIGHT_CACHE
       // below for why that matters.
@@ -364,18 +364,18 @@ async function buildStack(podTypes, onReady) {
     // the loads) so a build that gets superseded mid-flight — e.g. the
     // very first page-load call, if the user clicks a chip before its GLBs
     // finish — still records whatever pod heights it measured instead of
-    // silently dropping them. Previously Pill Pod could end up permanently
+    // silently dropping them. Previously Small Pill Pod could end up permanently
     // missing from HEIGHT_CACHE for the rest of the session whenever that
     // happened, skewing the stacking math for any selection that didn't
-    // happen to include a Pill Pod.
+    // happen to include a Small Pill Pod.
     if (mySeq !== buildSeq) {
       document.getElementById('system-loading')?.classList.add('hidden')
       return
     }
 
-    // Per-type center fraction: Pill Pod geometry sits toward the top of its BB
+    // Per-type center fraction: Small Pill Pod geometry sits toward the top of its BB
     // so we bias the center upward to close the gap it creates below
-    const CENTER_BIAS = { 'Pill Pod': 0.72, 'Hybrid Pod': 0.5, 'Powder Pod': 0.5 }
+    const CENTER_BIAS = { 'Small Pill Pod': 0.72, 'Big Pill Pod': 0.5, 'Powder Pod': 0.5 }
 
     // Half-extent of each pod above/below its own bias-weighted center.
     // The pods physically nest into each other (each one's connector slides
@@ -384,7 +384,7 @@ async function buildStack(podTypes, onReady) {
     // depth, not the raw center-to-center distance. A flat center-to-center
     // step (the old approach) only gives a constant overlap when neighboring
     // pods share the same height/bias — it silently broke the moment two
-    // Pill Pods ended up adjacent (bias=0.72 leaves Pill Pod a tiny
+    // Small Pill Pods ended up adjacent (bias=0.72 leaves Small Pill Pod a tiny
     // 0.28-of-height half-span above its own center), so that pair nested
     // only half as deep as every other pod-to-pod boundary and visibly
     // read as a gap where the others looked fused.
@@ -756,21 +756,21 @@ function getLabelNamesForPods(podTypes) {
   const pCopy = [...pillNames], hCopy = [...hybridNames], wCopy = [...powderNames]
 
   return podTypes.map(type => {
-    if (type === 'Pill Pod'   && pCopy.length)  return pCopy.splice(0, 3).join(', ')
-    if (type === 'Hybrid Pod' && hCopy.length)  return hCopy.splice(0, 2).join(', ')
+    if (type === 'Small Pill Pod'   && pCopy.length)  return pCopy.splice(0, 3).join(', ')
+    if (type === 'Big Pill Pod' && hCopy.length)  return hCopy.splice(0, 2).join(', ')
     if (type === 'Powder Pod' && wCopy.length)  return wCopy.splice(0, 1)[0]
     return type
   })
 }
 
 const POD_IMAGES = {
-  'Pill Pod':   'images/lifestyle_section/Pill Pod.png',
-  'Hybrid Pod': 'images/lifestyle_section/Hybrid Pod.png',
+  'Small Pill Pod':   'images/lifestyle_section/Pill Pod.png',
+  'Big Pill Pod': 'images/lifestyle_section/Hybrid Pod.png',
   'Powder Pod': 'images/lifestyle_section/Powder Pod Render.png',
 }
 const POD_SPECS = {
-  'Pill Pod':   '[pending mL]',
-  'Hybrid Pod': '[pending mL]',
+  'Small Pill Pod':   '[pending mL]',
+  'Big Pill Pod': '[pending mL]',
   'Powder Pod': '[pending mL]',
 }
 
@@ -818,11 +818,11 @@ function updateSummary(pillPods, hybridPods, powderPods) {
             </div>
             <div class="sys-acc-pod-info">
               <div class="sys-acc-info-field">
-                <span class="sys-acc-info-label">Pill Pod</span>
+                <span class="sys-acc-info-label">Small Pill Pod</span>
                 <span class="sys-acc-info-value">${pillNames.join(', ')}</span>
               </div>
               <div class="sys-acc-info-field">
-                <span class="sys-acc-info-label">Hybrid Pod</span>
+                <span class="sys-acc-info-label">Big Pill Pod</span>
                 <span class="sys-acc-info-value">${hybridNames.join(', ')}</span>
               </div>
               <div class="sys-acc-info-field">
@@ -908,8 +908,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   }
 
   let rows = ''
-  for (let i = 0; i < pillPods;   i++) rows += makeRow('Pill Pod',   pillNames.slice(i*3,(i+1)*3),   'pills',   pillIds.slice(i*3,(i+1)*3))
-  for (let i = 0; i < hybridPods; i++) rows += makeRow('Hybrid Pod', hybridNames.slice(i*2,(i+1)*2), 'hybrid',  hybridIds.slice(i*2,(i+1)*2))
+  for (let i = 0; i < pillPods;   i++) rows += makeRow('Small Pill Pod',   pillNames.slice(i*3,(i+1)*3),   'pills',   pillIds.slice(i*3,(i+1)*3))
+  for (let i = 0; i < hybridPods; i++) rows += makeRow('Big Pill Pod', hybridNames.slice(i*2,(i+1)*2), 'hybrid',  hybridIds.slice(i*2,(i+1)*2))
   for (let i = 0; i < powderPods; i++) rows += makeRow('Powder Pod', [powderNames[i]].filter(Boolean),'powders', [powderIds[i]].filter(Boolean))
 
   rows += `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
@@ -965,7 +965,7 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
     window.PilrCart?.add(CLASSIC_STACK, 1)
   } else {
     const discount = discountForQty(total)
-    const counts = { 'Pill Pod': pillPods, 'Hybrid Pod': hybridPods, 'Powder Pod': powderPods }
+    const counts = { 'Small Pill Pod': pillPods, 'Big Pill Pod': hybridPods, 'Powder Pod': powderPods }
     Object.keys(counts).forEach(podName => {
       const qty = counts[podName]
       if (qty === 0) return
@@ -995,8 +995,8 @@ function updateSystem() {
 
   // Build ordered pod list: pill (bottom) → hybrid (middle) → powder (top)
   const podList = [
-    ...Array(pillPods).fill('Pill Pod'),
-    ...Array(hybridPods).fill('Hybrid Pod'),
+    ...Array(pillPods).fill('Small Pill Pod'),
+    ...Array(hybridPods).fill('Big Pill Pod'),
     ...Array(powderPods).fill('Powder Pod'),
   ]
 
@@ -1055,7 +1055,7 @@ renderChips('pills',   'pills-row')
 animate()
 
 // Default: show full system as a preview
-const DEFAULT_STACK = ['Pill Pod', 'Hybrid Pod', 'Powder Pod']
+const DEFAULT_STACK = ['Small Pill Pod', 'Big Pill Pod', 'Powder Pod']
 const initZ = idealCameraZ(DEFAULT_STACK.length)
 CAMERA_REST_POS.z = initZ
 camera.position.z = initZ

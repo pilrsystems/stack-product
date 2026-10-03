@@ -10,7 +10,7 @@ const CONFIGS = [
     id: 'classic',
     name: 'Classic',
     tagline: 'Your all-in-one daily stack',
-    pods: ['Pill Pod', 'Hybrid Pod', 'Powder Pod'],
+    pods: ['Small Pill Pod', 'Big Pill Pod', 'Powder Pod'],
     layers: ['bottom', 'middle', 'top', 'lid'],
     commonStack: 'Vitamin D, Zinc, B12 → Omega-3, Magnesium → Creatine',
     accent: '#8BB8C8',
@@ -20,7 +20,7 @@ const CONFIGS = [
     id: 'powder-heavy',
     name: 'Powder Heavy',
     tagline: 'For those whose routine leans more on powders',
-    pods: ['Pill Pod', 'Hybrid Pod', 'Powder Pod', 'Powder Pod'],
+    pods: ['Small Pill Pod', 'Big Pill Pod', 'Powder Pod', 'Powder Pod'],
     layers: ['bottom', 'middle', 'middle_2', 'top', 'lid'],
     commonStack: 'Vitamin D, Zinc, Multivitamin → Electrolytes → Greens Powder → Collagen',
     accent: '#7AAFC8',
@@ -30,7 +30,7 @@ const CONFIGS = [
     id: 'capsule-loader',
     name: 'Capsule Loader',
     tagline: 'All capsules, no powders',
-    pods: ['Pill Pod', 'Hybrid Pod', 'Hybrid Pod'],
+    pods: ['Small Pill Pod', 'Big Pill Pod', 'Big Pill Pod'],
     layers: ['bottom', 'middle', 'top', 'lid'],
     commonStack: 'B12, Zinc, Vitamin D → Fish Oil, CoQ10 → Magnesium, Turmeric',
     accent: '#A89CC4',
@@ -40,7 +40,7 @@ const CONFIGS = [
     id: 'minimalist',
     name: 'Minimalist',
     tagline: 'Just the essentials — light and compact',
-    pods: ['Pill Pod', 'Hybrid Pod'],
+    pods: ['Small Pill Pod', 'Big Pill Pod'],
     layers: ['bottom', 'top', 'lid'],
     commonStack: 'Ashwagandha, Zinc, Turmeric → Magnesium and Omega-3 or Electrolytes',
     accent: '#A8C4A0',
@@ -50,7 +50,7 @@ const CONFIGS = [
     id: 'serious-traveler',
     name: 'Serious Traveler',
     tagline: 'Full coverage, every trip',
-    pods: ['Pill Pod', 'Hybrid Pod', 'Hybrid Pod', 'Powder Pod'],
+    pods: ['Small Pill Pod', 'Big Pill Pod', 'Big Pill Pod', 'Powder Pod'],
     layers: ['bottom', 'middle', 'middle_up', 'top', 'lid'],
     commonStack: 'Melatonin, Ibuprofen, Charcoal → Magnesium, Multivitamin → Creatine → Greens Powder',
     accent: '#C4B89C',
@@ -60,12 +60,12 @@ const CONFIGS = [
 
 // ── Pod detail info ──────────────────────────────────────────
 const POD_INFO = {
-  'Pill Pod': {
+  'Small Pill Pod': {
     desc: 'Carries a full week of small and medium-sized capsules — organized across 3 compartments for easy access.',
     specs: ['Easy Dispense & Loading Mechanism', 'Height: 1 in.'],
     examples: 'Vitamin D, Zinc, Multivitamins…',
   },
-  'Hybrid Pod': {
+  'Big Pill Pod': {
     desc: 'Organize a week\'s supply of larger pill supplements. Start with one. Stack as many as you need.',
     specs: ['2 compartments for large capsules', 'Height: 2 in.'],
     examples: 'Fish Oil, Magnesium, Electrolytes, Creatine…',
