@@ -424,8 +424,20 @@
       [buildPanel, editPanel].forEach(p => p.classList.toggle('open', p === panel))
     }
 
-    document.getElementById('sys-build-header').addEventListener('click', () => openPanel(buildPanel))
-    document.getElementById('sys-edit-header').addEventListener('click', () => openPanel(editPanel))
+    // Header click toggles: opening a collapsed panel still closes the
+    // other one (only one body shown at a time), but clicking the
+    // header of the panel that's already open just collapses it —
+    // leaving both collapsed — rather than doing nothing.
+    function togglePanel(panel) {
+      if (panel.classList.contains('open')) {
+        panel.classList.remove('open')
+      } else {
+        openPanel(panel)
+      }
+    }
+
+    document.getElementById('sys-build-header').addEventListener('click', () => togglePanel(buildPanel))
+    document.getElementById('sys-edit-header').addEventListener('click', () => togglePanel(editPanel))
 
     // BUILD MY SYSTEM — collapse Build panel, expand Edit panel
     document.getElementById('bas-build-btn').addEventListener('click', function() {
