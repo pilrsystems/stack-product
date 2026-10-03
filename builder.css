@@ -741,6 +741,15 @@ body.system-page {
   margin-bottom: 1.5rem;
 }
 
+/* Targets the Pills & Small Capsules block specifically: neither
+   :last-of-type (the .bas-footer-row right after it is a <div> too, so
+   that's what "last-of-type" actually matches) nor :last-child (that
+   same footer-row really is .sys-panel-body's final child) single it
+   out — it's the 2nd-to-last child instead. */
+.bas-category-block:nth-last-child(2) {
+  margin-bottom: 0.5rem;
+}
+
 .bas-cat-label {
   font-size: 0.65rem;
   font-weight: 600;
@@ -803,7 +812,7 @@ body.system-page {
 }
 
 .bas-footer-row {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
