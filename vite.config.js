@@ -26,6 +26,7 @@ export default defineConfig({
         stack: resolve(__dirname, 'stack.html'),
         claim: resolve(__dirname, 'claim.html'),
         routineProblem: resolve(__dirname, 'the-routine-problem.html'),
+        sizeGuide: resolve(__dirname, 'size-guide.html'),
       },
     },
   },

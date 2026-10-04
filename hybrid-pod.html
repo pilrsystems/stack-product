@@ -10,7 +10,181 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
+  <!-- Buy column standardized to match pill-pod.html's layout: same
+       title/reviews/price order, checkmark bullets, collapsible "Add
+       a Pod" widget, single Add to Cart button, Details/Size guide
+       accordions, and "Complete your system" offer box. -->
   <style>
+    #product-info-inner .bc-guarantees {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    #product-info-inner .bc-guarantee-item {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-guarantee-divider {
+      width: 3px; height: 3px; border-radius: 50%; background: #c3ccd1; flex-shrink: 0;
+    }
+    #product-info-inner .product-reviews-bar { margin-top: -0.3rem; }
+    /* Reviews → tagline gets the same -0.3rem tightening as title →
+       reviews, so the gap above and below the stars matches. */
+    #product-info-inner .product-page-tagline { margin-top: -0.3rem; }
+    #product-info-inner .product-btn-add { width: 100%; margin-top: -0.85rem; }
+    #product-info-inner .bc-finish {
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    /* Price sits flush in the top-right corner of the title row,
+       top-aligned with the title rather than centered on its
+       baseline. */
+    #product-info-inner .product-title-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    #product-info-inner .product-title-price { font-size: 1.15rem; }
+    #product-info-inner .product-feature-list { gap: 0.2rem; margin-bottom: 0.4rem; padding-left: 0.4rem; }
+    #product-info-inner .product-feature-list li { color: #7a8a94; }
+    #product-info-inner .product-feature-list li { font-size: 0.85rem; font-weight: 400; }
+    #product-info-inner .product-feature-check { flex-shrink: 0; }
+    #product-info-inner .bc-accordion-text {
+      font-size: 0.82rem; color: #7a8a94; line-height: 1.6; margin: 0 0 0.6rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-spec-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; line-height: 1.8;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-spec-row span:first-child { color: #3d4f5c; }
+    #product-info-inner .bc-capacity-label {
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      font-size: 0.75rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #3d4f5c; margin: 0 0 0.5rem; padding: 0.4rem 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-capacity-label-sub { font-weight: 400; color: #7a8a94; }
+    #product-info-inner .bc-capacity-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      font-size: 0.9rem; color: #5e6e7a; padding: 0.4rem 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-capacity-row span:first-child {
+      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem;
+    }
+    #product-info-inner .bc-capacity-row + .bc-capacity-row { border-top: 1px solid rgba(66,85,99,0.15); }
+    #product-info-inner .bc-capacity-row span:last-child { color: #7a8a94; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; }
+    #product-info-inner .product-info-sections .product-accordion:nth-child(2) .product-accordion-panel.is-open {
+      max-height: 560px; margin-top: -0.4rem;
+    }
+    #product-info-inner .bc-capacity-note {
+      font-size: 0.6rem; color: #9aa7ae; margin: 0 0 0.6rem; padding-top: 0.4rem;
+      border-top: 1px solid rgba(66,85,99,0.15);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-offer-price {
+      font-size: 0.9rem; color: #7a8a94; flex-shrink: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .offer-item + .offer-item {
+      margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(66,85,99,0.15);
+    }
+    #product-info-inner .bc-offer-arrow {
+      color: #5e6e7a; font-size: 1rem; flex-shrink: 0; text-decoration: none;
+    }
+    #product-info-inner .pod-add {
+      background: var(--bg); border: 1.5px solid rgba(66,85,99,0.15); border-radius: 0;
+      padding: 0 1.5rem;
+    }
+    #product-info-inner .pod-add-trigger {
+      width: 100%; position: relative; display: flex; align-items: center; justify-content: center;
+      padding: 0.7rem 0; background: none; border: none; cursor: pointer; text-align: center;
+    }
+    #product-info-inner .pod-add-trigger-icon {
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; line-height: 1; color: #5e6e7a;
+      transition: transform 0.25s ease;
+    }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-icon { transform: translateY(-50%) rotate(45deg); }
+    #product-info-inner .pod-add-trigger-note {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      font-size: 0.7rem; font-weight: 400; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-note { display: none; }
+    #product-info-inner .pod-add-trigger-label--closed {
+      font-size: 0.6875rem; font-weight: 600; color: #5e6e7a;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-trigger-label--open {
+      display: none; font-size: 0.78rem; font-weight: 400; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-label--closed { display: none; }
+    #product-info-inner .pod-add-trigger[aria-expanded="true"] .pod-add-trigger-label--open { display: inline; }
+    #product-info-inner .pod-add-panel {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    #product-info-inner .pod-add-panel.is-open { max-height: 600px; overflow: visible; }
+    #product-info-inner .pod-add-row {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 0;
+      border-top: 1px solid rgba(66,85,99,0.15);
+    }
+    #product-info-inner .pod-add-row-qty {
+      flex-shrink: 0; width: 58px; display: flex; align-items: center; gap: 0.45rem;
+    }
+    #product-info-inner .pod-add-qty-btn {
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-size: 1rem; line-height: 1; color: #5e6e7a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-row[data-qty="0"] .pod-add-qty-minus,
+    #product-info-inner .pod-add-row[data-qty="0"] .pod-add-qty-val { display: none; }
+    #product-info-inner .pod-add-qty-val {
+      min-width: 14px; text-align: center; font-size: 0.9rem; font-weight: 600; color: #5e6e7a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-row-name {
+      flex: 0 0 auto; font-size: 0.95rem; font-weight: 400; color: #5e6e7a; margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-row-price {
+      flex-shrink: 0; text-align: right; margin: 0 0 0 auto;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .pod-add-row-strike {
+      font-size: 0.85rem; color: #9aa7ae; text-decoration: line-through; margin-right: 0.35rem;
+    }
+    #product-info-inner .pod-add-row-strike.is-hidden { display: none; }
+    #product-info-inner .pod-add-row-strike--after { margin-right: 0; margin-left: 0.35rem; }
+    #product-info-inner .pod-add-row-sale { font-size: 0.95rem; font-weight: 700; color: #5e6e7a; }
+    #product-info-inner .pod-add-offer-row {
+      text-decoration: none; cursor: pointer; padding-bottom: 1.1rem;
+      border-radius: var(--radius);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+    #product-info-inner .pod-add-offer-row:hover {
+      transform: translateY(-6px) scale(1.035);
+    }
+    #product-info-inner .pod-add-offer-badge {
+      display: block; font-size: 0.5rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #7a8a94; margin-bottom: 0.25rem;
+      transition: color 0.2s ease;
+    }
+    #product-info-inner .pod-add-offer-title {
+      font-size: 0.9rem; font-weight: 700; color: #5e6e7a; transition: color 0.2s ease;
+    }
+    #product-info-inner .pod-add-row:not(.pod-add-offer-row) .pod-add-row-name {
+      font-size: 0.9rem;
+    }
+    #product-info-inner .pod-add-offer-sub {
+      display: block; font-size: 0.8rem; font-weight: 400; color: #7a8a94; margin-top: 0.15rem;
+      transition: color 0.2s ease;
+    }
     /* FAQ — page background instead of the shared .wp-faq grey, so it
        reads as part of this page rather than a distinct band. Scoped
        here, not in style.css, so why-pilr.html keeps its grey. */
@@ -77,49 +251,117 @@
         </div>
         <span class="product-reviews-count">4,728 Reviews</span>
       </div>
-      <p class="product-page-tagline">Built to carry a week's supply of medium and large capsules.</p>
+      <p class="product-page-tagline">Built for your larger pills, capsules, and gummies.</p>
       <ul class="product-feature-list">
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
+
+      <div class="pod-add" id="pod-add">
+        <button type="button" class="pod-add-trigger" id="pod-add-trigger" aria-expanded="false" aria-controls="pod-add-panel">
+          <span class="pod-add-trigger-icon">+</span>
+          <span class="pod-add-trigger-label--closed">Add a Pod</span>
+          <span class="pod-add-trigger-label--open">Stack more, save more — up to 28% off.</span>
+          <span class="pod-add-trigger-note">(up to 28% off)</span>
+        </button>
+        <div class="pod-add-panel" id="pod-add-panel">
+          <div class="pod-add-row" data-qty="0" data-pod-id="pill-pod" data-pod-title="Small Pill pod" data-pod-image="images/lifestyle_section/Pill Pod.png">
+            <p class="pod-add-row-name">Small Pill Pod</p>
+            <div class="pod-add-row-qty">
+              <button type="button" class="pod-add-qty-btn pod-add-qty-minus" data-action="minus" aria-label="Decrease Small Pill Pod quantity">&minus;</button>
+              <span class="pod-add-qty-val">0</span>
+              <button type="button" class="pod-add-qty-btn pod-add-qty-plus" data-action="plus" aria-label="Increase Small Pill Pod quantity">+</button>
+            </div>
+            <p class="pod-add-row-price"><span class="pod-add-row-strike is-hidden">$20</span><span class="pod-add-row-sale">$20</span></p>
+          </div>
+
+          <div class="pod-add-row" data-qty="1" data-pod-id="hybrid-pod" data-pod-title="Big Pill pod" data-pod-image="images/lifestyle_section/Hybrid Pod.png">
+            <p class="pod-add-row-name">Big Pill Pod</p>
+            <div class="pod-add-row-qty">
+              <button type="button" class="pod-add-qty-btn pod-add-qty-minus" data-action="minus" aria-label="Decrease Big Pill Pod quantity">&minus;</button>
+              <span class="pod-add-qty-val">1</span>
+              <button type="button" class="pod-add-qty-btn pod-add-qty-plus" data-action="plus" aria-label="Increase Big Pill Pod quantity">+</button>
+            </div>
+            <p class="pod-add-row-price"><span class="pod-add-row-strike is-hidden">$23</span><span class="pod-add-row-sale">$23</span></p>
+          </div>
+
+          <div class="pod-add-row" data-qty="0" data-pod-id="powder-pod" data-pod-title="Powder pod" data-pod-image="images/lifestyle_section/Powder Pod Render.png">
+            <p class="pod-add-row-name">Powder Pod</p>
+            <div class="pod-add-row-qty">
+              <button type="button" class="pod-add-qty-btn pod-add-qty-minus" data-action="minus" aria-label="Decrease Powder Pod quantity">&minus;</button>
+              <span class="pod-add-qty-val">0</span>
+              <button type="button" class="pod-add-qty-btn pod-add-qty-plus" data-action="plus" aria-label="Increase Powder Pod quantity">+</button>
+            </div>
+            <p class="pod-add-row-price"><span class="pod-add-row-strike is-hidden">$26</span><span class="pod-add-row-sale">$26</span></p>
+          </div>
+
+          <a href="./classic-stack.html" class="pod-add-row pod-add-offer-row">
+            <p class="pod-add-row-name">
+              <span class="pod-add-offer-badge">Best Value</span>
+              <span class="pod-add-offer-title">Classic Stack</span>
+              <span class="pod-add-offer-sub">All 3 pods, includes free powder scooper.</span>
+            </p>
+            <p class="pod-add-row-price"><span class="pod-add-row-sale">$54</span><span class="pod-add-row-strike pod-add-row-strike--after">$69</span></p>
+          </a>
+        </div>
+      </div>
+
+      <button class="product-btn-add" id="product-btn-add-main">ADD TO CART</button>
       <div class="product-info-sections">
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
-            <span>Details &amp; Size</span>
+            <span>Details</span>
             <span class="product-accordion-icon">+</span>
           </button>
           <div class="product-accordion-panel">
-            <p class="product-accordion-sub">See what fits in each pod</p>
-            <a href="#" class="product-info-link"><span>Full Size Guide</span><span>&rarr;</span></a>
+            <div class="bc-spec-row"><span>Material</span><span>PCTG Eastman Tritan&trade; TX1001</span></div>
+            <div class="bc-spec-row"><span>Internal volume</span><span>XX mL</span></div>
+            <div class="bc-spec-row"><span>Compliance</span><span>BPA-FREE &middot; FDA 21 CFR 177.1580</span></div>
+            <div class="bc-spec-row"><span>Care</span><span>Dishwasher safe, top rack.</span></div>
           </div>
         </div>
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
-            <span>Customize Your Stack</span>
+            <span>Size guide</span>
             <span class="product-accordion-icon">+</span>
           </button>
           <div class="product-accordion-panel">
-            <p class="product-accordion-sub">Pick the pods that fit your routine</p>
-            <a href="./build-your-system.html" class="product-info-link"><span>Build Your System</span><span>&rarr;</span></a>
+            <p class="bc-capacity-label"><span>Capacity</span><span class="bc-capacity-label-sub">Per Pod</span></p>
+            <div class="bc-capacity-row"><span>Fish oil / Omega-3</span><span>XX pills</span></div>
+            <div class="bc-capacity-row"><span>Multivitamin</span><span>XX pills</span></div>
+            <div class="bc-capacity-row"><span>Magnesium glycinate</span><span>XX pills</span></div>
+            <div class="bc-capacity-row"><span>CoQ10</span><span>XX pills</span></div>
+            <div class="bc-capacity-row"><span>Ashwagandha</span><span>XX pills</span></div>
+            <div class="bc-capacity-row"><span>Turmeric</span><span>XX pills</span></div>
+            <p class="bc-capacity-note">Based on standard retail pill sizes. Yours may vary.</p>
+            <a href="./size-guide.html?pod=big" class="product-info-link"><span>Full Size Guide</span><span>&rarr;</span></a>
           </div>
         </div>
       </div>
-      <div class="product-qty-cart-row">
-        <div class="product-qty-ctrl">
-          <button class="product-qty-btn" id="qty-minus">−</button>
-          <span class="product-qty-val" id="qty-val">1</span>
-          <button class="product-qty-btn" id="qty-plus">+</button>
-        </div>
-        <button class="product-btn-add">ADD TO CART</button>
+      <div class="bc-guarantees">
+        <span class="bc-guarantee-item">Lifetime guarantee</span>
+        <span class="bc-guarantee-divider"></span>
+        <span class="bc-guarantee-item">30-day returns</span>
       </div>
-      <button class="product-btn-buy">BUY NOW</button>
       <div class="offer-box">
-        <p class="offer-box-eyebrow">Exclusive Offers</p>
+        <p class="offer-box-eyebrow">Complete your system</p>
+        <div class="offer-item">
+          <div class="offer-item-img"><img src="images/lifestyle_section/Build Your System.png" alt="" /></div>
+          <div class="offer-item-info">
+            <p class="offer-item-name">Extra Pods</p>
+            <p class="offer-item-price">Stack more, pay less per pod.</p>
+          </div>
+          <a href="./build-your-system.html?stack=hybrid-pod" class="bc-offer-arrow" aria-label="Build your system">&rarr;</a>
+        </div>
         <div class="offer-item">
           <div class="offer-item-img"><img src="images/lifestyle_section/Scooper.png" alt="Pilr Travel Scooper" /></div>
-          <div class="offer-item-info"><p class="offer-item-name">Pilr travel scooper</p><p class="offer-item-price">$11</p></div>
-          <button class="offer-item-add">ADD TO CART</button>
+          <div class="offer-item-info">
+            <p class="offer-item-name">Pilr Travel Scooper</p>
+            <p class="offer-item-price">Stainless steel scooper for on-the-go refills.</p>
+          </div>
+          <span class="bc-offer-price">$11</span>
+          <button class="offer-item-add">Add</button>
         </div>
       </div>
     </div></div>
@@ -254,21 +496,89 @@
   <script>
     const navEl=document.querySelector('nav.nav'),shopAllLi=document.querySelector('.nav-has-dropdown'),shopDropdown=document.querySelector('.nav-dropdown'),dimOverlay=document.getElementById('nav-dim-overlay');let dropOpen=false,dropCloseTimer=null;function openDrop(){clearTimeout(dropCloseTimer);dropCloseTimer=null;shopAllLi.classList.add('dropdown-active');dimOverlay.classList.add('active');dropOpen=true}function closeDrop(){clearTimeout(dropCloseTimer);dropCloseTimer=null;shopAllLi.classList.remove('dropdown-active');dimOverlay.classList.remove('active');dropOpen=false}dimOverlay.addEventListener('click',closeDrop);function inZone(x,y){const li=shopAllLi.getBoundingClientRect(),dd=shopDropdown.getBoundingClientRect();if(x>=li.left&&x<=li.right&&y>=li.top&&y<=li.bottom)return true;if(y>=dd.top&&y<=dd.bottom)return true;if(y>li.bottom&&y<dd.top)return true;return false}shopAllLi.addEventListener('mouseenter',openDrop);document.addEventListener('mousemove',(e)=>{if(!dropOpen)return;if(inZone(e.clientX,e.clientY)){clearTimeout(dropCloseTimer);dropCloseTimer=null}else if(!dropCloseTimer){dropCloseTimer=setTimeout(closeDrop,150)}});
     const stickyBar=document.getElementById('product-sticky-bar');
-    var _addBtn=document.querySelector('.product-btn-add');
+    var _addBtn=document.getElementById('product-btn-add-main');
     if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
-    let qty=1;document.getElementById('qty-minus').addEventListener('click',()=>{if(qty>1){qty--;document.getElementById('qty-val').textContent=qty}});document.getElementById('qty-plus').addEventListener('click',()=>{qty++;document.getElementById('qty-val').textContent=qty});
     document.querySelectorAll('.product-acc-trigger').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.product-acc-item').classList.toggle('open')));
   </script>
   <script src="./pilr-cart.js"></script>
   <script>
     ;(function(){
-      var PRODUCT={id:'hybrid-pod',title:'Big Pill Pod',price:23,image:'images/lifestyle_section/Hybrid Pod.png'};
+      var POD_BASE_PRICE = { 'pill-pod': 20, 'hybrid-pod': 23, 'powder-pod': 26 };
+      var DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28];
+      function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)]; }
+      function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); }
+
+      var PRODUCT={id:'hybrid-pod',title:'Big Pill Pod',price:POD_BASE_PRICE['hybrid-pod'],image:'images/lifestyle_section/Hybrid Pod.png'};
       var SCOOPER={id:'travel-scooper',title:'Pilr travel scooper',price:11,image:'images/lifestyle_section/Scooper.png'};
       function flashBtn(btn,orig){btn.textContent='Added ✓';btn.disabled=true;setTimeout(function(){btn.textContent=orig;btn.disabled=false},1200);}
-      document.querySelector('.product-btn-add').addEventListener('click',function(){PilrCart.add(PRODUCT,qty);flashBtn(this,'ADD TO CART');});
       document.querySelector('.product-sticky-cta').addEventListener('click',function(){PilrCart.add(PRODUCT,1);flashBtn(this,'ADD TO CART');});
-      document.querySelector('.product-btn-buy').addEventListener('click',function(){PilrCart.add(PRODUCT,qty);window.location.href='./cart.html';});
       document.querySelector('.offer-item-add').addEventListener('click',function(){PilrCart.add(SCOOPER,1);flashBtn(this,'ADD TO CART');});
+
+      var podAddTrigger = document.getElementById('pod-add-trigger');
+      var podAddPanel = document.getElementById('pod-add-panel');
+      var podAddRows = document.querySelectorAll('.pod-add-row[data-pod-id]');
+      var podAddSubmit = document.getElementById('product-btn-add-main');
+
+      podAddTrigger.addEventListener('click', function() {
+        var open = podAddTrigger.getAttribute('aria-expanded') !== 'true';
+        podAddTrigger.setAttribute('aria-expanded', String(open));
+        podAddPanel.classList.toggle('is-open', open);
+      });
+
+      function rowQty(row) { return Number(row.dataset.qty); }
+
+      function setRowQty(row, qty) {
+        qty = Math.max(0, qty);
+        row.dataset.qty = String(qty);
+        row.querySelector('.pod-add-qty-val').textContent = String(qty);
+      }
+
+      function updateWidget() {
+        var totalQty = 0;
+        podAddRows.forEach(function(row) { totalQty += rowQty(row); });
+        var discount = discountForQty(totalQty);
+        var addOnTotal = 0;
+
+        podAddRows.forEach(function(row) {
+          var listPrice = POD_BASE_PRICE[row.dataset.podId];
+          var salePrice = listPrice * (1 - discount);
+          addOnTotal += rowQty(row) * salePrice;
+
+          row.querySelector('.pod-add-row-sale').textContent = formatPrice(salePrice);
+          row.querySelector('.pod-add-row-strike').classList.toggle('is-hidden', discount === 0);
+        });
+
+        podAddSubmit.textContent = totalQty > 1 ? 'ADD TO CART — ' + formatPrice(addOnTotal) : 'ADD TO CART';
+        podAddSubmit.disabled = totalQty === 0;
+      }
+
+      podAddRows.forEach(function(row) {
+        row.querySelector('.pod-add-qty-plus').addEventListener('click', function() {
+          setRowQty(row, rowQty(row) + 1);
+          updateWidget();
+        });
+        row.querySelector('.pod-add-qty-minus').addEventListener('click', function() {
+          setRowQty(row, rowQty(row) - 1);
+          updateWidget();
+        });
+      });
+
+      podAddSubmit.addEventListener('click', function() {
+        var totalQty = 0;
+        podAddRows.forEach(function(row) { totalQty += rowQty(row); });
+        var discount = discountForQty(totalQty);
+        podAddRows.forEach(function(row) {
+          var qty = rowQty(row);
+          if (qty > 0) {
+            var salePrice = POD_BASE_PRICE[row.dataset.podId] * (1 - discount);
+            PilrCart.add({ id: row.dataset.podId, title: row.dataset.podTitle, price: salePrice, image: row.dataset.podImage }, qty);
+          }
+        });
+        var orig = podAddSubmit.textContent;
+        flashBtn(podAddSubmit, orig);
+      });
+
+      updateWidget();
     })();
   </script>
   <script>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Size Guide — PILR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <!-- All of this page's own CSS lives here, scoped under .sg- class
+       names so it can't leak into or collide with other pages. Every
+       color, font, radius, hairline and spacing value below is pulled
+       from style.css's existing tokens/components (--bg, --radius,
+       #5e6e7a/#7a8a94/#9aa7ae/#3d4f5c, rgba(66,85,99,0.15) hairlines,
+       the .bc-spec-row label/value recipe, the eyebrow recipe used on
+       why-pilr.html/the offer boxes) — nothing here is a new color or
+       size invented for this page. -->
+  <style>
+    .sg-main { max-width: 960px; margin: 0 auto; padding: 11rem 3rem var(--section-gap); }
+
+    .sg-eyebrow {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; margin: 0 0 0.75rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-title {
+      font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 500; color: #5e6e7a;
+      letter-spacing: -0.025em; line-height: 1.15; margin: 0 0 0.6rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-subtitle {
+      font-size: 0.98rem; color: #7a8a94; line-height: 1.5; margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-header { margin-bottom: 3.5rem; }
+
+    /* ── Pod specs ─────────────────────────────────────────── */
+    .sg-specs {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+      margin-bottom: var(--section-gap);
+    }
+    .sg-spec-photo {
+      background: #F3F2EE; border-radius: var(--radius);
+      aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.1rem; overflow: hidden;
+    }
+    .sg-spec-photo img { width: 70%; height: 70%; object-fit: contain; }
+    .sg-spec-photo-placeholder {
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #9aa7ae;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-spec-name {
+      font-size: 1.1rem; font-weight: 500; color: #5e6e7a; margin: 0 0 0.85rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-spec-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; padding: 0.6rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-spec-row span:first-child { color: #3d4f5c; }
+
+    /* ── What we tested ────────────────────────────────────── */
+    .sg-tested { margin-bottom: var(--section-gap); }
+    .sg-tabs-row {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+      flex-wrap: wrap; margin-bottom: 1.5rem;
+    }
+    .sg-tabs {
+      display: flex; gap: 1.75rem; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none;
+    }
+    .sg-tabs::-webkit-scrollbar { display: none; }
+    .sg-tab {
+      background: none; border: none; cursor: pointer; white-space: nowrap;
+      padding: 0 0 0.6rem; margin-bottom: -1px;
+      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #9aa7ae; border-bottom: 1.5px solid transparent;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .sg-tab[aria-selected="true"] { color: #5e6e7a; border-bottom-color: #5e6e7a; }
+    .sg-tab:focus-visible { outline: 1.5px solid #5e6e7a; outline-offset: 2px; }
+
+    .sg-search { flex-shrink: 0; width: 220px; }
+    .sg-search input {
+      width: 100%; border: none; border-bottom: 1px solid rgba(66,85,99,0.25);
+      background: none; padding: 0 0 0.5rem; font-size: 0.85rem; color: #5e6e7a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-search input::placeholder { color: #9aa7ae; }
+    .sg-search input:focus { outline: none; border-bottom-color: #5e6e7a; }
+
+    .sg-table-head, .sg-row {
+      display: grid; grid-template-columns: 1.6fr 1fr 0.8fr 1fr; gap: 1rem;
+      align-items: center; padding: 0.85rem 0;
+    }
+    .sg-table-head {
+      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #9aa7ae; border-bottom: 1px solid rgba(66,85,99,0.15);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-row {
+      font-size: 0.9rem; color: #5e6e7a; border-bottom: 1px solid rgba(66,85,99,0.15);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-row-name { color: #3d4f5c; }
+    .sg-row-size { color: #7a8a94; }
+    .sg-row-count, .sg-table-head span:last-child { text-align: right; color: #7a8a94; }
+    .sg-row-count { font-weight: 500; }
+    .sg-row[hidden] { display: none; }
+
+    .sg-no-match {
+      display: none; padding: 1.25rem 0; font-size: 0.9rem; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-no-match.is-visible { display: block; }
+
+    .sg-footnote {
+      font-size: 0.8rem; color: #9aa7ae; margin-top: 0.9rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    /* ── Not on the list ───────────────────────────────────── */
+    .sg-buckets { margin-bottom: var(--section-gap); }
+    .sg-h2 {
+      font-size: 1.4rem; font-weight: 500; color: #5e6e7a; margin: 0 0 0.5rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-bucket-row {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+    }
+    .sg-bucket-row:last-of-type { border-bottom: 1px solid rgba(66,85,99,0.15); }
+    .sg-bucket-pill {
+      flex-shrink: 0; width: 48px; height: 18px; border: 1.5px solid #9aa7ae; border-radius: 9px;
+    }
+    .sg-bucket-pill--2 { width: 72px; }
+    .sg-bucket-pill--3 { width: 96px; }
+    .sg-bucket-label {
+      flex: 1; font-size: 0.9rem; color: #5e6e7a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-bucket-count {
+      font-size: 0.9rem; font-weight: 500; color: #3d4f5c;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    /* ── Inert text links (no destination yet) ─────────────── */
+    .sg-inert-link {
+      background: none; border: none; padding: 0; cursor: default;
+      font: inherit; color: #5e6e7a; text-decoration: underline;
+    }
+    .sg-link-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+      padding: 1.1rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+      font-size: 0.9rem; color: #7a8a94;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .sg-link-row:last-child { border-bottom: 1px solid rgba(66,85,99,0.15); }
+    .sg-link-cta {
+      background: none; border: none; cursor: default; flex-shrink: 0;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    @media (max-width: 760px) {
+      .sg-main { padding: 8rem 1.5rem var(--section-gap); }
+      .sg-specs { grid-template-columns: 1fr; gap: 1.75rem; }
+      .sg-table-head, .sg-row { grid-template-columns: 1.4fr 1fr 1fr; }
+      .sg-table-head span:nth-child(3), .sg-row .sg-row-size { display: none; }
+      .sg-search { width: 100%; }
+      .sg-tabs-row { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
+  <nav class="nav">
+    <a href="./index.html" class="nav-logo"><img src="images/logov3-cropped.png" alt="Pilr" class="nav-logo-img"></a>
+    <div class="nav-right">
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-has-dropdown">
+          <a href="./catalog.html">Shop<svg class="nav-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg></a>
+          <div class="nav-dropdown"><div class="nav-dropdown-inner"><div class="nav-drop-grid">
+            <a href="./build-your-system.html" class="nav-drop-card"><div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System.png" alt="Build Your System"></div><div class="nav-drop-text"><span class="nav-drop-title">Build Your System</span><span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span></div></a>
+            <a href="./classic-stack.html" class="nav-drop-card"><div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Classic Stack"></div><div class="nav-drop-text"><span class="nav-drop-title">Classic Stack</span><span class="nav-drop-desc">Powders, big pills, little pills. One system.</span></div></a>
+            <a href="./catalog.html#section-single-pods" class="nav-drop-card"><div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Render.png" alt="Single Pods"></div><div class="nav-drop-text"><span class="nav-drop-title">Single Pods</span><span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span></div></a>
+            <a href="./catalog.html" class="nav-drop-card"><div class="nav-drop-img"><img src="images/lifestyle_section/Full Render.png" alt="All Products"></div><div class="nav-drop-text"><span class="nav-drop-title">All Products</span><span class="nav-drop-desc">Browse the complete Pilr collection</span></div></a>
+          </div></div></div>
+        </li>
+        <li><a href="./why-pilr.html">Why pilr</a></li>
+        <li><a href="./about.html">Our story</a></li>
+        <li><a href="./faq.html">FAQ</a></li>
+      </ul>
+      <a href="./cart.html" class="nav-cart-icon" aria-label="Cart"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></a>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="sg-main">
+    <header class="sg-header">
+      <p class="sg-eyebrow">Size Guide</p>
+      <h1 class="sg-title">Will it fit?</h1>
+      <p class="sg-subtitle">What each pod holds, tested with real supplements.</p>
+    </header>
+
+    <section class="sg-specs" id="sg-specs" aria-label="Pod specifications">
+      <!-- filled by JS from the SIZE_GUIDE_DATA block below -->
+    </section>
+
+    <section class="sg-tested">
+      <p class="sg-eyebrow">What we tested</p>
+      <div class="sg-tabs-row">
+        <div class="sg-tabs" role="tablist" aria-label="Pod type">
+          <button type="button" class="sg-tab" role="tab" id="sg-tab-small" aria-controls="sg-panel" aria-selected="true" data-pod="small">Small Pill Pod</button>
+          <button type="button" class="sg-tab" role="tab" id="sg-tab-big" aria-controls="sg-panel" aria-selected="false" tabindex="-1" data-pod="big">Big Pill Pod</button>
+          <button type="button" class="sg-tab" role="tab" id="sg-tab-powder" aria-controls="sg-panel" aria-selected="false" tabindex="-1" data-pod="powder">Powder Pod</button>
+        </div>
+        <div class="sg-search">
+          <input type="text" id="sg-search-input" placeholder="Find your supplement" aria-label="Find your supplement" autocomplete="off">
+        </div>
+      </div>
+
+      <div id="sg-panel" role="tabpanel" aria-labelledby="sg-tab-small" tabindex="0">
+        <div class="sg-table-head" id="sg-table-head"></div>
+        <div id="sg-table-rows"></div>
+        <p class="sg-no-match" id="sg-no-match">Not here? <button type="button" class="sg-inert-link">Tell us and we'll test it.</button></p>
+      </div>
+      <p class="sg-footnote" id="sg-footnote"></p>
+    </section>
+
+    <section class="sg-buckets">
+      <p class="sg-eyebrow">Not on the list?</p>
+      <h2 class="sg-h2" id="sg-bucket-title"></h2>
+      <p class="sg-subtitle" id="sg-bucket-sub"></p>
+      <div id="sg-bucket-rows" style="margin-top: 1.5rem;"></div>
+      <p class="sg-footnote" id="sg-bucket-footnote"></p>
+    </section>
+
+    <div class="sg-link-row">
+      <span>Don't see your supplement? <button type="button" class="sg-inert-link">Tell us and we'll test it.</button></span>
+      <button type="button" class="sg-link-cta">TELL US &rarr;</button>
+    </div>
+  </main>
+
+  <div class="footer-top"><div class="footer-top-inner"><div class="footer-newsletter"><h3>Never miss a day</h3><p>Receive special offers and first look at new products.</p><form class="footer-email-form" id="footer-email-form"><div class="footer-email-row"><input type="email" placeholder="Email address" required /><button type="submit" class="footer-email-btn" aria-label="Subscribe"><svg width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#3d4f5c"/><path d="M13 10l6 6-6 6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></form><p class="footer-legal">By submitting your email, you agree to the pilr privacy policy and are opting in to marketing communications.</p></div><div class="footer-links-grid"><div class="footer-col"><h4>Shop</h4><ul><li><a href="./catalog.html">All Products</a></li><li><a href="./catalog.html#section-single-pods">Single Pods</a></li><li><a href="./build-your-system.html">Build Your System</a></li><li><a href="./classic-stack.html">Classic Stack</a></li><li><a href="./catalog.html#section-accessories">Accessories</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="./about.html">Our story</a></li><li><a href="#">News</a></li><li><a href="mailto:support@pilrsystems.com">Contact us</a></li><li><a href="./why-pilr.html">Why pilr</a></li><li><a href="#">Stories</a></li></ul></div><div class="footer-col"><h4>Support</h4><ul><li><a href="./faq.html">FAQ</a></li>
+  <footer class="site-footer"><div class="site-footer-social-row"><div class="site-footer-social-inner"><div class="footer-social"><a href="https://www.instagram.com/pilrofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a><a href="https://www.tiktok.com/@pilrofficial" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg></a><a href="https://www.youtube.com/@pilrofficial" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#4d6070" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a><a href="https://www.linkedin.com/company/pilrsystems" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.18-7.06-5.96-8.72-2.91l.04-1.68z"/></svg></a></div></div></div><div class="site-footer-bottom"><div class="site-footer-inner"><span class="site-footer-copy">© Pilr 2026.</span><div class="footer-payment-icons"><img src="images/lifestyle_section/Visa ss.png" alt="Visa" class="payment-icon"><img src="images/lifestyle_section/Amex ss.png" alt="Amex" class="payment-icon"><img src="images/lifestyle_section/Apple Pay ss.png" alt="Apple Pay" class="payment-icon"><img src="images/lifestyle_section/PayPal ss.png" alt="PayPal" class="payment-icon"><img src="images/lifestyle_section/Shop ss.png" alt="Shop Pay" class="payment-icon"><img src="images/lifestyle_section/Discover ss.png" alt="Discover" class="payment-icon"></div></div></div></footer>
+
+  <script>
+    const shopAllLi    = document.querySelector('.nav-has-dropdown')
+    const shopDropdown = document.querySelector('.nav-dropdown')
+    const dimOverlay   = document.getElementById('nav-dim-overlay')
+    let dropOpen = false, dropCloseTimer = null
+    function openDrop()  { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.add('dropdown-active'); dimOverlay.classList.add('active'); dropOpen = true }
+    function closeDrop() { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.remove('dropdown-active'); dimOverlay.classList.remove('active'); dropOpen = false }
+    dimOverlay.addEventListener('click', closeDrop)
+    function inZone(x, y) {
+      const li = shopAllLi.getBoundingClientRect(), dd = shopDropdown.getBoundingClientRect()
+      if (x >= li.left && x <= li.right && y >= li.top && y <= li.bottom) return true
+      if (y >= dd.top && y <= dd.bottom) return true
+      if (y > li.bottom && y < dd.top) return true
+      return false
+    }
+    shopAllLi.addEventListener('mouseenter', openDrop)
+    document.addEventListener('mousemove', e => {
+      if (!dropOpen) return
+      if (inZone(e.clientX, e.clientY)) { clearTimeout(dropCloseTimer); dropCloseTimer = null }
+      else if (!dropCloseTimer) { dropCloseTimer = setTimeout(closeDrop, 150) }
+    })
+    const hamburger = document.getElementById('nav-hamburger')
+    const navLinks  = document.getElementById('nav-links')
+    function closeMenu() { hamburger.classList.remove('open'); navLinks.classList.remove('open'); document.body.style.overflow = '' }
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open')
+      hamburger.classList.toggle('open', open)
+      document.body.style.overflow = open ? 'hidden' : ''
+    })
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
+  </script>
+
+  <!-- All size guide numbers live here, in one place, so they can be
+       edited without touching anything else on the page. Every
+       untested value is "—" — never "XX" or "~". -->
+  <script>
+    window.SIZE_GUIDE_DATA = {
+      "small": {
+        "tabLabel": "Small Pill Pod",
+        "name": "Small Pill Pod",
+        "image": "images/lifestyle_section/Pill Pod.png",
+        "specs": { "compartments": "3", "internalVolume": "82.2 mL", "openingWidth": "—" },
+        "columns": ["Supplement", "Form tested", "Size", "Pills per pod"],
+        "supplements": [
+          { "name": "Vitamin D3", "form": "Softgel", "size": "—", "count": "—" },
+          { "name": "Zinc", "form": "Tablet", "size": "—", "count": "—" },
+          { "name": "B12", "form": "Tablet", "size": "—", "count": "—" },
+          { "name": "Biotin", "form": "Softgel", "size": "—", "count": "—" },
+          { "name": "Vitamin C", "form": "Tablet", "size": "—", "count": "—" },
+          { "name": "Probiotic", "form": "Capsule", "size": "—", "count": "—" }
+        ],
+        "countUnit": "pills",
+        "footnote": "Counts are for standard retail sizes and vary by brand.",
+        "bucketHeading": "Go by your pill's length.",
+        "bucketSub": "Measure the longest side of your pill, then find it below.",
+        "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
+        "buckets": [
+          { "label": "Under — mm", "count": "— pills" },
+          { "label": "— – — mm", "count": "— pills" },
+          { "label": "Over — mm", "count": "— pills" }
+        ]
+      },
+      "big": {
+        "tabLabel": "Big Pill Pod",
+        "name": "Big Pill Pod",
+        "image": "images/lifestyle_section/Hybrid Pod.png",
+        "specs": { "compartments": "2", "internalVolume": "—", "openingWidth": "—" },
+        "columns": ["Supplement", "Form tested", "Size", "Pills per pod"],
+        "supplements": [
+          { "name": "Fish oil / Omega-3", "form": "Softgel", "size": "—", "count": "—" },
+          { "name": "Multivitamin", "form": "Tablet", "size": "—", "count": "—" },
+          { "name": "Magnesium glycinate", "form": "Capsule", "size": "—", "count": "—" },
+          { "name": "CoQ10", "form": "Softgel", "size": "—", "count": "—" },
+          { "name": "Ashwagandha", "form": "Capsule", "size": "—", "count": "—" },
+          { "name": "Turmeric", "form": "Capsule", "size": "—", "count": "—" }
+        ],
+        "countUnit": "pills",
+        "footnote": "Counts are for standard retail sizes and vary by brand.",
+        "bucketHeading": "Go by your pill's length.",
+        "bucketSub": "Measure the longest side of your pill, then find it below.",
+        "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
+        "buckets": [
+          { "label": "Under — mm", "count": "— pills" },
+          { "label": "— – — mm", "count": "— pills" },
+          { "label": "Over — mm", "count": "— pills" }
+        ]
+      },
+      "powder": {
+        "tabLabel": "Powder Pod",
+        "name": "Powder Pod",
+        "image": "images/lifestyle_section/Powder Pod Render.png",
+        "specs": { "compartments": "1", "internalVolume": "—", "openingWidth": "—" },
+        "columns": ["Supplement", "Form tested", "Scoop size", "Servings per pod"],
+        "supplements": [
+          { "name": "Creatine monohydrate", "form": "Powder", "size": "—", "count": "—" },
+          { "name": "Collagen peptides", "form": "Powder", "size": "—", "count": "—" },
+          { "name": "Electrolytes", "form": "Powder", "size": "—", "count": "—" },
+          { "name": "Greens", "form": "Powder", "size": "—", "count": "—" },
+          { "name": "L-theanine", "form": "Powder", "size": "—", "count": "—" },
+          { "name": "BCAAs", "form": "Powder", "size": "—", "count": "—" }
+        ],
+        "countUnit": "servings",
+        "footnote": "Servings are for standard scoop sizes and vary by brand.",
+        "bucketHeading": "Go by your scoop.",
+        "bucketSub": "Measure your scoop size, then find it below.",
+        "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
+        "buckets": [
+          { "label": "Under — mL", "count": "— servings" },
+          { "label": "— – — mL", "count": "— servings" },
+          { "label": "Over — mL", "count": "— servings" }
+        ]
+      }
+    }
+  </script>
+
+  <script>
+    ;(function () {
+      var PODS = ['small', 'big', 'powder']
+      var data = null
+      var activePod = 'small'
+      var searchTerm = ''
+
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.sg-tab'))
+      var panel = document.getElementById('sg-panel')
+      var tableHead = document.getElementById('sg-table-head')
+      var tableRows = document.getElementById('sg-table-rows')
+      var noMatch = document.getElementById('sg-no-match')
+      var footnote = document.getElementById('sg-footnote')
+      var bucketTitle = document.getElementById('sg-bucket-title')
+      var bucketSub = document.getElementById('sg-bucket-sub')
+      var bucketRows = document.getElementById('sg-bucket-rows')
+      var bucketFootnote = document.getElementById('sg-bucket-footnote')
+      var specsEl = document.getElementById('sg-specs')
+      var searchInput = document.getElementById('sg-search-input')
+
+      function specRow(label, value) {
+        return '<div class="sg-spec-row"><span>' + label + '</span><span>' + value + '</span></div>'
+      }
+
+      function renderSpecs() {
+        specsEl.innerHTML = PODS.map(function (pod) {
+          var d = data[pod]
+          return (
+            '<div class="sg-spec-col">' +
+              '<div class="sg-spec-photo"><img src="' + d.image + '" alt="' + d.name + '"></div>' +
+              '<p class="sg-spec-name">' + d.name + '</p>' +
+              specRow('Compartments', d.specs.compartments) +
+              specRow('Internal volume', d.specs.internalVolume) +
+              specRow('Opening width', d.specs.openingWidth) +
+            '</div>'
+          )
+        }).join('')
+      }
+
+      function renderTableHead(d) {
+        tableHead.innerHTML = d.columns.map(function (c) { return '<span>' + c + '</span>' }).join('')
+      }
+
+      function renderRows(d) {
+        tableRows.innerHTML = d.supplements.map(function (row, i) {
+          return (
+            '<div class="sg-row" data-name="' + row.name.toLowerCase() + '">' +
+              '<span class="sg-row-name">' + row.name + '</span>' +
+              '<span>' + row.form + '</span>' +
+              '<span class="sg-row-size">' + row.size + '</span>' +
+              '<span class="sg-row-count">' + row.count + '</span>' +
+            '</div>'
+          )
+        }).join('')
+      }
+
+      function renderBuckets(d) {
+        bucketTitle.textContent = d.bucketHeading
+        bucketSub.textContent = d.bucketSub
+        bucketFootnote.textContent = d.bucketFootnote
+        bucketRows.innerHTML = d.buckets.map(function (b, i) {
+          return (
+            '<div class="sg-bucket-row">' +
+              '<span class="sg-bucket-pill sg-bucket-pill--' + (i + 1) + '"></span>' +
+              '<span class="sg-bucket-label">' + b.label + '</span>' +
+              '<span class="sg-bucket-count">' + b.count + '</span>' +
+            '</div>'
+          )
+        }).join('')
+      }
+
+      function applySearch() {
+        var term = searchTerm.trim().toLowerCase()
+        var rows = tableRows.querySelectorAll('.sg-row')
+        var visibleCount = 0
+        rows.forEach(function (row) {
+          var match = !term || row.dataset.name.indexOf(term) !== -1
+          row.hidden = !match
+          if (match) visibleCount++
+        })
+        noMatch.classList.toggle('is-visible', term.length > 0 && visibleCount === 0)
+      }
+
+      function renderPanel() {
+        var d = data[activePod]
+        panel.setAttribute('aria-labelledby', 'sg-tab-' + activePod)
+        renderTableHead(d)
+        renderRows(d)
+        footnote.textContent = d.footnote
+        renderBuckets(d)
+        applySearch()
+      }
+
+      function setActiveTab(pod, opts) {
+        opts = opts || {}
+        activePod = pod
+        tabs.forEach(function (tab) {
+          var selected = tab.dataset.pod === pod
+          tab.setAttribute('aria-selected', selected ? 'true' : 'false')
+          tab.tabIndex = selected ? 0 : -1
+        })
+        renderPanel()
+        if (!opts.skipHistory) {
+          var url = new URL(window.location.href)
+          url.searchParams.set('pod', pod)
+          history.replaceState(null, '', url)
+        }
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () { setActiveTab(tab.dataset.pod) })
+        tab.addEventListener('keydown', function (e) {
+          var idx = tabs.indexOf(tab)
+          var next = null
+          if (e.key === 'ArrowRight') next = tabs[(idx + 1) % tabs.length]
+          else if (e.key === 'ArrowLeft') next = tabs[(idx - 1 + tabs.length) % tabs.length]
+          else if (e.key === 'Home') next = tabs[0]
+          else if (e.key === 'End') next = tabs[tabs.length - 1]
+          if (next) { e.preventDefault(); next.focus(); setActiveTab(next.dataset.pod) }
+        })
+      })
+
+      searchInput.addEventListener('input', function () {
+        searchTerm = searchInput.value
+        applySearch()
+      })
+
+      data = window.SIZE_GUIDE_DATA
+      renderSpecs()
+      var params = new URLSearchParams(window.location.search)
+      var requested = params.get('pod')
+      var initial = PODS.indexOf(requested) !== -1 ? requested : 'small'
+      setActiveTab(initial, { skipHistory: true })
+    })()
+  </script>
+</body>
+</html>
