@@ -27,6 +27,7 @@ export default defineConfig({
         claim: resolve(__dirname, 'claim.html'),
         routineProblem: resolve(__dirname, 'the-routine-problem.html'),
         sizeGuide: resolve(__dirname, 'size-guide.html'),
+        earlyAccess: resolve(__dirname, 'early-access.html'),
       },
     },
   },

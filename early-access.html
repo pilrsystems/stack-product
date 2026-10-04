@@ -2,237 +2,430 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Get Early Access — PILR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Get Early Access — Pilr</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-85BFGXZB1R');
+  </script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
   <style>
-    .ea-page {
+    .ea-hero {
       min-height: 100vh;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      overflow: hidden;
     }
 
-    .ea-main {
-      flex: 1;
+    /* Left: hand image */
+    .ea-img-col {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 7rem 2rem 5rem;
+      justify-content: flex-start;
+      padding: 100px 2rem 2rem 110px;
+    }
+    .ea-img-col img {
+      max-height: 82vh;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
     }
 
+    /* Right: signup card */
+    .ea-card-col {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 120px 60px 80px 70px;
+    }
     .ea-card {
       width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      max-width: 420px;
     }
-
-    .ea-logo {
-      height: 32px;
-      width: auto;
-      margin-bottom: 2.5rem;
-      opacity: 0.9;
-    }
-
-    .ea-eyebrow {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-
-    .ea-headline {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 400;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      margin-bottom: 1rem;
-    }
-
-    .ea-headline strong {
+    .ea-card h1 {
+      font-size: 2.8rem;
       font-weight: 700;
-    }
-
-    .ea-sub {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--muted);
-      max-width: 400px;
-      margin-bottom: 2.5rem;
-    }
-
-    /* ── Step panels ── */
-    .ea-steps {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .ea-step {
-      background: #FFFFFF;
-      border: 1px solid rgba(66,85,99,0.12);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: left;
-    }
-
-    .ea-step-label {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .ea-step-title {
-      font-size: 1.05rem;
-      font-weight: 600;
+      line-height: 1.15;
+      white-space: nowrap;
       color: var(--text);
-      line-height: 1.3;
-      margin-bottom: 0.1rem;
+      margin-bottom: 0.75rem;
     }
-
-    .ea-step-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .ea-step form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .ea-step input[type="email"],
-    .ea-step input[type="tel"] {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid rgba(66,85,99,0.2);
-      border-radius: var(--radius);
-      padding: 0.75rem 1rem;
-      font-family: inherit;
+    .ea-card-sub {
       font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
     }
-
-    .ea-step input:focus {
-      border-color: #5e6e7a;
-    }
-
-    .ea-phone-row {
+    .ea-input-row {
       display: flex;
       gap: 0;
-      border: 1px solid rgba(66,85,99,0.2);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg);
-      transition: border-color 0.2s;
+      margin-bottom: 0.75rem;
     }
-
-    .ea-phone-row:focus-within {
-      border-color: #5e6e7a;
-    }
-
-    .ea-phone-row select {
-      background: rgba(66,85,99,0.06);
-      border: none;
-      border-right: 1px solid rgba(66,85,99,0.15);
-      padding: 0.75rem 0.6rem;
-      font-family: inherit;
-      font-size: 0.85rem;
-      color: var(--text);
-      outline: none;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .ea-phone-row input {
-      border: none !important;
-      border-radius: 0 !important;
-      background: transparent !important;
+    .ea-input-row input[type="email"] {
       flex: 1;
-      padding: 0.75rem 1rem !important;
+      padding: 0.75rem 1rem;
+      border-radius: 6px 0 0 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: none;
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
     }
-
-    .ea-step .btn {
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-      background: #5e6e7a;
-      color: #FAFAF8;
-      border: none;
-      padding: 0.85rem 1rem;
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: background 0.2s;
+    .ea-input-row input[type="email"]::placeholder { color: var(--muted); }
+    .ea-input-row input[type="email"]:focus { outline: none; border-color: rgba(255,255,255,0.35); }
+    .ea-input-row .btn {
+      border-radius: 0 6px 6px 0;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem 1.25rem;
     }
-
-    .ea-step .btn:hover { background: #4a5a67; }
-    .ea-step .btn:disabled { opacity: 0.6; cursor: default; }
-
     .ea-legal {
-      font-size: 0.7rem;
-      color: rgba(66,85,99,0.45);
+      font-size: 0.72rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+    .ea-legal a { color: inherit; text-decoration: underline; }
+    .ea-sms-consent {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      opacity: 0.8;
+      text-align: center;
+    }
+    .ea-sms-consent a { color: inherit; text-decoration: underline; }
+    .ea-phone-error {
+      margin: 0.5rem 0;
+      color: #ffb4a8;
+      font-size: 0.875rem;
       line-height: 1.5;
     }
 
-    .ea-legal a {
-      color: rgba(66,85,99,0.6);
-      text-decoration: underline;
-    }
-
-    .ea-success {
+    /* Phone step */
+    .ea-phone-sub {
       font-size: 0.9rem;
-      font-weight: 600;
-      color: #5e6e7a;
-      padding: 0.5rem 0;
-      display: none;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
     }
-
-    .ea-divider {
+    .ea-card h1.ea-step-title {
+      font-size: 1.75rem;
+      white-space: normal;
+      text-align: left;
+    }
+    .ea-phone-row {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      color: var(--muted);
-      font-size: 0.6875rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      width: 100%;
+      margin-bottom: 0.75rem;
     }
-
-    .ea-divider::before,
-    .ea-divider::after {
-      content: '';
+    .ea-phone-row select {
+      padding: 0.75rem 0.5rem;
+      border-radius: 6px 0 0 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: none;
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .ea-phone-row input[type="tel"] {
       flex: 1;
-      height: 1px;
-      background: rgba(66,85,99,0.12);
+      padding: 0.75rem 1rem;
+      border-radius: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: none;
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+    }
+    .ea-phone-row input[type="tel"]::placeholder { color: var(--muted); }
+    .ea-phone-row .btn {
+      border-radius: 0 6px 6px 0;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem 1.25rem;
+    }
+    .ea-success {
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    @media (max-width: 600px) {
-      .ea-main { padding: 6rem 1.25rem 4rem; }
-      .ea-headline { font-size: 2rem; }
+    /* Why section */
+    .ea-why {
+      padding: 80px 0 60px;
+    }
+    .ea-why-inner {
+      width: 100%;
+      padding: 0 max(40px, calc(50vw - 490px)) 0 150px;
+    }
+    .ea-why-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .ea-why-heading {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 2.5rem;
+    }
+    .ea-why-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 2.5rem;
+    }
+    .ea-why-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .ea-why-num {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .ea-why-col h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+    .ea-why-col p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    @media (max-width: 700px) {
+      .ea-why-cols { grid-template-columns: 1fr; gap: 2rem; }
+      .ea-why-inner { padding: 0 24px; }
+    }
+
+    /* Pods section */
+    .ea-pods {
+      padding: 80px 0 70px;
+    }
+    .ea-pods-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .ea-pods-title {
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .ea-pods-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+    .ea-pods-grid-wrap {
+      padding: 0 60px 0 0;
+    }
+    .ea-pods-grid {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 80px;
+    }
+    .ea-pod {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .ea-pod-img {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .ea-pod-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .ea-pod-img--lg { width: 300px; height: 280px; }
+    .ea-pod-img--md { width: 262px; height: 242px; }
+    .ea-pod-img--sm { width: 250px; height: 230px; }
+    .ea-pod-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .ea-pod-desc {
+      font-size: 0.875rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+    @media (max-width: 700px) {
+      .ea-pods-grid-wrap { padding: 0; }
+      .ea-pods-grid { flex-direction: column; align-items: center; gap: 2.5rem; }
+      .ea-pod-img--lg { width: 220px; height: 200px; }
+      .ea-pod-img--md, .ea-pod-img--sm { width: 200px; height: 180px; }
+      .ea-pod-name, .ea-pod-desc { text-align: center; }
+    }
+
+    /* Built to hold section */
+    .ea-built {
+      padding: 50px 24px 50px;
+      text-align: center;
+    }
+    .ea-built-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .ea-built-heading {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .ea-built-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .ea-built-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+    .ea-built-col-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .ea-built-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .ea-built-list li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding: 0.3rem 0;
+      line-height: 1.5;
+    }
+
+    /* Final CTA */
+    .ea-cta {
+      padding: 40px 24px 100px;
+      text-align: center;
+    }
+    .ea-cta-inner {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .ea-cta-heading {
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+    .ea-cta-card {
+      padding: 0;
+    }
+    @media (max-width: 700px) {
+      .ea-built-cols { grid-template-columns: 1fr; }
+      .ea-built-inner { max-width: 100%; }
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .ea-hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        min-height: auto;
+      }
+      .ea-img-col {
+        justify-content: center;
+        padding: 90px 1rem 1rem;
+      }
+      .ea-img-col img {
+        max-height: 44vh;
+        width: auto;
+      }
+      .ea-card-col {
+        padding: 32px 24px 60px;
+      }
+      .ea-card h1 {
+        font-size: 2.2rem;
+        white-space: normal;
+        text-align: center;
+      }
+      .ea-card-sub, .ea-legal {
+        text-align: center;
+      }
+      .ea-card-col { padding-bottom: 40px; }
+      .ea-phone-row {
+        display: grid;
+        grid-template-columns: 68px minmax(0, 1fr);
+        width: 100%;
+      }
+      .ea-phone-row select,
+      .ea-phone-row input[type="tel"] {
+        box-sizing: border-box;
+        min-width: 0;
+        width: 100%;
+      }
+      .ea-phone-row select { border-radius: 6px 0 0 6px; }
+      .ea-phone-row input[type="tel"] {
+        border-right: 1px solid rgba(255,255,255,0.15);
+        border-radius: 0 6px 6px 0;
+      }
+      .ea-phone-row .btn {
+        grid-column: 1 / -1;
+        width: 100%;
+        margin-top: 0.65rem;
+        border-radius: 6px;
+      }
+      .ea-sms-consent {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+      .ea-why { padding: 50px 0 35px; }
+      .ea-why-inner { text-align: center; }
+      .ea-why-heading { font-size: 1.45rem; }
+      .ea-why-cols { text-align: center; }
+      .ea-why-col h3, .ea-why-col p, .ea-why-num { text-align: center; }
+      .ea-pods { padding: 50px 0 45px; }
+      .ea-built { padding: 35px 24px 40px; }
     }
   </style>
 </head>
@@ -241,225 +434,305 @@
   <!-- NAV -->
   <div class="nav-overlay" id="nav-overlay"></div>
   <nav class="nav">
-    <a href="./index.html" class="nav-logo">
-      <img src="images/logov3-cropped.png" alt="Pilr" class="nav-logo-img">
-    </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="nav-links">
-        <li class="nav-has-dropdown">
-          <a href="./catalog.html">Shop
-            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-inner">
-              <div class="nav-drop-grid">
-                <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System.png" alt="Build Your System"></div>
-                  <div class="nav-drop-text"><span class="nav-drop-title">Build Your System</span><span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span></div>
-                </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Classic Stack"></div>
-                  <div class="nav-drop-text"><span class="nav-drop-title">Classic Stack</span><span class="nav-drop-desc">Powders, big pills, little pills. One system.</span></div>
-                </a>
-                <a href="./catalog.html#section-single-pods" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Render.png" alt="Single Pods"></div>
-                  <div class="nav-drop-text"><span class="nav-drop-title">Single Pods</span><span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span></div>
-                </a>
-                <a href="./catalog.html" class="nav-drop-card">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Full Render.png" alt="All Products"></div>
-                  <div class="nav-drop-text"><span class="nav-drop-title">All Products</span><span class="nav-drop-desc">Browse the complete Pilr collection</span></div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="./why-pilr.html">Why pilr</a></li>
-        <li><a href="./about.html">Our story</a></li>
-        <li><a href="./faq.html">FAQ</a></li>
-      </ul>
-      <a href="./cart.html" class="nav-cart-icon" aria-label="Cart">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      </a>
-      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <a href="./index.html" class="nav-logo"><img src="images/logov3.png" alt="Pilr" class="nav-logo-img"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./build-your-system.html">Build Your System</a></li>
+      <li><a href="./early-access.html" class="nav-cta-filled">Get Early Access</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
-  <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
 
-  <!-- MAIN -->
-  <div class="ea-page">
-    <div class="ea-main">
+  <section class="ea-hero">
+
+    <!-- Left: hand image -->
+    <div class="ea-img-col">
+      <img src="images/lifestyle_section/Hand Transparent.png" alt="Pilr system" />
+    </div>
+
+    <!-- Right: signup card -->
+    <div class="ea-card-col">
       <div class="ea-card">
+        <h1>Never Miss a Day</h1>
+        <p class="ea-card-sub">Receive early access and launch discounts when you sign up</p>
 
-        <img src="./images/logov3-cropped.png" alt="Pilr" class="ea-logo" />
-        <div class="ea-eyebrow">Early Access</div>
-        <h1 class="ea-headline">Be the first to<br><strong>get pilr.</strong></h1>
-        <p class="ea-sub">Sign up below to lock in 10% off your first order and be first in line when we launch.</p>
-
-        <div class="ea-steps">
-
-          <!-- Step 1: Email -->
-          <div class="ea-step">
-            <div>
-              <div class="ea-step-label">Step 1</div>
-              <div class="ea-step-title">Get 10% off your first order</div>
-              <div class="ea-step-desc">Enter your email to claim your discount and stay in the loop.</div>
-            </div>
-            <form id="ea-email-form">
+        <div id="ea-step">
+          <form id="ea-email-form">
+            <div class="ea-input-row">
               <input type="email" placeholder="your@email.com" required />
-              <button type="submit" class="btn">Claim My 10% Off</button>
-            </form>
-            <p class="ea-success" id="ea-email-success">You're on the list. Check your inbox.</p>
-            <p class="ea-legal">By signing up, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
-          </div>
-
-          <div class="ea-divider">or go further</div>
-
-          <!-- Step 2: SMS -->
-          <div class="ea-step">
-            <div>
-              <div class="ea-step-label">Step 2</div>
-              <div class="ea-step-title">Get a free stainless steel scooper</div>
-              <div class="ea-step-desc">Add your number to be first to know when we launch — plus get a <strong>FREE custom stainless steel scooper</strong> with your first order.</div>
+              <button type="submit" class="btn">Notify Me</button>
             </div>
-            <form id="ea-phone-form">
-              <div class="ea-phone-row">
-                <select aria-label="Country code">
-                  <option value="+1">+1</option>
-                  <option value="+44">+44</option>
-                  <option value="+39">+39</option>
-                  <option value="+33">+33</option>
-                  <option value="+49">+49</option>
-                  <option value="+34">+34</option>
-                  <option value="+61">+61</option>
-                  <option value="+52">+52</option>
-                  <option value="+55">+55</option>
-                </select>
-                <input type="tel" placeholder="000-000-0000" required />
-              </div>
-              <button type="submit" class="btn">Text Me Launch Updates</button>
-            </form>
-            <p class="ea-success" id="ea-phone-success">You're in. We'll text you at launch.</p>
-            <p class="ea-legal">Agree to recurring marketing texts from Pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
-          </div>
-
+          </form>
+          <p class="ea-legal">By signing up, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <div class="footer-top"><div class="footer-top-inner">
-    <div class="footer-newsletter"><h3>Never miss a day</h3><p>Receive special offers and first look at new products.</p><form class="footer-email-form" id="footer-email-form"><div class="footer-email-row"><input type="email" placeholder="Email address" required /><button type="submit" class="footer-email-btn" aria-label="Subscribe"><svg width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#3d4f5c"/><path d="M13 10l6 6-6 6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></form><p class="footer-legal">By submitting your email, you agree to the pilr privacy policy and are opting in to marketing communications.</p></div>
-    <div class="footer-links-grid">
-      <div class="footer-col"><h4>Shop</h4><ul><li><a href="./catalog.html">All Products</a></li><li><a href="./catalog.html#section-single-pods">Single Pods</a></li><li><a href="./build-your-system.html">Build Your System</a></li><li><a href="./classic-stack.html">Classic Stack</a></li><li><a href="./catalog.html#section-accessories">Accessories</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="./about.html">Our story</a></li><li><a href="#">News</a></li><li><a href="mailto:support@pilrsystems.com">Contact us</a></li><li><a href="./why-pilr.html">Why pilr</a></li><li><a href="#">Stories</a></li></ul></div>
-      <div class="footer-col"><h4>Support</h4><ul><li><a href="./faq.html">FAQ</a></li><li><a href="#">Shipping information</a></li><li><a href="#">Returns &amp; exchanges</a></li><li><a href="./privacy-policy.html">Privacy policy</a></li><li><a href="#">Order tracking</a></li></ul></div>
+  </section>
+
+  <!-- WHY SECTION -->
+  <section class="ea-why">
+    <div class="ea-why-inner">
+      <div class="ea-why-top">
+        <div class="ea-why-eyebrow">What we make, and why</div>
+        <h2 class="ea-why-heading">Stay consistent with your routine,<br>no matter where life takes you.</h2>
+      </div>
+      <hr class="ea-why-divider" />
+      <div class="ea-why-cols">
+        <div class="ea-why-col">
+          <div class="ea-why-num">01 / Modular</div>
+          <h3>Every pod snaps into any stack.</h3>
+          <p>All three pods interlock seamlessly, so your system grows or changes with your routine, not the other way around.</p>
+        </div>
+        <div class="ea-why-col">
+          <div class="ea-why-num">02 / Portable</div>
+          <h3>Designed to move with you.</h3>
+          <p>Made to fit in your suitcase, carry-on, or gym bag, wherever you're headed.</p>
+        </div>
+        <div class="ea-why-col">
+          <div class="ea-why-num">03 / Built to Last</div>
+          <h3>Engineered to outlast what it carries.</h3>
+          <p>Pods created to survive years of travel, so your system holds up long after the first trip.</p>
+        </div>
+      </div>
     </div>
-  </div></div>
+  </section>
+
+  <!-- PODS SECTION -->
+  <section class="ea-pods">
+    <div class="ea-pods-header">
+      <div class="ea-pods-title">The Pilr System</div>
+      <div class="ea-pods-badge">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="7" fill="#4a90a4"/><path d="M4 7l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        TSA-Compliant
+      </div>
+    </div>
+    <div class="ea-pods-grid-wrap">
+      <div class="ea-pods-grid">
+        <div class="ea-pod">
+          <div class="ea-pod-img ea-pod-img--lg">
+            <img src="images/lifestyle_section/Powder Pod Transparent.png" alt="Powder Pod" />
+          </div>
+          <div class="ea-pod-name">Powder Pod</div>
+          <div class="ea-pod-desc">Powder, sealed tight</div>
+        </div>
+        <div class="ea-pod">
+          <div class="ea-pod-img ea-pod-img--md">
+            <img src="images/lifestyle_section/Hybrid Pod Transparent.png" alt="Hybrid Pod" />
+          </div>
+          <div class="ea-pod-name">Hybrid Pod</div>
+          <div class="ea-pod-desc">For medium &amp; large sized capsules</div>
+        </div>
+        <div class="ea-pod">
+          <div class="ea-pod-img ea-pod-img--sm">
+            <img src="images/lifestyle_section/Pill Pod Transparent.png" alt="Pill Pod" />
+          </div>
+          <div class="ea-pod-name">Pill Pod</div>
+          <div class="ea-pod-desc">Built for smaller capsules</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT TO HOLD SECTION -->
+  <section class="ea-built">
+    <div class="ea-built-inner">
+      <h2 class="ea-built-heading">Built to Hold Your Routine</h2>
+      <p class="ea-built-sub">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p>
+      <div class="ea-built-cols">
+        <div class="ea-built-col">
+          <div class="ea-built-col-title">Powders</div>
+          <ul class="ea-built-list">
+            <li>Creatine (~ 14 servings)</li>
+            <li>Pre-Workout (~ 8 servings)</li>
+            <li>AG1 (~ 6 servings)</li>
+            <li>Electrolytes (~ 25 servings)</li>
+          </ul>
+        </div>
+        <div class="ea-built-col">
+          <div class="ea-built-col-title">Large Pills</div>
+          <ul class="ea-built-list">
+            <li>Fish Oil (~ 8 servings)</li>
+            <li>Vitamin C (~ 7 servings)</li>
+            <li>Multivitamin (~ 8 servings)</li>
+            <li>Magnesium (~ 9 servings)</li>
+          </ul>
+        </div>
+        <div class="ea-built-col">
+          <div class="ea-built-col-title">Small Pills</div>
+          <ul class="ea-built-list">
+            <li>Vitamin D3 (~ 30 servings)</li>
+            <li>Zinc (~ 17 servings)</li>
+            <li>Probiotic (~ 9 servings)</li>
+            <li>Ashwagandha (~ 12 servings)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="ea-cta">
+    <div class="ea-cta-inner">
+      <h2 class="ea-cta-heading">Your Routine, Anywhere.</h2>
+      <div class="ea-cta-card">
+        <form id="ea-cta-form">
+          <div class="ea-input-row">
+            <input type="email" placeholder="your@email.com" required />
+            <button type="submit" class="btn">Notify Me</button>
+          </div>
+        </form>
+        <p class="ea-legal">By signing up, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITE FOOTER -->
   <footer class="site-footer">
-    <div class="site-footer-social-row"><div class="site-footer-social-inner"><div class="footer-social">
-      <a href="https://www.instagram.com/pilrofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
-      <a href="https://www.tiktok.com/@pilrofficial" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg></a>
-      <a href="https://www.youtube.com/@pilrofficial" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#4d6070" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
-      <a href="https://www.linkedin.com/company/pilrsystems" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.18-7.06-5.96-8.72-2.91l.04-1.68z"/></svg></a>
-    </div></div></div>
-    <div class="site-footer-bottom"><div class="site-footer-inner"><span class="site-footer-copy">© Pilr 2026.</span><div class="footer-payment-icons"><img src="images/lifestyle_section/Visa ss.png" alt="Visa" class="payment-icon"><img src="images/lifestyle_section/Amex ss.png" alt="Amex" class="payment-icon"><img src="images/lifestyle_section/Apple Pay ss.png" alt="Apple Pay" class="payment-icon"><img src="images/lifestyle_section/PayPal ss.png" alt="PayPal" class="payment-icon"><img src="images/lifestyle_section/Shop ss.png" alt="Shop Pay" class="payment-icon"><img src="images/lifestyle_section/Discover ss.png" alt="Discover" class="payment-icon"></div></div></div>
+    <span class="site-footer-copy">© 2026 PILR LLC. All rights reserved.</span>
+    <nav class="site-footer-links" aria-label="Legal">
+      <a href="./privacy-policy.html">Privacy Policy</a>
+      <a href="./terms-of-service.html">Terms of Service</a>
+      <a href="mailto:support@pilrsystems.com">Contact</a>
+    </nav>
   </footer>
 
-  <script src="./pilr-cart.js"></script>
+  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/shopify.js"></script>
+
   <script>
-    // ── Nav ───────────────────────────────────────────────────────────
     const hamburger = document.getElementById('nav-hamburger')
     const navLinks  = document.getElementById('nav-links')
     const overlay   = document.getElementById('nav-overlay')
-    hamburger.addEventListener('click', () => { navLinks.classList.toggle('nav-links--open'); hamburger.classList.toggle('nav-hamburger--open') })
-    overlay.addEventListener('click', () => { navLinks.classList.remove('nav-links--open'); hamburger.classList.remove('nav-hamburger--open') })
 
-    const shopAllLi    = document.querySelector('.nav-has-dropdown')
-    const shopDropdown = document.querySelector('.nav-dropdown')
-    const dimOverlay   = document.getElementById('nav-dim-overlay')
-    let dropOpen = false, dropCloseTimer = null
-    function openDrop()  { clearTimeout(dropCloseTimer); shopAllLi.classList.add('dropdown-active'); dimOverlay.classList.add('active'); dropOpen = true }
-    function closeDrop() { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.remove('dropdown-active'); dimOverlay.classList.remove('active'); dropOpen = false }
-    dimOverlay.addEventListener('click', closeDrop)
-    document.addEventListener('mousemove', e => {
-      if (!dropOpen) return
-      const li = shopAllLi.getBoundingClientRect(), dd = shopDropdown.getBoundingClientRect()
-      const inZone = (e.clientX >= li.left && e.clientX <= li.right && e.clientY >= li.top && e.clientY <= li.bottom) || (e.clientY >= dd.top && e.clientY <= dd.bottom) || (e.clientY > li.bottom && e.clientY < dd.top)
-      if (!inZone) { if (!dropCloseTimer) dropCloseTimer = setTimeout(closeDrop, 120) } else { clearTimeout(dropCloseTimer); dropCloseTimer = null }
-    })
-    shopAllLi.addEventListener('mouseenter', openDrop)
-    shopAllLi.querySelector('a').addEventListener('click', e => { if (window.innerWidth > 900) e.preventDefault(); closeDrop() })
+    function openMenu()  { hamburger.classList.add('open'); navLinks.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden' }
+    function closeMenu() { hamburger.classList.remove('open'); navLinks.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = '' }
+    function toggleMenu() { navLinks.classList.contains('open') ? closeMenu() : openMenu() }
 
-    let lastY = 0
-    const nav = document.querySelector('.nav')
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY
-      if (y > lastY && y > 80) nav.classList.add('nav--hidden')
-      else nav.classList.remove('nav--hidden')
-      lastY = y
-    }, { passive: true })
+    hamburger.addEventListener('click', toggleMenu)
+    overlay.addEventListener('click', closeMenu)
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
 
-    // ── Klaviyo helpers (same pattern as index.html) ──────────────────
-    function logConsent(identifier, source) {
-      console.log('[Consent]', identifier, source)
+    function logConsent(value, source, phone = null) {
+      const record = {
+        email: value,
+        ...(phone ? { phone } : {}),
+        consent_given: true,
+        timestamp: new Date().toISOString(),
+        page_url: window.location.href,
+        privacy_policy_version: '2026-03-24',
+        terms_version: '2026-03-24',
+        source,
+      }
+      try {
+        const existing = JSON.parse(localStorage.getItem('pilr_consent_log') || '[]')
+        existing.push(record)
+        localStorage.setItem('pilr_consent_log', JSON.stringify(existing))
+      } catch (err) {
+        console.warn('[Consent] local log unavailable:', err)
+      }
     }
 
-    // ── Email form ────────────────────────────────────────────────────
+    const eaStep = document.getElementById('ea-step')
+
+    function showPhoneStep(email) {
+      const heading = document.querySelector('.ea-card h1')
+      heading.textContent = 'Step 2 of 2 - Almost There'
+      heading.classList.add('ea-step-title')
+      document.querySelector('.ea-card-sub').remove()
+      eaStep.innerHTML = `
+        <p class="ea-phone-sub">FREE stainless steel scooper for your powder pod when you add your phone number!</p>
+        <form id="ea-phone-form">
+          <div class="ea-phone-row">
+            <select aria-label="Country code">
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+39">+39</option>
+              <option value="+33">+33</option>
+              <option value="+49">+49</option>
+              <option value="+34">+34</option>
+              <option value="+61">+61</option>
+              <option value="+52">+52</option>
+              <option value="+55">+55</option>
+            </select>
+            <input type="tel" placeholder="000-000-0000" required />
+            <button type="submit" class="btn">UNLOCK FREE SCOOPER</button>
+          </div>
+        </form>
+        <p class="ea-phone-error" id="ea-phone-error" role="alert" aria-live="polite"></p>
+        <p class="ea-sms-consent">By clicking UNLOCK FREE SCOOPER, you agree to receive recurring automated marketing texts from Pilr. Not a condition of purchase. Msg frequency varies. Msg &amp; data rates may apply. Reply HELP for help, STOP to cancel. <a href="https://pilr.myklpages.com/p/mobile-terms-of-service" target="_blank" rel="noopener noreferrer">Terms</a> &amp; <a href="https://pilrsystems.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy</a>.</p>
+      `
+      document.getElementById('ea-phone-form').addEventListener('submit', async e => {
+        e.preventDefault()
+        const countryCode = e.target.querySelector('select').value
+        const rawNumber   = e.target.querySelector('input[type="tel"]').value.trim()
+        const phone       = countryCode + rawNumber
+        const btn         = e.target.querySelector('button[type="submit"]')
+        const error       = document.getElementById('ea-phone-error')
+        btn.disabled = true
+        btn.textContent = 'Saving…'
+        try {
+          await window.subscribePhoneToKlaviyo(phone, email, 'RSVKC7', 'Early Access Page')
+          logConsent(email, 'early_access_page_phone', phone)
+          heading.textContent = 'You\'re on the list'
+          document.querySelector('.ea-phone-sub').textContent = 'Launching soon!'
+          e.target.remove()
+          document.getElementById('ea-phone-error').remove()
+          document.querySelector('.ea-sms-consent').remove()
+        } catch (err) {
+          console.warn('[Klaviyo] phone subscribe error:', err)
+          error.textContent = 'We couldn\'t save your number. Please check it and try again.'
+          btn.disabled = false
+          btn.textContent = 'UNLOCK FREE SCOOPER'
+        }
+      })
+    }
+
     document.getElementById('ea-email-form').addEventListener('submit', async e => {
-      e.preventDefault()
-      const email = e.target.querySelector('input[type="email"]').value.trim()
-      const btn   = e.target.querySelector('button')
-      btn.disabled = true
-      btn.textContent = 'Saving…'
-      logConsent(email, 'early_access_email')
-      try {
-        await Promise.all([
-          window.subscribeEmail?.(email),
-          window.subscribeEmailToKlaviyo?.(email),
-        ])
-        window._learnq = window._learnq || []
-        window._learnq.push(['identify', { '$email': email }])
-      } catch (err) {
-        console.warn('[Klaviyo] email error:', err)
-      }
-      e.target.style.display = 'none'
-      document.getElementById('ea-email-success').style.display = 'block'
-    })
-
-    // ── Phone form ────────────────────────────────────────────────────
-    document.getElementById('ea-phone-form').addEventListener('submit', async e => {
-      e.preventDefault()
-      const countryCode = e.target.querySelector('select').value
-      const rawNumber   = e.target.querySelector('input[type="tel"]').value.trim()
-      const phone       = countryCode + rawNumber
-      const btn         = e.target.querySelector('button')
-      btn.disabled = true
-      btn.textContent = 'Saving…'
-      logConsent(phone, 'early_access_sms')
-      try {
-        await window.subscribePhoneToKlaviyo?.(phone)
-      } catch (err) {
-        console.warn('[Klaviyo] phone error:', err)
-      }
-      e.target.style.display = 'none'
-      document.getElementById('ea-phone-success').style.display = 'block'
-    })
-
-    // ── Footer email ──────────────────────────────────────────────────
-    document.getElementById('footer-email-form').addEventListener('submit', async e => {
       e.preventDefault()
       const email = e.target.querySelector('input[type="email"]').value.trim()
       const btn   = e.target.querySelector('button[type="submit"]')
       btn.disabled = true
-      btn.textContent = 'Done!'
-      logConsent(email, 'footer_newsletter')
+      btn.textContent = 'Saving…'
+      logConsent(email, 'early_access_page_email')
       try {
-        await Promise.all([window.subscribeEmail?.(email), window.subscribeEmailToKlaviyo?.(email)])
-      } catch (err) { console.warn(err) }
+        await Promise.all([
+          window.subscribeEmail(email),
+          window.subscribeEmailToKlaviyo(email),
+        ])
+      } catch (err) {
+        console.warn('[Klaviyo] email subscribe error:', err)
+      }
+      window._learnq = window._learnq || []
+      window._learnq.push(['identify', { '$email': email }])
+      showPhoneStep(email)
+    })
+
+    document.getElementById('ea-cta-form').addEventListener('submit', async e => {
+      e.preventDefault()
+      const email = e.target.querySelector('input[type="email"]').value.trim()
+      const btn   = e.target.querySelector('button[type="submit"]')
+      btn.disabled = true
+      btn.textContent = 'Saving…'
+      logConsent(email, 'early_access_cta_email')
+      try {
+        await Promise.all([
+          window.subscribeEmail(email),
+          window.subscribeEmailToKlaviyo(email),
+        ])
+      } catch (err) {
+        console.warn('[Klaviyo] email subscribe error:', err)
+      }
+      window._learnq = window._learnq || []
+      window._learnq.push(['identify', { '$email': email }])
+      e.target.closest('.ea-cta-card').innerHTML = '<p class="ea-success" style="color:var(--text);font-size:1rem;">You\'re on the list. Talk soon.</p>'
     })
   </script>
+
 </body>
 </html>
