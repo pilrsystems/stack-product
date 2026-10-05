@@ -1,4 +1,4 @@
-// ── Pilr Cart ────────────────────────────────────────────────────────────────
+// ── pilr Cart ────────────────────────────────────────────────────────────────
 // localStorage-based cart. When Shopify goes live, replace the storage layer
 // (getCart / saveCart) with fetch calls to /cart.js and /cart/change.js.
 // The public API surface stays the same so all product-page code still works.
@@ -15,7 +15,7 @@
   // casing needed there.
   const FREE_SCOOPER_PRODUCT = {
     id: 'travel-scooper-free',
-    title: 'Pilr Travel Scooper',
+    title: 'pilr Travel Scooper',
     price: 0,
     listPrice: 9,
     image: 'images/lifestyle_section/Scooper.png',

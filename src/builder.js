@@ -72,7 +72,7 @@ const POD_INFO = {
   },
   'Powder Pod': {
     desc: 'Store a full week\'s supply of your go-to powders. 1 or 10? Stack as many as you\'d like.',
-    specs: ['Fits Pilr Travel Scooper', 'Height: 2.5 in.'],
+    specs: ['Fits pilr Travel Scooper', 'Height: 2.5 in.'],
     examples: 'Pre-Workout, Collagen, Greens Powder…',
   },
 }
