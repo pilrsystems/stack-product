@@ -3147,6 +3147,23 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-size: 1.05rem;
 }
 
+/* "See the full size guide" link inside a Sizing & Capacity answer -
+   sits on its own line after a <br> within the same <p> as the
+   answer text itself, rather than as a second <p>, since
+   .wp-faq-item.is-active .wp-faq-answer p adds bottom padding to
+   every <p> in the answer and a second one would double it up. */
+.faq-answer-link {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: #46545e;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.faq-answer-link:hover {
+  color: #2f3940;
+}
+
 .wp-footnotes {
   padding: 2.5rem 3rem;
   background: var(--bg);
