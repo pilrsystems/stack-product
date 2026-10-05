@@ -3158,12 +3158,12 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .faq-answer-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   margin-top: 0.75rem;
-  padding: 0.45rem 0.9rem;
+  padding: 0.35rem 0.7rem;
   border: 1.5px solid rgba(66,85,99,0.2);
   border-radius: var(--radius);
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
