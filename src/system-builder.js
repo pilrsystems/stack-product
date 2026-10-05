@@ -52,7 +52,7 @@ const POD_GLBS = {
 // Pod" widget on the single-pod product pages (pill-pod.html etc.) —
 // kept in sync manually since there's no shared pricing config in the
 // codebase yet; see pill-pod.html for the source of truth.
-const POD_BASE_PRICE  = { 'Small Pill Pod': 20, 'Big Pill Pod': 23, 'Powder Pod': 29 }
+const POD_BASE_PRICE  = { 'Small Pill Pod': 24, 'Big Pill Pod': 28, 'Powder Pod': 32 }
 const POD_CART_ID     = { 'Small Pill Pod': 'pill-pod', 'Big Pill Pod': 'hybrid-pod', 'Powder Pod': 'powder-pod' }
 const DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28] // index = total pods, 6+ capped at index 6
 function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)] }
@@ -65,7 +65,7 @@ function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) 
 // missing), this stops applying and the normal per-pod pricing takes
 // over again.
 const CLASSIC_STACK = {
-  id: 'classic-stack', title: 'Classic Stack', price: 54,
+  id: 'classic-stack', title: 'Classic Stack', price: 68,
   image: 'images/lifestyle_section/Hand Render.png',
 }
 const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Small Pill Pod'] + POD_BASE_PRICE['Big Pill Pod'] + POD_BASE_PRICE['Powder Pod']
