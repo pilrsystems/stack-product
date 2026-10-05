@@ -4013,6 +4013,12 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .product-images-col {
   margin: 3rem 1.5rem 3rem 1.5rem;
   display: flex; flex-direction: column; gap: 1rem;
+  /* Pins the images in place while the (taller) info column's extra
+     content scrolls past underneath — the standard sticky-image
+     product-page pattern. Catches up to normal scrolling exactly when
+     .product-hero's bottom edge (set by the taller info column) comes
+     into view, i.e. once the info column has nothing left to scroll. */
+  position: sticky; top: 96px; align-self: start;
 }
 .product-hero-img-frame {
   background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 3 / 2;
@@ -4028,7 +4034,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   color: #9aa7ae; font-size: 0.7rem; text-align: center; padding: 1rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.product-info-col { position: sticky; top: 96px; align-self: stretch; }
+.product-info-col { align-self: start; }
 .product-info-inner { padding: 4.5rem 3rem 4rem 3.5rem; display: flex; flex-direction: column; gap: 1rem; }
 
 .product-page-title {
