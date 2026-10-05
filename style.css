@@ -3086,6 +3086,59 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .wp-faq-inner { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* ── Standalone FAQ page (faq.html) ──────────────────────
+   A centered single column, not the two-column .wp-faq-inner layout
+   used when the FAQ is one section among several on a product page.
+   General questions sit directly under the hero in their own card;
+   every category after that gets its own centered title + card.
+   Items inside each .faq-card reuse .wp-faq-item/-question/-icon/
+   -answer as-is — same accordion look and JS, just a different
+   container. */
+.faq-hero {
+  padding: 6rem 3rem 3rem;
+  text-align: center;
+  background: var(--bg);
+}
+
+.faq-hero-headline {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 500;
+  color: #46545e;
+  letter-spacing: -0.01em;
+}
+
+.faq-groups {
+  padding: 1rem 3rem 7rem;
+  background: var(--bg);
+}
+
+.faq-group {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.faq-group + .faq-group {
+  margin-top: 4rem;
+}
+
+.faq-group-title {
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-weight: 500;
+  color: #46545e;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.faq-card {
+  background: #F3F2EE;
+  border-radius: var(--radius);
+  padding: 0.5rem 2rem;
+}
+
+@media (max-width: 640px) {
+  .faq-card { padding: 0.25rem 1.25rem; }
+}
+
 .wp-footnotes {
   padding: 2.5rem 3rem;
   background: var(--bg);
