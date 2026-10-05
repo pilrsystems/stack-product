@@ -6,6 +6,21 @@
 ;(function(global) {
   const STORAGE_KEY = 'pilr_cart'
 
+  // Classic Stack always comes with a free travel scooper. Kept as its own
+  // id (not 'travel-scooper') so it never merges with a scooper someone
+  // bought on its own at full price — the cart would have no way to tell
+  // a free unit and a paid one apart once merged into a single line's
+  // shared price/quantity. listPrice is display-only (see cart.html); the
+  // real `price` is 0, so totals already count it as free with no special
+  // casing needed there.
+  const FREE_SCOOPER_PRODUCT = {
+    id: 'travel-scooper-free',
+    title: 'Pilr Travel Scooper',
+    price: 0,
+    listPrice: 9,
+    image: 'images/lifestyle_section/Scooper.png',
+  }
+
   function getCart() {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { items: [] }
@@ -31,6 +46,9 @@
     } else {
       cart.items.push({ ...product, quantity })
     }
+    if (product.id === 'classic-stack' && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
+      cart.items.push({ ...FREE_SCOOPER_PRODUCT, quantity: 1 })
+    }
     saveCart(cart)
     return cart
   }
@@ -39,6 +57,10 @@
     const cart = getCart()
     if (quantity <= 0) {
       cart.items = cart.items.filter(i => i.id !== id)
+      // The free scooper perk goes away with the Classic Stack it came with.
+      if (id === 'classic-stack') {
+        cart.items = cart.items.filter(i => i.id !== FREE_SCOOPER_PRODUCT.id)
+      }
     } else {
       const item = cart.items.find(i => i.id === id)
       if (item) item.quantity = quantity

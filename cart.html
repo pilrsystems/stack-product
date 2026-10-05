@@ -90,6 +90,17 @@
       margin-top: auto;
     }
 
+    .cart-item-price-strike {
+      font-weight: 400;
+      color: #9aa7ae;
+      text-decoration: line-through;
+      margin-right: 0.3em;
+    }
+
+    .cart-item-price-free {
+      color: #5e6e7a;
+    }
+
     .cart-item-actions {
       display: flex;
       flex-direction: column;
@@ -446,6 +457,14 @@
 
     function renderItem(item) {
       const lineTotal = item.price * item.quantity
+      // Free-with-bundle perks (e.g. the Classic Stack's scooper) carry a
+      // listPrice for display even though their real price is 0 — show the
+      // original crossed out next to "FREE" instead of "$0.00", and skip
+      // the quantity stepper since there's only ever meant to be the one.
+      const isFreePerk = item.listPrice != null && item.price === 0
+      const priceHtml = isFreePerk
+        ? `<span class="cart-item-price-strike">${formatMoney(item.listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
+        : formatMoney(lineTotal)
       const el = document.createElement('div')
       el.className = 'cart-item'
       el.dataset.key = item.id
@@ -455,14 +474,15 @@
         </div>
         <div class="cart-item-details">
           <p class="cart-item-name">${item.title}</p>
-          <p class="cart-item-price">${formatMoney(lineTotal)}</p>
+          <p class="cart-item-price">${priceHtml}</p>
         </div>
         <div class="cart-item-actions">
+          ${isFreePerk ? '' : `
           <div class="cart-qty-ctrl">
             <button class="cart-qty-btn" data-action="decrease" data-key="${item.id}">−</button>
             <span class="cart-qty-val">${item.quantity}</span>
             <button class="cart-qty-btn" data-action="increase" data-key="${item.id}">+</button>
-          </div>
+          </div>`}
           <button class="cart-remove-btn" data-key="${item.id}">Remove</button>
         </div>
       `
