@@ -4128,30 +4128,48 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 .product-btn-add:hover, .product-btn-buy:hover { opacity: 0.88; }
 
-.offer-box { border: 1.5px solid rgba(66,85,99,0.15); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
-.offer-box-eyebrow {
-  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em;
-  text-transform: uppercase; color: #7a8a94; margin-bottom: 1rem;
+/* ── Build Your System promo card ────────────────────────
+   Shared across every product page's buy column, linking out to
+   build-your-system.html. Originally built for pill-pod.html only;
+   every value here is reused from elsewhere on the page it first
+   shipped on: the accordion trigger's label recipe (0.75rem/600/
+   0.14em uppercase/#5e6e7a) for "BUILD YOUR SYSTEM", the tagline's
+   body recipe (0.98rem/#7a8a94/1.5 line-height) for the description,
+   the same rgba(66,85,99,0.15) hairline the accordions use, and the
+   gallery's #EFEDE9 tile background for the photo's loading
+   placeholder color. No box/border/shadow — just the one hairline
+   above it, matching the accordion dividers. */
+.bys-block {
+  display: flex; flex-direction: column; gap: 0.9rem;
+  padding: 1.75rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+  text-decoration: none; cursor: pointer;
+}
+.bys-photo {
+  width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
+  border-radius: var(--radius); background: #EFEDE9;
+}
+.bys-text {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.bys-label {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #5e6e7a; margin: 0;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.offer-item { display: flex; align-items: center; gap: 1rem; }
-.offer-item-img {
-  width: 70px; height: 70px; border-radius: var(--radius); background: #F3F2EE;
-  overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+.bys-desc {
+  font-size: 0.98rem; font-weight: 400; color: #7a8a94; line-height: 1.5;
+  margin: 0.4rem 0 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.offer-item-img img { width: 100%; height: 100%; object-fit: contain; }
-.offer-item-info { flex: 1; }
-.offer-item-name { font-size: 0.95rem; font-weight: 600; color: #5e6e7a; margin-bottom: 0.15rem; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-.offer-item-price { font-size: 0.9rem; color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-.offer-item-add {
-  padding: 0.5rem 1.1rem; border: 1.5px solid rgba(66,85,99,0.25);
-  border-radius: var(--radius); background: none; font-size: 0.6875rem; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: #5e6e7a; cursor: pointer; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; white-space: nowrap;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+.bys-arrow {
+  display: block; flex-shrink: 0;
+  color: #5e6e7a; font-size: 1.1rem; line-height: 1;
+  transition: transform 0.15s ease;
 }
-.offer-item-add:hover {
-  background: #5e6e7a; border-color: #5e6e7a; color: #fff;
+.bys-block:hover .bys-arrow,
+.bys-block:focus-visible .bys-arrow { transform: translateX(4px); }
+.bys-block:focus-visible {
+  outline: 1.5px solid #5e6e7a; outline-offset: 4px;
 }
 
 .pilr-system-section { padding: 7rem 3rem 4rem; text-align: center; background: var(--bg); max-width: 1440px; margin: 0 auto; width: 100%; }

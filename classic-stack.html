@@ -145,30 +145,6 @@
     }
     #product-info-inner .bc-spec-row span:first-child { color: #5e6e7a; }
 
-    /* Zone 11 — same card border/eyebrow/row/Add-button the old
-       "Exclusive Offers" box used, square corners only. Arrow links
-       reuse the existing #5e6e7a link color; no new icon. */
-    #product-info-inner .offer-box { border-radius: 0; border: none; padding: 1.25rem 0; }
-    #product-info-inner .offer-item-img { border-radius: 0; }
-    #product-info-inner .offer-item-add { border-radius: 0; }
-    /* Scooper price — sits between the description and the Add
-       button instead of folded into the description line. Same
-       recipe as .offer-item-price (0.9rem / #7a8a94), just its own
-       element so it doesn't wrap with the button. */
-    #product-info-inner .bc-offer-price {
-      font-size: 0.9rem; color: #7a8a94; flex-shrink: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    /* Three rows now share one card; .offer-item itself only ever
-       had internal (thumbnail/text/control) gap before. Divider
-       reuses the same hairline color as .product-accordion's border. */
-    #product-info-inner .offer-item + .offer-item {
-      margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(66,85,99,0.15);
-    }
-    #product-info-inner .bc-offer-arrow {
-      color: #5e6e7a; font-size: 1rem; flex-shrink: 0; text-decoration: none;
-    }
-
     /* Single column at every breakpoint; this rule lives only in
        this page's own <style> block, not in style.css, so it has no
        effect on the other product pages. */
@@ -451,26 +427,16 @@
       <!-- 9. Buy Now deleted -->
 
       <!-- 11. Add-ons -->
-      <div class="offer-box">
-        <p class="offer-box-eyebrow">Complete your system</p>
-        <div class="offer-item">
-          <div class="offer-item-img"><img src="images/lifestyle_section/Build Your System.png" alt="" /></div>
-          <div class="offer-item-info">
-            <p class="offer-item-name">Extra Pods</p>
-            <p class="offer-item-price">Stack more, pay less per pod.</p>
+      <a href="./build-your-system.html" class="bys-block" aria-label="Build your system">
+        <img class="bys-photo" src="images/lifestyle_section/Pods Floating.png" alt="Pilr pods stacked in mid-air" width="450" height="300" loading="lazy" />
+        <div class="bys-text">
+          <div>
+            <p class="bys-label">Build Your System</p>
+            <p class="bys-desc">Build the stack that fits your routine.</p>
           </div>
-          <a href="./build-your-system.html?stack=classic-stack" class="bc-offer-arrow" aria-label="Build your system">&rarr;</a>
+          <span class="bys-arrow" aria-hidden="true">&rarr;</span>
         </div>
-        <div class="offer-item">
-          <div class="offer-item-img"><img src="images/lifestyle_section/Scooper.png" alt="Pilr Travel Scooper" /></div>
-          <div class="offer-item-info">
-            <p class="offer-item-name">Powder Scooper</p>
-            <p class="offer-item-price">Custom stainless steel scooper built to travel with your powders.</p>
-          </div>
-          <span class="bc-offer-price">$9</span>
-          <button class="offer-item-add">Add</button>
-        </div>
-      </div>
+      </a>
     </div></div>
   </div>
 
@@ -768,7 +734,6 @@
   <script>
     ;(function() {
       var PRODUCT = { id: 'classic-stack', title: 'Classic Stack', price: 68, image: 'images/lifestyle_section/Hand Render.png' }
-      var SCOOPER = { id: 'travel-scooper', title: 'Pilr travel scooper', price: 9, image: 'images/lifestyle_section/Scooper.png' }
 
       function flashBtn(btn, original) {
         btn.textContent = 'Added ✓'
@@ -784,11 +749,6 @@
       document.querySelector('.product-sticky-cta').addEventListener('click', function() {
         PilrCart.add(PRODUCT, 1)
         flashBtn(this, 'ADD TO CART')
-      })
-
-      document.querySelector('.offer-item-add').addEventListener('click', function() {
-        PilrCart.add(SCOOPER, 1)
-        flashBtn(this, 'Add')
       })
     })()
   </script>

@@ -118,19 +118,6 @@
       flex-shrink: 0; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
       color: #7a8a94;
     }
-    /* Offer box — second item's price sits before its Add button, and
-       a hairline separates the two rows, same as classic-stack. */
-    #product-info-inner .bc-offer-price {
-      font-size: 0.9rem; color: #7a8a94; flex-shrink: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    #product-info-inner .offer-item + .offer-item {
-      margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(66,85,99,0.15);
-    }
-    #product-info-inner .bc-offer-arrow {
-      color: #5e6e7a; font-size: 1rem; flex-shrink: 0; text-decoration: none;
-    }
-
     /* "Add a Pod" — collapsed by default: just a trigger row reading
        "Add a Pod" with a plus icon (styled like the site's other
        accordions — .product-accordion-trigger/-icon — icon rotates
@@ -138,11 +125,11 @@
        rows list below, no white card: background is the page's own
        --bg token (the site's cream), not a hardcoded color. Fonts/
        colors otherwise reuse what's already on this page (#5e6e7a
-       text, #7a8a94 muted, rgba(66,85,99,0.15) hairline dividers). */
-    /* Same thin card treatment as the site's .offer-box ("Complete
-       your system"), so this reads as its own distinct block from
-       Add to Cart below it — background stays the page's own --bg
-       token, not white like .offer-box's page-background fallback. */
+       text, #7a8a94 muted, rgba(66,85,99,0.15) hairline dividers).
+       Same thin card treatment as the site's old "Complete your
+       system" offer box (since replaced by .bys-block everywhere), so
+       this reads as its own distinct block from Add to Cart below
+       it. */
     #product-info-inner .pod-add {
       background: var(--bg); border: 1.5px solid rgba(66,85,99,0.15); border-radius: 0;
       padding: 0 1.5rem;
@@ -274,49 +261,9 @@
        here, not in style.css, so why-pilr.html keeps its grey. */
     .wp-faq { background: var(--bg); }
 
-    /* "Build Your System" block — replaces the old "Complete your
-       system" offer box. One clickable card: full-width landscape
-       photo on top, label/desc + arrow row underneath. Every token
-       reused from elsewhere on this page: the accordion trigger's
-       label recipe (0.75rem/600/0.14em uppercase/#5e6e7a) for "BUILD
-       YOUR SYSTEM", the tagline's body recipe (0.98rem/#7a8a94/1.5
-       line-height) for the description, the same rgba(66,85,99,0.15)
-       hairline the accordions use, and the gallery's #EFEDE9 tile
-       background for the photo's loading placeholder color. No
-       box/border/shadow — just the one hairline beneath it, matching
-       the accordion dividers above. */
-    #product-info-inner .bys-block {
-      display: flex; flex-direction: column; gap: 0.9rem;
-      padding: 1.75rem 0; border-top: 1px solid rgba(66,85,99,0.15);
-      text-decoration: none; cursor: pointer;
-    }
-    #product-info-inner .bys-photo {
-      width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
-      border-radius: var(--radius); background: #EFEDE9;
-    }
-    #product-info-inner .bys-text {
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    }
-    #product-info-inner .bys-label {
-      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-      color: #5e6e7a; margin: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    #product-info-inner .bys-desc {
-      font-size: 0.98rem; font-weight: 400; color: #7a8a94; line-height: 1.5;
-      margin: 0.4rem 0 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    #product-info-inner .bys-arrow {
-      display: block; flex-shrink: 0;
-      color: #5e6e7a; font-size: 1.1rem; line-height: 1;
-      transition: transform 0.15s ease;
-    }
-    #product-info-inner .bys-block:hover .bys-arrow,
-    #product-info-inner .bys-block:focus-visible .bys-arrow { transform: translateX(4px); }
-    #product-info-inner .bys-block:focus-visible {
-      outline: 1.5px solid #5e6e7a; outline-offset: 4px;
-    }
+    /* "Build Your System" block (.bys-*) — moved to the shared
+       style.css now that every product page uses it, not just this
+       one. */
 
     /* Product gallery — square main image with a vertical thumbnail
        rail on the left and arrow nav either side, replacing the
