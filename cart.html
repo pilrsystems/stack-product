@@ -57,12 +57,22 @@
       background: #f0f0ee;
       overflow: hidden;
       flex-shrink: 0;
+      display: block;
     }
 
     .cart-item-img img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+    }
+
+    .cart-item-name-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .cart-item-name-link:hover {
+      text-decoration: underline;
     }
 
     .cart-item-details {
@@ -455,6 +465,19 @@
       return '$' + dollars.toFixed(2)
     }
 
+    // Maps a cart line's id to its product page, so the item can link back
+    // to where it was bought. travel-scooper-free is the auto-added
+    // Classic Stack perk (see pilr-cart.js) — same product, same page.
+    const PRODUCT_PAGE_BY_ID = {
+      'pill-pod': 'pill-pod.html',
+      'hybrid-pod': 'hybrid-pod.html',
+      'powder-pod': 'powder-pod.html',
+      'classic-stack': 'classic-stack.html',
+      'travel-scooper': 'travel-scooper.html',
+      'travel-scooper-free': 'travel-scooper.html',
+      'single-lid': 'single-lid.html',
+    }
+
     function renderItem(item) {
       const lineTotal = item.price * item.quantity
       // Free-with-bundle perks (e.g. the Classic Stack's scooper) carry a
@@ -465,15 +488,16 @@
       const priceHtml = isFreePerk
         ? `<span class="cart-item-price-strike">${formatMoney(item.listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
         : formatMoney(lineTotal)
+      const href = PRODUCT_PAGE_BY_ID[item.id]
       const el = document.createElement('div')
       el.className = 'cart-item'
       el.dataset.key = item.id
       el.innerHTML = `
-        <div class="cart-item-img">
+        ${href ? `<a class="cart-item-img" href="${href}">` : '<div class="cart-item-img">'}
           <img src="${item.image}" alt="${item.title}" />
-        </div>
+        ${href ? '</a>' : '</div>'}
         <div class="cart-item-details">
-          <p class="cart-item-name">${item.title}</p>
+          <p class="cart-item-name">${href ? `<a class="cart-item-name-link" href="${href}">${item.title}</a>` : item.title}</p>
           <p class="cart-item-price">${priceHtml}</p>
         </div>
         <div class="cart-item-actions">
