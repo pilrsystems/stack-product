@@ -3089,19 +3089,24 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 /* ── Standalone FAQ page (faq.html) ──────────────────────
    A centered single column, not the two-column .wp-faq-inner layout
    used when the FAQ is one section among several on a product page.
-   General questions sit directly under the hero in their own card;
-   every category after that gets its own centered title + card.
+   General questions sit directly under the hero in their own group;
+   every category after that gets its own centered title + group.
    Items inside each .faq-card reuse .wp-faq-item/-question/-icon/
-   -answer as-is — same accordion look and JS, just a different
-   container. */
+   -answer as-is — same accordion behavior as the product-page FAQ,
+   just a different container and (via the override below) slightly
+   larger question text, since this page is nothing but FAQ rather
+   than one section among several. No card background any more — flat
+   against the page's own white/cream, same as every section around
+   it; the hairline dividers between items (.wp-faq-item's own
+   border-bottom) still read the list apart without needing a box. */
 .faq-hero {
-  padding: 6rem 3rem 3rem;
+  padding: 9rem 3rem 3rem;
   text-align: center;
   background: var(--bg);
 }
 
 .faq-hero-headline {
-  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 3.4vw, 2.6rem);
   font-weight: 500;
   color: #46545e;
   letter-spacing: -0.01em;
@@ -3122,7 +3127,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .faq-group-title {
-  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-size: 1.7rem;
   font-weight: 500;
   color: #46545e;
   text-align: center;
@@ -3130,13 +3135,11 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .faq-card {
-  background: #F3F2EE;
-  border-radius: var(--radius);
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 0;
 }
 
-@media (max-width: 640px) {
-  .faq-card { padding: 0.25rem 1.25rem; }
+.faq-card .wp-faq-question {
+  font-size: 1.05rem;
 }
 
 .wp-footnotes {
