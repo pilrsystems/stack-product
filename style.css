@@ -3147,21 +3147,34 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-size: 1.05rem;
 }
 
-/* "See the full size guide" link inside a Sizing & Capacity answer -
+/* "See the full size guide" button inside a Sizing & Capacity answer -
    sits on its own line after a <br> within the same <p> as the
    answer text itself, rather than as a second <p>, since
    .wp-faq-item.is-active .wp-faq-answer p adds bottom padding to
-   every <p> in the answer and a second one would double it up. */
+   every <p> in the answer and a second one would double it up.
+   Reuses the small bordered-link recipe from .product-info-link
+   elsewhere on the site, just without that one's full-width/
+   space-between layout. */
 .faq-answer-link {
-  display: inline-block;
-  margin-top: 0.6rem;
-  color: #46545e;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding: 0.45rem 0.9rem;
+  border: 1.5px solid rgba(66,85,99,0.2);
+  border-radius: var(--radius);
+  font-size: 0.6875rem;
   font-weight: 500;
-  text-decoration: underline;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  text-decoration: none;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  transition: border-color 0.15s;
 }
 
 .faq-answer-link:hover {
-  color: #2f3940;
+  border-color: rgba(66,85,99,0.45);
 }
 
 .wp-footnotes {
