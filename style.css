@@ -3106,7 +3106,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .faq-hero-headline {
-  font-size: clamp(2rem, 3.4vw, 2.6rem);
+  font-size: 1.6rem;
   font-weight: 500;
   color: #46545e;
   letter-spacing: -0.01em;
@@ -3127,7 +3127,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .faq-group-title {
-  font-size: 1.7rem;
+  /* Matches .faq-hero-headline exactly - every heading on this page
+     reads as one size, not a hero/subhead hierarchy. */
+  font-size: 1.6rem;
   font-weight: 500;
   color: #46545e;
   text-align: center;
@@ -3135,7 +3137,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .faq-card {
-  padding: 0.5rem 0;
+  /* Horizontal padding insets the question/icon rows and answer text
+     from the .faq-group's own 860px width, narrowing the line length
+     without narrowing the centered titles above. */
+  padding: 0.5rem 3rem;
 }
 
 .faq-card .wp-faq-question {
