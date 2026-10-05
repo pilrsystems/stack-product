@@ -15,6 +15,56 @@
        reads as part of this page rather than a distinct band. Scoped
        here, not in style.css, so why-pilr.html keeps its grey. */
     .wp-faq { background: var(--bg); }
+
+    /* Product gallery — square main image with a vertical thumbnail
+       rail on the left and arrow nav either side, matching
+       pill/hybrid/powder-pod.html's layout instead of the old shared
+       .product-hero-img-frame/.product-secondary-images stack. */
+    .pg-gallery { display: flex; gap: 0.85rem; align-items: flex-start; }
+    .pg-thumbs {
+      flex-shrink: 0; width: 72px; display: flex; flex-direction: column; gap: 0.6rem;
+      max-height: 560px; overflow-y: auto;
+    }
+    .pg-thumb {
+      background: #EFEDE9; border: 1.5px solid transparent; border-radius: var(--radius);
+      aspect-ratio: 1 / 1; padding: 0; cursor: pointer; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pg-thumb.is-active { border-color: #5e6e7a; }
+    .pg-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 0.4rem; }
+    .pg-thumb-placeholder {
+      border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      color: #9aa7ae; font-size: 0.55rem; text-align: center;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .pg-main { position: relative; flex: 1; max-width: 740px; }
+    .product-hero { grid-template-columns: 1.5fr 1.1fr; }
+    #product-info-inner { padding-left: 2rem; }
+    .pg-main-frame {
+      background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 1 / 1;
+      display: flex; align-items: center; justify-content: center; padding: 0;
+      overflow: hidden;
+    }
+    .pg-main-frame .pg-main-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .pg-main-frame .pg-main-placeholder {
+      border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      color: #9aa7ae; font-size: 0.8rem; text-align: center;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .pg-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 32px; height: 32px; border-radius: 50%; border: none; background: none;
+      color: #5e6e7a; font-size: 1.6rem; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pg-arrow:hover { background: rgba(255,255,255,0.7); }
+    .pg-arrow--prev { left: 0.4rem; }
+    .pg-arrow--next { right: 0.4rem; }
+    @media (max-width: 900px) {
+      .pg-thumbs { width: 56px; }
+    }
   </style>
 </head>
 <body>
@@ -52,14 +102,23 @@
 
   <div class="product-hero">
     <div class="product-images-col">
-      <div class="product-hero-img-frame">
-        <img class="product-main-img" src="images/lifestyle_section/Full Render.png" alt="Single Lid" />
-      </div>
-      <div class="product-secondary-images">
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
-        <div class="product-placeholder-img">Product photo</div>
+      <div class="pg-gallery">
+        <div class="pg-thumbs" id="pg-thumbs">
+          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Full Render.png" aria-label="Photo 1">
+            <img src="images/lifestyle_section/Full Render.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" aria-label="Photo 2"><span class="pg-thumb-placeholder">Photo</span></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 3"><span class="pg-thumb-placeholder">Photo</span></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 4"><span class="pg-thumb-placeholder">Photo</span></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 5"><span class="pg-thumb-placeholder">Photo</span></button>
+        </div>
+        <div class="pg-main">
+          <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
+          <div class="pg-main-frame" id="pg-main-frame">
+            <img class="pg-main-img" id="pg-main-img" src="images/lifestyle_section/Full Render.png" alt="Single Lid" />
+          </div>
+          <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
+        </div>
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
@@ -261,6 +320,31 @@
     if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
     let qty=1;document.getElementById('qty-minus').addEventListener('click',()=>{if(qty>1){qty--;document.getElementById('qty-val').textContent=qty}});document.getElementById('qty-plus').addEventListener('click',()=>{qty++;document.getElementById('qty-val').textContent=qty});
     document.querySelectorAll('.product-acc-trigger').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.product-acc-item').classList.toggle('open')));
+  </script>
+  <script>
+    ;(function () {
+      var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pg-thumb'));
+      var mainFrame = document.getElementById('pg-main-frame');
+      var prevBtn = document.getElementById('pg-prev');
+      var nextBtn = document.getElementById('pg-next');
+      var current = 0;
+
+      function renderSlide(index) {
+        var thumb = thumbs[index];
+        var src = thumb.dataset.src;
+        mainFrame.innerHTML = src
+          ? '<img class="pg-main-img" id="pg-main-img" src="' + src + '" alt="Single Lid" />'
+          : '<div class="pg-main-placeholder">Product photo</div>';
+        thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
+        current = index;
+      }
+
+      thumbs.forEach(function (thumb, i) {
+        thumb.addEventListener('click', function () { renderSlide(i); });
+      });
+      prevBtn.addEventListener('click', function () { renderSlide((current - 1 + thumbs.length) % thumbs.length); });
+      nextBtn.addEventListener('click', function () { renderSlide((current + 1) % thumbs.length); });
+    })();
   </script>
   <script src="./pilr-cart.js"></script>
   <script>

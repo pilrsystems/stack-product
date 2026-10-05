@@ -20,11 +20,59 @@
        in full at the end of this task.
   ────────────────────────────────────────────────────────────── -->
   <style>
-    /* Product photos are shot at the frame's own 3:2 ratio, so they
-       should fill it edge to edge instead of sitting padded/inset
-       inside it like the placeholder state did. */
-    .product-hero-img-frame { padding: 0; }
-    .product-main-img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: cover; }
+    /* Product gallery — square main image with a vertical thumbnail
+       rail on the left and arrow nav either side, matching
+       pill/hybrid/powder-pod.html's layout instead of the old shared
+       .product-hero-img-frame/.product-secondary-images stack. */
+    .pg-gallery { display: flex; gap: 0.85rem; align-items: flex-start; }
+    .pg-thumbs {
+      flex-shrink: 0; width: 72px; display: flex; flex-direction: column; gap: 0.6rem;
+      max-height: 560px; overflow-y: auto;
+    }
+    .pg-thumb {
+      background: #EFEDE9; border: 1.5px solid transparent; border-radius: var(--radius);
+      aspect-ratio: 1 / 1; padding: 0; cursor: pointer; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pg-thumb.is-active { border-color: #5e6e7a; }
+    .pg-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .pg-thumb-placeholder {
+      border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      color: #9aa7ae; font-size: 0.55rem; text-align: center;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .pg-main { position: relative; flex: 1; max-width: 740px; }
+    .product-hero { grid-template-columns: 1.5fr 1.1fr; }
+    #product-info-inner { padding-left: 2rem; }
+    .pg-main-frame {
+      background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 1 / 1;
+      display: flex; align-items: center; justify-content: center; padding: 0;
+      overflow: hidden;
+    }
+    /* Classic Stack's photos are shot at a consistent square crop, so
+       cover (not contain, which pill/hybrid/powder-pod use for their
+       single-product renders) keeps them filling the frame edge to
+       edge like they did in the old layout. */
+    .pg-main-frame .pg-main-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .pg-main-frame .pg-main-placeholder {
+      border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      color: #9aa7ae; font-size: 0.8rem; text-align: center;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .pg-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 32px; height: 32px; border-radius: 50%; border: none; background: none;
+      color: #5e6e7a; font-size: 1.6rem; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pg-arrow:hover { background: rgba(255,255,255,0.7); }
+    .pg-arrow--prev { left: 0.4rem; }
+    .pg-arrow--next { right: 0.4rem; }
+    @media (max-width: 900px) {
+      .pg-thumbs { width: 56px; }
+    }
 
     /* Struck-through original price next to .product-title-price,
        sized like the same pattern already used on catalog cards
@@ -308,14 +356,31 @@
   <!-- PRODUCT HERO -->
   <div class="product-hero">
     <div class="product-images-col">
-      <div class="product-hero-img-frame">
-        <img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 1.png" alt="The Classic Stack" />
-      </div>
-      <div class="product-secondary-images">
-        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 2.png" alt="The Classic Stack, disassembled into its stacking pods" /></div>
-        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 3.png" alt="The Classic Stack, angled product view" /></div>
-        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 4.png" alt="The Classic Stack, close-up on the lid" /></div>
-        <div class="product-hero-img-frame"><img class="product-main-img" src="images/lifestyle_section/Classic Stack Photo 5.png" alt="The Classic Stack, held in hand" /></div>
+      <div class="pg-gallery">
+        <div class="pg-thumbs" id="pg-thumbs">
+          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Classic Stack Photo 1.png" aria-label="Photo 1">
+            <img src="images/lifestyle_section/Classic Stack Photo 1.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Classic Stack Photo 2.png" aria-label="Photo 2">
+            <img src="images/lifestyle_section/Classic Stack Photo 2.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Classic Stack Photo 3.png" aria-label="Photo 3">
+            <img src="images/lifestyle_section/Classic Stack Photo 3.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Classic Stack Photo 4.png" aria-label="Photo 4">
+            <img src="images/lifestyle_section/Classic Stack Photo 4.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Classic Stack Photo 5.png" aria-label="Photo 5">
+            <img src="images/lifestyle_section/Classic Stack Photo 5.png" alt="" />
+          </button>
+        </div>
+        <div class="pg-main">
+          <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
+          <div class="pg-main-frame" id="pg-main-frame">
+            <img class="pg-main-img" id="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 1.png" alt="The Classic Stack" />
+          </div>
+          <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
+        </div>
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
@@ -673,6 +738,31 @@
     document.querySelectorAll('.product-acc-trigger').forEach(btn => {
       btn.addEventListener('click', () => btn.closest('.product-acc-item').classList.toggle('open'))
     })
+  </script>
+  <script>
+    ;(function () {
+      var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pg-thumb'));
+      var mainFrame = document.getElementById('pg-main-frame');
+      var prevBtn = document.getElementById('pg-prev');
+      var nextBtn = document.getElementById('pg-next');
+      var current = 0;
+
+      function renderSlide(index) {
+        var thumb = thumbs[index];
+        var src = thumb.dataset.src;
+        mainFrame.innerHTML = src
+          ? '<img class="pg-main-img" id="pg-main-img" src="' + src + '" alt="The Classic Stack" />'
+          : '<div class="pg-main-placeholder">Product photo</div>';
+        thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
+        current = index;
+      }
+
+      thumbs.forEach(function (thumb, i) {
+        thumb.addEventListener('click', function () { renderSlide(i); });
+      });
+      prevBtn.addEventListener('click', function () { renderSlide((current - 1 + thumbs.length) % thumbs.length); });
+      nextBtn.addEventListener('click', function () { renderSlide((current + 1) % thumbs.length); });
+    })();
   </script>
   <script src="./pilr-cart.js"></script>
   <script>
