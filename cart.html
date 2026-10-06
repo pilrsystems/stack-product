@@ -117,13 +117,10 @@
     /* Free-perk rows (e.g. the Classic Stack's scooper) skip the quantity
        stepper, so Remove is the only child here - space-between has
        nothing to push it against and leaves it pinned to the top instead
-       of centered against the item image. */
+       of at the bottom, where Remove sits on every other row (space-
+       between puts the qty-ctrl at the top and Remove at the end). */
     .cart-item-actions--single {
-      justify-content: center;
-    }
-
-    .cart-item-actions--single .cart-remove-btn {
-      margin-top: 0;
+      justify-content: flex-end;
     }
 
     .cart-qty-ctrl {
