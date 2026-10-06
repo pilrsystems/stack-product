@@ -3543,12 +3543,12 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .cart-drawer-free-badge {
   display: inline-block;
-  background: rgba(129, 142, 153, 0.15);
-  color: #46545e;
+  background: #818E99;
+  color: #FFFFFF;
   font-size: 0.72rem;
   font-weight: 600;
   padding: 0.3rem 0.7rem;
-  border-radius: 999px;
+  border-radius: var(--radius);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
