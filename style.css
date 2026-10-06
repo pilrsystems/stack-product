@@ -3366,7 +3366,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: -8px 0 32px rgba(0,0,0,0.08);
 }
 
