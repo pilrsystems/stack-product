@@ -845,9 +845,9 @@ body.system-page {
    sit on top of the centered pod render below it. */
 .system-layout.detail-active .pod-detail-panel {
   display: block;
-  width: 210px;
+  width: 230px;
   top: 1.75rem;
-  right: 2.5rem;
+  right: 4.5rem;
   left: auto;
   position: absolute;
   z-index: 10;
