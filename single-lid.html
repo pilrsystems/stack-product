@@ -57,6 +57,11 @@
     .pg-arrow:hover { background: rgba(255,255,255,0.7); }
     .pg-arrow--prev { left: 0.4rem; }
     .pg-arrow--next { right: 0.4rem; }
+    /* Price pushed to the far right of the title row, same pattern
+       the other product pages use. */
+    #product-info-inner .product-title-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
     @media (max-width: 900px) {
       .pg-thumbs { width: 56px; }
     }
@@ -133,9 +138,9 @@
       </div>
       <p class="product-page-tagline">Compatible with all three pods across your stack. For extra stacks or replacements.</p>
       <ul class="product-feature-list">
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
       <div class="product-info-sections">
         <div class="product-accordion">
