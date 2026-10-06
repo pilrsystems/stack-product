@@ -47,6 +47,10 @@ const POD_GLBS = {
   'Powder Pod': './models/Configurations/Powder%20Pod%20New.glb',
 }
 
+// The lid that caps whatever pod ends up on top of the stack — always the
+// same asset regardless of which pod it's resting on.
+const LID_GLB = './models/Configurations/Multi-Pod%20Lid%20New.glb'
+
 // ── Pricing ────────────────────────────────────────────────────
 // Same base prices and tiered quantity discount curve as the "Add a
 // Pod" widget on the single-pod product pages (pill-pod.html etc.) —
@@ -195,6 +199,10 @@ scene.add(outerGroup)
 let sections        = []
 let modelLoaded     = false
 let currentGlbScene = null
+// The lid sitting on top of the stack — tracked separately from `sections`
+// (not clickable, no label, no "View inside" panel of its own) but still
+// animated alongside them for drop-in and detail-view fly-away.
+let lidSection       = null
 // Measured pod height per type, keyed by pod name — populated the first
 // time each type loads (see buildStack). Lets the stacking gap stay
 // constant across different selections instead of depending on which
@@ -300,6 +308,7 @@ async function buildStack(podTypes, onReady) {
     currentGlbScene = null
   }
   sections        = []
+  lidSection      = null
   modelLoaded     = false
   currentPodTypes = [...podTypes]
 
@@ -331,8 +340,9 @@ async function buildStack(podTypes, onReady) {
     // empty shell needing a separate divider_2026_0520.glb piece added
     // on top — doing that here now would overlay a second, perpendicular
     // wall and make the pod look like it has 4 compartments instead of 2.
-    const [podGltfs] = await Promise.all([
+    const [podGltfs, lidGltf] = await Promise.all([
       Promise.all(podTypes.map(t => loadPod(POD_GLBS[t]))),
+      loadPod(LID_GLB),
       ensureAllHeights(),
     ])
 
@@ -431,6 +441,30 @@ async function buildStack(podTypes, onReady) {
         stackZ -= (halfExtents[i].above + halfExtents[i + 1].below) - overlapUsed
       }
     }
+
+    // ── Lid: always caps whatever pod ends up on top. Continues the exact
+    // same stepping pattern used between every pair of pods above (same
+    // `overlapUsed` nesting depth), so it reads as just another pod in the
+    // stack rather than a separately-tuned gap.
+    const lidScene = lidGltf.scene
+    lidScene.traverse(m => {
+      if (m.isMesh) {
+        m.castShadow = true
+        m.material   = darkMat
+      }
+    })
+    const { zMin: lidZMin, zMax: lidZMax } = measurePod(lidScene)
+    stackGroup.add(lidScene)
+
+    const lidBBCenter    = lidZMin + (lidZMax - lidZMin) * 0.5
+    const lidHalfExtents = { above: lidBBCenter - lidZMin, below: lidZMax - lidBBCenter }
+    const topHalfExtents = halfExtents[halfExtents.length - 1]
+
+    stackZ -= (topHalfExtents.above + lidHalfExtents.below) - overlapUsed
+    lidScene.position.z = stackZ - lidBBCenter
+    outerGroup.updateMatrixWorld(true)
+
+    lidSection = { mesh: lidScene, restZ: lidScene.position.z }
 
     modelLoaded = true
     document.getElementById('system-loading')?.classList.add('hidden')
@@ -555,12 +589,14 @@ function updateLabels() {
 
 // ── Drop animation ───────────────────────────────────────────
 function playDrop() {
-  if (!sections.length) return
-  sections.forEach(s => gsap.killTweensOf(s.mesh.position))
-  sections.forEach(s => { s.mesh.position.z = s.restZ - DROP_OFFSET })
+  // Lid drops in last, continuing the same cascade right after the top pod.
+  const all = lidSection ? [...sections, lidSection] : sections
+  if (!all.length) return
+  all.forEach(s => gsap.killTweensOf(s.mesh.position))
+  all.forEach(s => { s.mesh.position.z = s.restZ - DROP_OFFSET })
 
   const tl = gsap.timeline()
-  sections.forEach((s, i) => {
+  all.forEach((s, i) => {
     tl.to(s.mesh.position, { z: s.restZ, duration: 0.72, ease: 'power3.out' }, i * 0.18)
   })
 }
@@ -605,6 +641,12 @@ function enterDetailView(sectionIndex) {
     const dir = i < sectionIndex ? FLY_OFFSET : -FLY_OFFSET
     gsap.to(s.mesh.position, { z: s.restZ + dir, duration: 0.55, ease: 'power2.in', delay: 0.05 })
   })
+  // The lid sits above every pod, so it always flies off the same way the
+  // other above-the-clicked-pod sections do — regardless of which pod was
+  // clicked, including the top one it's actually resting on.
+  if (lidSection) {
+    gsap.to(lidSection.mesh.position, { z: lidSection.restZ - FLY_OFFSET, duration: 0.55, ease: 'power2.in', delay: 0.05 })
+  }
 
   gsap.to(outerGroup.rotation, { x: 0, z: 0, duration: 0.85, ease: 'power2.inOut' })
   gsap.to(outerGroup.position, { y: 0, duration: 0.85, ease: 'power2.inOut' })
@@ -654,6 +696,9 @@ function exitDetailView() {
   sections.forEach((s, i) => {
     gsap.to(s.mesh.position, { z: s.restZ, duration: 0.7, ease: 'power3.out', delay: 0.25 + i * 0.08 })
   })
+  if (lidSection) {
+    gsap.to(lidSection.mesh.position, { z: lidSection.restZ, duration: 0.7, ease: 'power3.out', delay: 0.25 + sections.length * 0.08 })
+  }
 }
 
 // ── Pod detail panel ─────────────────────────────────────────
@@ -777,6 +822,41 @@ const POD_SPECS = {
   'Powder Pod': '[pending mL]',
 }
 
+// Every order includes one free lid, same rule and same product (id
+// 'single-lid-free', $7 list) as PilrCart's own auto-granted perk — kept
+// in sync manually since there's no shared pricing config yet. Shown here
+// purely as a preview line; PilrCart grants the real cart item itself the
+// moment any pod lands in the cart, so this row never needs to touch
+// currentCartTotal/currentCartListTotal.
+const FREE_LID = {
+  title: 'Single Lid',
+  image: 'images/lifestyle_section/Full Render.png',
+  listPrice: 7,
+}
+function makeLidRow(chevron) {
+  return `<div class="sys-acc-row">
+    <button class="sys-acc-header">
+      <span class="sys-acc-dot"></span>
+      <span class="sys-acc-name">${FREE_LID.title} <span class="sys-acc-supp">— <em>Included with your pods</em></span></span>
+      <span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(FREE_LID.listPrice)}</span>Free</span>
+      ${chevron}
+    </button>
+    <div class="sys-acc-body">
+      <div class="sys-acc-expanded">
+        <div class="sys-acc-pod-img-wrap">
+          <img src="${FREE_LID.image}" alt="${FREE_LID.title}" class="sys-acc-pod-img" />
+        </div>
+        <div class="sys-acc-pod-info">
+          <div class="sys-acc-info-field">
+            <span class="sys-acc-info-label">Included</span>
+            <span class="sys-acc-info-value">Free with any pod — extra lids are available at checkout.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`
+}
+
 function updateSummary(pillPods, hybridPods, powderPods) {
   const el    = document.getElementById('system-summary-content')
   const total = pillPods + hybridPods + powderPods
@@ -839,6 +919,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
           </div>
         </div>
       </div>
+      ${makeLidRow(chevron)}
       ${addBtnHtml}
     </div>`
 
@@ -915,6 +996,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   for (let i = 0; i < hybridPods; i++) rows += makeRow('Big Pill Pod', hybridNames.slice(i*2,(i+1)*2), 'hybrid',  hybridIds.slice(i*2,(i+1)*2))
   for (let i = 0; i < powderPods; i++) rows += makeRow('Powder Pod', [powderNames[i]].filter(Boolean),'powders', [powderIds[i]].filter(Boolean))
 
+  rows += makeLidRow(chevron)
   rows += `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
   el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
 
