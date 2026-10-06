@@ -663,6 +663,12 @@ body.system-page {
   flex-shrink: 0;
 }
 
+/* Trims just the gap below the "Build Your System" title (not above it,
+   and not the "Edit Your System" header on the right, which stays as-is). */
+#system-selector .sys-panel-header {
+  padding-bottom: 1rem;
+}
+
 .sys-panel-header-title {
   font-size: 1.1rem;
   font-weight: 500;
@@ -684,7 +690,7 @@ body.system-page {
   font-size: 0.85rem;
   color: #7a8a94;
   line-height: 1.6;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -692,7 +698,7 @@ body.system-page {
   font-size: 0.92rem;
   font-weight: 500;
   color: #5e6e7a;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
