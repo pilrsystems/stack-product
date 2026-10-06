@@ -10,9 +10,9 @@
   // id (not 'travel-scooper') so it never merges with a scooper someone
   // bought on its own at full price — the cart would have no way to tell
   // a free unit and a paid one apart once merged into a single line's
-  // shared price/quantity. listPrice is display-only (see cart.html); the
-  // real `price` is 0, so totals already count it as free with no special
-  // casing needed there.
+  // shared price/quantity. listPrice is display-only (see getItemDisplay
+  // below); the real `price` is 0, so totals already count it as free with
+  // no special casing needed there.
   const FREE_SCOOPER_PRODUCT = {
     id: 'travel-scooper-free',
     title: 'Travel Scooper',
@@ -36,15 +36,13 @@
   }
   const PODS_THAT_INCLUDE_A_FREE_LID = ['pill-pod', 'hybrid-pod', 'powder-pod', 'classic-stack']
 
-  // Both free perks can now be bumped up from their own cart row (someone
-  // wanting a spare scooper or lid right from their cart instead of a
-  // separate product page visit) — the first unit of each stays free, any
-  // beyond that are charged at the normal per-unit price. This is a running
-  // TOTAL for the whole line (not a flat per-unit price times quantity),
-  // since "first one free" isn't expressible as a single per-unit number:
-  // qty 1 → $0, qty 2 → one base price, qty 3 → two base prices, etc. Both
-  // getCartTotal below and cart.html's own per-row display call this so the
-  // order subtotal and the line's own price always agree.
+  // Both free perks can be bumped up from their own cart row — the first
+  // unit of each stays free, any beyond that are charged at the normal
+  // per-unit price. This is a running TOTAL for the whole line (not a flat
+  // per-unit price times quantity), since "first one free" isn't
+  // expressible as a single per-unit number: qty 1 → $0, qty 2 → one base
+  // price, qty 3 → two base prices, etc. getCartTotal and getItemDisplay
+  // both call this so every price shown anywhere always agrees.
   const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 9, 'single-lid-free': 7 }
   function freePerkLineTotal(id, quantity) {
     const basePrice = FIRST_UNIT_FREE_BASE_PRICE[id]
@@ -67,8 +65,9 @@
   // based on their COMBINED quantity across the whole cart, then re-saves.
   // Called after every add/quantity change so the discount keeps stacking
   // correctly no matter where a pod's count last changed — a product page's
-  // Add a Pod panel, or the cart's own qty stepper — rather than only ever
-  // reflecting whatever was true the moment a line was first added.
+  // Add a Pod panel, the full cart page's qty stepper, or the drawer's own
+  // qty stepper — rather than only ever reflecting whatever was true the
+  // moment a line was first added.
   function repriceStackingPods(cart) {
     const totalQty = cart.items
       .filter(i => STACKING_POD_BASE_PRICE[i.id] != null)
@@ -159,6 +158,58 @@
     saveCart({ items: [] })
   }
 
+  function formatMoney(dollars) {
+    return '$' + dollars.toFixed(2)
+  }
+
+  // Maps a cart line's id to its own product page, so a UI can link an item
+  // back to where it was bought. The two free-perk ids share their paid
+  // counterpart's page.
+  const PRODUCT_PAGE_BY_ID = {
+    'pill-pod': 'pill-pod.html',
+    'hybrid-pod': 'hybrid-pod.html',
+    'powder-pod': 'powder-pod.html',
+    'classic-stack': 'classic-stack.html',
+    'travel-scooper': 'travel-scooper.html',
+    'travel-scooper-free': 'travel-scooper.html',
+    'single-lid': 'single-lid.html',
+    'single-lid-free': 'single-lid.html',
+  }
+
+  // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
+  // backfilling cart items that were added to localStorage before a given
+  // product started carrying its own listPrice field - so an older cart
+  // line still shows the correct struck-through price instead of needing
+  // the shopper to remove and re-add it. Pod lines bought at a bundle
+  // discount tier aren't backfillable this way since their list price
+  // depends on what else was in the cart at add-time, not just the id.
+  const STATIC_LIST_PRICE_BY_ID = {
+    'classic-stack': 84,
+  }
+
+  // Single source of truth for how a cart line's price should be shown,
+  // used by both cart.html's full-page list and the nav cart drawer so the
+  // two views can never drift from each other.
+  function getItemDisplay(item) {
+    const freeTotal = freePerkLineTotal(item.id, item.quantity)
+    const listPrice = item.listPrice ?? STATIC_LIST_PRICE_BY_ID[item.id] ?? null
+    const lineTotal = freeTotal != null ? freeTotal : item.price * item.quantity
+    const lineListTotal = listPrice != null ? listPrice * item.quantity : null
+    // Still at just the one free unit — the UI shows "FREE" outright. Once
+    // bumped past that it behaves like any other discounted line: struck-
+    // through full price next to what's actually charged.
+    const isFree = freeTotal === 0
+    const hasDiscount = !isFree && lineListTotal != null && lineListTotal > lineTotal
+    return {
+      href: PRODUCT_PAGE_BY_ID[item.id] || null,
+      lineTotal,
+      lineListTotal,
+      isFree,
+      hasDiscount,
+      isPerk: freeTotal != null,
+    }
+  }
+
   // ── Nav badge ─────────────────────────────────────────────────────────────
   // Injects a count bubble on every cart icon found in the page.
   function updateNavBadge() {
@@ -177,6 +228,195 @@
   global.addEventListener('pilr:cart-updated', updateNavBadge)
   document.addEventListener('DOMContentLoaded', updateNavBadge)
 
+  // ── Cart drawer ───────────────────────────────────────────────────────────
+  // A slide-in panel that opens from the nav cart icon on every page instead
+  // of navigating to cart.html. cart.html still exists as a full-page
+  // fallback (direct links/bookmarks), so its own cart icon is left to
+  // behave normally rather than popping a redundant drawer over a page
+  // that's already showing the same thing.
+  const DRAWER_ID = 'pilr-cart-drawer'
+  const TRASH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>'
+
+  function buildDrawer() {
+    if (document.getElementById(DRAWER_ID)) return
+
+    const overlay = document.createElement('div')
+    overlay.className = 'cart-drawer-overlay'
+    overlay.id = 'cart-drawer-overlay'
+
+    const drawer = document.createElement('aside')
+    drawer.className = 'cart-drawer'
+    drawer.id = DRAWER_ID
+    drawer.setAttribute('aria-hidden', 'true')
+    drawer.innerHTML =
+      '<div class="cart-drawer-header">' +
+        '<h2>Your Cart</h2>' +
+        '<button type="button" class="cart-drawer-close" aria-label="Close cart">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="cart-drawer-body" id="cart-drawer-body"></div>' +
+      '<div class="cart-drawer-footer" id="cart-drawer-footer"></div>'
+
+    document.body.appendChild(overlay)
+    document.body.appendChild(drawer)
+
+    overlay.addEventListener('click', closeDrawer)
+    drawer.querySelector('.cart-drawer-close').addEventListener('click', closeDrawer)
+
+    // Delegated so newly-rendered rows (every renderDrawer() call replaces
+    // the body's innerHTML) stay wired without re-attaching listeners.
+    drawer.querySelector('#cart-drawer-body').addEventListener('click', e => {
+      const removeBtn = e.target.closest('.cart-drawer-remove')
+      const qtyBtn = e.target.closest('.cart-drawer-qty-btn')
+      if (removeBtn) {
+        removeFromCart(removeBtn.dataset.key)
+        renderDrawer()
+      } else if (qtyBtn) {
+        const key = qtyBtn.dataset.key
+        const valEl = qtyBtn.closest('.cart-drawer-item').querySelector('.cart-drawer-qty-val')
+        const qty = parseInt(valEl.textContent, 10)
+        const next = qtyBtn.dataset.action === 'increase' ? qty + 1 : Math.max(0, qty - 1)
+        updateQuantity(key, next)
+        renderDrawer()
+      }
+    })
+  }
+
+  function isDrawerOpen() {
+    const drawer = document.getElementById(DRAWER_ID)
+    return !!drawer && drawer.classList.contains('open')
+  }
+
+  function openDrawer() {
+    buildDrawer()
+    renderDrawer()
+    document.getElementById('cart-drawer-overlay').classList.add('open')
+    const drawer = document.getElementById(DRAWER_ID)
+    drawer.classList.add('open')
+    drawer.setAttribute('aria-hidden', 'false')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closeDrawer() {
+    const overlay = document.getElementById('cart-drawer-overlay')
+    const drawer = document.getElementById(DRAWER_ID)
+    if (!overlay || !drawer) return
+    overlay.classList.remove('open')
+    drawer.classList.remove('open')
+    drawer.setAttribute('aria-hidden', 'true')
+    document.body.style.overflow = ''
+  }
+
+  function drawerItemRowHtml(item) {
+    const d = getItemDisplay(item)
+    const priceInner = d.isFree
+      ? '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span><span class="cart-item-price-free">Free</span>'
+      : d.hasDiscount
+        ? '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span>' + formatMoney(d.lineTotal)
+        : formatMoney(d.lineTotal)
+    const href = d.href
+    return (
+      '<div class="cart-drawer-item" data-key="' + item.id + '">' +
+        (href ? '<a class="cart-drawer-item-img" href="' + href + '">' : '<div class="cart-drawer-item-img">') +
+          '<img src="' + item.image + '" alt="' + item.title + '" />' +
+        (href ? '</a>' : '</div>') +
+        '<div class="cart-drawer-item-info">' +
+          '<p class="cart-drawer-item-name">' + (href ? '<a href="' + href + '">' + item.title + '</a>' : item.title) + '</p>' +
+          '<div class="cart-drawer-item-controls">' +
+            '<div class="cart-drawer-qty-ctrl">' +
+              '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + item.id + '">−</button>' +
+              '<span class="cart-drawer-qty-val">' + item.quantity + '</span>' +
+              '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + item.id + '">+</button>' +
+            '</div>' +
+            '<button type="button" class="cart-drawer-remove" data-key="' + item.id + '" aria-label="Remove">' + TRASH_ICON + '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="cart-drawer-item-price">' + priceInner + '</div>' +
+      '</div>'
+    )
+  }
+
+  // Every renderDrawer() call rebuilds the footer's innerHTML from scratch
+  // (quantities/subtotal have to, to stay current) — tracked separately so
+  // the promo accordion doesn't silently re-collapse on the next qty or
+  // remove click just because its DOM got replaced.
+  let promoOpen = false
+
+  function renderDrawer() {
+    const body = document.getElementById('cart-drawer-body')
+    const footer = document.getElementById('cart-drawer-footer')
+    if (!body || !footer) return
+
+    const cart = getCart()
+    if (cart.items.length === 0) {
+      body.innerHTML = '<div class="cart-drawer-empty">Your cart is empty.</div>'
+      footer.innerHTML = ''
+      return
+    }
+
+    const mainItems = cart.items.filter(i => !FIRST_UNIT_FREE_BASE_PRICE[i.id])
+    const perkItems = cart.items.filter(i => FIRST_UNIT_FREE_BASE_PRICE[i.id])
+
+    let html = ''
+    if (mainItems.length) {
+      html += '<div class="cart-drawer-section-label">Your Items</div>'
+      html += mainItems.map(drawerItemRowHtml).join('')
+    }
+    if (perkItems.length) {
+      html += '<div class="cart-drawer-section-label">Free Gifts</div>'
+      html += perkItems.map(drawerItemRowHtml).join('')
+    }
+    body.innerHTML = html
+
+    footer.innerHTML =
+      '<div class="cart-drawer-promo' + (promoOpen ? ' open' : '') + '" id="cart-drawer-promo">' +
+        '<button type="button" class="cart-drawer-promo-toggle" id="cart-drawer-promo-toggle">' +
+          '<span>Have a promo code?</span>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+        '</button>' +
+        '<div class="cart-drawer-promo-body">' +
+          '<div class="cart-drawer-promo-body-inner">' +
+            '<div class="cart-drawer-promo-row">' +
+              '<input type="text" placeholder="Enter code" />' +
+              '<button type="button">Apply</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cart-drawer-subtotal">' +
+        '<span>Subtotal</span>' +
+        '<span>' + formatMoney(getCartTotal()) + '</span>' +
+      '</div>' +
+      '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>' +
+      '<a href="./cart.html" class="cart-drawer-view-full">View full cart</a>'
+
+    document.getElementById('cart-drawer-promo-toggle').addEventListener('click', () => {
+      promoOpen = !promoOpen
+      document.getElementById('cart-drawer-promo').classList.toggle('open', promoOpen)
+    })
+    document.getElementById('cart-drawer-checkout-btn').addEventListener('click', () => {
+      // Redirect to Shopify checkout when live
+      // window.location.href = '/checkout'
+      alert('Checkout will be available once our store is live. Thank you for your interest!')
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const onCartPage = /(^|\/)cart\.html$/.test(location.pathname)
+    document.querySelectorAll('.nav-cart-btn, .nav-cart-icon').forEach(el => {
+      el.addEventListener('click', e => {
+        if (onCartPage) return
+        e.preventDefault()
+        openDrawer()
+      })
+    })
+  })
+
+  // Keep an already-open drawer in sync if the cart changes from elsewhere
+  // (e.g. localStorage updated in another tab).
+  global.addEventListener('pilr:cart-updated', () => { if (isDrawerOpen()) renderDrawer() })
+
   // ── Expose public API ─────────────────────────────────────────────────────
   global.PilrCart = {
     get: getCart,
@@ -187,5 +427,9 @@
     total: getCartTotal,
     clear: clearCart,
     freePerkLineTotal,
+    formatMoney,
+    getItemDisplay,
+    openDrawer,
+    closeDrawer,
   }
 })(window)

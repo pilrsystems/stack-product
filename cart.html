@@ -464,57 +464,19 @@
       document.getElementById('cart-layout').style.display = 'grid'
     }
 
-    function formatMoney(dollars) {
-      return '$' + dollars.toFixed(2)
-    }
-
-    // Maps a cart line's id to its product page, so the item can link back
-    // to where it was bought. travel-scooper-free and single-lid-free are
-    // the auto-added free perks (see pilr-cart.js) — same product, same page
-    // as their paid counterparts.
-    const PRODUCT_PAGE_BY_ID = {
-      'pill-pod': 'pill-pod.html',
-      'hybrid-pod': 'hybrid-pod.html',
-      'powder-pod': 'powder-pod.html',
-      'classic-stack': 'classic-stack.html',
-      'travel-scooper': 'travel-scooper.html',
-      'travel-scooper-free': 'travel-scooper.html',
-      'single-lid': 'single-lid.html',
-      'single-lid-free': 'single-lid.html',
-    }
-
-    // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
-    // backfilling cart items that were added to localStorage before a given
-    // product started carrying its own listPrice field - so an older cart
-    // line still shows the correct struck-through price instead of needing
-    // the shopper to remove and re-add it. Pod lines bought at a bundle
-    // discount tier aren't backfillable this way since their list price
-    // depends on what else was in the cart at add-time, not just the id.
-    const STATIC_LIST_PRICE_BY_ID = {
-      'classic-stack': 84,
-    }
-
+    // formatMoney, the id→product-page map, and the full price-display
+    // logic (listPrice backfill, bundle discounts, the first-unit-free
+    // perks) all now live in pilr-cart.js as PilrCart.formatMoney /
+    // PilrCart.getItemDisplay, shared with the nav cart drawer so the two
+    // views can never drift from each other.
     function renderItem(item) {
-      // Free perks (scooper, lid) now get a normal stepper too, so someone
-      // can add extras right from the cart - the first unit of either
-      // stays free, anything beyond that is charged at the normal price.
-      // PilrCart.freePerkLineTotal returns null for every other product,
-      // so lineTotal falls back to the usual price*quantity for those.
-      const freeTotal = PilrCart.freePerkLineTotal(item.id, item.quantity)
-      const listPrice = item.listPrice ?? STATIC_LIST_PRICE_BY_ID[item.id] ?? null
-      const lineTotal = freeTotal != null ? freeTotal : item.price * item.quantity
-      const lineListTotal = listPrice != null ? listPrice * item.quantity : null
-      // Still at just the one free unit — show "FREE" outright. Once
-      // bumped past that it behaves like any other discounted line below:
-      // struck-through full price next to what's actually charged.
-      const isFreePerk = freeTotal === 0
-      const hasDiscount = !isFreePerk && lineListTotal != null && lineListTotal > lineTotal
-      const priceHtml = isFreePerk
-        ? `<span class="cart-item-price-strike">${formatMoney(listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
-        : hasDiscount
-          ? `<span class="cart-item-price-strike">${formatMoney(lineListTotal)}</span> ${formatMoney(lineTotal)}`
-          : formatMoney(lineTotal)
-      const href = PRODUCT_PAGE_BY_ID[item.id]
+      const d = PilrCart.getItemDisplay(item)
+      const priceHtml = d.isFree
+        ? `<span class="cart-item-price-strike">${PilrCart.formatMoney(d.lineListTotal)}</span> <span class="cart-item-price-free">FREE</span>`
+        : d.hasDiscount
+          ? `<span class="cart-item-price-strike">${PilrCart.formatMoney(d.lineListTotal)}</span> ${PilrCart.formatMoney(d.lineTotal)}`
+          : PilrCart.formatMoney(d.lineTotal)
+      const href = d.href
       const el = document.createElement('div')
       el.className = 'cart-item'
       el.dataset.key = item.id
@@ -539,7 +501,7 @@
     }
 
     function updateSummary(total) {
-      const formatted = formatMoney(total)
+      const formatted = PilrCart.formatMoney(total)
       document.getElementById('cart-subtotal').textContent = formatted
       document.getElementById('cart-total').textContent    = formatted
     }
