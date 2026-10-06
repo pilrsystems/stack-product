@@ -846,8 +846,8 @@ body.system-page {
 .system-layout.detail-active .pod-detail-panel {
   display: block;
   width: 250px;
-  top: 1.25rem;
-  right: 0.5rem;
+  top: 0.75rem;
+  right: 0.25rem;
   left: auto;
   position: absolute;
   z-index: 10;
