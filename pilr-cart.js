@@ -15,7 +15,7 @@
   // casing needed there.
   const FREE_SCOOPER_PRODUCT = {
     id: 'travel-scooper-free',
-    title: 'pilr Travel Scooper',
+    title: 'Travel Scooper',
     price: 0,
     listPrice: 9,
     image: 'images/lifestyle_section/Scooper.png',
