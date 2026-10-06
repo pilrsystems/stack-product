@@ -491,14 +491,26 @@
       'single-lid': 'single-lid.html',
     }
 
+    // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
+    // backfilling cart items that were added to localStorage before a given
+    // product started carrying its own listPrice field - so an older cart
+    // line still shows the correct struck-through price instead of needing
+    // the shopper to remove and re-add it. Pod lines bought at a bundle
+    // discount tier aren't backfillable this way since their list price
+    // depends on what else was in the cart at add-time, not just the id.
+    const STATIC_LIST_PRICE_BY_ID = {
+      'classic-stack': 84,
+    }
+
     function renderItem(item) {
+      const listPrice = item.listPrice ?? STATIC_LIST_PRICE_BY_ID[item.id] ?? null
       const lineTotal = item.price * item.quantity
-      const lineListTotal = item.listPrice != null ? item.listPrice * item.quantity : null
+      const lineListTotal = listPrice != null ? listPrice * item.quantity : null
       // Free-with-bundle perks (e.g. the Classic Stack's scooper) carry a
       // listPrice for display even though their real price is 0 — show the
       // original crossed out next to "FREE" instead of "$0.00", and skip
       // the quantity stepper since there's only ever meant to be the one.
-      const isFreePerk = item.listPrice != null && item.price === 0
+      const isFreePerk = listPrice != null && item.price === 0
       // Everything else that carries a listPrice (Classic Stack's fixed
       // bundle discount, or pods added at a quantity-discount tier) shows
       // the same struck-through-list-price treatment as the product
@@ -506,7 +518,7 @@
       // of replacing it with "FREE".
       const hasDiscount = !isFreePerk && lineListTotal != null && lineListTotal > lineTotal
       const priceHtml = isFreePerk
-        ? `<span class="cart-item-price-strike">${formatMoney(item.listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
+        ? `<span class="cart-item-price-strike">${formatMoney(listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
         : hasDiscount
           ? `${formatMoney(lineTotal)} <span class="cart-item-price-strike">${formatMoney(lineListTotal)}</span>`
           : formatMoney(lineTotal)
