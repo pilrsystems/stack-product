@@ -29,6 +29,27 @@ const SUPPLEMENTS = {
     { id: 'vitaminc',     label: 'Vitamin C' },
     { id: 'turmeric',     label: 'Turmeric' },
   ],
+  // Not actual supplements — real, individually-purchasable products.
+  // Reuses the same chip rendering/selection machinery as the categories
+  // above (renderChips keys off SUPPLEMENTS[category] + selected[category]
+  // generically), but unlike those, each one here maps straight to its own
+  // full-price cart line in updateSummary/the Add to Cart handler — see
+  // ADD_ONS below for price/image, kept separate since renderChips only
+  // needs id + label.
+  addons: [
+    { id: 'single-lid',     label: 'Single Lid' },
+    { id: 'travel-scooper', label: 'Travel Scooper' },
+  ],
+}
+
+// Price/image for each ADD ONS chip — same id, full list price, and image
+// as that product's own page (single-lid.html / travel-scooper.html), so
+// adding one here is indistinguishable from buying it there. Intentionally
+// the *paid* ids (not '-free'), so an add-on purchase never merges with
+// the free lid/scooper perk PilrCart grants automatically elsewhere.
+const ADD_ONS = {
+  'single-lid':     { label: 'Single Lid',     price: 7, image: 'images/lifestyle_section/Full Render.png' },
+  'travel-scooper': { label: 'Travel Scooper', price: 9, image: 'images/lifestyle_section/Scooper.png' },
 }
 
 // ── Individual pod GLB paths ─────────────────────────────────
@@ -96,11 +117,12 @@ const DROP_OFFSET = 1.5   // scaled for individual pod GLB units
 const FLY_OFFSET  = 2.0
 
 // ── Selection state ──────────────────────────────────────────
-const selected = { powders: new Set(), hybrid: new Set(), pills: new Set() }
+const selected = { powders: new Set(), hybrid: new Set(), pills: new Set(), addons: new Set() }
 let currentPodTypes = []
 // Latest pod counts/total — read by the "Add to Cart" click handler so
 // it doesn't need to recompute calcPods() itself.
 let currentPodCounts   = { pillPods: 0, hybridPods: 0, powderPods: 0 }
+let currentAddonIds      = []   // selected ADD_ONS ids, same reasoning as currentPodCounts above
 let currentCartTotal     = 0
 let currentCartListTotal = 0   // sum of the struck-through list prices, for the Add to Cart button
 let isClassicStackCart = false
@@ -857,13 +879,43 @@ function makeLidRow(chevron) {
   </div>`
 }
 
+// One row per selected ADD ONS chip — full price (no bundle discount),
+// with its own Remove action that just deselects the chip.
+function makeAddonRow(id, chevron) {
+  const addon = ADD_ONS[id]
+  if (!addon) return ''
+  return `<div class="sys-acc-row">
+    <button class="sys-acc-header">
+      <span class="sys-acc-dot"></span>
+      <span class="sys-acc-name">${addon.label}</span>
+      <span class="sys-acc-price">${formatPrice(addon.price)}</span>
+      ${chevron}
+    </button>
+    <div class="sys-acc-body">
+      <div class="sys-acc-expanded">
+        <div class="sys-acc-pod-img-wrap">
+          <img src="${addon.image}" alt="${addon.label}" class="sys-acc-pod-img" />
+        </div>
+        <div class="sys-acc-pod-info">
+          <div class="sys-acc-pod-actions">
+            <button class="sys-acc-remove" data-addon-id="${id}">× Remove ${addon.label}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`
+}
+
 function updateSummary(pillPods, hybridPods, powderPods) {
   const el    = document.getElementById('system-summary-content')
   const total = pillPods + hybridPods + powderPods
 
   currentPodCounts = { pillPods, hybridPods, powderPods }
+  const addonIds   = [...selected.addons]
+  currentAddonIds  = addonIds
+  const addonTotal = addonIds.reduce((sum, id) => sum + (ADD_ONS[id]?.price ?? 0), 0)
 
-  if (total === 0) {
+  if (total === 0 && addonIds.length === 0) {
     el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
     currentCartTotal     = 0
     currentCartListTotal = 0
@@ -919,10 +971,11 @@ function updateSummary(pillPods, hybridPods, powderPods) {
         </div>
       </div>
       ${makeLidRow(chevron)}
+      ${addonIds.map(id => makeAddonRow(id, chevron)).join('')}
     </div>`
 
-    currentCartTotal     = CLASSIC_STACK.price
-    currentCartListTotal = CLASSIC_STACK_LIST_PRICE
+    currentCartTotal     = CLASSIC_STACK.price + addonTotal
+    currentCartListTotal = CLASSIC_STACK_LIST_PRICE + addonTotal
     updateCartButton()
 
     el.querySelectorAll('.sys-acc-header').forEach(btn => {
@@ -935,6 +988,15 @@ function updateSummary(pillPods, hybridPods, powderPods) {
       selected.powders.clear()
       document.querySelectorAll('.supp-chip.selected').forEach(chip => chip.classList.remove('selected'))
       updateSystem()
+    })
+    el.querySelectorAll('.sys-acc-remove[data-addon-id]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation()
+        const id = btn.dataset.addonId
+        selected.addons.delete(id)
+        document.querySelector(`.supp-chip[data-id="${id}"]`)?.classList.remove('selected')
+        updateSystem()
+      })
     })
     return
   }
@@ -993,11 +1055,14 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   for (let i = 0; i < hybridPods; i++) rows += makeRow('Big Pill Pod', hybridNames.slice(i*2,(i+1)*2), 'hybrid',  hybridIds.slice(i*2,(i+1)*2))
   for (let i = 0; i < powderPods; i++) rows += makeRow('Powder Pod', [powderNames[i]].filter(Boolean),'powders', [powderIds[i]].filter(Boolean))
 
-  rows += makeLidRow(chevron)
+  // The free lid only exists as a perk of buying a pod — don't show it
+  // when the only thing selected is an ADD ONS chip with no pods.
+  if (total > 0) rows += makeLidRow(chevron)
+  rows += addonIds.map(id => makeAddonRow(id, chevron)).join('')
   el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
 
-  currentCartTotal     = cartTotal
-  currentCartListTotal = listTotal
+  currentCartTotal     = cartTotal + addonTotal
+  currentCartListTotal = listTotal + addonTotal
   updateCartButton()
 
   el.querySelectorAll('.sys-acc-header').forEach(btn => {
@@ -1007,6 +1072,13 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   el.querySelectorAll('.sys-acc-remove').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation()
+      if (btn.dataset.addonId) {
+        const id = btn.dataset.addonId
+        selected.addons.delete(id)
+        document.querySelector(`.supp-chip[data-id="${id}"]`)?.classList.remove('selected')
+        updateSystem()
+        return
+      }
       const cat = btn.dataset.category
       const ids = JSON.parse(btn.dataset.ids)
       ids.forEach(id => {
@@ -1022,7 +1094,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 function updateCartButton() {
   const btn = document.getElementById('system-add-to-cart-btn')
   if (!btn) return
-  const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods
+  const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + currentAddonIds.length
   btn.disabled = totalQty === 0
   if (totalQty === 0) {
     btn.textContent = 'Add to Cart'
@@ -1038,25 +1110,36 @@ function updateCartButton() {
 document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
   const { pillPods, hybridPods, powderPods } = currentPodCounts
   const total = pillPods + hybridPods + powderPods
-  if (total === 0) return
+  if (total === 0 && currentAddonIds.length === 0) return
 
-  if (isClassicStackCart) {
-    window.PilrCart?.add(CLASSIC_STACK, 1)
-  } else {
-    const discount = discountForQty(total)
-    const counts = { 'Small Pill Pod': pillPods, 'Big Pill Pod': hybridPods, 'Powder Pod': powderPods }
-    Object.keys(counts).forEach(podName => {
-      const qty = counts[podName]
-      if (qty === 0) return
-      const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
-      window.PilrCart?.add({
-        id:    POD_CART_ID[podName],
-        title: podName,
-        price: salePrice,
-        image: POD_IMAGES[podName],
-      }, qty)
-    })
+  if (total > 0) {
+    if (isClassicStackCart) {
+      window.PilrCart?.add(CLASSIC_STACK, 1)
+    } else {
+      const discount = discountForQty(total)
+      const counts = { 'Small Pill Pod': pillPods, 'Big Pill Pod': hybridPods, 'Powder Pod': powderPods }
+      Object.keys(counts).forEach(podName => {
+        const qty = counts[podName]
+        if (qty === 0) return
+        const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
+        window.PilrCart?.add({
+          id:    POD_CART_ID[podName],
+          title: podName,
+          price: salePrice,
+          image: POD_IMAGES[podName],
+        }, qty)
+      })
+    }
   }
+
+  // ADD ONS are always full price — never folded into the pod bundle
+  // discount above, and kept on their own paid ids so they stay separate
+  // from the free lid/scooper perk PilrCart grants automatically.
+  currentAddonIds.forEach(id => {
+    const addon = ADD_ONS[id]
+    if (!addon) return
+    window.PilrCart?.add({ id, title: addon.label, price: addon.price, image: addon.image }, 1)
+  })
 
   const btn  = this
   const orig = btn.innerHTML
@@ -1131,6 +1214,7 @@ function renderChips(category, containerId) {
 renderChips('powders', 'powders-row')
 renderChips('hybrid',  'hybrid-row')
 renderChips('pills',   'pills-row')
+renderChips('addons',  'addons-row')
 animate()
 
 // Nothing selected yet on first load — leave the canvas empty until the
