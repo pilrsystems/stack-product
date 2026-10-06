@@ -104,13 +104,16 @@
       width: 3px; height: 3px; border-radius: 50%; background: #c3ccd1; flex-shrink: 0;
     }
 
-    /* New — finish name under the title. Same LABEL treatment used
-       elsewhere on this page (.bc-spec-row): uppercase, 0.14em,
-       11px, slate. */
-    #product-info-inner .bc-finish {
-      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* Title + price on one row, price pushed to the far right - same
+       pattern as the individual pod pages (pill/hybrid/powder-pod.html). */
+    #product-info-inner .product-title-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
+
+    /* Same tightened spacing the pod pages use for the checkmark list
+       (default shared gap is a touch looser). */
+    #product-info-inner .product-feature-list { gap: 0.2rem; margin-top: -0.4rem; margin-bottom: 0.4rem; padding-left: 0; }
+    #product-info-inner .product-feature-list li { color: #7a8a94; font-size: 0.98rem; font-weight: 400; }
 
     /* Title → ratings sits closer than the parent's default 1rem flex
        gap, matching the tighter spacing used on the individual pod
@@ -356,8 +359,11 @@
       </div>
     </div>
     <div class="product-info-col" id="product-info-col"><div class="product-info-inner" id="product-info-inner">
-      <!-- 1. Title -->
-      <h1 class="product-page-title">Classic Stack</h1>
+      <!-- 1. Title + price -->
+      <div class="product-title-row">
+        <h1 class="product-page-title">Classic Stack</h1>
+        <span class="product-title-price">$68 <span class="bc-price-strike">$84</span></span>
+      </div>
 
       <div class="product-reviews-bar">
         <div class="product-reviews-stars">
@@ -370,14 +376,15 @@
         <span class="product-reviews-count">4,728 Reviews</span>
       </div>
 
-      <!-- 2. Finish name -->
-      <p class="bc-finish">Matte Black</p>
-
-      <!-- 3. Price -->
-      <p class="product-title-price">$68 <span class="bc-price-strike">$84</span></p>
-
       <!-- 4. Description -->
       <p class="product-page-tagline">One system for small pills, large capsules, and powders. Includes stainless steel travel scooper.</p>
+
+      <!-- Same three checkmarks used on the individual pod pages -->
+      <ul class="product-feature-list">
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
+      </ul>
 
       <!-- 7. Primary button — the only filled button in this column -->
       <button class="product-btn-add">ADD TO CART</button>
@@ -415,7 +422,7 @@
 
       <!-- 8. Guarantee line -->
       <div class="bc-guarantees">
-        <span class="bc-guarantee-item">Lifetime guarantee</span>
+        <span class="bc-guarantee-item">Free shipping $75+</span>
         <span class="bc-guarantee-divider"></span>
         <span class="bc-guarantee-item">30-day returns</span>
       </div>
