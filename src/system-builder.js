@@ -1003,7 +1003,7 @@ function updateSystem() {
     ...Array(powderPods).fill('Powder Pod'),
   ]
 
-  const stackToShow = podList.length ? podList : DEFAULT_STACK
+  const stackToShow = podList
   const podKey = stackToShow.join(',')
   if (podKey !== lastPodKey) {
     lastPodKey = podKey
@@ -1057,9 +1057,10 @@ renderChips('hybrid',  'hybrid-row')
 renderChips('pills',   'pills-row')
 animate()
 
-// Default: show full system as a preview
-const DEFAULT_STACK = ['Small Pill Pod', 'Big Pill Pod', 'Powder Pod']
-const initZ = idealCameraZ(DEFAULT_STACK.length)
+// Nothing selected yet on first load — leave the canvas empty until the
+// user actually picks a supplement, rather than previewing a Classic
+// Stack nobody chose.
+const initZ = idealCameraZ(0)
 CAMERA_REST_POS.z = initZ
 camera.position.z = initZ
-buildStack(DEFAULT_STACK, () => playDrop())
+buildStack([], () => playDrop())
