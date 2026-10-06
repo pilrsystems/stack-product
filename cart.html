@@ -112,6 +112,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      /* Fixed to the qty-ctrl's own rendered width (two 30px buttons +
+         28px min-width value, plus its 1px border each side) so every
+         row's actions column is the same width regardless of whether a
+         qty-ctrl is present. Without this, a lone Remove button (the
+         free-perk rows below) shrinks this column to just its own text
+         width instead, re-centering it a few pixels off from where
+         Remove sits under an actual qty-ctrl on every other row. */
+      width: 90px;
     }
 
     /* Free-perk rows (e.g. the Classic Stack's scooper) skip the quantity
