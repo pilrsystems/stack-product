@@ -642,7 +642,7 @@
           var qty = rowQty(row);
           if (qty > 0) {
             var salePrice = POD_BASE_PRICE[row.dataset.podId] * (1 - discount);
-            PilrCart.add({ id: row.dataset.podId, title: row.dataset.podTitle, price: salePrice, image: row.dataset.podImage }, qty);
+            PilrCart.add({ id: row.dataset.podId, title: row.dataset.podTitle, price: salePrice, listPrice: POD_BASE_PRICE[row.dataset.podId], image: row.dataset.podImage }, qty);
           }
         });
         var orig = podAddSubmit.innerHTML;

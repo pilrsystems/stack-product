@@ -493,14 +493,23 @@
 
     function renderItem(item) {
       const lineTotal = item.price * item.quantity
+      const lineListTotal = item.listPrice != null ? item.listPrice * item.quantity : null
       // Free-with-bundle perks (e.g. the Classic Stack's scooper) carry a
       // listPrice for display even though their real price is 0 — show the
       // original crossed out next to "FREE" instead of "$0.00", and skip
       // the quantity stepper since there's only ever meant to be the one.
       const isFreePerk = item.listPrice != null && item.price === 0
+      // Everything else that carries a listPrice (Classic Stack's fixed
+      // bundle discount, or pods added at a quantity-discount tier) shows
+      // the same struck-through-list-price treatment as the product
+      // pages' own price displays, just next to the real price instead
+      // of replacing it with "FREE".
+      const hasDiscount = !isFreePerk && lineListTotal != null && lineListTotal > lineTotal
       const priceHtml = isFreePerk
         ? `<span class="cart-item-price-strike">${formatMoney(item.listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
-        : formatMoney(lineTotal)
+        : hasDiscount
+          ? `${formatMoney(lineTotal)} <span class="cart-item-price-strike">${formatMoney(lineListTotal)}</span>`
+          : formatMoney(lineTotal)
       const href = PRODUCT_PAGE_BY_ID[item.id]
       const el = document.createElement('div')
       el.className = 'cart-item'
