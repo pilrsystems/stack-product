@@ -311,7 +311,7 @@
   function drawerItemRowHtml(item) {
     const d = getItemDisplay(item)
     const priceInner = d.isFree
-      ? '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span><span class="cart-item-price-free">Free</span>'
+      ? '<span class="cart-drawer-free-badge">Free</span>'
       : d.hasDiscount
         ? '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span>' + formatMoney(d.lineTotal)
         : formatMoney(d.lineTotal)
