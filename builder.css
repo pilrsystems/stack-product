@@ -854,7 +854,7 @@ body.system-page {
   transform: none !important;
   opacity: 1 !important;
   pointer-events: auto !important;
-  padding: 1.2rem 1.3rem;
+  padding: 1rem 1.3rem;
 }
 
 /* Mobile — canvas on top, then Build, then Edit, stacked in that
