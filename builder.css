@@ -841,15 +841,17 @@ body.system-page {
   background: #818E99;
 }
 
-/* Detail view — pod panel overlays canvas */
+/* Detail view — pod panel overlays canvas, top-right so it doesn't
+   sit on top of the centered pod render below it. */
 .system-layout.detail-active .pod-detail-panel {
   display: block;
   width: 230px;
-  left: 1.75rem;
-  top: 50%;
+  top: 1.75rem;
+  right: 1.75rem;
+  left: auto;
   position: absolute;
   z-index: 10;
-  transform: translateY(-50%) !important;
+  transform: none !important;
   opacity: 1 !important;
   pointer-events: auto !important;
   padding: 1.2rem 1.3rem;
