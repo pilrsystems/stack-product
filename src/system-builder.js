@@ -885,7 +885,6 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   isClassicStackCart = isClassicStack
 
   if (isClassicStack) {
-    const addBtnHtml = `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
     el.innerHTML = `<div class="sys-acc-list">
       <div class="sys-acc-row">
         <button class="sys-acc-header">
@@ -920,7 +919,6 @@ function updateSummary(pillPods, hybridPods, powderPods) {
         </div>
       </div>
       ${makeLidRow(chevron)}
-      ${addBtnHtml}
     </div>`
 
     currentCartTotal     = CLASSIC_STACK.price
@@ -938,7 +936,6 @@ function updateSummary(pillPods, hybridPods, powderPods) {
       document.querySelectorAll('.supp-chip.selected').forEach(chip => chip.classList.remove('selected'))
       updateSystem()
     })
-    document.getElementById('sys-acc-add-btn')?.addEventListener('click', () => window.showBysSelector?.())
     return
   }
 
@@ -997,7 +994,6 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   for (let i = 0; i < powderPods; i++) rows += makeRow('Powder Pod', [powderNames[i]].filter(Boolean),'powders', [powderIds[i]].filter(Boolean))
 
   rows += makeLidRow(chevron)
-  rows += `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
   el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
 
   currentCartTotal     = cartTotal
@@ -1020,8 +1016,6 @@ function updateSummary(pillPods, hybridPods, powderPods) {
       updateSystem()
     })
   })
-
-  document.getElementById('sys-acc-add-btn')?.addEventListener('click', () => window.showBysSelector?.())
 }
 
 // ── Add to Cart ────────────────────────────────────────────────
