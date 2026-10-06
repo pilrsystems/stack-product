@@ -114,6 +114,18 @@
       justify-content: space-between;
     }
 
+    /* Free-perk rows (e.g. the Classic Stack's scooper) skip the quantity
+       stepper, so Remove is the only child here - space-between has
+       nothing to push it against and leaves it pinned to the top instead
+       of centered against the item image. */
+    .cart-item-actions--single {
+      justify-content: center;
+    }
+
+    .cart-item-actions--single .cart-remove-btn {
+      margin-top: 0;
+    }
+
     .cart-qty-ctrl {
       display: flex;
       align-items: center;
@@ -496,7 +508,7 @@
           <p class="cart-item-name">${href ? `<a class="cart-item-name-link" href="${href}">${item.title}</a>` : item.title}</p>
           <p class="cart-item-price">${priceHtml}</p>
         </div>
-        <div class="cart-item-actions">
+        <div class="cart-item-actions${isFreePerk ? ' cart-item-actions--single' : ''}">
           ${isFreePerk ? '' : `
           <div class="cart-qty-ctrl">
             <button class="cart-qty-btn" data-action="decrease" data-key="${item.id}">−</button>
