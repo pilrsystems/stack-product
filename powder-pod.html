@@ -72,16 +72,16 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #product-info-inner .bc-capacity-label-sub { font-weight: 400; color: #7a8a94; }
+    /* Matches .bc-spec-row's exact recipe above - same size/style as
+       the Details accordion, instead of its own larger type. */
     #product-info-inner .bc-capacity-row {
       display: flex; justify-content: space-between; gap: 1rem;
-      font-size: 0.9rem; color: #5e6e7a; padding: 0.4rem 0;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; line-height: 1.8; padding: 0.4rem 0;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    #product-info-inner .bc-capacity-row span:first-child {
-      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem;
-    }
+    #product-info-inner .bc-capacity-row span:first-child { color: #3d4f5c; }
     #product-info-inner .bc-capacity-row + .bc-capacity-row { border-top: 1px solid rgba(66,85,99,0.15); }
-    #product-info-inner .bc-capacity-row span:last-child { color: #7a8a94; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; }
     #product-info-inner .product-info-sections .product-accordion:nth-child(2) .product-accordion-panel.is-open {
       max-height: 560px; margin-top: -0.4rem;
     }

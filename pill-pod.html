@@ -91,16 +91,16 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #product-info-inner .bc-capacity-label-sub { font-weight: 400; color: #7a8a94; }
+    /* Matches .bc-spec-row's exact recipe above - same size/style as
+       the Details accordion, instead of its own larger type. */
     #product-info-inner .bc-capacity-row {
       display: flex; justify-content: space-between; gap: 1rem;
-      font-size: 0.9rem; color: #5e6e7a; padding: 0.4rem 0;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; line-height: 1.8; padding: 0.4rem 0;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    #product-info-inner .bc-capacity-row span:first-child {
-      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem;
-    }
+    #product-info-inner .bc-capacity-row span:first-child { color: #3d4f5c; }
     #product-info-inner .bc-capacity-row + .bc-capacity-row { border-top: 1px solid rgba(66,85,99,0.15); }
-    #product-info-inner .bc-capacity-row span:last-child { color: #7a8a94; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; }
     /* The Size guide panel's content (internal volume + 6 capacity
        rows + note + link) is taller than the shared accordion's
        default 220px open height, which was clipping the note and
@@ -474,11 +474,9 @@
           <div class="product-accordion-panel">
             <div class="bc-capacity-row"><span>Vitamin D3</span><span>~XX pills</span></div>
             <div class="bc-capacity-row"><span>Zinc</span><span>~XX pills</span></div>
-            <div class="bc-capacity-row"><span>B12</span><span>~XX pills</span></div>
-            <div class="bc-capacity-row"><span>Biotin</span><span>~XX pills</span></div>
             <div class="bc-capacity-row"><span>Vitamin C</span><span>~XX pills</span></div>
             <div class="bc-capacity-row"><span>Probiotic</span><span>~XX pills</span></div>
-            <p class="bc-capacity-note"><span>Based on standard retail sizes. Yours may vary.</span><span class="bc-capacity-note-unit">Per Compartment</span></p>
+            <p class="bc-capacity-note"><span>Based on standard retail sizes. Pill size may vary.</span><span class="bc-capacity-note-unit">Per Compartment</span></p>
             <a href="./size-guide.html?pod=small" class="product-info-link"><span>Full Size Guide</span><span>&rarr;</span></a>
           </div>
         </div>
