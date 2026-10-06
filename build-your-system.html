@@ -81,47 +81,18 @@
   </nav>
   <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
 
-  <!-- CANVAS + SIDEBAR (Build Your System / Edit Your System tabs) -->
+  <!-- BUILD PANEL / CANVAS / EDIT PANEL — three static columns. Build
+       Your System and Edit Your System are always both visible (left
+       and right), so the 3D render stays centered between them
+       rather than sharing a single sidebar as a collapsible pair. -->
   <div class="system-layout" id="system-layout">
 
-    <!-- 3D Canvas -->
-    <div class="builder-canvas-wrap system-canvas-wrap">
-      <canvas id="system-canvas"></canvas>
-
-      <div class="builder-loading hidden" id="system-loading">
-        <div class="builder-loading-dot"></div>
-        <div class="builder-loading-dot"></div>
-        <div class="builder-loading-dot"></div>
-      </div>
-
-      <button class="pod-back-btn" id="system-back-btn" aria-label="Back to full stack">
-        ← Back to stack
-      </button>
-
-      <div id="system-labels" class="blabel-container"></div>
-    </div>
-
-    <!-- Pod detail panel (overlays canvas on pod click) -->
-    <div class="pod-detail-panel" id="pod-detail-panel">
-      <div class="pod-detail-name" id="pod-detail-name"></div>
-      <div class="pod-detail-desc" id="pod-detail-desc"></div>
-      <ul class="pod-detail-specs" id="pod-detail-specs"></ul>
-      <div class="pod-detail-examples-label">common supplements</div>
-      <div class="pod-detail-examples" id="pod-detail-examples"></div>
-    </div>
-
-    <!-- RIGHT: Build Your System / Edit Your System accordion -->
-    <aside class="system-sidebar">
-
-      <!-- Build Your System — open on page load -->
-      <div class="sys-panel open" id="system-selector">
-        <button type="button" class="sys-panel-header" id="sys-build-header">
-          <span class="sys-panel-header-text">
-            <h1 class="sys-panel-header-title">Build Your System</h1>
-            <span class="sys-panel-header-hint" id="sys-build-hint"></span>
-          </span>
-          <svg class="sys-panel-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
+    <!-- LEFT: Build Your System -->
+    <aside class="system-sidebar system-sidebar--left">
+      <div class="sys-panel" id="system-selector">
+        <div class="sys-panel-header">
+          <h1 class="sys-panel-header-title">Build Your System</h1>
+        </div>
         <div class="sys-panel-body">
           <p class="bas-desc">Pick your daily supplements below. Select as many or as few as you'd like, then hit Build My System.</p>
 
@@ -148,15 +119,40 @@
           </div>
         </div>
       </div>
+    </aside>
 
-      <!-- Edit Your System — collapsed on page load -->
+    <!-- CENTER: 3D Canvas -->
+    <div class="builder-canvas-wrap system-canvas-wrap">
+      <canvas id="system-canvas"></canvas>
+
+      <div class="builder-loading hidden" id="system-loading">
+        <div class="builder-loading-dot"></div>
+        <div class="builder-loading-dot"></div>
+        <div class="builder-loading-dot"></div>
+      </div>
+
+      <button class="pod-back-btn" id="system-back-btn" aria-label="Back to full stack">
+        ← Back to stack
+      </button>
+
+      <div id="system-labels" class="blabel-container"></div>
+
+      <!-- Pod detail panel (overlays canvas on pod click) -->
+      <div class="pod-detail-panel" id="pod-detail-panel">
+        <div class="pod-detail-name" id="pod-detail-name"></div>
+        <div class="pod-detail-desc" id="pod-detail-desc"></div>
+        <ul class="pod-detail-specs" id="pod-detail-specs"></ul>
+        <div class="pod-detail-examples-label">common supplements</div>
+        <div class="pod-detail-examples" id="pod-detail-examples"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Edit Your System -->
+    <aside class="system-sidebar system-sidebar--right">
       <div class="sys-panel" id="sys-panel-edit">
-        <button type="button" class="sys-panel-header" id="sys-edit-header">
-          <span class="sys-panel-header-text">
-            <h2 class="sys-panel-header-title">Edit Your System</h2>
-          </span>
-          <svg class="sys-panel-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
+        <div class="sys-panel-header">
+          <h2 class="sys-panel-header-title">Edit Your System</h2>
+        </div>
         <div class="sys-panel-body">
           <p class="sys-edit-desc">Add, remove, and edit the pods in your system below.</p>
           <div id="system-summary-content" class="system-summary-content">
@@ -165,7 +161,6 @@
           <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Add to Cart</button>
         </div>
       </div>
-
     </aside>
 
   </div>
@@ -403,68 +398,26 @@
     // Only the summary "Get Early Access" button triggers the popup
     document.querySelectorAll('.js-early-access').forEach(btn => btn.addEventListener('click', showBysPopup))
 
-    // ── Build Your System / Edit Your System accordion ──────────
-    // Exactly one of the two panels is "open" (full body visible) at a
-    // time; the other collapses to just its header row. Both panels
-    // live in the sidebar next to the canvas, which already updates
-    // live on every chip click regardless of which panel is open — this
-    // toggle is purely about which panel's content is showing, so people
-    // never have to scroll between picking supplements and seeing the
-    // stack/pricing update.
+    // ── Build Your System / Edit Your System panels ──────────────
+    // Both panels are always visible now (left/right of the centered
+    // canvas), so there's no open/collapse state to manage — just a
+    // bit of scroll-into-view convenience for the narrower viewports
+    // where the two panels stack above/below the canvas instead of
+    // sitting beside it.
     const buildPanel = document.getElementById('system-selector')
     const editPanel  = document.getElementById('sys-panel-edit')
 
-    function openPanel(panel) {
-      [buildPanel, editPanel].forEach(p => p.classList.toggle('open', p === panel))
-    }
-
-    // Header click toggles: opening a collapsed panel still closes the
-    // other one (only one body shown at a time), but clicking the
-    // header of the panel that's already open just collapses it —
-    // leaving both collapsed — rather than doing nothing.
-    function togglePanel(panel) {
-      if (panel.classList.contains('open')) {
-        panel.classList.remove('open')
-      } else {
-        openPanel(panel)
-      }
-    }
-
-    document.getElementById('sys-build-header').addEventListener('click', () => togglePanel(buildPanel))
-    document.getElementById('sys-edit-header').addEventListener('click', () => togglePanel(editPanel))
-
-    // BUILD MY SYSTEM — collapse Build panel, expand Edit panel
     document.getElementById('bas-build-btn').addEventListener('click', function() {
       const selectedChips = [...document.querySelectorAll('.supp-chip.selected')]
       if (selectedChips.length === 0) return
-      openPanel(editPanel)
+      editPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     })
 
     // "Add another supplement +" inside the Edit panel (wired by
-    // system-builder.js via window.showBysSelector) — collapse Edit
-    // panel, expand Build panel.
+    // system-builder.js via window.showBysSelector).
     window.showBysSelector = function() {
-      openPanel(buildPanel)
+      buildPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
-
-    // Collapsed Build panel header shows a running list of what's
-    // picked so far. Delegated on the panel itself (not the individual
-    // .supp-chip buttons) since those are rendered later by the
-    // deferred module script — this still catches every click on them
-    // once they exist.
-    function updateBuildHint() {
-      const selectedChips = [...document.querySelectorAll('.supp-chip.selected')]
-      const hint = document.getElementById('sys-build-hint')
-      if (selectedChips.length === 0) { hint.textContent = ''; return }
-      const names = selectedChips.map(el => el.textContent.trim())
-      const MAX = 3
-      const shown = names.slice(0, MAX).join(', ')
-      const more  = names.length - MAX
-      hint.textContent = shown + (more > 0 ? ' +' + more + ' more' : '')
-    }
-    buildPanel.addEventListener('click', e => {
-      if (e.target.closest('.supp-chip')) updateBuildHint()
-    })
 
     document.getElementById('bys-footer-email-form').addEventListener('submit', async e => {
       e.preventDefault()

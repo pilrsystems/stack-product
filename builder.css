@@ -619,9 +619,13 @@ body.system-page {
 }
 
 /* ── System Builder page ────────────────────────────────── */
+/* Three static columns: Build Your System (left), the 3D render
+   (center — takes the remaining space, so it's centered between two
+   equal-width side panels), Edit Your System (right). Both panels
+   are always visible; there's no open/collapse state any more. */
 .system-layout {
   display: grid;
-  grid-template-columns: 1fr 460px;
+  grid-template-columns: 400px 1fr 400px;
   height: calc(100vh - 70px);
   margin-top: 70px;
   position: relative;
@@ -632,57 +636,31 @@ body.system-page {
   position: relative;
 }
 
-/* ── Sidebar: Build Your System / Edit Your System accordion ──
-   Exactly one panel is "open" (header + body) at a time; the other
-   collapses to just its header row, so people never have to scroll
-   between picking supplements and seeing the stack/pricing update —
-   both live in the same column next to the always-visible canvas. */
 .system-sidebar {
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  border-left: 1px solid var(--border);
-  overflow: hidden;
+  overflow-y: auto;
 }
+
+.system-sidebar--left { border-right: 1px solid var(--border); }
+.system-sidebar--right { border-left: 1px solid var(--border); }
 
 .sys-panel {
   display: flex;
   flex-direction: column;
-  flex: 0 0 auto;
-  min-height: 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.sys-panel:last-child { border-bottom: none; }
-
-.sys-panel.open {
-  flex: 1 1 auto;
+  flex: 1;
   min-height: 0;
 }
 
 .sys-panel-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   width: 100%;
   padding: 1.5rem 1.75rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   flex-shrink: 0;
-  transition: background 0.15s;
-}
-
-.sys-panel-header:hover { background: rgba(0,0,0,0.025); }
-
-.sys-panel-header-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  min-width: 0;
 }
 
 .sys-panel-header-title {
@@ -693,30 +671,11 @@ body.system-page {
   margin: 0;
 }
 
-.sys-panel-header-hint {
-  font-size: 0.78rem;
-  color: #7a8a94;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.sys-panel-chevron {
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.sys-panel.open .sys-panel-chevron { transform: rotate(180deg); }
-
 .sys-panel-body {
-  display: none;
+  display: block;
   overflow-y: auto;
   padding: 0 1.75rem 1.75rem;
   min-height: 0;
-}
-
-.sys-panel.open .sys-panel-body {
-  display: block;
   flex: 1;
 }
 
@@ -896,11 +855,13 @@ body.system-page {
   padding: 1.2rem 1.3rem;
 }
 
-/* Mobile */
+/* Mobile — canvas on top, then Build, then Edit, stacked in that
+   order (both panels are their own grid item now, not one shared
+   sidebar, so each needs its own `order` + top border). */
 @media (max-width: 700px) {
   .system-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh auto;
+    grid-template-rows: 50vh auto auto;
     height: auto;
     overflow: visible;
   }
@@ -910,8 +871,15 @@ body.system-page {
     height: 50vh;
   }
 
-  .system-sidebar {
+  .system-sidebar--left {
     order: 2;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    overflow: visible;
+  }
+
+  .system-sidebar--right {
+    order: 3;
     border-left: none;
     border-top: 1px solid var(--border);
     overflow: visible;
@@ -919,7 +887,7 @@ body.system-page {
 
   .sys-panel-body { overflow-y: visible; }
 
-  .system-layout.detail-active #system-selector {
+  .system-layout.detail-active .system-sidebar--left {
     display: none;
   }
 
