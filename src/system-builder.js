@@ -32,59 +32,28 @@ const SUPPLEMENTS = {
 }
 
 // ── Individual pod GLB paths ─────────────────────────────────
-// Big Pill/Powder extracted from stack-bottle.glb (the homepage hero
-// model's four named parts — see extract-pods.mjs) since that model's
-// geometry looks noticeably better than the original Configurations
-// set. Each export has the rotation + 1000x scale correction already
-// baked in, so it drops into the exact same transform chain below
-// unmodified. Small Pill Pod stays on the original Configurations asset —
-// stack-bottle.glb's Small Pill Pod reflects an older product design that
-// still has a dispenser-flap cutout, which the real product no
-// longer has.
 const POD_GLBS = {
-  'Small Pill Pod':   './models/Configurations/pill_module_260520.glb',
-  'Big Pill Pod': './models/Configurations/Hybrid%20Pod%20New.glb',
-  'Powder Pod': './models/Configurations/Powder%20Pod%20New.glb',
+  'Pill Pod':   './models/Configurations/pill_module_260520.glb',
+  'Hybrid Pod': './models/Configurations/hybrid_pod_260520.glb',
+  'Powder Pod': './models/Configurations/powder_pod_260520.glb',
 }
-
-// ── Pricing ────────────────────────────────────────────────────
-// Same base prices and tiered quantity discount curve as the "Add a
-// Pod" widget on the single-pod product pages (pill-pod.html etc.) —
-// kept in sync manually since there's no shared pricing config in the
-// codebase yet; see pill-pod.html for the source of truth.
-const POD_BASE_PRICE  = { 'Small Pill Pod': 24, 'Big Pill Pod': 28, 'Powder Pod': 32 }
-const POD_CART_ID     = { 'Small Pill Pod': 'pill-pod', 'Big Pill Pod': 'hybrid-pod', 'Powder Pod': 'powder-pod' }
-const DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28] // index = total pods, 6+ capped at index 6
-function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)] }
-function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) }
-
-// Exactly one Small Pill + one Big Pill + one Powder Pod is its own bundle (the
-// same product classic-stack.html sells), priced below the generic
-// tiered discount — not derived from DISCOUNT_BY_QTY. The instant the
-// selection becomes anything else (a 4th pod, a duplicate, one type
-// missing), this stops applying and the normal per-pod pricing takes
-// over again.
-const CLASSIC_STACK = {
-  id: 'classic-stack', title: 'Classic Stack', price: 68,
-  image: 'images/lifestyle_section/Hand Render.png',
-}
-const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Small Pill Pod'] + POD_BASE_PRICE['Big Pill Pod'] + POD_BASE_PRICE['Powder Pod']
+const DIVIDER_GLB = './models/Configurations/divider_2026_0520.glb'
 
 const POD_INFO = {
-  'Small Pill Pod': {
-    desc: 'Built for the small capsules you take every day. Three compartments, a full week, one pod.',
-    specs: ['[Size] mL'],
-    examples: 'Vitamin D, Zinc, Multivitamins, etc.',
+  'Pill Pod': {
+    desc: 'Carries a full week of small and medium-sized capsules — organized across 3 compartments for easy access.',
+    specs: ['Easy Dispense & Loading Mechanism', 'Height: 1 in.'],
+    examples: 'Vitamin D, Zinc, Multivitamins…',
   },
-  'Big Pill Pod': {
-    desc: 'Built to carry a week\'s supply of medium and large capsules.',
-    specs: ['[Size] mL'],
-    examples: 'Fish Oil, Magnesium, Ashwagandha, etc.',
+  'Hybrid Pod': {
+    desc: 'Organize a week\'s supply of larger pill supplements — or remove the divider for powder storage.',
+    specs: ['2 capsule types or 1 powder? You choose.', 'Height: 2 in.'],
+    examples: 'Fish Oil, Magnesium, Electrolytes, Creatine…',
   },
   'Powder Pod': {
-    desc: 'Stores your daily powders.',
-    specs: ['[Size] mL'],
-    examples: 'Creatine, Pre-Workout, Greens Powder',
+    desc: 'Store a full week\'s supply of your go-to powders. 1 or 10? Stack as many as you\'d like.',
+    specs: ['Includes 5g scooper', 'Height: 2.5 in.'],
+    examples: 'Pre-Workout, Collagen, Greens Powder…',
   },
 }
 
@@ -94,14 +63,7 @@ const FLY_OFFSET  = 2.0
 // ── Selection state ──────────────────────────────────────────
 const selected = { powders: new Set(), hybrid: new Set(), pills: new Set() }
 let currentPodTypes = []
-// Latest pod counts/total — read by the "Add to Cart" click handler so
-// it doesn't need to recompute calcPods() itself.
-let currentPodCounts   = { pillPods: 0, hybridPods: 0, powderPods: 0 }
-let currentCartTotal     = 0
-let currentCartListTotal = 0   // sum of the struck-through list prices, for the Add to Cart button
-let isClassicStackCart = false
 let lastPodKey      = ''
-let buildSeq        = 0   // incremented on each buildStack call; stale builds abort on completion
 
 // ── Renderer ─────────────────────────────────────────────────
 const canvasEl = document.getElementById('system-canvas')
@@ -120,26 +82,11 @@ renderer.shadowMap.type      = THREE.PCFSoftShadowMap
 renderer.setSize(CW, CH)
 
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0xFAFAF8)
+scene.background = new THREE.Color(0x2E4256)
 
 // ── Camera ───────────────────────────────────────────────────
-const CAMERA_REST_POS    = new THREE.Vector3(0, 0.4, 6.1)
+const CAMERA_REST_POS    = new THREE.Vector3(0, 0.4, 7)
 const CAMERA_REST_TARGET = new THREE.Vector3(0, 0, 0)
-
-// Returns the ideal camera Z so the full stack fits in the viewport.
-// ZOOM pulls the camera uniformly closer (same ratio at every pod count,
-// so taller stacks still back off exactly as before relative to shorter
-// ones — only the baseline distance changes) to make the pods read a
-// bit bigger / more foreground, without touching how they're spaced.
-// Eased back from 0.88 toward 1 (further from the pods = smaller on
-// screen) after the three-column layout narrowed the canvas and made
-// that same zoom level read as too large.
-const ZOOM = 1.06
-function idealCameraZ(podCount) {
-  if (podCount <= 1) return 4.7 * ZOOM
-  if (podCount === 2) return 5.0 * ZOOM
-  return (4.7 + (podCount - 1) * 0.72) * ZOOM   // 3→6.1, 4→6.8, 5→7.6 (pre-zoom)
-}
 
 const camera = new THREE.PerspectiveCamera(40, CW / CH, 0.1, 50)
 camera.position.copy(CAMERA_REST_POS)
@@ -183,7 +130,7 @@ scene.add(floor)
 // ── Outer group ──────────────────────────────────────────────
 const OUTER_REST_ROT_Z = THREE.MathUtils.degToRad(15)
 const OUTER_REST_ROT_X = THREE.MathUtils.degToRad(-8)
-const OUTER_REST_POS_Y = isMobile ? 0.05 : -0.15
+const OUTER_REST_POS_Y = isMobile ? -0.25 : -0.5
 
 const outerGroup = new THREE.Group()
 outerGroup.rotation.z = OUTER_REST_ROT_Z
@@ -195,11 +142,6 @@ scene.add(outerGroup)
 let sections        = []
 let modelLoaded     = false
 let currentGlbScene = null
-// Measured pod height per type, keyed by pod name — populated the first
-// time each type loads (see buildStack). Lets the stacking gap stay
-// constant across different selections instead of depending on which
-// pod type happens to be shortest in the *current* selection.
-const HEIGHT_CACHE  = {}
 
 // ── Label state ──────────────────────────────────────────────
 let labelEls     = []
@@ -220,79 +162,8 @@ function loadPod(url) {
   return new Promise((resolve, reject) => loader.load(url, resolve, undefined, reject))
 }
 
-// ── Dedicated measurement rig ────────────────────────────────
-// A private, never-rendered copy of outerGroup/stackGroup's rest
-// transform chain, used only to measure each pod's bounding box.
-// Measuring against the LIVE outerGroup/stackGroup (like this used to)
-// ties the result to whatever those groups' current state happens to
-// be: (1) outerGroup's own tilt is intentional and reproduced here, but
-// once idle rotation starts running between builds its rotation.y
-// drifts, so the exact same pod could measure slightly differently
-// depending on when it's measured; (2) when a build gets superseded
-// mid-flight, a later call's cleanup detaches *its* stackGroup from
-// outerGroup, so outerGroup.updateMatrixWorld() silently no-ops for
-// that now-orphaned subtree and the pod's rotation never reaches
-// matrixWorld — corrupting the measurement (it ends up reading an
-// unrotated cross-section instead of the true height). This rig is
-// never attached to the live scene and nothing else ever touches it,
-// so neither problem can happen here.
-const measureOuter = new THREE.Group()
-measureOuter.rotation.z = OUTER_REST_ROT_Z
-measureOuter.rotation.x = OUTER_REST_ROT_X
-const measureStack = new THREE.Group()
-measureStack.scale.setScalar(isMobile ? 18.5 : 16.5)
-measureStack.rotation.x = THREE.MathUtils.degToRad(90)
-measureOuter.add(measureStack)
-measureOuter.updateMatrixWorld(true)
-const measureInvMat = new THREE.Matrix4().copy(measureStack.matrixWorld).invert()
-
-// Rotates a pod -90° around X (so its height axis lands on stackGroup's
-// -Z, which after stackGroup's own rotation.x=90 maps to world +Y) and
-// centers it at x=0, y=0, measuring entirely within the private rig
-// above. Mutates `s` in place (rotation + centering) and returns its
-// resulting local zMin/zMax — safe to call for any pod, raced build or
-// not, since nothing else can run between these synchronous steps.
-function measurePod(s) {
-  measureStack.add(s)
-  s.rotation.x = THREE.MathUtils.degToRad(-90)
-  measureOuter.updateMatrixWorld(true)
-  const worldBox = new THREE.Box3().setFromObject(s)
-  const localBox = worldBox.clone().applyMatrix4(measureInvMat)
-
-  s.position.x -= (localBox.min.x + localBox.max.x) / 2
-  s.position.y -= (localBox.min.y + localBox.max.y) / 2
-  measureOuter.updateMatrixWorld(true)
-  const wb2 = new THREE.Box3().setFromObject(s)
-  const lb2 = wb2.clone().applyMatrix4(measureInvMat)
-
-  measureStack.remove(s)
-  return { zMin: Math.min(lb2.min.z, lb2.max.z), zMax: Math.max(lb2.min.z, lb2.max.z) }
-}
-
-// OVERLAP below is derived from the *shortest* pod type's height, so it
-// stays a true session constant only once every type has been measured
-// at least once. The default stack's own build normally fills this in
-// within well under a second of page load, but a selection whose build
-// finishes first — e.g. one that skips Small Pill Pod, whose Draco-compressed
-// GLB decodes slower than the others — would otherwise compute OVERLAP
-// from an incomplete (and so inflated) minimum for that one build. This
-// tops up whatever's missing before OVERLAP gets computed.
-async function ensureAllHeights() {
-  const missing = Object.keys(POD_GLBS).filter(t => !(t in HEIGHT_CACHE))
-  if (!missing.length) return
-  const gltfs = await Promise.all(missing.map(t => loadPod(POD_GLBS[t])))
-  gltfs.forEach((gltf, i) => {
-    const type = missing[i]
-    if (type in HEIGHT_CACHE) return   // filled in by someone else while we were loading
-    const { zMin, zMax } = measurePod(gltf.scene)
-    HEIGHT_CACHE[type] = Math.abs(zMax - zMin)
-  })
-}
-
 // ── Build stack from individual pod GLBs ─────────────────────
 async function buildStack(podTypes, onReady) {
-  const mySeq = ++buildSeq   // claim this build slot; any prior in-flight build is now stale
-
   if (inDetailView) exitDetailView()
 
   if (currentGlbScene) {
@@ -314,7 +185,7 @@ async function buildStack(podTypes, onReady) {
 
   try {
     const stackGroup = new THREE.Group()
-    stackGroup.scale.setScalar(isMobile ? 18.5 : 16.5)
+    stackGroup.scale.setScalar(isMobile ? 18 : 16)
     stackGroup.rotation.x = THREE.MathUtils.degToRad(90)
     currentGlbScene = stackGroup
     outerGroup.add(stackGroup)
@@ -325,18 +196,21 @@ async function buildStack(podTypes, onReady) {
       metalness: 0.0,
     })
 
-    // Load all pods in parallel. The new Big Pill Pod GLB (extracted from
-    // stack-bottle.glb) already has its own internal divider wall
-    // modeled in, unlike the old Configurations Big Pill Pod which was an
-    // empty shell needing a separate divider_2026_0520.glb piece added
-    // on top — doing that here now would overlay a second, perpendicular
-    // wall and make the pod look like it has 4 compartments instead of 2.
-    const [podGltfs] = await Promise.all([
-      Promise.all(podTypes.map(t => loadPod(POD_GLBS[t]))),
-      ensureAllHeights(),
-    ])
+    // Load all pods in parallel; also load divider for each Hybrid Pod
+    const podGltfs = await Promise.all(podTypes.map(t => loadPod(POD_GLBS[t])))
+    const dividerGltf = podTypes.includes('Hybrid Pod') ? await loadPod(DIVIDER_GLB) : null
 
-    const podData = podGltfs.map((gltf, i) => {
+    const gltfs = podGltfs.map((gltf, i) => {
+      if (podTypes[i] === 'Hybrid Pod' && dividerGltf) {
+        const dividerScene = dividerGltf.scene.clone()
+        dividerScene.traverse(m => { if (m.isMesh) m.material = darkMat })
+        dividerScene.position.y = 0.05
+        gltf.scene.add(dividerScene)
+      }
+      return gltf
+    })
+
+    const podScenes = gltfs.map(gltf => {
       const s = gltf.scene
       s.traverse(m => {
         if (m.isMesh) {
@@ -344,92 +218,65 @@ async function buildStack(podTypes, onReady) {
           m.material   = darkMat
         }
       })
-
-      // Rotates -90° and centers x/y, measured via the private rig above —
-      // see measurePod for why that matters. Leaves s's rotation/position
-      // set correctly for when it gets added to the real stackGroup below.
-      const { zMin, zMax } = measurePod(s)
       stackGroup.add(s)
+      return s
+    })
+    outerGroup.updateMatrixWorld(true)
 
-      const height = Math.abs(zMax - zMin)
-      // Cache every pod type's measured height the first time we see it.
-      // The default stack (Small Pill + Big Pill + Powder) loads on page load,
-      // before any selection is possible, so by the time the user picks
-      // anything this cache already holds all three — see HEIGHT_CACHE
-      // below for why that matters.
-      if (!(podTypes[i] in HEIGHT_CACHE)) HEIGHT_CACHE[podTypes[i]] = height
+    const invMat = new THREE.Matrix4().copy(stackGroup.matrixWorld).invert()
+    const podData = podScenes.map(s => {
+      // Rotate each pod -90° around X so height axis goes along stackGroup -Z
+      // which after stackGroup rotation.x=90 maps to world +Y (upright)
+      s.rotation.x = THREE.MathUtils.degToRad(-90)
+      outerGroup.updateMatrixWorld(true)
 
-      return { scene: s, zMin, zMax }
+      const worldBox = new THREE.Box3().setFromObject(s)
+      const localBox = worldBox.clone().applyMatrix4(invMat)
+
+      // Center pod at x=0, y=0 in stackGroup so all pods share the same axis
+      const cx = (localBox.min.x + localBox.max.x) / 2
+      const cy = (localBox.min.y + localBox.max.y) / 2
+      s.position.x -= cx
+      s.position.y -= cy
+
+      // Re-measure after centering
+      outerGroup.updateMatrixWorld(true)
+      const wb2 = new THREE.Box3().setFromObject(s)
+      const lb2 = wb2.clone().applyMatrix4(invMat)
+
+      return {
+        scene: s,
+        zMin:  Math.min(lb2.min.z, lb2.max.z),
+        zMax:  Math.max(lb2.min.z, lb2.max.z),
+      }
     })
 
-    // A newer buildStack call started while we were loading — discard this
-    // result. Checked *after* HEIGHT_CACHE is populated above (not before
-    // the loads) so a build that gets superseded mid-flight — e.g. the
-    // very first page-load call, if the user clicks a chip before its GLBs
-    // finish — still records whatever pod heights it measured instead of
-    // silently dropping them. Previously Small Pill Pod could end up permanently
-    // missing from HEIGHT_CACHE for the rest of the session whenever that
-    // happened, skewing the stacking math for any selection that didn't
-    // happen to include a Small Pill Pod.
-    if (mySeq !== buildSeq) {
-      document.getElementById('system-loading')?.classList.add('hidden')
-      return
-    }
-
-    // Per-type center fraction: Small Pill Pod geometry sits toward the top of its BB
-    // so we bias the center upward to close the gap it creates below
-    const CENTER_BIAS = { 'Small Pill Pod': 0.72, 'Big Pill Pod': 0.5, 'Powder Pod': 0.5 }
-
-    // Half-extent of each pod above/below its own bias-weighted center.
-    // The pods physically nest into each other (each one's connector slides
-    // into the next), so neighboring bounding boxes are *meant* to overlap
-    // along the stack axis — what needs to stay constant is that overlap
-    // depth, not the raw center-to-center distance. A flat center-to-center
-    // step (the old approach) only gives a constant overlap when neighboring
-    // pods share the same height/bias — it silently broke the moment two
-    // Small Pill Pods ended up adjacent (bias=0.72 leaves Small Pill Pod a tiny
-    // 0.28-of-height half-span above its own center), so that pair nested
-    // only half as deep as every other pod-to-pod boundary and visibly
-    // read as a gap where the others looked fused.
-    const halfExtents = podData.map((d, i) => {
-      const bias     = CENTER_BIAS[podTypes[i]] ?? 0.5
-      const bbCenter = d.zMin + (d.zMax - d.zMin) * bias
-      return { above: bbCenter - d.zMin, below: d.zMax - bbCenter, bbCenter }
-    })
-
-    // HEIGHT_CACHE remembers every pod type's height across the whole
-    // session (not just the current selection) so this stays a session
-    // constant regardless of what's currently selected — matching the
-    // nesting depth the default Classic Stack shows on first load.
-    const OVERLAP = Math.min(...Object.values(HEIGHT_CACHE)) * 0.63
-
-    // Sum of the fixed half-extents at every boundary — the total stack
-    // height is this minus (n-1) * whatever overlap depth we end up using.
-    let sumHalfExtents = 0
-    for (let i = 0; i < podData.length - 1; i++) {
-      sumHalfExtents += halfExtents[i].above + halfExtents[i + 1].below
-    }
-
-    // Cap total stack height so unusually large selections (many
-    // duplicate pods) still fit the canvas instead of overflowing it —
-    // nest them deeper (more overlap) rather than shrinking the pods.
+    // Use the smallest pod's bounding box as the uniform step, and
+    // place each pod by its BB center — this equalises gaps across pod types
+    const TIGHT      = 0.72
+    const naturalStep = Math.min(...podData.map(d => (d.zMax - d.zMin))) * TIGHT
+    // Cap total stack height so all pods always fit in the canvas
     const MAX_HEIGHT = 0.26
-    const overlapUsed = podData.length > 1
-      ? Math.max(OVERLAP, (sumHalfExtents - MAX_HEIGHT) / (podData.length - 1))
-      : OVERLAP
+    const maxStep    = podData.length > 1 ? MAX_HEIGHT / (podData.length - 1) : naturalStep
+    const step       = Math.min(naturalStep, maxStep)
 
-    const totalHeight = sumHalfExtents - overlapUsed * (podData.length - 1)
+    const totalHeight = step * (podData.length - 1)
     let stackZ = totalHeight / 2
 
+    // Per-type center fraction: Pill Pod geometry sits toward the top of its BB
+    // so we bias the center upward to close the gap it creates below
+    const CENTER_BIAS = { 'Pill Pod': 0.72, 'Hybrid Pod': 0.5, 'Powder Pod': 0.5 }
+
     for (let i = 0; i < podData.length; i++) {
-      const { scene: s } = podData[i]
-      s.position.z = stackZ - halfExtents[i].bbCenter
+      const { scene: s, zMin, zMax } = podData[i]
+      const bias     = CENTER_BIAS[podTypes[i]] ?? 0.5
+      const bbCenter = zMin + (zMax - zMin) * bias
+
+      s.position.z = stackZ - bbCenter
       outerGroup.updateMatrixWorld(true)
 
       sections.push({ mesh: s, restZ: s.position.z })
-      if (i < podData.length - 1) {
-        stackZ -= (halfExtents[i].above + halfExtents[i + 1].below) - overlapUsed
-      }
+      stackZ -= step
     }
 
     modelLoaded = true
@@ -501,55 +348,20 @@ function updateLabels() {
   const rect   = canvasEl.getBoundingClientRect()
   const hidden = inDetailView || transitioning
 
-  // First pass: compute raw projected positions
-  const info = labelEls.map((el, i) => {
-    if (hidden) { el.classList.remove('visible'); return { el, visible: false } }
+  labelEls.forEach((el, i) => {
+    if (hidden) { el.classList.remove('visible'); return }
     const anchor = labelAnchors[i]
-    if (!anchor) return { el, visible: false }
+    if (!anchor) return
 
     const worldPos = anchor.clone()
     outerGroup.localToWorld(worldPos)
     const ndc = worldPos.clone().project(camera)
 
-    if (ndc.z > 1) return { el, visible: false }
+    if (ndc.z > 1) { el.classList.remove('visible'); return }
 
-    const edgeOffset = (rect.height / camera.position.z) * 0.95
-    const isRight    = el.classList.contains('blabel-right')
-    const xPx        = (ndc.x * 0.5 + 0.5) * rect.width + (isRight ? edgeOffset : -edgeOffset)
-    const yPx        = (ndc.y * -0.5 + 0.5) * rect.height
-
-    return { el, visible: true, xPx, yPx, isRight }
-  })
-
-  // Second pass: push apart labels on the same side that are too close,
-  // then clamp to canvas bounds so collision resolution never hides a label.
-  const MIN_GAP    = 50   // px between label centers
-  const LABEL_HALF = 24   // half the label's visual height (approx)
-  ;['right', 'left'].forEach(side => {
-    const group = info.filter(d => d.visible && d.isRight === (side === 'right'))
-    group.sort((a, b) => a.yPx - b.yPx)
-    for (let pass = 0; pass < 4; pass++) {
-      for (let j = 1; j < group.length; j++) {
-        const gap = group[j].yPx - group[j - 1].yPx
-        if (gap < MIN_GAP) {
-          const shift = (MIN_GAP - gap) / 2
-          group[j - 1].yPx -= shift
-          group[j].yPx     += shift
-        }
-      }
-    }
-    // Clamp so no label goes off the top or bottom of the canvas
-    group.forEach(d => {
-      d.yPx = Math.max(LABEL_HALF, Math.min(rect.height - LABEL_HALF, d.yPx))
-    })
-  })
-
-  // Apply final positions
-  info.forEach(d => {
-    if (!d.visible) { d.el.classList.remove('visible'); return }
-    d.el.style.left = d.xPx + 'px'
-    d.el.style.top  = d.yPx + 'px'
-    d.el.classList.add('visible')
+    el.style.left = ((ndc.x *  0.5 + 0.5) * rect.width)  + 'px'
+    el.style.top  = ((ndc.y * -0.5 + 0.5) * rect.height) + 'px'
+    el.classList.add('visible')
   })
 }
 
@@ -584,7 +396,7 @@ function getSectionDetailSetup(sectionIndex) {
 
   const halfSpan = Math.max(size.x, size.z) / 2
   const height   = Math.max((halfSpan / Math.tan(THREE.MathUtils.degToRad(20))) * 1.4, 3.5)
-  const camPos   = new THREE.Vector3(center.x - 0.55, center.y + height, center.z + 0.05)
+  const camPos   = new THREE.Vector3(center.x, center.y + height, center.z + 0.05)
 
   outerGroup.rotation.x = rx; outerGroup.rotation.y = ry
   outerGroup.rotation.z = rz; outerGroup.position.y = py
@@ -759,247 +571,71 @@ function getLabelNamesForPods(podTypes) {
   const pCopy = [...pillNames], hCopy = [...hybridNames], wCopy = [...powderNames]
 
   return podTypes.map(type => {
-    if (type === 'Small Pill Pod'   && pCopy.length)  return pCopy.splice(0, 3).join(', ')
-    if (type === 'Big Pill Pod' && hCopy.length)  return hCopy.splice(0, 2).join(', ')
+    if (type === 'Pill Pod'   && pCopy.length)  return pCopy.splice(0, 3).join(', ')
+    if (type === 'Hybrid Pod' && hCopy.length)  return hCopy.splice(0, 2).join(', ')
     if (type === 'Powder Pod' && wCopy.length)  return wCopy.splice(0, 1)[0]
     return type
   })
-}
-
-const POD_IMAGES = {
-  'Small Pill Pod':   'images/lifestyle_section/Pill Pod.png',
-  'Big Pill Pod': 'images/lifestyle_section/Hybrid Pod.png',
-  'Powder Pod': 'images/lifestyle_section/Powder Pod Render.png',
-}
-const POD_SPECS = {
-  'Small Pill Pod':   '[pending mL]',
-  'Big Pill Pod': '[pending mL]',
-  'Powder Pod': '[pending mL]',
 }
 
 function updateSummary(pillPods, hybridPods, powderPods) {
   const el    = document.getElementById('system-summary-content')
   const total = pillPods + hybridPods + powderPods
 
-  currentPodCounts = { pillPods, hybridPods, powderPods }
-
   if (total === 0) {
     el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
-    currentCartTotal     = 0
-    currentCartListTotal = 0
-    isClassicStackCart = false
-    updateCartButton()
     return
   }
 
-  const pillIds   = [...selected.pills]
-  const hybridIds = [...selected.hybrid]
-  const powderIds = [...selected.powders]
-  const pillNames   = pillIds.map(id   => SUPPLEMENTS.pills.find(s => s.id === id).label)
-  const hybridNames = hybridIds.map(id => SUPPLEMENTS.hybrid.find(s => s.id === id).label)
-  const powderNames = powderIds.map(id => SUPPLEMENTS.powders.find(s => s.id === id).label)
+  const pillNames   = [...selected.pills].map(id   => SUPPLEMENTS.pills.find(s => s.id === id).label)
+  const hybridNames = [...selected.hybrid].map(id  => SUPPLEMENTS.hybrid.find(s => s.id === id).label)
+  const powderNames = [...selected.powders].map(id => SUPPLEMENTS.powders.find(s => s.id === id).label)
 
-  const chevron = `<svg class="sys-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`
+  let html = ''
 
-  const isClassicStack = pillPods === 1 && hybridPods === 1 && powderPods === 1
-  isClassicStackCart = isClassicStack
+  if (pillPods > 0) html += `<div class="system-pod-row">
+    <div class="system-pod-header">
+      <span class="system-pod-name">Pill Pod</span>
+      <span class="system-pod-qty">×${pillPods}</span>
+    </div>
+    <div class="system-pod-supplements">${pillNames.join(', ')}</div>
+  </div>`
 
-  if (isClassicStack) {
-    const addBtnHtml = `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
-    el.innerHTML = `<div class="sys-acc-list">
-      <div class="sys-acc-row">
-        <button class="sys-acc-header">
-          <span class="sys-acc-dot"></span>
-          <span class="sys-acc-name"><span class="sys-acc-bundle-badge">Best Value</span>The Classic Stack</span>
-          <span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(CLASSIC_STACK_LIST_PRICE)}</span>${formatPrice(CLASSIC_STACK.price)}</span>
-          ${chevron}
-        </button>
-        <div class="sys-acc-body">
-          <div class="sys-acc-expanded">
-            <div class="sys-acc-pod-img-wrap">
-              <img src="${CLASSIC_STACK.image}" alt="The Classic Stack" class="sys-acc-pod-img" />
-            </div>
-            <div class="sys-acc-pod-info">
-              <div class="sys-acc-info-field">
-                <span class="sys-acc-info-label">Small Pill Pod</span>
-                <span class="sys-acc-info-value">${pillNames.join(', ')}</span>
-              </div>
-              <div class="sys-acc-info-field">
-                <span class="sys-acc-info-label">Big Pill Pod</span>
-                <span class="sys-acc-info-value">${hybridNames.join(', ')}</span>
-              </div>
-              <div class="sys-acc-info-field">
-                <span class="sys-acc-info-label">Powder Pod</span>
-                <span class="sys-acc-info-value">${powderNames.join(', ')}</span>
-              </div>
-              <div class="sys-acc-pod-actions">
-                <button class="sys-acc-remove" id="sys-acc-remove-bundle">× Remove Stack</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      ${addBtnHtml}
-    </div>`
+  if (hybridPods > 0) html += `<div class="system-pod-row">
+    <div class="system-pod-header">
+      <span class="system-pod-name">Hybrid Pod</span>
+      <span class="system-pod-qty">×${hybridPods}</span>
+    </div>
+    <div class="system-pod-supplements">${hybridNames.join(', ')}</div>
+  </div>`
 
-    currentCartTotal     = CLASSIC_STACK.price
-    currentCartListTotal = CLASSIC_STACK_LIST_PRICE
-    updateCartButton()
+  if (powderPods > 0) html += `<div class="system-pod-row">
+    <div class="system-pod-header">
+      <span class="system-pod-name">Powder Pod</span>
+      <span class="system-pod-qty">×${powderPods}</span>
+    </div>
+    <div class="system-pod-supplements">${powderNames.join(', ')}</div>
+  </div>`
 
-    el.querySelectorAll('.sys-acc-header').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.sys-acc-row').classList.toggle('open'))
-    })
-    document.getElementById('sys-acc-remove-bundle')?.addEventListener('click', e => {
-      e.stopPropagation()
-      selected.pills.clear()
-      selected.hybrid.clear()
-      selected.powders.clear()
-      document.querySelectorAll('.supp-chip.selected').forEach(chip => chip.classList.remove('selected'))
-      updateSystem()
-    })
-    document.getElementById('sys-acc-add-btn')?.addEventListener('click', () => window.showBysSelector?.())
-    return
-  }
+  html += `<div class="system-total-row">
+    <span class="system-total-label">Total Pods</span>
+    <span class="system-total-count">${total}</span>
+  </div>`
 
-  // Same tiered quantity discount as the product pages' "Add a Pod"
-  // widget — driven by the TOTAL pod count across all three types.
-  const discount = discountForQty(total)
-
-  let cartTotal = 0
-  let listTotal = 0
-
-  function makeRow(podName, supps, category, ids) {
-    const label     = supps.join(', ')
-    const imgSrc    = POD_IMAGES[podName] || ''
-    const spec      = POD_SPECS[podName]  || ''
-    const idsAttr   = JSON.stringify(ids || [])
-    const listPrice = POD_BASE_PRICE[podName]
-    const salePrice = listPrice * (1 - discount)
-    cartTotal += salePrice
-    listTotal += listPrice
-    const priceHtml = discount > 0
-      ? `<span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(listPrice)}</span>${formatPrice(salePrice)}</span>`
-      : `<span class="sys-acc-price">${formatPrice(listPrice)}</span>`
-    return `<div class="sys-acc-row">
-      <button class="sys-acc-header">
-        <span class="sys-acc-dot"></span>
-        <span class="sys-acc-name">${podName} <span class="sys-acc-supp">— <em>${label}</em></span></span>
-        ${priceHtml}
-        ${chevron}
-      </button>
-      <div class="sys-acc-body">
-        <div class="sys-acc-expanded">
-          <div class="sys-acc-pod-img-wrap">
-            <img src="${imgSrc}" alt="${podName}" class="sys-acc-pod-img" />
-          </div>
-          <div class="sys-acc-pod-info">
-            <div class="sys-acc-info-field">
-              <span class="sys-acc-info-label">Contains</span>
-              <span class="sys-acc-info-value">${label}</span>
-            </div>
-            <div class="sys-acc-info-field">
-              <span class="sys-acc-info-label">Capacity</span>
-              <span class="sys-acc-info-value">${spec}</span>
-            </div>
-            <div class="sys-acc-pod-actions">
-              <button class="sys-acc-remove" data-category="${category}" data-ids='${idsAttr}'>× Remove Pod</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`
-  }
-
-  let rows = ''
-  for (let i = 0; i < pillPods;   i++) rows += makeRow('Small Pill Pod',   pillNames.slice(i*3,(i+1)*3),   'pills',   pillIds.slice(i*3,(i+1)*3))
-  for (let i = 0; i < hybridPods; i++) rows += makeRow('Big Pill Pod', hybridNames.slice(i*2,(i+1)*2), 'hybrid',  hybridIds.slice(i*2,(i+1)*2))
-  for (let i = 0; i < powderPods; i++) rows += makeRow('Powder Pod', [powderNames[i]].filter(Boolean),'powders', [powderIds[i]].filter(Boolean))
-
-  rows += `<button class="sys-acc-add" id="sys-acc-add-btn">Add another supplement +</button>`
-  el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
-
-  currentCartTotal     = cartTotal
-  currentCartListTotal = listTotal
-  updateCartButton()
-
-  el.querySelectorAll('.sys-acc-header').forEach(btn => {
-    btn.addEventListener('click', () => btn.closest('.sys-acc-row').classList.toggle('open'))
-  })
-
-  el.querySelectorAll('.sys-acc-remove').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation()
-      const cat = btn.dataset.category
-      const ids = JSON.parse(btn.dataset.ids)
-      ids.forEach(id => {
-        selected[cat].delete(id)
-        document.querySelector(`.supp-chip[data-id="${id}"]`)?.classList.remove('selected')
-      })
-      updateSystem()
-    })
-  })
-
-  document.getElementById('sys-acc-add-btn')?.addEventListener('click', () => window.showBysSelector?.())
+  el.innerHTML = html
 }
-
-// ── Add to Cart ────────────────────────────────────────────────
-function updateCartButton() {
-  const btn = document.getElementById('system-add-to-cart-btn')
-  if (!btn) return
-  const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods
-  btn.disabled = totalQty === 0
-  if (totalQty === 0) {
-    btn.textContent = 'Add to Cart'
-    return
-  }
-  const hasDiscount = currentCartListTotal - currentCartTotal > 0.001
-  const priceHtml   = hasDiscount
-    ? `<span class="cart-btn-price-strike">${formatPrice(currentCartListTotal)}</span> ${formatPrice(currentCartTotal)}`
-    : formatPrice(currentCartTotal)
-  btn.innerHTML = 'Add to Cart — ' + priceHtml
-}
-
-document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
-  const { pillPods, hybridPods, powderPods } = currentPodCounts
-  const total = pillPods + hybridPods + powderPods
-  if (total === 0) return
-
-  if (isClassicStackCart) {
-    window.PilrCart?.add(CLASSIC_STACK, 1)
-  } else {
-    const discount = discountForQty(total)
-    const counts = { 'Small Pill Pod': pillPods, 'Big Pill Pod': hybridPods, 'Powder Pod': powderPods }
-    Object.keys(counts).forEach(podName => {
-      const qty = counts[podName]
-      if (qty === 0) return
-      const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
-      window.PilrCart?.add({
-        id:    POD_CART_ID[podName],
-        title: podName,
-        price: salePrice,
-        image: POD_IMAGES[podName],
-      }, qty)
-    })
-  }
-
-  const btn  = this
-  const orig = btn.innerHTML
-  btn.textContent = 'Added ✓'
-  btn.disabled = true
-  setTimeout(() => { btn.innerHTML = orig; btn.disabled = false }, 1200)
-})
 
 function updateSystem() {
   const { powderPods, hybridPods, pillPods } = calcPods()
-  const totalPods = powderPods + hybridPods + pillPods
+  const total = selected.powders.size + selected.hybrid.size + selected.pills.size
 
   document.getElementById('selected-count').textContent =
-    totalPods > 0 ? `${totalPods} pod${totalPods === 1 ? '' : 's'} selected` : ''
+    total > 0 ? `${total} supplement${total === 1 ? '' : 's'} selected` : ''
 
   // Build ordered pod list: pill (bottom) → hybrid (middle) → powder (top)
   const podList = [
-    ...Array(pillPods).fill('Small Pill Pod'),
-    ...Array(hybridPods).fill('Big Pill Pod'),
+    ...Array(pillPods).fill('Pill Pod'),
+    ...Array(hybridPods).fill('Hybrid Pod'),
     ...Array(powderPods).fill('Powder Pod'),
   ]
 
@@ -1007,14 +643,7 @@ function updateSystem() {
   const podKey = stackToShow.join(',')
   if (podKey !== lastPodKey) {
     lastPodKey = podKey
-    buildStack(stackToShow, () => {
-      playDrop()
-      if (!inDetailView) {
-        const targetZ = idealCameraZ(stackToShow.length)
-        CAMERA_REST_POS.z = targetZ
-        gsap.to(camera.position, { z: targetZ, duration: 0.6, ease: 'power2.out' })
-      }
-    })
+    buildStack(stackToShow, () => playDrop())
   } else {
     // Same stack shape — just update labels
     const labelNames = getLabelNamesForPods(podList)
@@ -1036,7 +665,6 @@ function renderChips(category, containerId) {
     btn.className   = 'supp-chip'
     btn.textContent = s.label
     btn.type        = 'button'
-    btn.dataset.id  = s.id
     btn.addEventListener('click', () => {
       if (selected[category].has(s.id)) {
         selected[category].delete(s.id)
@@ -1058,8 +686,5 @@ renderChips('pills',   'pills-row')
 animate()
 
 // Default: show full system as a preview
-const DEFAULT_STACK = ['Small Pill Pod', 'Big Pill Pod', 'Powder Pod']
-const initZ = idealCameraZ(DEFAULT_STACK.length)
-CAMERA_REST_POS.z = initZ
-camera.position.z = initZ
+const DEFAULT_STACK = ['Pill Pod', 'Hybrid Pod', 'Powder Pod']
 buildStack(DEFAULT_STACK, () => playDrop())

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>About — pilr</title>
+  <title>About — Pilr</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
@@ -18,159 +18,129 @@
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
   <style>
     /* ── ABOUT PAGE ── */
-
-    .about-story-tagline {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: #5e6e7a;
-      text-align: center;
-      padding: 0.6rem 3rem 6rem;
-      opacity: 0.7;
+    .about-page {
+      padding-top: 120px;
+      padding-bottom: 6rem;
     }
 
-    .about-story-label {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 1.45rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #5e6e7a;
-      text-align: center;
-      padding: 4rem 3rem 0;
-    }
-
-    @media (max-width: 700px) {
-      .about-story-tagline {
-        padding: 2rem 1.5rem 0;
-      }
-      .about-story-label {
-        padding: 0.5rem 1.5rem 0;
-      }
-    }
-
-    /* ── STORY SECTIONS ── */
-    .about-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: min(70vh, 700px);
-      max-width: 1440px;
+    .about-page-hero {
+      max-width: 1100px;
       margin: 0 auto;
-      width: 100%;
+      padding: 0 2rem 5rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .about-section--fit .about-section-img {
-      max-height: 600px;
-      align-self: center;
-    }
-
-    .about-section-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem 5rem 5rem 6rem;
-    }
-
-    .about-section-eyebrow {
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #5e6e7a;
-      opacity: 0.7;
-      margin-bottom: 1.2rem;
-    }
-
-    .about-section-heading {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(1.6rem, 2.6vw, 2.25rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: #5e6e7a;
+    .about-page-hero .section-eyebrow {
       margin-bottom: 1.5rem;
     }
 
-    .about-section-body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.85;
-      color: #5e6e7a;
-      opacity: 0.7;
-      max-width: 480px;
+    .about-page-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--text);
     }
 
-    .about-section-body p + p {
+    .about-page-hero p {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 600px;
+    }
+
+    /* ── STORY SECTIONS ── */
+    .story-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .story-section:last-child {
+      border-bottom: none;
+    }
+
+    .story-section-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .story-section-inner.text-only {
+      grid-template-columns: 1fr;
+      max-width: 620px;
+    }
+
+    .story-section-inner.img-right .story-text { order: 1; }
+    .story-section-inner.img-right .story-img  { order: 2; }
+
+    .story-section-inner.img-left .story-text  { order: 2; }
+    .story-section-inner.img-left .story-img   { order: 1; }
+
+    .story-num {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-teal);
+      margin-bottom: 1rem;
+    }
+
+    .story-text h2 {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      color: var(--text);
+    }
+
+    .story-text p {
+      font-size: 0.975rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .story-text p + p {
       margin-top: 1rem;
     }
 
-    .about-signature {
-      margin-top: 2rem !important;
-      font-weight: 500;
-      opacity: 1 !important;
+    .story-img {
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--surface);
     }
 
-    .about-section-img {
-      padding: 2rem 4rem 2rem 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .about-section-img img {
+    .story-img img {
       width: 100%;
-      height: auto;
-      max-height: 620px;
-      object-fit: contain;
-      display: block;
-      border-radius: var(--radius);
-    }
-
-    /* image-left variant */
-    .about-section--img-left .about-section-img {
-      order: 1;
-      padding: 2rem 0 2rem 4rem;
-    }
-
-    .about-section--img-left .about-section-text {
-      order: 2;
-      padding: 5rem 6rem 5rem 5rem;
-    }
-
-    @media (max-width: 700px) {
-      .about-section {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-
-      .about-section-text {
-        padding: 3rem 1.5rem;
-        order: 2;
-      }
-
-      .about-section-img {
-        order: 1;
-        height: 60vw;
-        padding: 1.5rem 1.5rem 0 !important;
-      }
-    }
-
-    /* Hero image — full bleed, sits behind the nav */
-    .about-hero-img {
-      width: 100%;
-      height: 75vh;
-      min-height: 420px;
+      height: 100%;
       object-fit: cover;
-      object-position: center 68%;
       display: block;
-      margin-top: 0;
     }
 
+    /* ── CLOSING SIGNATURE ── */
+    .story-signature {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      .about-hero-img {
-        height: 50vw;
-        min-height: 240px;
+      .story-section-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
       }
+
+      .story-section-inner.img-right .story-text,
+      .story-section-inner.img-left .story-text { order: 1; }
+      .story-section-inner.img-right .story-img,
+      .story-section-inner.img-left .story-img  { order: 2; }
     }
   </style>
 </head>
@@ -178,142 +148,92 @@
 
   <!-- NAV -->
   <div class="nav-overlay" id="nav-overlay"></div>
-  <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
-
   <nav class="nav">
-    <a href="/" class="nav-logo">
-      <img src="images/logov3-cropped.png" alt="pilr" class="nav-logo-img">
-    </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="nav-links">
-        <li class="nav-has-dropdown">
-          <a href="./catalog.html">
-            Shop
-            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-inner">
-              <div class="nav-drop-grid">
-                <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System.png" alt="Build Your System"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Build Your System</span>
-                    <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
-                  </div>
-                </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Classic Stack"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Classic Stack</span>
-                    <span class="nav-drop-desc">Powders, big pills, little pills. One system.</span>
-                  </div>
-                </a>
-                <a href="./catalog.html#section-single-pods" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Render.png" alt="Single Pods"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Single Pods</span>
-                    <span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span>
-                  </div>
-                </a>
-                <a href="./catalog.html" class="nav-drop-card">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Full Render.png" alt="All Products"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">All Products</span>
-                    <span class="nav-drop-desc">Browse the complete pilr collection</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="./why-pilr.html">Why pilr</a></li>
-        <li><a href="./about.html">Our story</a></li>
-        <li><a href="./faq.html">FAQ</a></li>
-      </ul>
-      <a href="./cart.html" class="nav-cart-btn" aria-label="Cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      </a>
-      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <a href="./index.html" class="nav-logo"><img src="images/logov3.png" alt="Pilr" class="nav-logo-img"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./build-your-system.html">Build Your System</a></li>
+      <li><a href="./early-access.html" class="nav-cta-filled">Get Early Access</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <!-- PAGE -->
-  <main>
+  <main class="about-page">
 
-    <!-- HERO IMAGE — full bleed -->
-    <img
-      src="./images/lifestyle_section/About Film Pic.JPG"
-      alt="pilr — Our Story"
-      class="about-hero-img"
-    />
+    <!-- INTRO -->
+    <div class="about-page-hero">
+      <div class="section-eyebrow">Our Story</div>
+      <h1>Is it really a routine if it isn't consistent?</h1>
+      <p>Two friends, one shared problem — and a system built to solve it.</p>
+    </div>
 
-    <!-- OUR STORY LABEL -->
-    <div class="about-story-label">Our story</div>
-    <div class="about-story-tagline">Two friends, one shared problem — and a system built to solve it</div>
-
-    <!-- SECTION 01 — The Starting Point -->
-    <section class="about-section">
-      <div class="about-section-text">
-        <div class="about-section-eyebrow">The Starting Point</div>
-        <h2 class="about-section-heading">Built on routine.</h2>
-        <div class="about-section-body">
+    <!-- 01 — The Starting Point -->
+    <section class="story-section">
+      <div class="story-section-inner img-right">
+        <div class="story-text">
+          <div class="story-num">01 — The Starting Point</div>
+          <h2>Built on routine.</h2>
           <p>Two friends who met in college and ended up living together. Our days were built around routine: training, studying, eating right, and showing up consistently.</p>
           <p>Every morning started the same way, with coffee and our daily supplements. That was the anchor of our system.</p>
           <p>We weren't obsessed with being perfect. We just knew that small, consistent habits added up. Each day was built on the one before it.</p>
         </div>
-      </div>
-      <div class="about-section-img">
-        <img src="./images/lifestyle_section/About Pic 1.JPG" alt="Built on routine" />
+        <div class="story-img">
+          <img src="./images/about_images/sec1.png" alt="Built on routine" />
+        </div>
       </div>
     </section>
 
-    <!-- SECTION 02 — The Problem -->
-    <section class="about-section">
-      <div class="about-section-text">
-        <div class="about-section-eyebrow">The Problem</div>
-        <h2 class="about-section-heading">Travel kills consistency.</h2>
-        <div class="about-section-body">
+    <!-- 02 — The Break in Routine -->
+    <section class="story-section">
+      <div class="story-section-inner img-left">
+        <div class="story-img">
+          <img src="./images/about_images/sec2.png" alt="The problem with travel and supplements" />
+        </div>
+        <div class="story-text">
+          <div class="story-num">02 — The Problem</div>
+          <h2>Travel kills consistency.</h2>
           <p>After graduating and starting work, that system was tested. Work meant lots of travel, and travel broke the routine. Without it, momentum slipped.</p>
           <p>The problem was clear. Powders didn't fit in pill containers. Ziploc bags spilled. Cheap containers broke.</p>
           <p>Nothing was built for the way we actually took supplements, powders, capsules, softgels, a full daily stack. So we built it.</p>
         </div>
       </div>
-      <div class="about-section-img">
-        <img src="./images/lifestyle_section/About Pic 2.jpg" alt="Travel kills consistency" />
-      </div>
     </section>
 
-    <!-- SECTION 03 — The Solution -->
-    <section class="about-section about-section--fit">
-      <div class="about-section-text">
-        <div class="about-section-eyebrow">The Solution</div>
-        <h2 class="about-section-heading">How we built it.</h2>
-        <div class="about-section-body">
+    <!-- 03 — Designing the System -->
+    <section class="story-section">
+      <div class="story-section-inner img-right">
+        <div class="story-text">
+          <div class="story-num">03 — The Solution</div>
+          <h2>How we built it.</h2>
           <p>We designed a system that could handle the way we actually live, structured, adaptable, and built to travel.</p>
           <p>Not a container. A system. Built to adapt.</p>
           <p>Eight months of design. Nine prototypes. Three pods, each with a purpose. Some people carry creatine and that's it. Some carry a whole lot more. 100% BPA-free Tritan, wrapped in an anodized aluminum shell built to last. Modular by design, so it fits your routine.</p>
         </div>
-      </div>
-      <div class="about-section-img">
-        <img src="./images/lifestyle_section/About Pic 3.png" alt="How we built it" />
+        <div class="story-img">
+          <img src="./images/about_images/sec3.png" alt="Designing Pilr" />
+        </div>
       </div>
     </section>
 
-    <!-- SECTION 04 — The Standard -->
-    <section class="about-section">
-      <div class="about-section-text">
-        <div class="about-section-eyebrow">The Standard</div>
-        <h2 class="about-section-heading">Why it matters.</h2>
-        <div class="about-section-body">
+    <!-- 04 — The Standard -->
+    <section class="story-section">
+      <div class="story-section-inner img-left">
+        <div class="story-img">
+          <img src="./images/IMG_6559.JPG" alt="Why it matters" />
+        </div>
+        <div class="story-text">
+          <div class="story-num">04 — The Standard</div>
+          <h2>Why it matters.</h2>
           <p>Consistency is what drives results. Every day builds on the one before.</p>
           <p>We built pilr so nothing gets in the way of that, no matter where you are.</p>
-          <p class="about-signature">— Andrea &amp; Justin</p>
+          <p class="story-signature">— Andrea &amp; Justin</p>
         </div>
-      </div>
-      <div class="about-section-img">
-        <img src="./images/lifestyle_section/About Pic 4.JPG" alt="Why it matters" />
       </div>
     </section>
 
@@ -329,9 +249,9 @@
       </div>
 
       <div class="popup-content">
-        <img src="./images/logov3-cropped.png" alt="pilr" class="popup-logo" />
+        <img src="./images/logov3.png" alt="Pilr" class="popup-logo" />
         <div class="popup-eyebrow">Early Access Offer</div>
-        <h2 class="popup-headline">You've got<br><strong>10% off</strong></h2>
+        <h2 class="popup-headline">You've Got<br><strong>10% Off</strong></h2>
         <p class="popup-sub">Sign up to receive 10% off when we launch — be the first to know.</p>
         <form class="popup-form" id="popup-form">
           <input type="email" placeholder="your@email.com" required />
@@ -352,115 +272,42 @@
     </div>
   </div>
 
-  <!-- FOOTER TOP (dark) -->
-  <div class="footer-top">
-    <div class="footer-top-inner">
-      <div class="footer-newsletter">
-        <h3>Never miss a day</h3>
-        <p>Receive special offers and first look at new products.</p>
-        <form class="footer-email-form" id="footer-email-form">
-          <div class="footer-email-row">
-            <input type="email" placeholder="Email address" required />
-            <button type="submit" class="footer-email-btn" aria-label="Subscribe">
-              <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#3d4f5c"/><path d="M13 10l6 6-6 6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
+  <!-- CTA / CONTACT -->
+  <section id="contact" class="contact">
+    <div class="contact-inner">
+      <div class="section-eyebrow">Early Access</div>
+      <h2>Stay consistent,<br>wherever life takes you.</h2>
+      <div id="waitlist-step">
+        <form class="contact-form" id="waitlist-form">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit" class="btn">Notify</button>
         </form>
-        <p class="footer-legal">By submitting your email, you agree to the pilr privacy policy and are opting in to marketing communications.</p>
-      </div>
-      <div class="footer-links-grid">
-        <div class="footer-col">
-          <h4>Shop</h4>
-          <ul>
-            <li><a href="./catalog.html">All Products</a></li>
-            <li><a href="./catalog.html#section-single-pods">Single Pods</a></li>
-            <li><a href="./build-your-system.html">Build Your System</a></li>
-            <li><a href="./classic-stack.html">Classic Stack</a></li>
-            <li><a href="./catalog.html#section-accessories">Accessories</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="./about.html">Our story</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="mailto:support@pilrsystems.com">Contact us</a></li>
-            <li><a href="./why-pilr.html">Why pilr</a></li>
-            <li><a href="#">Stories</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="./faq.html">FAQ</a></li>
-            <li><a href="#">Shipping information</a></li>
-            <li><a href="#">Returns &amp; exchanges</a></li>
-            <li><a href="./privacy-policy.html">Privacy policy</a></li>
-            <li><a href="#">Order tracking</a></li>
-          </ul>
-        </div>
+        <p class="signup-legal">By signing up, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- SITE FOOTER -->
   <footer class="site-footer">
-    <div class="site-footer-social-row">
-      <div class="site-footer-social-inner">
-        <div class="footer-social">
-          <a href="https://www.instagram.com/pilrofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://www.tiktok.com/@pilrofficial" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg></a>
-          <a href="https://www.youtube.com/@pilrofficial" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#4d6070" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
-          <a href="https://www.linkedin.com/company/pilrsystems" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.18-7.06-5.96-8.72-2.91l.04-1.68z"/></svg></a>
-        </div>
-      </div>
-    </div>
-    <div class="site-footer-bottom">
-      <div class="site-footer-inner">
-        <span class="site-footer-copy">© pilr 2026.</span>
-        <div class="footer-payment-icons">
-          <img src="images/lifestyle_section/Visa ss.png" alt="Visa" class="payment-icon">
-          <img src="images/lifestyle_section/Amex ss.png" alt="Amex" class="payment-icon">
-          <img src="images/lifestyle_section/Apple Pay ss.png" alt="Apple Pay" class="payment-icon">
-          <img src="images/lifestyle_section/PayPal ss.png" alt="PayPal" class="payment-icon">
-          <img src="images/lifestyle_section/Shop ss.png" alt="Shop Pay" class="payment-icon">
-          <img src="images/lifestyle_section/Discover ss.png" alt="Discover" class="payment-icon">
-        </div>
-      </div>
-    </div>
+    <span class="site-footer-copy">© 2026 PILR LLC. All rights reserved.</span>
+    <nav class="site-footer-links" aria-label="Legal">
+      <a href="./privacy-policy.html">Privacy Policy</a>
+      <a href="./terms-of-service.html">Terms of Service</a>
+      <a href="mailto:support@pilrsystems.com">Contact</a>
+    </nav>
   </footer>
 
-  <script src="./pilr-cart.js"></script>
   <script>
-    const shopAllLi    = document.querySelector('.nav-has-dropdown')
-    const shopDropdown = document.querySelector('.nav-dropdown')
-    const dimOverlay   = document.getElementById('nav-dim-overlay')
-    let dropOpen = false, dropCloseTimer = null
-    function openDrop()  { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.add('dropdown-active'); dimOverlay.classList.add('active'); dropOpen = true }
-    function closeDrop() { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.remove('dropdown-active'); dimOverlay.classList.remove('active'); dropOpen = false }
-    dimOverlay.addEventListener('click', closeDrop)
-    function inZone(x, y) {
-      const li = shopAllLi.getBoundingClientRect(), dd = shopDropdown.getBoundingClientRect()
-      if (x >= li.left && x <= li.right && y >= li.top && y <= li.bottom) return true
-      if (y >= dd.top && y <= dd.bottom) return true
-      if (y > li.bottom && y < dd.top) return true
-      return false
-    }
-    shopAllLi.addEventListener('mouseenter', openDrop)
-    document.addEventListener('mousemove', e => {
-      if (!dropOpen) return
-      if (inZone(e.clientX, e.clientY)) { clearTimeout(dropCloseTimer); dropCloseTimer = null }
-      else if (!dropCloseTimer) { dropCloseTimer = setTimeout(closeDrop, 150) }
-    })
-
     const hamburger = document.getElementById('nav-hamburger')
     const navLinks  = document.getElementById('nav-links')
-    function closeMenu() { hamburger.classList.remove('open'); navLinks.classList.remove('open'); document.body.style.overflow = '' }
-    hamburger.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open')
-      hamburger.classList.toggle('open', open)
-      document.body.style.overflow = open ? 'hidden' : ''
-    })
+    const overlay   = document.getElementById('nav-overlay')
+
+    function openMenu()  { hamburger.classList.add('open'); navLinks.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden' }
+    function closeMenu() { hamburger.classList.remove('open'); navLinks.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = '' }
+    function toggleMenu() { navLinks.classList.contains('open') ? closeMenu() : openMenu() }
+
+    hamburger.addEventListener('click', toggleMenu)
+    overlay.addEventListener('click', closeMenu)
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
 
     // ── Consent logging helper ─────────────────────────────────────
@@ -503,7 +350,7 @@
           </div>
           <button type="submit" class="btn">Text me</button>
         </form>
-        <p class="signup-legal signup-legal--small">Agree to recurring marketing texts from pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
+        <p class="signup-legal signup-legal--small">Agree to recurring marketing texts from Pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
       `
       document.getElementById('waitlist-phone-form').addEventListener('submit', async e => {
         e.preventDefault()
@@ -577,23 +424,6 @@
         setTimeout(hidePopup, 2200)
       })
     })()
-
-    document.getElementById('footer-email-form').addEventListener('submit', async e => {
-      e.preventDefault()
-      const email = e.target.querySelector('input[type="email"]').value.trim()
-      const btn   = e.target.querySelector('button[type="submit"]')
-      btn.disabled = true
-      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#3d4f5c"/><path d="M10 16l4 4 8-8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-      logConsent(email, 'footer_newsletter')
-      try {
-        await Promise.all([
-          window.subscribeEmail(email),
-          window.subscribeEmailToKlaviyo(email),
-        ])
-      } catch (err) {
-        console.warn('[Shopify] subscribe error:', err)
-      }
-    })
 
     const nav = document.querySelector('.nav')
     let lastY = 0

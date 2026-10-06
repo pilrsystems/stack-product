@@ -7,17 +7,10 @@ import { playExplodeIn, idleRotation, updateLabels, hoverExplode } from './anima
 
 // ── Renderer ──────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('three-canvas')
-
-function canvasSize() {
-  return { w: Math.round(window.innerWidth * 0.58), h: window.innerHeight }
-}
-
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-const { w: initW, h: initH } = canvasSize()
-renderer.setSize(initW, initH, false)
+renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.toneMapping = THREE.NoToneMapping
-renderer.setClearColor(0x000000, 0)
 
 const isMobile = window.innerWidth < 768
 renderer.shadowMap.enabled = !isMobile
@@ -25,12 +18,11 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 // ── Scene & Camera ────────────────────────────────────────────────────────────
 const scene = new THREE.Scene()
-// transparent — let the hero background show through
+scene.background = new THREE.Color(0x2E4256)
 
-const { w: cW, h: cH } = canvasSize()
-const camera = new THREE.PerspectiveCamera(45, (cW || window.innerWidth * 0.58) / (cH || window.innerHeight), 0.1, 50)
-camera.position.set(0, 0.4, 6.3)
-camera.lookAt(new THREE.Vector3(0, 0, 0))
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 50)
+camera.position.set(0, 0.4, 7)
+camera.lookAt(new THREE.Vector3(isMobile ? 0 : -1.2, 0, 0))
 
 // ── Lights — studio 3-point setup ─────────────────────────────────────────────
 // Low ambient so dark sides of product stay dark vs background
@@ -74,7 +66,7 @@ scene.add(topSpot)
 // ── Floor (shadow only) ───────────────────────────────────────────────────────
 const floor = new THREE.Mesh(
   new THREE.CircleGeometry(9, 128),
-  new THREE.ShadowMaterial({ opacity: 0.18 })
+  new THREE.ShadowMaterial({ opacity: 0.80 })
 )
 floor.rotation.x = -Math.PI / 2
 floor.position.y = -2.4
@@ -86,7 +78,7 @@ const composer = new EffectComposer(renderer)
 composer.addPass(new RenderPass(scene, camera))
 
 const bloom = new UnrealBloomPass(
-  new THREE.Vector2(initW, initH),
+  new THREE.Vector2(window.innerWidth, window.innerHeight),
   0.5,   // strength
   0.5,   // radius
   0.85   // threshold
@@ -126,9 +118,8 @@ loadModel(isMobile)
 // ── Mouse / Touch events ──────────────────────────────────────────────────────
 canvas.addEventListener('mousemove', (e) => {
   if (isMobile) return
-  const rect = canvas.getBoundingClientRect()
-  mouse.x =  ((e.clientX - rect.left) / rect.width)  * 2 - 1
-  mouse.y = -((e.clientY - rect.top)  / rect.height) * 2 + 1
+  mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1
 })
 
 canvas.addEventListener('mouseleave', () => {
@@ -152,10 +143,9 @@ canvas.addEventListener('touchend', (e) => {
   if (dx > 10 || dy > 10) return  // was a scroll/swipe, not a tap
 
   const t = e.changedTouches[0]
-  const rect = canvas.getBoundingClientRect()
   const tapMouse = new THREE.Vector2(
-    ((t.clientX - rect.left) / rect.width)  * 2 - 1,
-    -((t.clientY - rect.top)  / rect.height) * 2 + 1
+    (t.clientX / window.innerWidth)  * 2 - 1,
+    -(t.clientY / window.innerHeight) * 2 + 1
   )
   raycaster.setFromCamera(tapMouse, camera)
   const hit = raycaster.intersectObjects(allMeshes).length > 0
@@ -188,14 +178,17 @@ function animate() {
     }
   }
 
-  renderer.render(scene, camera)
+  updateLabels(sections, camera, canvas)
+  composer.render()
 }
 
 // ── Resize ────────────────────────────────────────────────────────────────────
 window.addEventListener('resize', () => {
-  const { w, h } = canvasSize()
+  const w = window.innerWidth
+  const h = window.innerHeight
   camera.aspect = w / h
-  camera.lookAt(new THREE.Vector3(0, 0, 0))
+  camera.lookAt(new THREE.Vector3(w < 768 ? 0 : -1.2, 0, 0))
   camera.updateProjectionMatrix()
-  renderer.setSize(w, h, false)
+  renderer.setSize(w, h)
+  composer.setSize(w, h)
 })

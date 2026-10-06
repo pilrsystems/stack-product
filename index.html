@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>pilr — Your Routine. Anywhere.</title>
+  <title>STACK — Modular Supplement Container</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
@@ -17,408 +19,270 @@
 </head>
 <body>
 
-  <!-- NAV OVERLAY -->
-  <div class="nav-overlay" id="nav-overlay"></div>
-
   <!-- NAV -->
+  <div class="nav-overlay" id="nav-overlay"></div>
   <nav class="nav">
-    <a href="/" class="nav-logo">
-      <img src="images/logov3-cropped.png" alt="pilr" class="nav-logo-img">
-    </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="nav-links">
-        <li class="nav-has-dropdown">
-          <a href="./catalog.html">
-            Shop
-            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-inner">
-              <div class="nav-drop-grid">
-                <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System.png" alt="Build Your System"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Build Your System</span>
-                    <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
-                  </div>
-                </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Classic Stack"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Classic Stack</span>
-                    <span class="nav-drop-desc">Powders, big pills, little pills. One system.</span>
-                  </div>
-                </a>
-                <a href="./catalog.html#section-single-pods" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Render.png" alt="Single Pods"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Single Pods</span>
-                    <span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span>
-                  </div>
-                </a>
-                <a href="./catalog.html" class="nav-drop-card">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Full Render.png" alt="All Products"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">All Products</span>
-                    <span class="nav-drop-desc">Browse the complete pilr collection</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="./why-pilr.html">Why pilr</a></li>
-        <li><a href="./about.html">Our story</a></li>
-        <li><a href="./faq.html">FAQ</a></li>
-      </ul>
-      <a href="./cart.html" class="nav-cart-btn" aria-label="Cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      </a>
-      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <a href="#hero" class="nav-logo"><img src="images/logov3.png" alt="Pilr" class="nav-logo-img"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./build-your-system.html">Build Your System</a></li>
+      <li><a href="./early-access.html" class="nav-cta-filled">Get Early Access</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
-
-  <!-- DROPDOWN DIM OVERLAY -->
-  <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
 
   <!-- HERO -->
   <section id="hero" class="hero">
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <div class="hero-eyebrow">PACK&nbsp;&nbsp;&nbsp;STACK&nbsp;&nbsp;&nbsp;GO</div>
-        <p class="hero-tagline">A modular system for your daily supplements,<br>wherever life takes you.</p>
-        <h1 class="hero-title">Your routine. Anywhere.</h1>
-        <a href="./build-your-system.html" class="btn btn--white">build your system →</a>
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Floating section labels — positions updated by JS -->
+    <div class="label label-left" id="label-lid">
+      <span class="label-dot"></span>
+      <span class="label-line"></span>
+      <div class="label-content">
+        <div class="label-title">MULTI-POD LID</div>
+        <ul class="label-details">
+          <li>Airtight twist-lock seal</li>
+          <li>Universal fit across all pods</li>
+        </ul>
       </div>
-      <div class="hero-product">
-        <img class="hero-product-img hero-product-img--hand" src="images/Home Page 1.png" alt="pilr hero" />
+    </div>
+    <div class="label label-right" id="label-dessert">
+      <div class="label-content">
+        <div class="label-title">POWDER POD</div>
+        <ul class="label-details">
+          <li>Includes 5g scooper</li>
+          <li>Height: 2.5 in.</li>
+          <li>Pre-Workout, Collagen, Greens…</li>
+        </ul>
       </div>
+      <span class="label-line"></span>
+      <span class="label-dot"></span>
+    </div>
+    <div class="label label-left" id="label-main">
+      <span class="label-dot"></span>
+      <span class="label-line"></span>
+      <div class="label-content">
+        <div class="label-title">HYBRID POD</div>
+        <ul class="label-details">
+          <li>2 capsule types or 1 powder</li>
+          <li>Height: 2 in.</li>
+          <li>Fish Oil, Magnesium, Creatine…</li>
+        </ul>
+      </div>
+    </div>
+    <div class="label label-right" id="label-snack">
+      <div class="label-content">
+        <div class="label-title">PILL POD</div>
+        <ul class="label-details">
+          <li>Easy dispense mechanism</li>
+          <li>Height: 1 in.</li>
+          <li>Vitamin D, Zinc, Multivitamins…</li>
+        </ul>
+      </div>
+      <span class="label-line"></span>
+      <span class="label-dot"></span>
+    </div>
+
+    <!-- Hero copy -->
+    <div class="hero-copy">
+      <div class="hero-eyebrow">PACK · STACK · GO</div>
+      <h1 class="hero-title"><span>BUILT FOR</span><br>CONSISTENCY</h1>
+      <p class="hero-sub">Three Pods. One System.<br>A modern solution for organizing your daily supplements — wherever life takes you.</p>
+    </div>
+
+    <div class="scroll-cue">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
     </div>
   </section>
 
-  <!-- SHOP CARDS -->
-  <section class="shop">
-    <div class="shop-inner">
-      <a href="./catalog.html#section-single-pods" class="shop-card">
-        <div class="shop-card-img">
-          <img src="images/lifestyle_section/Powder Pod Render.png" alt="Single Pods" />
-        </div>
-        <div class="shop-card-info">
-          <h3>Single Pods</h3>
-          <p>Just little pills, big pills, or powders</p>
-          <span class="shop-price"><span class="shop-price-lead">from</span> $24</span>
-        </div>
-      </a>
-      <a href="./classic-stack.html" class="shop-card shop-card--featured">
-        <div class="shop-card-img shop-card-img--large">
-          <div class="shop-card-badge">most popular</div>
-          <img src="images/lifestyle_section/Hand Render.png" alt="The Classic Stack" style="transform: translateY(6%);" />
-        </div>
-        <div class="shop-card-info">
-          <h3>Classic Stack</h3>
-          <p>One system for all your pills and powders</p>
-          <span class="shop-price">$68 <span class="shop-price-strike">$84</span></span>
-        </div>
-      </a>
-      <a href="./build-your-system.html" class="shop-card">
-        <div class="shop-card-img shop-card-img--large">
-          <img src="images/lifestyle_section/Build Your System.png" alt="Build Your System" class="shop-card-img-scale" />
-        </div>
-        <div class="shop-card-info">
-          <h3>Build Your System</h3>
-          <p>Create a stack that fits your routine</p>
-          <span class="shop-price"><span class="shop-price-lead">from</span> $24</span>
-        </div>
-      </a>
-    </div>
-  </section>
+  <!-- LIFESTYLE -->
+  <section class="lifestyle">
+  <div class="lifestyle-inner">
 
-  <!-- WHY SECTION -->
-  <section id="why" class="why">
-    <div class="why-inner">
-      <div class="why-left">
-        <img src="images/IG 2.png" alt="pilr supplement system" />
-      </div>
-      <div class="why-right">
-        <p class="why-label">WHAT WE MAKE, AND WHY</p>
-        <h2>Stay consistent with your routine, no matter where life takes you</h2>
-        <div class="why-accordion-list">
-          <div class="why-accordion-item">
-            <button class="why-accordion-trigger" aria-expanded="false">
-              <span class="why-accordion-label"><span class="why-accordion-num">01</span> Modular</span>
-              <span class="why-accordion-icon">+</span>
-            </button>
-            <div class="why-accordion-panel">
-              <h4>Every pod snaps into any stack.</h4>
-              <p>All three pods interlock seamlessly, so your system grows or changes with your routine, not the other way around.</p>
-            </div>
-          </div>
-          <div class="why-accordion-item">
-            <button class="why-accordion-trigger" aria-expanded="false">
-              <span class="why-accordion-label"><span class="why-accordion-num">02</span> Portable</span>
-              <span class="why-accordion-icon">+</span>
-            </button>
-            <div class="why-accordion-panel">
-              <h4>Designed to move with you.</h4>
-              <p>Made to fit in your suitcase, carry-on, or gym bag, wherever you're headed.</p>
-            </div>
-          </div>
-          <div class="why-accordion-item">
-            <button class="why-accordion-trigger" aria-expanded="false">
-              <span class="why-accordion-label"><span class="why-accordion-num">03</span> Built to last</span>
-              <span class="why-accordion-icon">+</span>
-            </button>
-            <div class="why-accordion-panel">
-              <h4>Engineered to outlast what it carries.</h4>
-              <p>Pods created to survive years of travel, so your system holds up long after the first trip.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="lifestyle-heading">
+      <h2>All your supplements. One system.</h2>
     </div>
-  </section>
 
-  <!-- EXPLORE ROUTINE — three-up image grid, one row, each linking to a
-       shop entry point. Images are placeholders (flat color rectangles)
-       until real lifestyle photos are ready. -->
-  <section class="explore-routine">
-    <div class="explore-routine-inner">
-      <p class="why-label">FOR WHEREVER YOU GO</p>
-      <h2 class="explore-routine-title">Built around your routine</h2>
-      <div class="explore-routine-grid">
-        <a href="./catalog.html#section-single-pods" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 11.jpg" alt="Individual pods" /></div>
-          <div class="explore-routine-caption">
-            <span>Individual pods</span>
-            <span class="explore-routine-arrow">→</span>
-          </div>
-        </a>
-        <a href="./classic-stack.html" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/About Film Pic.JPG" alt="The Classic Stack" /></div>
-          <div class="explore-routine-caption">
-            <span>The Classic Stack</span>
-            <span class="explore-routine-arrow">→</span>
-          </div>
-        </a>
-        <a href="./build-your-system.html" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 7.jpg" alt="Build your own" /></div>
-          <div class="explore-routine-caption">
-            <span>Build your own</span>
-            <span class="explore-routine-arrow">→</span>
-          </div>
-        </a>
+    <!-- Row 1: text left, image right -->
+    <div class="lifestyle-row lifestyle-row--text-left">
+      <div class="lifestyle-text-col">
+        <div class="section-eyebrow">Powders</div>
+        <h2>Any powder.<br>On the go.</h2>
+        <p>Leakproof, travel-ready storage built for a week's worth of your daily powders. No mess, no wasted space, no friction.</p>
+        <ul class="lifestyle-list">
+          <li>Stackable</li>
+          <li>Leakproof</li>
+          <li>TSA-Approved</li>
+        </ul>
+        <a href="#contact" class="btn">Get Early Access</a>
+        <div class="lifestyle-corner-img">
+          <img src="images/lifestyle_section/top_text_right_corner.svg" alt="" />
+        </div>
+      </div>
+      <div class="lifestyle-main-img">
+        <img src="images/lifestyle_section/top_right.png" alt="STACK powder pod in use" />
       </div>
     </div>
-  </section>
 
-  <!-- CAPACITY SECTION -->
-  <!-- (originally id="capacity" with the blue rectangle card backgrounds —
-       removed once the redesigned copy below replaced it) -->
-  <section id="capacity-2" class="capacity">
-    <div class="capacity-inner">
-      <p class="why-label">DESIGNED WITH INTENTION</p>
-      <h2>Every supplement, one system</h2>
-      <div class="capacity-cards">
-        <div class="capacity-card-wrap">
-          <a class="capacity-card" href="./powder-pod.html">
-            <img src="images/lifestyle_section/Powder Pod Render.png" alt="Powders" />
-            <span class="capacity-card-label"><span class="capacity-card-num">01</span> Powders</span>
-            <div class="capacity-card-overlay">
-              <span class="capacity-card-title"><span class="capacity-card-num">01</span> Powders</span>
-              <ul class="why-accordion-rows">
-                <li>Creatine Monohydrate (5g), 14 servings</li>
-                <li>Electrolytes (5.42g), 30 servings</li>
-                <li>Pre-Workout (8.5–17g), 9 servings</li>
-                <li>Greens/AG1 (12g), 6 servings</li>
-                <li>Collagen Peptides (11g), 4 servings</li>
-              </ul>
-            </div>
-          </a>
-          <p class="capacity-card-caption">Powder Pod</p>
-        </div>
-        <div class="capacity-card-wrap">
-          <a class="capacity-card" href="./hybrid-pod.html">
-            <img src="images/lifestyle_section/Hybrid Pod.png" alt="Big pills" />
-            <span class="capacity-card-label"><span class="capacity-card-num">02</span> Big pills</span>
-            <div class="capacity-card-overlay">
-              <span class="capacity-card-title"><span class="capacity-card-num">02</span> Big pills</span>
-              <ul class="why-accordion-rows">
-                <li>Turmeric (1 capsule), 30 servings</li>
-                <li>Multivitamin (1 tablet), 40 servings</li>
-                <li>Magnesium Glycinate (2 capsules), 24 servings</li>
-                <li>L-theanine (1 softgel), 24 servings</li>
-                <li>Fish Oil/Omega-3 (2 softgels), 20 servings</li>
-                <li>Vitamin C (1 tablet), 13 servings</li>
-              </ul>
-            </div>
-          </a>
-          <p class="capacity-card-caption">Big Pill Pod</p>
-        </div>
-        <div class="capacity-card-wrap">
-          <a class="capacity-card" href="./pill-pod.html">
-            <img src="images/lifestyle_section/Pill Pod.png" alt="Small pills" />
-            <span class="capacity-card-label"><span class="capacity-card-num">03</span> Small pills</span>
-            <div class="capacity-card-overlay">
-              <span class="capacity-card-title"><span class="capacity-card-num">03</span> Small pills</span>
-              <ul class="why-accordion-rows">
-                <li>Vitamin D3 (1 capsule), 35 servings</li>
-                <li>Zinc (1 capsule), 20 servings</li>
-                <li>Ashwagandha (1 capsule), 16 servings</li>
-                <li>CoQ10 (1 softgel), 15 servings</li>
-                <li>Probiotic (1 capsule), 14 servings</li>
-                <li>Vitamin C (1 tablet), 4 servings</li>
-              </ul>
-            </div>
-          </a>
-          <p class="capacity-card-caption">Small Pill Pod</p>
+    <!-- Row 2: image left, text right -->
+    <div class="lifestyle-row lifestyle-row--text-right">
+      <div class="lifestyle-main-img">
+        <img src="images/lifestyle_section/bottom_left.png" alt="STACK pill pods on the go" />
+      </div>
+      <div class="lifestyle-text-col">
+        <div class="section-eyebrow">Pills</div>
+        <h2>Every capsule.<br>Any place.</h2>
+        <p>Easy-access pill storage on the go, designed to keep your pills accessible no matter where you are.</p>
+        <ul class="lifestyle-list">
+          <li>Quick Access</li>
+          <li>Airtight</li>
+          <li>TSA-Approved</li>
+        </ul>
+        <a href="#contact" class="btn">Get Early Access</a>
+        <div class="lifestyle-corner-img">
+          <img src="images/lifestyle_section/Adobe Express - file (5).png" alt="" />
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- BLOG SECTION — horizontal scrolling card carousel, styled after
-       a reference layout. Cards are placeholders (blank image boxes,
-       generic copy) until real blog content is ready. -->
-  <section class="blog-section">
-    <div class="blog-section-inner">
-      <div class="blog-section-header">
-        <h2 class="blog-section-title">Explore pilr</h2>
-      </div>
-      <div class="blog-carousel-wrap">
-        <div class="blog-carousel" id="blog-carousel">
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/TSA Bin Bottom.jpg" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Carry-on Ready</h3>
-              <a href="./classic-stack.html" class="blog-card-btn">Shop The Classic Stack <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Gym Back Card.JPG" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Always With You</h3>
-              <a href="./catalog.html#section-single-pods" class="blog-card-btn">Shop All Pods <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Graduation Pic.jpg" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Behind The Brand</h3>
-              <a href="./about.html" class="blog-card-btn">Our Story <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Build Your Own System.JPG" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">The Routine Problem</h3>
-              <a href="./why-pilr.html" class="blog-card-btn">Why pilr <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Airport Asset.png" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">How It Works</h3>
-              <a href="./faq.html" class="blog-card-btn">FAQs <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="blog-carousel-nav">
-          <button class="blog-carousel-arrow blog-carousel-arrow--prev" aria-label="Previous post">‹</button>
-          <button class="blog-carousel-arrow blog-carousel-arrow--next" aria-label="Next post">›</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES BAR -->
-  <!-- FOOTER TOP (dark) -->
-  <div class="footer-top">
-    <div class="footer-top-inner">
-      <div class="footer-newsletter">
-        <h3>Never miss a day</h3>
-        <p>Receive special offers and first look at new products.</p>
-        <form class="footer-email-form" id="footer-email-form">
-          <div class="footer-email-row">
-            <input type="email" placeholder="Email address" required />
-            <button type="submit" class="footer-email-btn" aria-label="Subscribe">
-              <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#3d4f5c"/><path d="M13 10l6 6-6 6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </form>
-        <p class="footer-legal">By submitting your email, you agree to the pilr privacy policy and are opting in to marketing communications.</p>
-      </div>
-      <div class="footer-links-grid">
-        <div class="footer-col">
-          <h4>Shop</h4>
-          <ul>
-            <li><a href="./catalog.html">All Products</a></li>
-            <li><a href="./catalog.html#section-single-pods">Single Pods</a></li>
-            <li><a href="./build-your-system.html">Build Your System</a></li>
-            <li><a href="./classic-stack.html">Classic Stack</a></li>
-            <li><a href="./catalog.html#section-accessories">Accessories</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="./about.html">Our story</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="mailto:support@pilrsystems.com">Contact us</a></li>
-            <li><a href="./why-pilr.html">Why pilr</a></li>
-            <li><a href="#">Stories</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="./faq.html">FAQ</a></li>
-            <li><a href="#">Shipping information</a></li>
-            <li><a href="#">Returns &amp; exchanges</a></li>
-            <li><a href="./privacy-policy.html">Privacy policy</a></li>
-            <li><a href="#">Order tracking</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
   </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-eyebrow">About pilr</div>
+        <h2>A better way to<br>travel with your supplements.</h2>
+        <p>Staying consistent shouldn't require full-size bottles, ziploc bags, or unnecessary containers. Pilr packs a full week's supply of your daily supplement stack into one seamless system. Designed to effortlessly move with you and keep your routine on track, no matter where you are.</p>
+        <a href="#contact" class="btn">Get early access</a>
+      </div>
+      <div class="about-stats">
+        
+        <div class="stat">
+          <img src="images/about_pilr_section/3_modular_pods.svg" alt="" class="stat-icon stat-icon--pods" />
+          <div class="stat-num">3 Modular Pods</div>
+          <div class="stat-label">Pills, powders, or both</div>
+        </div>
+        <div class="stat">
+          <img src="images/about_pilr_section/1_System.svg" alt="" class="stat-icon stat-icon--system" />
+          <div class="stat-num">1 System</div>
+          <div class="stat-label">Add or remove pods</div>
+        </div>
+        <div class="stat">
+          <img src="images/about_pilr_section/TSA_compliant.svg" alt="" class="stat-icon stat-icon--tsa" />
+          <div class="stat-num">TSA Compliant</div>
+          <div class="stat-label">Designed to travel</div>
+        </div>
+        <div class="stat stat--bpa">
+          <img src="images/about_pilr_section/BPA_Free.svg" alt="" class="stat-icon stat-icon--bpa" />
+          <div class="stat-num">100% BPA-Free</div>
+          <div class="stat-label">Clean by design</div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- LAYERS -->
+  <section id="layers" class="layers">
+    <div class="layers-inner">
+      <div class="section-eyebrow">Modular Design</div>
+      <h2>Your daily stack.<br>One week's supply.</h2>
+      <div class="layers-grid">
+
+        <div class="layer-card" data-layer="dessert">
+          <div class="layer-card-top">
+            <div class="layer-num">01</div>
+            <img src="images/Modular_Design_section/Base_pill_pod.svg" alt="" class="layer-card-img" />
+          </div>
+          <h3>Base Pill Pod</h3>
+          <p>Carries a full week of small and medium-sized capsules — organized across 3 compartments for easy access.</p>
+          <ul>
+            <li>Easy Dispense &amp; Loading Mechanism</li>
+            <li>Height: 1 in.</li>
+            <li>Vitamin D, Zinc, Multivitamins…</li>
+          </ul>
+        </div>
+
+        <div class="layer-card" data-layer="main">
+          <div class="layer-card-top">
+            <div class="layer-num">02</div>
+            <img src="images/Modular_Design_section/hybrid_pod.svg" alt="" class="layer-card-img" />
+          </div>
+          <h3>Hybrid Pod</h3>
+          <p>Organize a week's supply of larger pill supplements — or remove the divider for powder storage. Start with one. Stack as many as you need.</p>
+          <ul>
+            <li>2 capsule types or 1 powder? You choose.</li>
+            <li>Height: 2 in.</li>
+            <li>Fish Oil, Magnesium, Electrolytes, Creatine…</li>
+          </ul>
+        </div>
+
+        <div class="layer-card" data-layer="snack">
+          <div class="layer-card-top">
+            <div class="layer-num">03</div>
+            <img src="images/Modular_Design_section/powder_pod.svg" alt="" class="layer-card-img" />
+          </div>
+          <h3>Powder Pod</h3>
+          <p>Store a full week's supply of your go-to powders. 1 or 10? Stack as many as you'd like.</p>
+          <ul>
+            <li>Includes 5g scooper</li>
+            <li>Height: 2.5 in.</li>
+            <li>Pre-Workout, Collagen, Greens Powder…</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section id="contact" class="contact">
+    <div class="contact-inner contact-inner--with-img">
+      <div class="contact-text">
+        <div class="section-eyebrow">Early Access</div>
+        <h2>Stay consistent,<br>wherever life takes you.</h2>
+        <div id="waitlist-step">
+          <form class="contact-form" id="waitlist-form">
+            <input type="email" placeholder="your@email.com" required />
+            <button type="submit" class="btn">Notify</button>
+          </form>
+          <p class="signup-legal">By signing up, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
+        </div>
+      </div>
+      <div class="contact-img">
+        <img src="images/lifestyle_section/IMG_5007 4.png" alt="Pilr system on luggage" />
+      </div>
+    </div>
+  </section>
 
   <!-- SITE FOOTER -->
   <footer class="site-footer">
-    <div class="site-footer-social-row">
-      <div class="site-footer-social-inner">
-        <div class="footer-social">
-          <a href="https://www.instagram.com/pilrofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://www.tiktok.com/@pilrofficial" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg></a>
-          <a href="https://www.youtube.com/@pilrofficial" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#4d6070" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
-          <a href="https://www.linkedin.com/company/pilrsystems" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.18-7.06-5.96-8.72-2.91l.04-1.68z"/></svg></a>
-        </div>
-      </div>
-    </div>
-    <div class="site-footer-bottom">
-      <div class="site-footer-inner">
-        <span class="site-footer-copy">© pilr 2026.</span>
-        <div class="footer-payment-icons">
-          <img src="images/lifestyle_section/Visa ss.png" alt="Visa" class="payment-icon">
-          <img src="images/lifestyle_section/Amex ss.png" alt="Amex" class="payment-icon">
-          <img src="images/lifestyle_section/Apple Pay ss.png" alt="Apple Pay" class="payment-icon">
-          <img src="images/lifestyle_section/PayPal ss.png" alt="PayPal" class="payment-icon">
-          <img src="images/lifestyle_section/Shop ss.png" alt="Shop Pay" class="payment-icon">
-          <img src="images/lifestyle_section/Discover ss.png" alt="Discover" class="payment-icon">
-        </div>
-      </div>
-    </div>
+    <span class="site-footer-copy">© 2026 PILR LLC. All rights reserved.</span>
+    <nav class="site-footer-links" aria-label="Legal">
+      <a href="./privacy-policy.html">Privacy Policy</a>
+      <a href="./terms-of-service.html">Terms of Service</a>
+      <a href="mailto:support@pilrsystems.com">Contact</a>
+    </nav>
   </footer>
 
   <!-- DISCOUNT POPUP -->
   <div class="popup-overlay" id="popup-overlay" role="dialog" aria-modal="true" aria-label="Early access offer">
     <div class="popup-card">
       <button class="popup-close" id="popup-close" aria-label="Close">&#x2715;</button>
+
       <div class="popup-content">
-        <img src="./images/logov3-cropped.png" alt="pilr" class="popup-logo" />
+        <img src="./images/logov3.png" alt="Pilr" class="popup-logo" />
         <div class="popup-eyebrow">Early Access Offer</div>
-        <h2 class="popup-headline">You've got<br><strong>10% off</strong></h2>
+        <h2 class="popup-headline">You've Got<br><strong>10% Off</strong></h2>
         <p class="popup-sub">Sign up to get early access and 10% off your first order.</p>
         <form class="popup-form" id="popup-form">
           <input type="email" placeholder="your@email.com" required />
@@ -427,6 +291,7 @@
         <p class="signup-legal">By signing up, you agree to our <a href="./privacy-policy.html" target="_blank">Privacy Policy</a>.</p>
         <button class="popup-skip" id="popup-skip">No thanks</button>
       </div>
+
     </div>
   </div>
 
@@ -434,11 +299,12 @@
   <div class="popup-overlay" id="phone-popup-overlay" role="dialog" aria-modal="true" aria-label="Text updates offer">
     <div class="popup-card">
       <button class="popup-close" id="phone-popup-close" aria-label="Close">&#x2715;</button>
+
       <div class="popup-content">
-        <img src="./images/logov3-cropped.png" alt="pilr" class="popup-logo" />
+        <img src="./images/logov3.png" alt="Pilr" class="popup-logo" />
         <div class="popup-eyebrow">Exclusive Launch Offer</div>
         <h2 class="popup-headline">Emails get<br><strong>buried.</strong></h2>
-        <p class="popup-sub">Add your number to be first to know when we launch — plus get a <strong>free custom stainless steel scooper</strong> with your first order.</p>
+        <p class="popup-sub">Add your number to be first to know when we launch — plus get a <strong>FREE custom stainless steel scooper</strong> with your first order.</p>
         <form class="popup-form" id="phone-popup-form">
           <div class="phone-input-wrapper">
             <select class="phone-country-select" aria-label="Country code">
@@ -456,13 +322,14 @@
           </div>
           <button type="submit" class="btn">Text me</button>
         </form>
-        <p class="signup-legal signup-legal--small">Agree to recurring marketing texts from pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
+        <p class="signup-legal signup-legal--small">Agree to recurring marketing texts from Pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
         <button class="popup-skip" id="phone-popup-skip">No thanks</button>
       </div>
+
     </div>
   </div>
 
-  <script src="./pilr-cart.js"></script>
+  <script type="module" src="/src/main.js"></script>
   <script type="module" src="/src/shopify.js"></script>
 
   <script>
@@ -478,60 +345,9 @@
     overlay.addEventListener('click', closeMenu)
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
 
-    // ── Shop All dropdown ──────────────────────────────────────────
-    // The gap between the "SHOP ALL" text and the dropdown panel is
-    // the nav's bottom padding (~28px). We keep the dropdown open
-    // by treating the *entire nav bar* as the safe zone via mousemove,
-    // so the cursor can travel from the text through the padding to
-    // the panel without triggering a close.
-    const navEl        = document.querySelector('nav.nav')
-    const shopAllLi    = document.querySelector('.nav-has-dropdown')
-    const shopDropdown = document.querySelector('.nav-dropdown')
-    const dimOverlay   = document.getElementById('nav-dim-overlay')
-    let dropOpen = false
-    let dropCloseTimer = null
-
-    function openDrop() {
-      clearTimeout(dropCloseTimer)
-      dropCloseTimer = null
-      shopAllLi.classList.add('dropdown-active')
-      dimOverlay.classList.add('active')
-      dropOpen = true
-    }
-    function closeDrop() {
-      clearTimeout(dropCloseTimer)
-      dropCloseTimer = null
-      shopAllLi.classList.remove('dropdown-active')
-      dimOverlay.classList.remove('active')
-      dropOpen = false
-    }
-
-    dimOverlay.addEventListener('click', closeDrop)
-    function inZone(x, y) {
-      const li = shopAllLi.getBoundingClientRect()
-      const dd = shopDropdown.getBoundingClientRect()
-      // Over the "Shop All" trigger (the <li> itself)
-      if (x >= li.left && x <= li.right && y >= li.top && y <= li.bottom) return true
-      // Over the dropdown panel (spans full width)
-      if (y >= dd.top && y <= dd.bottom) return true
-      // In the gap between the li bottom and the dropdown top (allow any x
-      // so diagonal cursor movement toward the dropdown stays open)
-      if (y > li.bottom && y < dd.top) return true
-      return false
-    }
-
-    shopAllLi.addEventListener('mouseenter', openDrop)
-
-    document.addEventListener('mousemove', (e) => {
-      if (!dropOpen) return
-      if (inZone(e.clientX, e.clientY)) {
-        clearTimeout(dropCloseTimer)
-        dropCloseTimer = null
-      } else if (!dropCloseTimer) {
-        dropCloseTimer = setTimeout(closeDrop, 150)
-      }
-    })
-
+    // ── Consent logging helper ─────────────────────────────────────
+    // Stores consent records to localStorage. IP is not available
+    // from the frontend — it is not logged here.
     function logConsent(email, source) {
       const record = {
         email,
@@ -547,14 +363,57 @@
       localStorage.setItem('pilr_consent_log', JSON.stringify(existing))
     }
 
-    // ── Footer email form ───────────────────────────────────────────
-    document.getElementById('footer-email-form').addEventListener('submit', async e => {
+    // ── Waitlist form ──────────────────────────────────────────────
+    const waitlistStep = document.getElementById('waitlist-step')
+    const waitlistForm = document.getElementById('waitlist-form')
+
+    function showWaitlistPhoneStep() {
+      waitlistStep.innerHTML = `
+        <p class="waitlist-phone-sub">Add your number to be first to know when we launch — plus get a <strong>FREE custom stainless steel scooper</strong> with your first order.</p>
+        <form class="contact-form contact-form--phone" id="waitlist-phone-form">
+          <div class="phone-input-wrapper">
+            <select class="phone-country-select" aria-label="Country code">
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+39">+39</option>
+              <option value="+33">+33</option>
+              <option value="+49">+49</option>
+              <option value="+34">+34</option>
+              <option value="+61">+61</option>
+              <option value="+52">+52</option>
+              <option value="+55">+55</option>
+            </select>
+            <input type="tel" placeholder="000-000-0000" />
+          </div>
+          <button type="submit" class="btn">Text me</button>
+        </form>
+        <p class="signup-legal signup-legal--small">Agree to recurring marketing texts from Pilr by clicking above. Msg/data rates may apply. Reply STOP to cancel. <a href="./privacy-policy.html" target="_blank">View Terms &amp; Privacy</a>.</p>
+      `
+      document.getElementById('waitlist-phone-form').addEventListener('submit', async e => {
+        e.preventDefault()
+        const countryCode = e.target.querySelector('select').value
+        const rawNumber   = e.target.querySelector('input[type="tel"]').value.trim()
+        const phone       = countryCode + rawNumber
+        const btn         = e.target.querySelector('button[type="submit"]')
+        btn.disabled = true
+        btn.textContent = 'Saving…'
+        logConsent(phone, 'homepage_waitlist_phone')
+        try {
+          await window.subscribePhoneToKlaviyo(phone)
+        } catch (err) {
+          console.warn('[Klaviyo] phone subscribe error:', err)
+        }
+        waitlistStep.innerHTML = '<p class="form-success">You\'re on the list. Talk soon.</p>'
+      })
+    }
+
+    waitlistForm.addEventListener('submit', async e => {
       e.preventDefault()
-      const email = e.target.querySelector('input[type="email"]').value.trim()
-      const btn   = e.target.querySelector('button[type="submit"]')
+      const email  = waitlistForm.querySelector('input[type="email"]').value.trim()
+      const btn    = waitlistForm.querySelector('button[type="submit"]')
       btn.disabled = true
-      btn.textContent = 'Done!'
-      logConsent(email, 'footer_newsletter')
+      btn.textContent = 'Saving…'
+      logConsent(email, 'homepage_waitlist')
       try {
         await Promise.all([
           window.subscribeEmail(email),
@@ -563,10 +422,14 @@
       } catch (err) {
         console.warn('[Shopify] subscribe error:', err)
       }
+      window._learnq = window._learnq || [];
+      window._learnq.push(['identify', { '$email': email }]);
+      showWaitlistPhoneStep()
     })
 
-    // ── Discount popup ──────────────────────────────────────────────
+    // ── Discount popup ─────────────────────────────────────────────
     ;(function() {
+      if (sessionStorage.getItem('popup_seen')) return
       const popupOverlay  = document.getElementById('popup-overlay')
       const popupClose    = document.getElementById('popup-close')
       const popupSkip     = document.getElementById('popup-skip')
@@ -577,19 +440,13 @@
       }
       function hidePopup() {
         popupOverlay.classList.remove('visible')
-        if (typeof schedulePhonePopup === 'function') schedulePhonePopup()
+        schedulePhonePopup()
       }
 
-      // Always attach close handlers so X and No thanks work even when
-      // the popup is opened via the "Become A Member" button
+      setTimeout(showPopup, 3000)
       popupClose.addEventListener('click', hidePopup)
       popupSkip.addEventListener('click', hidePopup)
       popupOverlay.addEventListener('click', e => { if (e.target === popupOverlay) hidePopup() })
-
-      // Only auto-show if not already seen this session
-      if (!sessionStorage.getItem('popup_seen')) {
-        setTimeout(showPopup, 3000)
-      }
 
       popupForm.addEventListener('submit', async e => {
         e.preventDefault()
@@ -608,12 +465,13 @@
         }
         window._learnq = window._learnq || [];
         window._learnq.push(['identify', { '$email': email }]);
+        // Transition directly to phone popup
         popupOverlay.classList.remove('visible')
         showPhonePopup()
       })
     })()
 
-    // ── Phone popup ─────────────────────────────────────────────────
+    // ── Phone popup ────────────────────────────────────────────────
     const phoneOverlay = document.getElementById('phone-popup-overlay')
     const phoneClose   = document.getElementById('phone-popup-close')
     const phoneSkip    = document.getElementById('phone-popup-skip')
@@ -633,24 +491,24 @@
     phoneOverlay.addEventListener('click', e => { if (e.target === phoneOverlay) hidePhonePopup() })
 
     phoneForm.addEventListener('submit', async e => {
-      e.preventDefault()
-      const countryCode = phoneForm.querySelector('select').value
-      const rawNumber   = phoneForm.querySelector('input[type="tel"]').value.trim()
-      const phone       = countryCode + rawNumber
-      const btn         = phoneForm.querySelector('button[type="submit"]')
-      btn.disabled = true
-      btn.textContent = 'Saving…'
-      logConsent(phone, 'phone_popup')
-      try {
-        await window.subscribePhoneToKlaviyo(phone)
-      } catch (err) {
-        console.warn('[Klaviyo] phone subscribe error:', err)
-      }
-      phoneForm.innerHTML = '<p class="popup-thanks">You\'re on the list. Talk soon.</p>'
-      setTimeout(hidePhonePopup, 2200)
-    })
+        e.preventDefault()
+        const countryCode = phoneForm.querySelector('select').value
+        const rawNumber   = phoneForm.querySelector('input[type="tel"]').value.trim()
+        const phone       = countryCode + rawNumber
+        const btn         = phoneForm.querySelector('button[type="submit"]')
+        btn.disabled = true
+        btn.textContent = 'Saving…'
+        logConsent(phone, 'phone_popup')
+        try {
+          await window.subscribePhoneToKlaviyo(phone)
+        } catch (err) {
+          console.warn('[Klaviyo] phone subscribe error:', err)
+        }
+        phoneForm.innerHTML = '<p class="popup-thanks">You\'re on the list. Talk soon.</p>'
+        setTimeout(hidePhonePopup, 2200)
+      })
 
-    // ── Hide nav on scroll down, reveal on scroll up ─────────────
+    // ── Hide nav on scroll down, reveal on scroll up ───────────────
     const nav = document.querySelector('.nav')
     let lastY = 0
     window.addEventListener('scroll', () => {
@@ -672,34 +530,6 @@
       Brand: 'PILR',
       Categories: ['Supplements', 'Travel', 'Fitness'],
     }]);
-  </script>
-  <script>
-    document.querySelectorAll('.why-accordion-trigger:not(.why-accordion-trigger--static)').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-        btn.nextElementSibling.classList.toggle('is-open', !expanded);
-      });
-    });
-  </script>
-  <script>
-    (function() {
-      var track = document.getElementById('blog-carousel');
-      var prev = document.querySelector('.blog-carousel-arrow--prev');
-      var next = document.querySelector('.blog-carousel-arrow--next');
-      if (!track || !prev || !next) return;
-      function step() {
-        var card = track.querySelector('.blog-card');
-        var gap = parseFloat(getComputedStyle(track).gap) || 0;
-        return card ? card.getBoundingClientRect().width + gap : 300;
-      }
-      prev.addEventListener('click', function() {
-        track.scrollBy({ left: -step(), behavior: 'smooth' });
-      });
-      next.addEventListener('click', function() {
-        track.scrollBy({ left: step(), behavior: 'smooth' });
-      });
-    })();
   </script>
 </body>
 </html>

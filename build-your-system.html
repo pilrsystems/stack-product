@@ -18,106 +18,49 @@
   </script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
 </head>
-<body class="system-page">
+<body class="builder-page system-page">
 
   <!-- NAV -->
+  <div class="nav-overlay" id="nav-overlay"></div>
   <nav class="nav">
-    <a href="/" class="nav-logo">
-      <img src="images/logov3-cropped.png" alt="pilr" class="nav-logo-img">
-    </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="nav-links">
-        <li class="nav-has-dropdown">
-          <a href="./catalog.html">
-            Shop
-            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>
-          </a>
-          <div class="nav-dropdown">
-            <div class="nav-dropdown-inner">
-              <div class="nav-drop-grid">
-                <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System.png" alt="Build Your System"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Build Your System</span>
-                    <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
-                  </div>
-                </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Classic Stack"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Classic Stack</span>
-                    <span class="nav-drop-desc">Powders, big pills, little pills. One system.</span>
-                  </div>
-                </a>
-                <a href="./catalog.html#section-single-pods" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Render.png" alt="Single Pods"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">Single Pods</span>
-                    <span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span>
-                  </div>
-                </a>
-                <a href="./catalog.html" class="nav-drop-card">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Full Render.png" alt="All Products"></div>
-                  <div class="nav-drop-text">
-                    <span class="nav-drop-title">All Products</span>
-                    <span class="nav-drop-desc">Browse the complete pilr collection</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="./why-pilr.html">Why pilr</a></li>
-        <li><a href="./about.html">Our story</a></li>
-        <li><a href="./faq.html">FAQ</a></li>
-      </ul>
-      <a href="./cart.html" class="nav-cart-btn" aria-label="Cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      </a>
-      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <a href="./index.html" class="nav-logo"><img src="images/logov3.png" alt="Pilr" class="nav-logo-img"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./build-your-system.html">Build Your System</a></li>
+      <li><a href="./early-access.html" class="nav-cta-filled">Get Early Access</a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
-  <div class="nav-dim-overlay" id="nav-dim-overlay"></div>
 
-  <!-- BUILD PANEL / CANVAS / EDIT PANEL — three static columns. Build
-       Your System and Edit Your System are always both visible (left
-       and right), so the 3D render stays centered between them
-       rather than sharing a single sidebar as a collapsible pair. -->
+  <!-- MAIN LAYOUT -->
   <div class="system-layout" id="system-layout">
 
-    <!-- LEFT: Build Your System -->
-    <aside class="system-sidebar system-sidebar--left">
-      <div class="sys-panel" id="system-selector">
-        <div class="sys-panel-header">
-          <h1 class="sys-panel-header-title">Build Your System</h1>
+    <!-- LEFT: Supplement Selector -->
+    <aside class="system-selector" id="system-selector">
+      <div class="system-selector-inner">
+        <div class="section-eyebrow">Customize</div>
+        <h2 class="system-selector-title">What do you take?</h2>
+        <p class="system-selector-sub">Select your daily supplements — we'll build your system.</p>
+
+        <div class="supp-section">
+          <div class="supp-section-label">Powders</div>
+          <div class="supp-chips" id="powders-row"></div>
         </div>
-        <div class="sys-panel-body">
-          <p class="bas-desc">Pick your daily supplements below. Select as many or as few as you'd like, then hit Build My System.</p>
 
-          <p class="bas-section-q">What do you take?</p>
-
-          <div class="bas-category-block">
-            <div class="bas-cat-label">POWDERS</div>
-            <div class="supp-chips" id="powders-row"></div>
-          </div>
-
-          <div class="bas-category-block">
-            <div class="bas-cat-label">LARGE CAPSULES &amp; SOFTGELS</div>
-            <div class="supp-chips" id="hybrid-row"></div>
-          </div>
-
-          <div class="bas-category-block">
-            <div class="bas-cat-label">PILLS &amp; SMALL CAPSULES</div>
-            <div class="supp-chips" id="pills-row"></div>
-          </div>
-
-          <div class="bas-footer-row">
-            <div class="supp-selected-count" id="selected-count"></div>
-            <button class="bas-cta-btn" id="bas-build-btn">BUILD MY SYSTEM</button>
-          </div>
+        <div class="supp-section">
+          <div class="supp-section-label">Large Capsules &amp; Softgels</div>
+          <div class="supp-chips" id="hybrid-row"></div>
         </div>
+
+        <div class="supp-section">
+          <div class="supp-section-label">Pills &amp; Small Capsules</div>
+          <div class="supp-chips" id="pills-row"></div>
+        </div>
+
+        <div class="supp-selected-count" id="selected-count"></div>
       </div>
     </aside>
 
@@ -136,235 +79,49 @@
       </button>
 
       <div id="system-labels" class="blabel-container"></div>
-
-      <!-- Pod detail panel (overlays canvas on pod click) -->
-      <div class="pod-detail-panel" id="pod-detail-panel">
-        <div class="pod-detail-name" id="pod-detail-name"></div>
-        <div class="pod-detail-desc" id="pod-detail-desc"></div>
-        <ul class="pod-detail-specs" id="pod-detail-specs"></ul>
-        <div class="pod-detail-examples-label">common supplements</div>
-        <div class="pod-detail-examples" id="pod-detail-examples"></div>
-      </div>
     </div>
 
-    <!-- RIGHT: Edit Your System -->
-    <aside class="system-sidebar system-sidebar--right">
-      <div class="sys-panel" id="sys-panel-edit">
-        <div class="sys-panel-header">
-          <h2 class="sys-panel-header-title">Edit Your System</h2>
+    <!-- Pod detail panel (overlays selector on pod click) -->
+    <div class="pod-detail-panel" id="pod-detail-panel">
+      <div class="pod-detail-name" id="pod-detail-name"></div>
+      <div class="pod-detail-desc" id="pod-detail-desc"></div>
+      <ul class="pod-detail-specs" id="pod-detail-specs"></ul>
+      <div class="pod-detail-examples-label">Common supplements</div>
+      <div class="pod-detail-examples" id="pod-detail-examples"></div>
+    </div>
+
+    <!-- RIGHT: System Summary -->
+    <aside class="system-summary">
+      <div class="system-summary-inner">
+        <div class="section-eyebrow" style="margin:0 0 1.25rem">Your System</div>
+        <div id="system-summary-content" class="system-summary-content">
+          <p class="system-empty-state">Select your supplements<br>to build your system.</p>
         </div>
-        <div class="sys-panel-body">
-          <p class="sys-edit-desc">Add, remove, and edit the pods in your system below.</p>
-          <div id="system-summary-content" class="system-summary-content">
-            <p class="system-empty-state">Select your supplements<br>to build your system.</p>
-          </div>
-          <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Add to Cart</button>
-        </div>
+        <button type="button" class="btn system-cta" id="early-access-btn">Get Early Access</button>
       </div>
     </aside>
 
   </div>
 
-  <!-- PILR SYSTEM SECTION -->
-  <section class="pilr-system-section" style="margin-top:0">
-    <p class="pilr-system-eyebrow">The pilr system</p>
-    <p class="pilr-system-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-Compliant</p>
-    <div class="pilr-system-pods">
-      <div><div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img" src="images/lifestyle_section/Powder Pod Render.png" alt="Powder Pod" /></div><p class="pilr-system-pod-name">Powder Pod</p><p class="pilr-system-pod-desc">Powder-sealed tight</p></div>
-      <div><div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img pilr-system-pod-img--lower" src="images/lifestyle_section/Hybrid Pod.png" alt="Big Pill Pod" /></div><p class="pilr-system-pod-name">Big Pill Pod</p><p class="pilr-system-pod-desc">For medium &amp; large sized capsules</p></div>
-      <div><div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img pilr-system-pod-img--lower-pill" src="images/lifestyle_section/Pill Pod.png" alt="Small Pill Pod" /></div><p class="pilr-system-pod-name">Small Pill Pod</p><p class="pilr-system-pod-desc">Built for smaller capsules</p></div>
-    </div>
-  </section>
-
-  <!-- BUILT TO HOLD YOUR ROUTINE -->
-  <section class="built-routine-section">
-    <div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="pilr lifestyle" /></div>
-    <div class="built-routine-content">
-      <h2 class="built-routine-title">Built to hold your routine</h2>
-      <p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p>
-      <div class="built-routine-table">
-        <div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div>
-        <div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div>
-        <div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div>
-        <div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div>
-        <div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div>
-      </div>
-      <a href="./size-guide.html" class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    </div>
-  </section>
-
-  <!-- STAY CONSISTENT, ANYWHERE -->
-    <!-- COMPARISON -->
-  <section class="comparison-section">
-    <div class="comparison-table">
-      <div class="comparison-cell comparison-header"></div>
-      <div class="comparison-cell comparison-header comparison-header--pilr"><img src="images/logov3-cropped.png" alt="pilr" class="comparison-logo" /></div>
-      <div class="comparison-cell comparison-header">7-day pill organizers</div>
-      <div class="comparison-cell comparison-header">Ziploc bags</div>
-
-      <div class="comparison-cell comparison-label">TSA-compliant</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-
-      <div class="comparison-cell comparison-label">Leakproof seal</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-
-      <div class="comparison-cell comparison-label">BPA-free</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-
-      <div class="comparison-cell comparison-label">Capsules &amp; powders, one system</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-
-      <div class="comparison-cell comparison-label">Built to last</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-
-      <div class="comparison-cell comparison-label">Space-efficient</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-
-      <div class="comparison-cell comparison-label">Temperature resistant</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-    <!-- FAQ -->
-  <section class="wp-faq">
-    <div class="wp-faq-inner">
-      <div class="wp-faq-copy">
-        <p class="wp-faq-eyebrow">FAQ</p>
-        <h2 class="wp-faq-headline">Questions</h2>
-      </div>
-      <div class="wp-faq-list" id="wp-faq-list">
-        <div class="wp-faq-item">
-          <button class="wp-faq-question" type="button">
-            <span>How much powder does the Powder Pod hold?</span>
-            <span class="wp-faq-icon">+</span>
-          </button>
-          <div class="wp-faq-answer">
-            <p>The Powder Pod is sized to hold about a week's supply of most powders — greens, creatine, and collagen. For protein powder, you may need multiple pods.</p>
-          </div>
-        </div>
-        <div class="wp-faq-item">
-          <button class="wp-faq-question" type="button">
-            <span>Can I customize which pods come in my stack?</span>
-            <span class="wp-faq-icon">+</span>
-          </button>
-          <div class="wp-faq-answer">
-            <p>Yes — head to Build Your System to mix and match individual pod types and quantities for a fully custom configuration.</p>
-          </div>
-        </div>
-        <div class="wp-faq-item">
-          <button class="wp-faq-question" type="button">
-            <span>How do I clean my pilr pods?</span>
-            <span class="wp-faq-icon">+</span>
-          </button>
-          <div class="wp-faq-answer">
-            <p>All pilr pods are dishwasher-safe on the top rack. For a deeper clean, unscrew the lid and rinse with warm water and a drop of dish soap.</p>
-          </div>
-        </div>
-        <div class="wp-faq-item">
-          <button class="wp-faq-question" type="button">
-            <span>Can I bring pilr through airport security?</span>
-            <span class="wp-faq-icon">+</span>
-          </button>
-          <div class="wp-faq-answer">
-            <p>Yes, pilr pods are TSA-compliant. Powders may be subject to additional screening for quantities over 12oz.</p>
-          </div>
-        </div>
-        <div class="wp-faq-item">
-          <button class="wp-faq-question" type="button">
-            <span>How long does shipping take?</span>
-            <span class="wp-faq-icon">+</span>
-          </button>
-          <div class="wp-faq-answer">
-            <p>Standard shipping takes 3–5 business days. Expedited options are available at checkout.</p>
-          </div>
-        </div>
-        <div class="wp-faq-item">
-          <button class="wp-faq-question" type="button">
-            <span>Can I buy replacement pods individually?</span>
-            <span class="wp-faq-icon">+</span>
-          </button>
-          <div class="wp-faq-answer">
-            <p>Yes — all individual pods are available in the Single Pods section of the shop.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER TOP -->
-  <div class="footer-top"><div class="footer-top-inner">
-    <div class="footer-newsletter"><h3>Never miss a day</h3><p>Receive special offers and first look at new products.</p><form class="footer-email-form" id="bys-footer-email-form"><div class="footer-email-row"><input type="email" placeholder="Email address" required /><button type="submit" class="footer-email-btn" aria-label="Subscribe"><svg width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#3d4f5c"/><path d="M13 10l6 6-6 6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></form><p class="footer-legal">By submitting your email, you agree to the pilr privacy policy and are opting in to marketing communications.</p></div>
-    <div class="footer-links-grid">
-      <div class="footer-col"><h4>Shop</h4><ul><li><a href="./catalog.html">All Products</a></li><li><a href="./catalog.html#section-single-pods">Single Pods</a></li><li><a href="./build-your-system.html">Build Your System</a></li><li><a href="./classic-stack.html">Classic Stack</a></li><li><a href="./catalog.html#section-accessories">Accessories</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="./about.html">Our story</a></li><li><a href="#">News</a></li><li><a href="mailto:support@pilrsystems.com">Contact us</a></li><li><a href="./why-pilr.html">Why pilr</a></li><li><a href="#">Stories</a></li></ul></div>
-      <div class="footer-col"><h4>Support</h4><ul><li><a href="./faq.html">FAQ</a></li>
-    </div>
-  </div></div>
-
-  <!-- SITE FOOTER -->
-  <footer class="site-footer">
-    <div class="site-footer-social-row"><div class="site-footer-social-inner"><div class="footer-social">
-      <a href="https://www.instagram.com/pilrofficial/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
-      <a href="https://www.tiktok.com/@pilrofficial" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg></a>
-      <a href="https://www.youtube.com/@pilrofficial" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon fill="#4d6070" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
-      <a href="https://www.linkedin.com/company/pilrsystems" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.18-7.06-5.96-8.72-2.91l.04-1.68z"/></svg></a>
-    </div></div></div>
-    <div class="site-footer-bottom"><div class="site-footer-inner"><span class="site-footer-copy">© pilr 2026.</span><div class="footer-payment-icons"><img src="images/lifestyle_section/Visa ss.png" alt="Visa" class="payment-icon"><img src="images/lifestyle_section/Amex ss.png" alt="Amex" class="payment-icon"><img src="images/lifestyle_section/Apple Pay ss.png" alt="Apple Pay" class="payment-icon"><img src="images/lifestyle_section/PayPal ss.png" alt="PayPal" class="payment-icon"><img src="images/lifestyle_section/Shop ss.png" alt="Shop Pay" class="payment-icon"><img src="images/lifestyle_section/Discover ss.png" alt="Discover" class="payment-icon"></div></div></div>
-  </footer>
-
   <script>
-    // Shop dropdown
-    const shopAllLi    = document.querySelector('.nav-has-dropdown')
-    const shopDropdown = document.querySelector('.nav-dropdown')
-    const dimOverlay   = document.getElementById('nav-dim-overlay')
-    let dropOpen = false, dropCloseTimer = null
-    function openDrop()  { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.add('dropdown-active'); dimOverlay.classList.add('active'); dropOpen = true }
-    function closeDrop() { clearTimeout(dropCloseTimer); dropCloseTimer = null; shopAllLi.classList.remove('dropdown-active'); dimOverlay.classList.remove('active'); dropOpen = false }
-    dimOverlay.addEventListener('click', closeDrop)
-    function inZone(x, y) {
-      const li = shopAllLi.getBoundingClientRect(), dd = shopDropdown.getBoundingClientRect()
-      if (x >= li.left && x <= li.right && y >= li.top && y <= li.bottom) return true
-      if (y >= dd.top && y <= dd.bottom) return true
-      if (y > li.bottom && y < dd.top) return true
-      return false
-    }
-    shopAllLi.addEventListener('mouseenter', openDrop)
-    document.addEventListener('mousemove', e => {
-      if (!dropOpen) return
-      if (inZone(e.clientX, e.clientY)) { clearTimeout(dropCloseTimer); dropCloseTimer = null }
-      else if (!dropCloseTimer) { dropCloseTimer = setTimeout(closeDrop, 150) }
-    })
-
     const hamburger = document.getElementById('nav-hamburger')
     const navLinks  = document.getElementById('nav-links')
+    const overlay   = document.getElementById('nav-overlay')
     function closeMenu() {
       hamburger.classList.remove('open')
       navLinks.classList.remove('open')
+      overlay.classList.remove('open')
       document.body.style.overflow = ''
     }
     hamburger.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open')
       hamburger.classList.toggle('open', open)
+      overlay.classList.toggle('open', open)
       document.body.style.overflow = open ? 'hidden' : ''
     })
+    overlay.addEventListener('click', closeMenu)
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu))
   </script>
-  <script src="./pilr-cart.js"></script>
   <script type="module" src="/src/system-builder.js"></script>
   <script type="module" src="/src/shopify.js"></script>
 
@@ -373,9 +130,9 @@
     <div class="popup-card">
       <button class="popup-close" id="bys-popup-close" aria-label="Close">&#x2715;</button>
       <div class="popup-content">
-        <img src="./images/logov3-cropped.png" alt="pilr" class="popup-logo" />
+        <img src="./images/logov3.png" alt="Pilr" class="popup-logo" />
         <div class="popup-eyebrow">Early Access Offer</div>
-        <h2 class="popup-headline">You've got<br><strong>10% off</strong></h2>
+        <h2 class="popup-headline">You've Got<br><strong>10% Off</strong></h2>
         <p class="popup-sub">Sign up to get early access and 10% off your first order.</p>
         <form class="popup-form" id="bys-popup-form">
           <input type="email" placeholder="your@email.com" required />
@@ -395,48 +152,7 @@
       document.getElementById('bys-popup-overlay').classList.remove('visible')
     }
 
-    // Only the summary "Get Early Access" button triggers the popup
-    document.querySelectorAll('.js-early-access').forEach(btn => btn.addEventListener('click', showBysPopup))
-
-    // ── Build Your System / Edit Your System panels ──────────────
-    // Both panels are always visible now (left/right of the centered
-    // canvas), so there's no open/collapse state to manage — just a
-    // bit of scroll-into-view convenience for the narrower viewports
-    // where the two panels stack above/below the canvas instead of
-    // sitting beside it.
-    const buildPanel = document.getElementById('system-selector')
-    const editPanel  = document.getElementById('sys-panel-edit')
-
-    document.getElementById('bas-build-btn').addEventListener('click', function() {
-      const selectedChips = [...document.querySelectorAll('.supp-chip.selected')]
-      if (selectedChips.length === 0) return
-      editPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    })
-
-    // "Add another supplement +" inside the Edit panel (wired by
-    // system-builder.js via window.showBysSelector).
-    window.showBysSelector = function() {
-      buildPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    }
-
-    document.getElementById('bys-footer-email-form').addEventListener('submit', async e => {
-      e.preventDefault()
-      const email = e.target.querySelector('input[type="email"]').value.trim()
-      const btn   = e.target.querySelector('button[type="submit"]')
-      btn.disabled = true
-      try {
-        await Promise.all([
-          window.subscribeEmail?.(email),
-          window.subscribeEmailToKlaviyo?.(email),
-        ])
-        window._learnq = window._learnq || []
-        window._learnq.push(['identify', { '$email': email }])
-      } catch (err) {
-        console.warn('[Footer] subscribe error:', err)
-      }
-      e.target.innerHTML = '<p class="form-success" style="color:#fff;margin:0">You\'re on the list. Talk soon.</p>'
-    })
-
+    document.getElementById('early-access-btn').addEventListener('click', showBysPopup)
     document.getElementById('bys-popup-close').addEventListener('click', hideBysPopup)
     document.getElementById('bys-popup-skip').addEventListener('click', hideBysPopup)
     document.getElementById('bys-popup-overlay').addEventListener('click', e => {
@@ -464,17 +180,5 @@
     })
   </script>
 
-  <script>
-    (function() {
-      var items = document.querySelectorAll('#wp-faq-list .wp-faq-item')
-      if (!items.length) return
-      items.forEach(function(item) {
-        var btn = item.querySelector('.wp-faq-question')
-        btn.addEventListener('click', function() {
-          item.classList.toggle('is-active')
-        })
-      })
-    })()
-  </script>
 </body>
 </html>
