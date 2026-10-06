@@ -520,7 +520,7 @@
       const priceHtml = isFreePerk
         ? `<span class="cart-item-price-strike">${formatMoney(listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
         : hasDiscount
-          ? `${formatMoney(lineTotal)} <span class="cart-item-price-strike">${formatMoney(lineListTotal)}</span>`
+          ? `<span class="cart-item-price-strike">${formatMoney(lineListTotal)}</span> ${formatMoney(lineTotal)}`
           : formatMoney(lineTotal)
       const href = PRODUCT_PAGE_BY_ID[item.id]
       const el = document.createElement('div')

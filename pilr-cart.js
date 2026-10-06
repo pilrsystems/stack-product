@@ -21,6 +21,37 @@
     image: 'images/lifestyle_section/Scooper.png',
   }
 
+  // Same bundle-discount curve as each pod product page's own "Add a Pod"
+  // widget (pill/hybrid/powder-pod.html each keep a local copy of this for
+  // their own live preview before anything's in the cart). Mirrored here so
+  // the cart itself is the authority on what a pod actually costs once it's
+  // really in there — see repriceStackingPods below.
+  const STACKING_POD_BASE_PRICE = { 'pill-pod': 24, 'hybrid-pod': 28, 'powder-pod': 32 }
+  const STACKING_POD_DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]
+  function stackingPodDiscountForQty(qty) {
+    return STACKING_POD_DISCOUNT_BY_QTY[Math.min(qty, STACKING_POD_DISCOUNT_BY_QTY.length - 1)]
+  }
+
+  // Recomputes price/listPrice for every pill-pod/hybrid-pod/powder-pod line
+  // based on their COMBINED quantity across the whole cart, then re-saves.
+  // Called after every add/quantity change so the discount keeps stacking
+  // correctly no matter where a pod's count last changed — a product page's
+  // Add a Pod panel, or the cart's own qty stepper — rather than only ever
+  // reflecting whatever was true the moment a line was first added.
+  function repriceStackingPods(cart) {
+    const totalQty = cart.items
+      .filter(i => STACKING_POD_BASE_PRICE[i.id] != null)
+      .reduce((sum, i) => sum + i.quantity, 0)
+    const discount = stackingPodDiscountForQty(totalQty)
+    cart.items.forEach(i => {
+      const basePrice = STACKING_POD_BASE_PRICE[i.id]
+      if (basePrice == null) return
+      i.price = Math.round(basePrice * (1 - discount) * 100) / 100
+      i.listPrice = basePrice
+    })
+    return cart
+  }
+
   function getCart() {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { items: [] }
@@ -49,6 +80,7 @@
     if (product.id === 'classic-stack' && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
       cart.items.push({ ...FREE_SCOOPER_PRODUCT, quantity: 1 })
     }
+    repriceStackingPods(cart)
     saveCart(cart)
     return cart
   }
@@ -65,6 +97,7 @@
       const item = cart.items.find(i => i.id === id)
       if (item) item.quantity = quantity
     }
+    repriceStackingPods(cart)
     saveCart(cart)
     return cart
   }
