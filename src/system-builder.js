@@ -134,7 +134,7 @@ const CAMERA_REST_TARGET = new THREE.Vector3(0, 0, 0)
 // Eased back from 0.88 toward 1 (further from the pods = smaller on
 // screen) after the three-column layout narrowed the canvas and made
 // that same zoom level read as too large.
-const ZOOM = 0.97
+const ZOOM = 1.06
 function idealCameraZ(podCount) {
   if (podCount <= 1) return 4.7 * ZOOM
   if (podCount === 2) return 5.0 * ZOOM
