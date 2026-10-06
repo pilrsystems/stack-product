@@ -115,6 +115,33 @@
     #product-info-inner .product-feature-list { gap: 0.2rem; margin-top: -0.4rem; margin-bottom: 0.4rem; padding-left: 0; }
     #product-info-inner .product-feature-list li { color: #7a8a94; font-size: 0.98rem; font-weight: 400; }
 
+    /* Size guide — same capacity-row list, note, and "Full Size Guide"
+       link as the individual pod pages, instead of the old plain
+       .bc-spec-row list with no note/link. */
+    #product-info-inner .bc-capacity-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94; line-height: 1.8; padding: 0.4rem 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-capacity-row span:first-child { color: #3d4f5c; }
+    #product-info-inner .bc-capacity-row + .bc-capacity-row { border-top: 1px solid rgba(66,85,99,0.15); }
+    #product-info-inner .bc-capacity-note {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+      font-size: 0.6rem; color: #9aa7ae; margin: 0 0 0.6rem; padding-top: 0.4rem;
+      border-top: 1px solid rgba(66,85,99,0.15);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    #product-info-inner .bc-capacity-note-unit {
+      flex-shrink: 0; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #7a8a94;
+    }
+    /* The Size guide panel (6 rows + note + link) is taller than the
+       shared accordion's default 220px open height. */
+    #product-info-inner .product-info-sections .product-accordion:nth-child(2) .product-accordion-panel.is-open {
+      max-height: 560px; margin-top: -0.4rem;
+    }
+
     /* Title → ratings sits closer than the parent's default 1rem flex
        gap, matching the tighter spacing used on the individual pod
        product pages; ratings → finish and everything below keep the
@@ -129,17 +156,13 @@
        first product image's radius. */
     #product-info-inner > .product-btn-add { flex: none; border-radius: var(--radius); }
 
-    /* Zone 10 — accordion body copy, not italic (the existing
-       .product-accordion-sub is italic and meant for a one-line sub-
-       caption, so it isn't reused directly) and label/value rows for
-       Specs and Size guide, which have no existing component. Both
-       copy the exact font-size/color already used for accordion
-       secondary text (0.82rem / #7a8a94). */
-    #product-info-inner .bc-accordion-text {
-      font-size: 0.82rem; color: #7a8a94; line-height: 1.6; margin: 0 0 0.6rem;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    #product-info-inner .bc-accordion-text:last-child { margin-bottom: 0; }
+    /* Zone 10 — accordion body copy: label/value rows for Specs, which
+       have no existing component. Copies the exact font-size/color
+       already used for accordion secondary text (0.82rem / #7a8a94).
+       (.bc-accordion-text, the intro blurb this recipe was originally
+       shared with, was dropped from the Size guide panel when that
+       switched to the capacity-row layout above, so only Specs uses
+       this now.) */
     #product-info-inner .bc-spec-row {
       display: flex; justify-content: space-between; gap: 1rem;
       font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
@@ -409,13 +432,14 @@
             <span class="product-accordion-icon">+</span>
           </button>
           <div class="product-accordion-panel">
-            <p class="bc-accordion-text">What each pod actually holds, from our capacity testing:</p>
-            <div class="bc-spec-row"><span>Creatine</span><span>70&ndash;75 g</span></div>
-            <div class="bc-spec-row"><span>Collagen</span><span>~60 g</span></div>
-            <div class="bc-spec-row"><span>Fish oil</span><span>17 capsules</span></div>
-            <div class="bc-spec-row"><span>Magnesium</span><span>26 capsules</span></div>
-            <div class="bc-spec-row"><span>CoQ10</span><span>10 capsules</span></div>
-            <div class="bc-spec-row"><span>Vitamin D3</span><span>35 capsules</span></div>
+            <div class="bc-capacity-row"><span>Creatine</span><span>~XX servings</span></div>
+            <div class="bc-capacity-row"><span>Greens</span><span>~XX servings</span></div>
+            <div class="bc-capacity-row"><span>Fish oil</span><span>~XX pills</span></div>
+            <div class="bc-capacity-row"><span>Magnesium glycinate</span><span>~XX pills</span></div>
+            <div class="bc-capacity-row"><span>Multivitamin</span><span>~XX pills</span></div>
+            <div class="bc-capacity-row"><span>Vitamin D3</span><span>~XX pills</span></div>
+            <p class="bc-capacity-note"><span>Based on standard retail sizes. Yours may vary.</span><span class="bc-capacity-note-unit">Per Pod</span></p>
+            <a href="./size-guide.html" class="product-info-link"><span>Full Size Guide</span><span>&rarr;</span></a>
           </div>
         </div>
       </div>
