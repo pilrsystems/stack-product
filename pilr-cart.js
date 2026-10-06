@@ -21,6 +21,21 @@
     image: 'images/lifestyle_section/Scooper.png',
   }
 
+  // Every order comes with one lid free, whichever pod(s) it's for — unlike
+  // the scooper above (Classic Stack only), this triggers off any pod
+  // product being in the cart at all. Kept as its own id (not 'single-lid')
+  // for the same reason as the scooper: so it never merges with lids bought
+  // on their own at full price (someone wanting a spare), which still use
+  // the paid 'single-lid' id and stay unaffected by any of this.
+  const FREE_LID_PRODUCT = {
+    id: 'single-lid-free',
+    title: 'Single Lid',
+    price: 0,
+    listPrice: 7,
+    image: 'images/lifestyle_section/Full Render.png',
+  }
+  const PODS_THAT_INCLUDE_A_FREE_LID = ['pill-pod', 'hybrid-pod', 'powder-pod', 'classic-stack']
+
   // Same bundle-discount curve as each pod product page's own "Add a Pod"
   // widget (pill/hybrid/powder-pod.html each keep a local copy of this for
   // their own live preview before anything's in the cart). Mirrored here so
@@ -80,6 +95,9 @@
     if (product.id === 'classic-stack' && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
       cart.items.push({ ...FREE_SCOOPER_PRODUCT, quantity: 1 })
     }
+    if (PODS_THAT_INCLUDE_A_FREE_LID.includes(product.id) && !cart.items.some(i => i.id === FREE_LID_PRODUCT.id)) {
+      cart.items.push({ ...FREE_LID_PRODUCT, quantity: 1 })
+    }
     repriceStackingPods(cart)
     saveCart(cart)
     return cart
@@ -92,6 +110,10 @@
       // The free scooper perk goes away with the Classic Stack it came with.
       if (id === 'classic-stack') {
         cart.items = cart.items.filter(i => i.id !== FREE_SCOOPER_PRODUCT.id)
+      }
+      // The free lid goes away once no pod that earns one is left in the cart.
+      if (PODS_THAT_INCLUDE_A_FREE_LID.includes(id) && !cart.items.some(i => PODS_THAT_INCLUDE_A_FREE_LID.includes(i.id))) {
+        cart.items = cart.items.filter(i => i.id !== FREE_LID_PRODUCT.id)
       }
     } else {
       const item = cart.items.find(i => i.id === id)

@@ -479,8 +479,9 @@
     }
 
     // Maps a cart line's id to its product page, so the item can link back
-    // to where it was bought. travel-scooper-free is the auto-added
-    // Classic Stack perk (see pilr-cart.js) — same product, same page.
+    // to where it was bought. travel-scooper-free and single-lid-free are
+    // the auto-added free perks (see pilr-cart.js) — same product, same page
+    // as their paid counterparts.
     const PRODUCT_PAGE_BY_ID = {
       'pill-pod': 'pill-pod.html',
       'hybrid-pod': 'hybrid-pod.html',
@@ -489,6 +490,7 @@
       'travel-scooper': 'travel-scooper.html',
       'travel-scooper-free': 'travel-scooper.html',
       'single-lid': 'single-lid.html',
+      'single-lid-free': 'single-lid.html',
     }
 
     // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
