@@ -36,6 +36,22 @@
   }
   const PODS_THAT_INCLUDE_A_FREE_LID = ['pill-pod', 'hybrid-pod', 'powder-pod', 'classic-stack']
 
+  // Both free perks can now be bumped up from their own cart row (someone
+  // wanting a spare scooper or lid right from their cart instead of a
+  // separate product page visit) — the first unit of each stays free, any
+  // beyond that are charged at the normal per-unit price. This is a running
+  // TOTAL for the whole line (not a flat per-unit price times quantity),
+  // since "first one free" isn't expressible as a single per-unit number:
+  // qty 1 → $0, qty 2 → one base price, qty 3 → two base prices, etc. Both
+  // getCartTotal below and cart.html's own per-row display call this so the
+  // order subtotal and the line's own price always agree.
+  const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 9, 'single-lid-free': 7 }
+  function freePerkLineTotal(id, quantity) {
+    const basePrice = FIRST_UNIT_FREE_BASE_PRICE[id]
+    if (basePrice == null) return null
+    return Math.max(0, quantity - 1) * basePrice
+  }
+
   // Same bundle-discount curve as each pod product page's own "Add a Pod"
   // widget (pill/hybrid/powder-pod.html each keep a local copy of this for
   // their own live preview before anything's in the cart). Mirrored here so
@@ -133,7 +149,10 @@
   }
 
   function getCartTotal() {
-    return getCart().items.reduce((sum, i) => sum + i.price * i.quantity, 0)
+    return getCart().items.reduce((sum, i) => {
+      const freeTotal = freePerkLineTotal(i.id, i.quantity)
+      return sum + (freeTotal != null ? freeTotal : i.price * i.quantity)
+    }, 0)
   }
 
   function clearCart() {
@@ -167,5 +186,6 @@
     count: getCartCount,
     total: getCartTotal,
     clear: clearCart,
+    freePerkLineTotal,
   }
 })(window)

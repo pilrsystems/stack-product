@@ -113,22 +113,12 @@
       align-items: center;
       justify-content: space-between;
       /* Fixed to the qty-ctrl's own rendered width (two 30px buttons +
-         28px min-width value, plus its 1px border each side) so every
-         row's actions column is the same width regardless of whether a
-         qty-ctrl is present. Without this, a lone Remove button (the
-         free-perk rows below) shrinks this column to just its own text
-         width instead, re-centering it a few pixels off from where
-         Remove sits under an actual qty-ctrl on every other row. */
+         28px min-width value, plus its 1px border each side), so this
+         column is a consistent width across every row. Every row gets a
+         qty-ctrl now (even the free perks, which can be bumped past their
+         one free unit), but this stays as a safeguard against any future
+         row type that might render Remove on its own again. */
       width: 90px;
-    }
-
-    /* Free-perk rows (e.g. the Classic Stack's scooper) skip the quantity
-       stepper, so Remove is the only child here - space-between has
-       nothing to push it against and leaves it pinned to the top instead
-       of at the bottom, where Remove sits on every other row (space-
-       between puts the qty-ctrl at the top and Remove at the end). */
-    .cart-item-actions--single {
-      justify-content: flex-end;
     }
 
     .cart-qty-ctrl {
@@ -505,19 +495,19 @@
     }
 
     function renderItem(item) {
+      // Free perks (scooper, lid) now get a normal stepper too, so someone
+      // can add extras right from the cart - the first unit of either
+      // stays free, anything beyond that is charged at the normal price.
+      // PilrCart.freePerkLineTotal returns null for every other product,
+      // so lineTotal falls back to the usual price*quantity for those.
+      const freeTotal = PilrCart.freePerkLineTotal(item.id, item.quantity)
       const listPrice = item.listPrice ?? STATIC_LIST_PRICE_BY_ID[item.id] ?? null
-      const lineTotal = item.price * item.quantity
+      const lineTotal = freeTotal != null ? freeTotal : item.price * item.quantity
       const lineListTotal = listPrice != null ? listPrice * item.quantity : null
-      // Free-with-bundle perks (e.g. the Classic Stack's scooper) carry a
-      // listPrice for display even though their real price is 0 — show the
-      // original crossed out next to "FREE" instead of "$0.00", and skip
-      // the quantity stepper since there's only ever meant to be the one.
-      const isFreePerk = listPrice != null && item.price === 0
-      // Everything else that carries a listPrice (Classic Stack's fixed
-      // bundle discount, or pods added at a quantity-discount tier) shows
-      // the same struck-through-list-price treatment as the product
-      // pages' own price displays, just next to the real price instead
-      // of replacing it with "FREE".
+      // Still at just the one free unit — show "FREE" outright. Once
+      // bumped past that it behaves like any other discounted line below:
+      // struck-through full price next to what's actually charged.
+      const isFreePerk = freeTotal === 0
       const hasDiscount = !isFreePerk && lineListTotal != null && lineListTotal > lineTotal
       const priceHtml = isFreePerk
         ? `<span class="cart-item-price-strike">${formatMoney(listPrice)}</span> <span class="cart-item-price-free">FREE</span>`
@@ -536,13 +526,12 @@
           <p class="cart-item-name">${href ? `<a class="cart-item-name-link" href="${href}">${item.title}</a>` : item.title}</p>
           <p class="cart-item-price">${priceHtml}</p>
         </div>
-        <div class="cart-item-actions${isFreePerk ? ' cart-item-actions--single' : ''}">
-          ${isFreePerk ? '' : `
+        <div class="cart-item-actions">
           <div class="cart-qty-ctrl">
             <button class="cart-qty-btn" data-action="decrease" data-key="${item.id}">−</button>
             <span class="cart-qty-val">${item.quantity}</span>
             <button class="cart-qty-btn" data-action="increase" data-key="${item.id}">+</button>
-          </div>`}
+          </div>
           <button class="cart-remove-btn" data-key="${item.id}">Remove</button>
         </div>
       `
