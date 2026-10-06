@@ -235,7 +235,6 @@
   // behave normally rather than popping a redundant drawer over a page
   // that's already showing the same thing.
   const DRAWER_ID = 'pilr-cart-drawer'
-  const TRASH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>'
 
   function buildDrawer() {
     if (document.getElementById(DRAWER_ID)) return
@@ -291,11 +290,21 @@
   function openDrawer() {
     buildDrawer()
     renderDrawer()
-    document.getElementById('cart-drawer-overlay').classList.add('open')
+    const overlay = document.getElementById('cart-drawer-overlay')
     const drawer = document.getElementById(DRAWER_ID)
+    document.body.style.overflow = 'hidden'
+    // The very first open builds the drawer (closed, transform: 100%) and
+    // would otherwise add .open in the same synchronous tick, with no
+    // flushed style in between for the browser to animate from — the
+    // slide-in silently skips on that first click only (a later open
+    // doesn't have this problem, since the drawer's already sitting there
+    // closed, already flushed, from a prior close). Reading offsetHeight
+    // forces a synchronous layout flush of the closed state right before
+    // .open changes it, giving the transition a real starting point.
+    void drawer.offsetHeight
+    overlay.classList.add('open')
     drawer.classList.add('open')
     drawer.setAttribute('aria-hidden', 'false')
-    document.body.style.overflow = 'hidden'
   }
 
   function closeDrawer() {
@@ -323,16 +332,16 @@
         (href ? '</a>' : '</div>') +
         '<div class="cart-drawer-item-info">' +
           '<p class="cart-drawer-item-name">' + (href ? '<a href="' + href + '">' + item.title + '</a>' : item.title) + '</p>' +
-          '<div class="cart-drawer-item-controls">' +
-            '<div class="cart-drawer-qty-ctrl">' +
-              '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + item.id + '">−</button>' +
-              '<span class="cart-drawer-qty-val">' + item.quantity + '</span>' +
-              '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + item.id + '">+</button>' +
-            '</div>' +
-            '<button type="button" class="cart-drawer-remove" data-key="' + item.id + '" aria-label="Remove">' + TRASH_ICON + '</button>' +
-          '</div>' +
+          '<p class="cart-drawer-item-price">' + priceInner + '</p>' +
         '</div>' +
-        '<div class="cart-drawer-item-price">' + priceInner + '</div>' +
+        '<div class="cart-drawer-item-actions">' +
+          '<div class="cart-drawer-qty-ctrl">' +
+            '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + item.id + '">−</button>' +
+            '<span class="cart-drawer-qty-val">' + item.quantity + '</span>' +
+            '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + item.id + '">+</button>' +
+          '</div>' +
+          '<button type="button" class="cart-drawer-remove" data-key="' + item.id + '">Remove</button>' +
+        '</div>' +
       '</div>'
     )
   }
