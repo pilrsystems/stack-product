@@ -270,7 +270,7 @@
     drawer.setAttribute('aria-hidden', 'true')
     drawer.innerHTML =
       '<div class="cart-drawer-header">' +
-        '<h2>Cart</h2>' +
+        '<h2>Cart<span class="cart-drawer-count" id="cart-drawer-count"></span></h2>' +
         '<button type="button" class="cart-drawer-close" aria-label="Close cart">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
         '</button>' +
@@ -349,11 +349,17 @@
 
   // Truck/checkmark badge icon stays fixed at the end of the track — only
   // the fill width moves as the cart total grows, same as the Hears
-  // reference this is modeled on.
+  // reference this is modeled on. stroke="currentColor" so the badge's
+  // CSS text color (dark slate when locked, white once done) drives both
+  // icons instead of hardcoding white — the locked badge's background is
+  // now light, so a white icon would've been invisible on it.
+  // Proportions borrowed from Feather's "truck" icon (well-centered within
+  // a 24x24 viewBox already) rather than a custom shape that measured
+  // visually off-center at this badge's small size.
   const SHIPPING_TRUCK_ICON =
-    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="13" height="9"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>'
+    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4.5" width="15" height="13"/><polygon points="16 9 20 9 23 12 23 17.5 16 17.5 16 9"/><circle cx="5.5" cy="19" r="2.1"/><circle cx="18.5" cy="19" r="2.1"/></svg>'
   const SHIPPING_CHECK_ICON =
-    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 7 9.5 17.5 4 12"/></svg>'
+    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 7 9.5 17.5 4 12"/></svg>'
 
   function shippingBarHtml() {
     const total     = getCartTotal()
@@ -361,7 +367,7 @@
     const unlocked  = remaining <= 0
     const pct       = Math.min(100, Math.max(0, (total / FREE_SHIPPING_THRESHOLD) * 100))
     const msg       = unlocked
-      ? "Congratulations! You've unlocked free shipping!"
+      ? "Congratulations! You've unlocked FREE shipping!"
       : "You're " + formatMoney(remaining) + ' away from free shipping.'
     return (
       '<p class="cart-drawer-shipping-msg">' + msg + '</p>' +
@@ -416,7 +422,11 @@
     const body = document.getElementById('cart-drawer-body')
     const footer = document.getElementById('cart-drawer-footer')
     const shipping = document.getElementById('cart-drawer-shipping')
+    const countEl = document.getElementById('cart-drawer-count')
     if (!body || !footer) return
+
+    const count = getCartCount()
+    if (countEl) countEl.textContent = count > 0 ? count : ''
 
     const cart = getCart()
     if (cart.items.length === 0) {

@@ -3387,8 +3387,27 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   color: #46545e;
   letter-spacing: -0.01em;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+.cart-drawer-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 50%;
+  background: #818E99;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.cart-drawer-count:empty { display: none; }
 
 .cart-drawer-close {
   background: none;
@@ -3445,15 +3464,21 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #818E99;
+  background: rgba(66,85,99,0.12);
+  color: #46545e;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.cart-drawer-shipping-icon--done { background: #46545e; }
+.cart-drawer-shipping-icon svg { display: block; }
+
+.cart-drawer-shipping-icon--done {
+  background: #818E99;
+  color: #fff;
+}
 
 .cart-drawer-body {
   flex: 1;
@@ -3541,10 +3566,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* Right column: qty stepper above, Remove below - fixed to the qty-ctrl's
-   own rendered width (two 24px buttons + 20px min-width value, plus its
-   1px border each side) so Remove centers consistently under it on every
-   row regardless of its own text width. */
+/* Right column: qty stepper above, Remove below - a fixed width (roughly
+   the qty-ctrl's own rendered width) so Remove centers consistently under
+   it on every row regardless of its own text width. */
 .cart-drawer-item-actions {
   display: flex;
   flex-direction: column;
@@ -3554,36 +3578,39 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   width: 72px;
 }
 
+/* Hears-style: the border box wraps only the number, with the -/+
+   buttons sitting plain outside it — not one shared bordered pill. */
 .cart-drawer-qty-ctrl {
   display: flex;
   align-items: center;
-  border: 1px solid rgba(66,85,99,0.18);
-  border-radius: var(--radius);
-  overflow: hidden;
+  gap: 0.45rem;
 }
 
 .cart-drawer-qty-btn {
   background: none;
   border: none;
-  width: 24px;
+  width: 16px;
   height: 24px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: #46545e;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s;
+  transition: opacity 0.15s;
 }
 
-.cart-drawer-qty-btn:hover { background: #f0f0ee; }
+.cart-drawer-qty-btn:hover { opacity: 0.6; }
 
 .cart-drawer-qty-val {
   font-size: 0.75rem;
   font-weight: 600;
   color: #46545e;
-  min-width: 20px;
+  min-width: 26px;
   text-align: center;
+  border: 1px solid rgba(66,85,99,0.25);
+  border-radius: var(--radius);
+  padding: 0.32rem 0;
 }
 
 .cart-drawer-remove {
