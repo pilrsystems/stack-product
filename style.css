@@ -3362,7 +3362,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   width: 510px;
   max-width: calc(100vw - 1rem);
   background: var(--bg);
-  border-radius: 5px;
+  border-radius: 3px;
   z-index: 201;
   display: flex;
   flex-direction: column;
