@@ -3464,8 +3464,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(66,85,99,0.12);
-  color: #46545e;
+  background: #9aa7ae;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3575,7 +3575,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   align-items: center;
   gap: 0.85rem;
   flex-shrink: 0;
-  width: 72px;
+  width: 84px;
 }
 
 /* Hears-style: the border box wraps only the number, with the -/+
@@ -3589,7 +3589,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .cart-drawer-qty-btn {
   background: none;
   border: none;
-  width: 16px;
+  width: 18px;
   height: 24px;
   font-size: 0.95rem;
   color: #46545e;
@@ -3603,14 +3603,14 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .cart-drawer-qty-btn:hover { opacity: 0.6; }
 
 .cart-drawer-qty-val {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #46545e;
-  min-width: 26px;
+  min-width: 36px;
   text-align: center;
   border: 1px solid rgba(66,85,99,0.25);
-  border-radius: var(--radius);
-  padding: 0.32rem 0;
+  border-radius: 8px;
+  padding: 0.4rem 0;
 }
 
 .cart-drawer-remove {

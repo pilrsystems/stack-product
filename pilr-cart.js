@@ -350,16 +350,17 @@
   // Truck/checkmark badge icon stays fixed at the end of the track — only
   // the fill width moves as the cart total grows, same as the Hears
   // reference this is modeled on. stroke="currentColor" so the badge's
-  // CSS text color (dark slate when locked, white once done) drives both
-  // icons instead of hardcoding white — the locked badge's background is
-  // now light, so a white icon would've been invisible on it.
-  // Proportions borrowed from Feather's "truck" icon (well-centered within
-  // a 24x24 viewBox already) rather than a custom shape that measured
-  // visually off-center at this badge's small size.
+  // CSS text color drives both icons (both are white; swap the badge's
+  // own background instead of the icon color between locked/done).
+  // The truck's y-coordinates are shifted -0.8 from Feather's original
+  // "truck" icon proportions — its drawn content (wheels extending below
+  // the cab/box) sits visually low within a plain 0-24 viewBox, which
+  // read as off-center in this small a badge; this re-centers it so the
+  // stroke-padded bounding box is symmetric top-to-bottom.
   const SHIPPING_TRUCK_ICON =
-    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4.5" width="15" height="13"/><polygon points="16 9 20 9 23 12 23 17.5 16 17.5 16 9"/><circle cx="5.5" cy="19" r="2.1"/><circle cx="18.5" cy="19" r="2.1"/></svg>'
+    '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3.7" width="15" height="13"/><polygon points="16 8.2 20 8.2 23 11.2 23 16.7 16 16.7 16 8.2"/><circle cx="5.5" cy="18.2" r="2.1"/><circle cx="18.5" cy="18.2" r="2.1"/></svg>'
   const SHIPPING_CHECK_ICON =
-    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 7 9.5 17.5 4 12"/></svg>'
+    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 7 9.5 17.5 4 12"/></svg>'
 
   function shippingBarHtml() {
     const total     = getCartTotal()
