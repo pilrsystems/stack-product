@@ -292,6 +292,13 @@
     renderDrawer()
     const overlay = document.getElementById('cart-drawer-overlay')
     const drawer = document.getElementById(DRAWER_ID)
+    // Locking body alone isn't enough — on pages where <body> has no scroll
+    // context of its own, the browser scrolls <html> instead, and that
+    // scrollbar stays visible (and usable) right in the drawer's own
+    // right-edge gap. Locking both keeps the page truly non-scrollable
+    // while open, leaving only the drawer's own internal scrollbar (on
+    // .cart-drawer-body) for when the item list overflows.
+    document.documentElement.style.overflow = 'hidden'
     document.body.style.overflow = 'hidden'
     // The very first open builds the drawer (closed, transform: 100%) and
     // would otherwise add .open in the same synchronous tick, with no
@@ -314,6 +321,7 @@
     overlay.classList.remove('open')
     drawer.classList.remove('open')
     drawer.setAttribute('aria-hidden', 'true')
+    document.documentElement.style.overflow = ''
     document.body.style.overflow = ''
   }
 
