@@ -3491,23 +3491,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   color: #fff;
 }
 
-.cart-drawer-shipping-threshold {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1.3;
-}
-
 .cart-drawer-shipping-threshold-amt {
   font-size: 0.82rem;
   font-weight: 600;
   color: #46545e;
-}
-
-.cart-drawer-shipping-threshold-label {
-  font-size: 0.68rem;
-  color: #7a8a94;
-  white-space: nowrap;
 }
 
 .cart-drawer-body {

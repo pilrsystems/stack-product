@@ -386,10 +386,7 @@
           '<div class="cart-drawer-shipping-icon' + (unlocked ? ' cart-drawer-shipping-icon--done' : '') + '">' +
             (unlocked ? SHIPPING_CHECK_ICON : SHIPPING_TRUCK_ICON) +
           '</div>' +
-          '<div class="cart-drawer-shipping-threshold">' +
-            '<span class="cart-drawer-shipping-threshold-amt">' + formatMoney(FREE_SHIPPING_THRESHOLD) + '</span>' +
-            '<span class="cart-drawer-shipping-threshold-label">Free shipping</span>' +
-          '</div>' +
+          '<span class="cart-drawer-shipping-threshold-amt">' + formatMoney(FREE_SHIPPING_THRESHOLD) + '</span>' +
         '</div>' +
       '</div>'
     )
