@@ -290,13 +290,20 @@
     // Removal is qty -> 0 via the "-" button (updateQuantity already strips
     // the line, and any free perk it was carrying, at zero) — no separate
     // Remove control any more.
+    // Reads the real cart quantity by id rather than the row's own displayed
+    // number — a free-perk line split across two rows (see
+    // perkDrawerRowsHtml) shows the PAID portion's count on its own row,
+    // not the item's true total, so parsing that span would under-count.
+    // data-floor lets the paid-portion row's "-" stop at 1 real unit
+    // (dropping back to "just the free one") instead of the normal 0.
     drawer.querySelector('#cart-drawer-body').addEventListener('click', e => {
       const qtyBtn = e.target.closest('.cart-drawer-qty-btn')
       if (qtyBtn) {
         const key = qtyBtn.dataset.key
-        const valEl = qtyBtn.closest('.cart-drawer-item').querySelector('.cart-drawer-qty-val')
-        const qty = parseInt(valEl.textContent, 10)
-        const next = qtyBtn.dataset.action === 'increase' ? qty + 1 : Math.max(0, qty - 1)
+        const floor = parseInt(qtyBtn.dataset.floor || '0', 10)
+        const current = getCart().items.find(i => i.id === key)
+        const qty = current ? current.quantity : 0
+        const next = qtyBtn.dataset.action === 'increase' ? qty + 1 : Math.max(floor, qty - 1)
         updateQuantity(key, next)
         renderDrawer()
       }
@@ -382,6 +389,42 @@
     )
   }
 
+  // Shared row shell — image, name, price, blurb, and whatever qty-control
+  // markup is passed in. Used for ordinary rows and both halves of a split
+  // free-perk line (see perkDrawerRowsHtml) so all three stay visually
+  // identical apart from their price/qty content.
+  function drawerRowHtml(opts) {
+    const href = opts.href
+    return (
+      '<div class="cart-drawer-item" data-key="' + opts.key + '">' +
+        (href ? '<a class="cart-drawer-item-img" href="' + href + '">' : '<div class="cart-drawer-item-img">') +
+          '<img src="' + opts.image + '" alt="' + opts.title + '" />' +
+        (href ? '</a>' : '</div>') +
+        '<div class="cart-drawer-item-info">' +
+          '<p class="cart-drawer-item-name">' + (href ? '<a href="' + href + '">' + opts.title + '</a>' : opts.title) + '</p>' +
+          '<p class="cart-drawer-item-price">' + opts.priceInner + '</p>' +
+          (opts.desc ? '<p class="cart-drawer-item-desc">' + opts.desc + '</p>' : '') +
+        '</div>' +
+        '<div class="cart-drawer-item-actions">' + opts.qtyHtml + '</div>' +
+      '</div>'
+    )
+  }
+
+  // floor caps how far "-" can take the item's REAL quantity (see the
+  // click handler above) — 0 (default) removes the line entirely, 1 is
+  // used by the paid half of a split perk row so it can't remove the
+  // always-present free unit underneath it.
+  function qtyCtrlHtml(key, qty, floor) {
+    const floorAttr = floor ? ' data-floor="' + floor + '"' : ''
+    return (
+      '<div class="cart-drawer-qty-ctrl">' +
+        '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + key + '"' + floorAttr + '>-</button>' +
+        '<span class="cart-drawer-qty-val">' + qty + '</span>' +
+        '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + key + '">+</button>' +
+      '</div>'
+    )
+  }
+
   function drawerItemRowHtml(item) {
     const d = getItemDisplay(item)
     const priceInner = d.isFree
@@ -389,26 +432,55 @@
       : d.hasDiscount
         ? '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span>' + formatMoney(d.lineTotal)
         : formatMoney(d.lineTotal)
-    const href = d.href
-    return (
-      '<div class="cart-drawer-item" data-key="' + item.id + '">' +
-        (href ? '<a class="cart-drawer-item-img" href="' + href + '">' : '<div class="cart-drawer-item-img">') +
-          '<img src="' + item.image + '" alt="' + item.title + '" />' +
-        (href ? '</a>' : '</div>') +
-        '<div class="cart-drawer-item-info">' +
-          '<p class="cart-drawer-item-name">' + (href ? '<a href="' + href + '">' + item.title + '</a>' : item.title) + '</p>' +
-          '<p class="cart-drawer-item-price">' + priceInner + '</p>' +
-          (PRODUCT_BLURB_BY_ID[item.id] ? '<p class="cart-drawer-item-desc">' + PRODUCT_BLURB_BY_ID[item.id] + '</p>' : '') +
-        '</div>' +
-        '<div class="cart-drawer-item-actions">' +
-          '<div class="cart-drawer-qty-ctrl">' +
-            '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + item.id + '">-</button>' +
-            '<span class="cart-drawer-qty-val">' + item.quantity + '</span>' +
-            '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + item.id + '">+</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
-    )
+    return drawerRowHtml({
+      key: item.id,
+      title: item.title,
+      image: item.image,
+      href: d.href,
+      priceInner: priceInner,
+      desc: PRODUCT_BLURB_BY_ID[item.id],
+      qtyHtml: qtyCtrlHtml(item.id, item.quantity),
+    })
+  }
+
+  // A free-perk line (travel-scooper-free / single-lid-free) splits into
+  // two rows the moment its real quantity goes above 1: the free unit
+  // stays pinned at "1" in Free Gifts (no steppers of its own once split —
+  // the paid row below handles further +/-), and everything past that
+  // shows up as its own full-price row in Your Items, same id/title/image
+  // so both halves still move together as one line underneath.
+  function perkDrawerRowsHtml(item) {
+    const basePrice = FIRST_UNIT_FREE_BASE_PRICE[item.id]
+    const paidQty = item.quantity - 1
+    const split = paidQty > 0
+    const href = PRODUCT_PAGE_BY_ID[item.id] || null
+    const desc = PRODUCT_BLURB_BY_ID[item.id]
+
+    const freeHtml = drawerRowHtml({
+      key: item.id,
+      title: item.title,
+      image: item.image,
+      href: href,
+      priceInner: '<span class="cart-drawer-free-badge">Free</span>',
+      desc: desc,
+      qtyHtml: split
+        ? '<div class="cart-drawer-qty-ctrl cart-drawer-qty-ctrl--static"><span class="cart-drawer-qty-val">1</span></div>'
+        : qtyCtrlHtml(item.id, 1),
+    })
+
+    const paidHtml = split
+      ? drawerRowHtml({
+          key: item.id,
+          title: item.title,
+          image: item.image,
+          href: href,
+          priceInner: formatMoney(basePrice * paidQty),
+          desc: desc,
+          qtyHtml: qtyCtrlHtml(item.id, paidQty, 1),
+        })
+      : ''
+
+    return { freeHtml: freeHtml, paidHtml: paidHtml }
   }
 
   // Every renderDrawer() call rebuilds the footer's innerHTML from scratch
@@ -440,14 +512,23 @@
     const mainItems = cart.items.filter(i => !FIRST_UNIT_FREE_BASE_PRICE[i.id])
     const perkItems = cart.items.filter(i => FIRST_UNIT_FREE_BASE_PRICE[i.id])
 
+    // Perk items split: the free half always goes to Free Gifts below, but
+    // any paid half (quantity bumped past 1) reads as a normal purchase and
+    // belongs in Your Items alongside everything else.
+    let yourItemsHtml = mainItems.map(drawerItemRowHtml).join('')
+    let freeGiftsHtml = ''
+    perkItems.forEach(item => {
+      const rows = perkDrawerRowsHtml(item)
+      freeGiftsHtml += rows.freeHtml
+      yourItemsHtml += rows.paidHtml
+    })
+
     let html = ''
-    if (mainItems.length) {
-      html += '<div class="cart-drawer-section-label">Your Items</div>'
-      html += mainItems.map(drawerItemRowHtml).join('')
+    if (yourItemsHtml) {
+      html += '<div class="cart-drawer-section-label">Your Items</div>' + yourItemsHtml
     }
-    if (perkItems.length) {
-      html += '<div class="cart-drawer-section-label">Free Gifts</div>'
-      html += perkItems.map(drawerItemRowHtml).join('')
+    if (freeGiftsHtml) {
+      html += '<div class="cart-drawer-section-label">Free Gifts</div>' + freeGiftsHtml
     }
     body.innerHTML = html
 
