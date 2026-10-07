@@ -43,6 +43,8 @@
   // expressible as a single per-unit number: qty 1 → $0, qty 2 → one base
   // price, qty 3 → two base prices, etc. getCartTotal and getItemDisplay
   // both call this so every price shown anywhere always agrees.
+  const FREE_SHIPPING_THRESHOLD = 75
+
   const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 9, 'single-lid-free': 7 }
   function freePerkLineTotal(id, quantity) {
     const basePrice = FIRST_UNIT_FREE_BASE_PRICE[id]
@@ -159,7 +161,12 @@
   }
 
   function formatMoney(dollars) {
-    return '$' + dollars.toFixed(2)
+    // Whole-dollar amounts show as "$24", not "$24.00" — same convention as
+    // system-builder.js's own formatPrice. Rounded first so float noise
+    // (e.g. 32 * 0.85 - style multiplication) doesn't spuriously trip the
+    // decimal branch.
+    const rounded = Math.round(dollars * 100) / 100
+    return '$' + (Number.isInteger(rounded) ? rounded : rounded.toFixed(2))
   }
 
   // Maps a cart line's id to its own product page, so a UI can link an item
@@ -174,6 +181,20 @@
     'travel-scooper-free': 'travel-scooper.html',
     'single-lid': 'single-lid.html',
     'single-lid-free': 'single-lid.html',
+  }
+
+  // Short one-line blurb shown under each cart drawer row, Hears-style
+  // ("Great, your ears will thank you."). Free-perk ids share their paid
+  // counterpart's line.
+  const PRODUCT_BLURB_BY_ID = {
+    'pill-pod': 'Keeps your pills organized.',
+    'hybrid-pod': 'Fits medium and large capsules.',
+    'powder-pod': 'Keeps your powder fresh.',
+    'classic-stack': 'Your whole routine, one system.',
+    'travel-scooper': 'Scoop and go, anywhere.',
+    'travel-scooper-free': 'Scoop and go, anywhere.',
+    'single-lid': 'Locks every pod shut tight.',
+    'single-lid-free': 'Locks every pod shut tight.',
   }
 
   // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
@@ -249,11 +270,12 @@
     drawer.setAttribute('aria-hidden', 'true')
     drawer.innerHTML =
       '<div class="cart-drawer-header">' +
-        '<h2>Your Cart</h2>' +
+        '<h2>Cart</h2>' +
         '<button type="button" class="cart-drawer-close" aria-label="Close cart">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
         '</button>' +
       '</div>' +
+      '<div class="cart-drawer-shipping" id="cart-drawer-shipping"></div>' +
       '<div class="cart-drawer-body" id="cart-drawer-body"></div>' +
       '<div class="cart-drawer-footer" id="cart-drawer-footer"></div>'
 
@@ -325,6 +347,35 @@
     document.body.style.overflow = ''
   }
 
+  // Truck/checkmark badge icon stays fixed at the end of the track — only
+  // the fill width moves as the cart total grows, same as the Hears
+  // reference this is modeled on.
+  const SHIPPING_TRUCK_ICON =
+    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="13" height="9"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>'
+  const SHIPPING_CHECK_ICON =
+    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 7 9.5 17.5 4 12"/></svg>'
+
+  function shippingBarHtml() {
+    const total     = getCartTotal()
+    const remaining = FREE_SHIPPING_THRESHOLD - total
+    const unlocked  = remaining <= 0
+    const pct       = Math.min(100, Math.max(0, (total / FREE_SHIPPING_THRESHOLD) * 100))
+    const msg       = unlocked
+      ? "Congratulations! You've unlocked free shipping!"
+      : "You're " + formatMoney(remaining) + ' away from free shipping.'
+    return (
+      '<p class="cart-drawer-shipping-msg">' + msg + '</p>' +
+      '<div class="cart-drawer-shipping-bar">' +
+        '<div class="cart-drawer-shipping-track">' +
+          '<div class="cart-drawer-shipping-fill" style="width:' + pct + '%"></div>' +
+        '</div>' +
+        '<div class="cart-drawer-shipping-icon' + (unlocked ? ' cart-drawer-shipping-icon--done' : '') + '">' +
+          (unlocked ? SHIPPING_CHECK_ICON : SHIPPING_TRUCK_ICON) +
+        '</div>' +
+      '</div>'
+    )
+  }
+
   function drawerItemRowHtml(item) {
     const d = getItemDisplay(item)
     const priceInner = d.isFree
@@ -341,10 +392,11 @@
         '<div class="cart-drawer-item-info">' +
           '<p class="cart-drawer-item-name">' + (href ? '<a href="' + href + '">' + item.title + '</a>' : item.title) + '</p>' +
           '<p class="cart-drawer-item-price">' + priceInner + '</p>' +
+          (PRODUCT_BLURB_BY_ID[item.id] ? '<p class="cart-drawer-item-desc">' + PRODUCT_BLURB_BY_ID[item.id] + '</p>' : '') +
         '</div>' +
         '<div class="cart-drawer-item-actions">' +
           '<div class="cart-drawer-qty-ctrl">' +
-            '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + item.id + '">−</button>' +
+            '<button type="button" class="cart-drawer-qty-btn" data-action="decrease" data-key="' + item.id + '">-</button>' +
             '<span class="cart-drawer-qty-val">' + item.quantity + '</span>' +
             '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + item.id + '">+</button>' +
           '</div>' +
@@ -363,14 +415,18 @@
   function renderDrawer() {
     const body = document.getElementById('cart-drawer-body')
     const footer = document.getElementById('cart-drawer-footer')
+    const shipping = document.getElementById('cart-drawer-shipping')
     if (!body || !footer) return
 
     const cart = getCart()
     if (cart.items.length === 0) {
       body.innerHTML = '<div class="cart-drawer-empty">Your cart is empty.</div>'
       footer.innerHTML = ''
+      if (shipping) shipping.innerHTML = ''
       return
     }
+
+    if (shipping) shipping.innerHTML = shippingBarHtml()
 
     const mainItems = cart.items.filter(i => !FIRST_UNIT_FREE_BASE_PRICE[i.id])
     const perkItems = cart.items.filter(i => FIRST_UNIT_FREE_BASE_PRICE[i.id])
@@ -402,11 +458,10 @@
         '</div>' +
       '</div>' +
       '<div class="cart-drawer-subtotal">' +
-        '<span>Subtotal</span>' +
+        '<span>Total</span>' +
         '<span>' + formatMoney(getCartTotal()) + '</span>' +
       '</div>' +
-      '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>' +
-      '<a href="./cart.html" class="cart-drawer-view-full">View full cart</a>'
+      '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>'
 
     document.getElementById('cart-drawer-promo-toggle').addEventListener('click', () => {
       promoOpen = !promoOpen
