@@ -17,7 +17,7 @@
     id: 'travel-scooper-free',
     title: 'Travel Scooper',
     price: 0,
-    listPrice: 9,
+    listPrice: 11,
     image: 'images/lifestyle_section/Scooper.png',
   }
 
@@ -45,7 +45,7 @@
   // both call this so every price shown anywhere always agrees.
   const FREE_SHIPPING_THRESHOLD = 75
 
-  const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 9, 'single-lid-free': 7 }
+  const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 11, 'single-lid-free': 7 }
   function freePerkLineTotal(id, quantity) {
     const basePrice = FIRST_UNIT_FREE_BASE_PRICE[id]
     if (basePrice == null) return null
