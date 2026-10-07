@@ -3358,9 +3358,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .cart-drawer {
   position: fixed;
-  top: 0.75rem; right: 0.5rem; bottom: 0.75rem;
-  width: 460px;
-  max-width: calc(100vw - 0.5rem);
+  top: 0.75rem; right: 1rem; bottom: 0.75rem;
+  width: 510px;
+  max-width: calc(100vw - 1rem);
   background: var(--bg);
   border-radius: 10px;
   z-index: 201;
