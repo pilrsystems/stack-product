@@ -287,13 +287,12 @@
 
     // Delegated so newly-rendered rows (every renderDrawer() call replaces
     // the body's innerHTML) stay wired without re-attaching listeners.
+    // Removal is qty -> 0 via the "-" button (updateQuantity already strips
+    // the line, and any free perk it was carrying, at zero) — no separate
+    // Remove control any more.
     drawer.querySelector('#cart-drawer-body').addEventListener('click', e => {
-      const removeBtn = e.target.closest('.cart-drawer-remove')
       const qtyBtn = e.target.closest('.cart-drawer-qty-btn')
-      if (removeBtn) {
-        removeFromCart(removeBtn.dataset.key)
-        renderDrawer()
-      } else if (qtyBtn) {
+      if (qtyBtn) {
         const key = qtyBtn.dataset.key
         const valEl = qtyBtn.closest('.cart-drawer-item').querySelector('.cart-drawer-qty-val')
         const qty = parseInt(valEl.textContent, 10)
@@ -407,7 +406,6 @@
             '<span class="cart-drawer-qty-val">' + item.quantity + '</span>' +
             '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + item.id + '">+</button>' +
           '</div>' +
-          '<button type="button" class="cart-drawer-remove" data-key="' + item.id + '">Remove</button>' +
         '</div>' +
       '</div>'
     )

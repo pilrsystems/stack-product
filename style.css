@@ -3615,20 +3615,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   padding: 0.4rem 0;
 }
 
-.cart-drawer-remove {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-size: 0.7rem;
-  color: #7a8a94;
-  text-decoration: underline;
-  transition: color 0.15s;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-.cart-drawer-remove:hover { color: #46545e; }
-
 .cart-drawer-free-badge {
   display: inline-block;
   background: rgba(129, 142, 153, 0.15);
