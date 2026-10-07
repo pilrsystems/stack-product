@@ -3513,8 +3513,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .cart-drawer-item-img {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--radius);
   background: #f0f0ee;
   flex-shrink: 0;
@@ -3533,7 +3533,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .cart-drawer-item-name {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: #46545e;
   margin: 0;
@@ -3545,7 +3545,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .cart-drawer-item-name a:hover { text-decoration: underline; }
 
 .cart-drawer-item-price {
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #46545e;
   margin: 0;
@@ -3560,7 +3560,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .cart-drawer-item-desc {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 400;
   color: #7a8a94;
   margin: 0;
