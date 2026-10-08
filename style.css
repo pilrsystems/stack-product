@@ -926,7 +926,12 @@ body {
 
 .catalog-main .shop-card-img {
   flex: none;
-  aspect-ratio: 6 / 5;
+  aspect-ratio: 6 / 5.2;
+  /* Taller box without a bigger image: the extra height goes entirely to
+     padding, so the available (object-fit: contain) area stays the exact
+     size it was at the old 6/5 ratio. */
+  padding-top: 37px;
+  padding-bottom: 37px;
 }
 
 .catalog-main .shop-price {
