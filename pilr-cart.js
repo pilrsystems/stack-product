@@ -298,6 +298,8 @@
     // (dropping back to "just the free one") instead of the normal 0.
     drawer.querySelector('#cart-drawer-body').addEventListener('click', e => {
       const qtyBtn = e.target.closest('.cart-drawer-qty-btn')
+      const offerAddBtn = e.target.closest('.cart-drawer-offer-add')
+      const offerArrow = e.target.closest('.cart-drawer-offers-arrow')
       if (qtyBtn) {
         const key = qtyBtn.dataset.key
         const floor = parseInt(qtyBtn.dataset.floor || '0', 10)
@@ -306,6 +308,20 @@
         const next = qtyBtn.dataset.action === 'increase' ? qty + 1 : Math.max(floor, qty - 1)
         updateQuantity(key, next)
         renderDrawer()
+      } else if (offerAddBtn) {
+        const id = offerAddBtn.dataset.offerId
+        const offer = OFFER_PRODUCTS.find(p => p.id === id)
+        if (offer) {
+          // Base price only — repriceStackingPods (called inside addToCart)
+          // immediately recomputes it against the cart's new combined pod
+          // count, same as every other way a pod gets added.
+          const basePrice = STACKING_POD_BASE_PRICE[id] ?? offerFlatPrice(id)
+          addToCart({ id: offer.id, title: offer.title, price: basePrice, image: offer.image }, 1)
+          renderDrawer()
+        }
+      } else if (offerArrow) {
+        const track = drawer.querySelector('#cart-drawer-offers-track')
+        if (track) track.scrollBy({ left: offerArrow.dataset.dir === '-1' ? -track.clientWidth : track.clientWidth, behavior: 'smooth' })
       }
     })
   }
@@ -486,6 +502,70 @@
     return { freeHtml: freeHtml, paidHtml: paidHtml }
   }
 
+  // ── "Exclusive offers" upsell carousel ───────────────────────────────────
+  // The single pods, scooper, and lid — same products sold everywhere else,
+  // just surfaced here so someone can round out their order without leaving
+  // the drawer. Carries no state of its own; offerPrice() below always
+  // reflects whatever's actually in the cart right now.
+  const OFFER_PRODUCTS = [
+    { id: 'pill-pod',       title: 'Small Pill Pod', image: 'images/lifestyle_section/Pill Pod Hero.png' },
+    { id: 'hybrid-pod',     title: 'Big Pill Pod',    image: 'images/lifestyle_section/Hybrid Pod.png' },
+    { id: 'powder-pod',     title: 'Powder Pod',      image: 'images/lifestyle_section/Powder Pod Render.png' },
+    { id: 'travel-scooper', title: 'Travel Scooper',  image: 'images/lifestyle_section/Scooper.png' },
+    { id: 'single-lid',     title: 'Single Lid',      image: 'images/lifestyle_section/Full Render.png' },
+  ]
+  const OFFER_FLAT_PRICE = { 'travel-scooper': 11, 'single-lid': 7 }
+  function offerFlatPrice(id) { return OFFER_FLAT_PRICE[id] ?? 0 }
+
+  // A single pod's offer price is what adding ONE MORE would actually cost
+  // right now — i.e. the same "Add a Pod" bundle-discount curve every pod
+  // page and the cart itself already use, evaluated one unit past the
+  // cart's current combined pod count (not the count including this one,
+  // since it isn't in the cart yet).
+  function offerPrice(id) {
+    const basePrice = STACKING_POD_BASE_PRICE[id]
+    if (basePrice == null) return offerFlatPrice(id)
+    const currentQty = getCart().items
+      .filter(i => STACKING_POD_BASE_PRICE[i.id] != null)
+      .reduce((sum, i) => sum + i.quantity, 0)
+    const discount = stackingPodDiscountForQty(currentQty + 1)
+    return Math.round(basePrice * (1 - discount) * 100) / 100
+  }
+
+  function offersHtml() {
+    const cards = OFFER_PRODUCTS.map(p => {
+      const href = PRODUCT_PAGE_BY_ID[p.id] || null
+      return (
+        '<div class="cart-drawer-offer-card">' +
+          (href ? '<a class="cart-drawer-offer-img" href="' + href + '">' : '<div class="cart-drawer-offer-img">') +
+            '<img src="' + p.image + '" alt="' + p.title + '" />' +
+          (href ? '</a>' : '</div>') +
+          '<div class="cart-drawer-offer-info">' +
+            '<p class="cart-drawer-offer-name">' + (href ? '<a href="' + href + '">' + p.title + '</a>' : p.title) + '</p>' +
+            '<p class="cart-drawer-offer-price">' + formatMoney(offerPrice(p.id)) + '</p>' +
+          '</div>' +
+          '<button type="button" class="cart-drawer-offer-add" data-offer-id="' + p.id + '">+ Add</button>' +
+        '</div>'
+      )
+    }).join('')
+
+    const chevronLeft  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+    const chevronRight = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+
+    return (
+      '<div class="cart-drawer-offers">' +
+        '<div class="cart-drawer-offers-header">' +
+          '<span>Exclusive offers to pair with your order!</span>' +
+          '<div class="cart-drawer-offers-nav">' +
+            '<button type="button" class="cart-drawer-offers-arrow" data-dir="-1" aria-label="Scroll offers left">' + chevronLeft + '</button>' +
+            '<button type="button" class="cart-drawer-offers-arrow" data-dir="1" aria-label="Scroll offers right">' + chevronRight + '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="cart-drawer-offers-track" id="cart-drawer-offers-track">' + cards + '</div>' +
+      '</div>'
+    )
+  }
+
   // Every renderDrawer() call rebuilds the footer's innerHTML from scratch
   // (quantities/subtotal have to, to stay current) — tracked separately so
   // the promo accordion doesn't silently re-collapse on the next qty or
@@ -533,6 +613,7 @@
     if (freeGiftsHtml) {
       html += '<div class="cart-drawer-section-label">Free Gifts</div>' + freeGiftsHtml
     }
+    html += offersHtml()
     body.innerHTML = html
 
     footer.innerHTML =
