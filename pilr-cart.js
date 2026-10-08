@@ -444,6 +444,19 @@
     )
   }
 
+  // No "-" at all — used for a free-perk line still at just its one free
+  // unit, so there's no way to remove the gift itself, only grow it (which
+  // splits off a paid row with its own normal steppers, see
+  // perkDrawerRowsHtml).
+  function qtyCtrlAddOnlyHtml(key, qty) {
+    return (
+      '<div class="cart-drawer-qty-ctrl">' +
+        '<span class="cart-drawer-qty-val">' + qty + '</span>' +
+        '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + key + '">+</button>' +
+      '</div>'
+    )
+  }
+
   function drawerItemRowHtml(item) {
     const d = getItemDisplay(item)
     const priceInner = d.isFree
@@ -484,7 +497,7 @@
       desc: desc,
       qtyHtml: split
         ? '<div class="cart-drawer-qty-ctrl cart-drawer-qty-ctrl--static"><span class="cart-drawer-qty-val">1</span></div>'
-        : qtyCtrlHtml(item.id, 1),
+        : qtyCtrlAddOnlyHtml(item.id, 1),
     })
 
     const paidHtml = split
