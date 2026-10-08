@@ -906,15 +906,15 @@ body {
 }
 
 .catalog-main .shop-card-info {
-  padding: 1.1rem 1.5rem 1.4rem;
+  padding: 1.2rem 1.65rem 1.5rem;
 }
 
 .catalog-main .shop-card-info h3 {
-  font-size: 1.15rem;
+  font-size: 1.28rem;
 }
 
 .catalog-main .shop-card-info p {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* Catalog cards: fix the image box to a set proportion instead of
@@ -926,16 +926,13 @@ body {
 
 .catalog-main .shop-card-img {
   flex: none;
-  aspect-ratio: 6 / 5.2;
-  /* Taller box without a bigger image: the extra height goes entirely to
-     padding, so the available (object-fit: contain) area stays the exact
-     size it was at the old 6/5 ratio. */
-  padding-top: 37px;
-  padding-bottom: 37px;
+  aspect-ratio: 6 / 5.7;
+  padding-top: 28px;
+  padding-bottom: 28px;
 }
 
 .catalog-main .shop-price {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 
