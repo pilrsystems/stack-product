@@ -910,12 +910,12 @@ body {
 }
 
 .catalog-main .shop-card-info h3 {
-  font-size: 1.28rem;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
 .catalog-main .shop-card-info p {
-  font-size: 1rem;
+  font-size: 0.92rem;
 }
 
 /* Catalog cards: fix the image box to a set proportion instead of
