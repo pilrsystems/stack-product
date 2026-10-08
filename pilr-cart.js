@@ -190,7 +190,7 @@
     'pill-pod': 'Keeps your pills organized.',
     'hybrid-pod': 'Fits medium and large capsules.',
     'powder-pod': 'Keeps your powder fresh.',
-    'classic-stack': 'Your whole routine, one system.',
+    'classic-stack': 'Powder Pod, Big Pill Pod, Little Pill Pod',
     'travel-scooper': 'Scoop and go, anywhere.',
     'travel-scooper-free': 'Scoop and go, anywhere.',
     'single-lid': 'Locks every pod shut tight.',
