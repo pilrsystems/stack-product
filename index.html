@@ -107,7 +107,7 @@
         </div>
         <div class="shop-card-info">
           <h3>Single Pods</h3>
-          <p>Just little pills, big pills, or powders</p>
+          <p>Start with one pod. Add more anytime.</p>
           <span class="shop-price"><span class="shop-price-lead">from</span> $24</span>
         </div>
       </a>
@@ -181,34 +181,6 @@
   </section>
 
 
-  <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
-       two corner labels, and a headline/subline below. Pauses off-screen;
-       shows only the poster under prefers-reduced-motion. -->
-  <section class="fly-video">
-    <div class="fly-video-inner">
-      <div class="fly-video-copy">
-        <p class="why-label">TSA Compliant</p>
-        <h2 class="fly-video-headline">Stop stuffing your pills and powders in your checked luggage.</h2>
-      </div>
-      <div class="fly-video-media">
-        <video
-          class="fly-video-el"
-          src="images/lifestyle_section/Built To Fly Video.mp4"
-          poster="images/lifestyle_section/Built To Fly Video Poster.jpg"
-          autoplay
-          muted
-          loop
-          playsinline
-          width="1920"
-          height="1080"
-        ></video>
-        <div class="fly-video-gradient" aria-hidden="true"></div>
-        <span class="fly-video-label fly-video-label--left">Pack. Stack. Go.</span>
-        <span class="fly-video-label fly-video-label--right">Through security, in plain sight</span>
-      </div>
-    </div>
-  </section>
-
   <!-- EXPLORE ROUTINE — three-up image grid, one row, each linking to a
        shop entry point. Images are placeholders (flat color rectangles)
        until real lifestyle photos are ready. -->
@@ -242,46 +214,57 @@
     </div>
   </section>
 
+  <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
+       two corner labels, and a headline/subline below. Pauses off-screen;
+       shows only the poster under prefers-reduced-motion. -->
+  <section class="fly-video">
+    <div class="fly-video-inner">
+      <div class="fly-video-media">
+        <video
+          class="fly-video-el"
+          src="images/lifestyle_section/Built To Fly Video.mp4"
+          poster="images/lifestyle_section/Built To Fly Video Poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          width="1920"
+          height="1080"
+        ></video>
+        <div class="fly-video-gradient" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROBLEM SECTION — reuses the site's .why-label eyebrow and the
-       shared h2 heading recipe (same as .capacity-inner h2 / .why-right
-       h2), same 1240px/3rem container as the sections around it. The
-       old-way row is vertically centered in the space under the
-       subtitle (flex: 1 wrapper), completely still — no stagger, no
-       animation. pilr is not sized to match the old-way column's
-       height. -->
+       shared h2 heading recipe, same 1240px/3rem container as the
+       sections around it. Left: headline + a row of line icons for the
+       old workarounds. Right: the pilr photo and caption. -->
   <section class="problem">
     <div class="problem-inner">
       <div class="problem-grid">
         <div class="problem-head">
           <p class="why-label">THE PROBLEM</p>
-          <h2 class="problem-headline">Routines don't break.<br>They get left behind.</h2>
-          <p class="problem-subtitle">Every trip has the same workarounds.</p>
+          <h2 class="problem-headline">Infinite problems. One solution.</h2>
         </div>
         <div class="problem-row-wrap">
           <div class="problem-old-ways">
             <figure>
-              <div class="problem-item-imgbox">
-                <img src="images/lifestyle_section/Problem Organizer-trimmed.png" alt="Blurred 7-day pill organizer labeled M T W T F S" width="459" height="256" loading="lazy" />
-              </div>
+              <img class="problem-icon problem-icon--img problem-icon--wide" src="images/lifestyle_section/Problem Organizer Icon.png" alt="" width="400" height="119" loading="lazy" />
               <figcaption><span class="problem-old-ways-label">7-day organizers</span><span class="problem-old-ways-desc">Too small. No room for powder.</span></figcaption>
             </figure>
             <figure>
-              <div class="problem-item-imgbox">
-                <img src="images/lifestyle_section/Problem Ziplocks-trimmed.png" alt="Two ziploc bags, one with pills and one with powder" width="450" height="272" loading="lazy" />
-              </div>
-              <figcaption><span class="problem-old-ways-label">Ziplocks</span><span class="problem-old-ways-desc">Leak. Get stopped at TSA.</span></figcaption>
+              <img class="problem-icon problem-icon--img" src="images/lifestyle_section/Problem Ziploc Icon.png" alt="" width="299" height="400" loading="lazy" />
+              <figcaption><span class="problem-old-ways-label">Ziplocs</span><span class="problem-old-ways-desc">Leak. Get stopped at TSA.</span></figcaption>
             </figure>
             <figure>
-              <div class="problem-item-imgbox">
-                <img src="images/lifestyle_section/Problem Bottles Real-trimmed.png" alt="Three blurred supplement bottles" width="402" height="349" loading="lazy" />
-              </div>
+              <img class="problem-icon problem-icon--img" src="images/lifestyle_section/Problem Bottle Icon.png" alt="" width="223" height="400" loading="lazy" />
               <figcaption><span class="problem-old-ways-label">Full-size bottles</span><span class="problem-old-ways-desc">Heavy. Take over your bag.</span></figcaption>
             </figure>
           </div>
         </div>
         <figure class="problem-pilr">
-          <img src="images/lifestyle_section/Pilr Stack Cutout-trimmed.png" alt="The full pilr stack: lid and three pods" width="566" height="907" />
-          <figcaption><span class="problem-pilr-label">pilr</span><span class="problem-pilr-desc">One system. Leakproof. Clears TSA.</span></figcaption>
+          <img src="images/Home Page 1.png" alt="A hand holding three open pilr pods filled with powder and pills" width="861" height="1051" loading="lazy" />
         </figure>
       </div>
     </div>
@@ -369,60 +352,6 @@
             </div>
           </a>
           <p class="capacity-card-caption">Small Pill Pod</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BLOG SECTION — horizontal scrolling card carousel, styled after
-       a reference layout. Cards are placeholders (blank image boxes,
-       generic copy) until real blog content is ready. -->
-  <section class="blog-section">
-    <div class="blog-section-inner">
-      <div class="blog-section-header">
-        <h2 class="blog-section-title">Explore pilr</h2>
-      </div>
-      <div class="blog-carousel-wrap">
-        <div class="blog-carousel" id="blog-carousel">
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/TSA Bin Bottom.jpg" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Carry-on Ready</h3>
-              <a href="./classic-stack.html" class="blog-card-btn">Shop The Classic Stack <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Gym Back Card.JPG" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Always With You</h3>
-              <a href="./catalog.html#section-single-pods" class="blog-card-btn">Shop All Pods <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Graduation Pic.jpg" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">Behind The Brand</h3>
-              <a href="./about.html" class="blog-card-btn">Our Story <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Build Your Own System.JPG" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">The Routine Problem</h3>
-              <a href="./why-pilr.html" class="blog-card-btn">Why pilr <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-          <div class="blog-card">
-            <div class="blog-card-img"><img src="images/lifestyle_section/Airport Asset.png" alt="" /></div>
-            <div class="blog-card-overlay">
-              <h3 class="blog-card-title">How It Works</h3>
-              <a href="./faq.html" class="blog-card-btn">FAQs <span class="blog-card-btn-arrow">→</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="blog-carousel-nav">
-          <button class="blog-carousel-arrow blog-carousel-arrow--prev" aria-label="Previous post">‹</button>
-          <button class="blog-carousel-arrow blog-carousel-arrow--next" aria-label="Next post">›</button>
         </div>
       </div>
     </div>
@@ -797,25 +726,6 @@
         });
       }, { threshold: 0.25 });
       io.observe(vid);
-    })();
-  </script>
-  <script>
-    (function() {
-      var track = document.getElementById('blog-carousel');
-      var prev = document.querySelector('.blog-carousel-arrow--prev');
-      var next = document.querySelector('.blog-carousel-arrow--next');
-      if (!track || !prev || !next) return;
-      function step() {
-        var card = track.querySelector('.blog-card');
-        var gap = parseFloat(getComputedStyle(track).gap) || 0;
-        return card ? card.getBoundingClientRect().width + gap : 300;
-      }
-      prev.addEventListener('click', function() {
-        track.scrollBy({ left: -step(), behavior: 'smooth' });
-      });
-      next.addEventListener('click', function() {
-        track.scrollBy({ left: step(), behavior: 'smooth' });
-      });
     })();
   </script>
 </body>

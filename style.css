@@ -1104,7 +1104,7 @@ body {
   max-width: 1160px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
   gap: 5rem;
   align-items: center;
 }
@@ -1225,7 +1225,7 @@ body {
    corner labels, headline/subline below. ──────────────────────────── */
 .fly-video {
   background: var(--bg);
-  padding: 3rem 3rem;
+  padding: 3rem 3rem 7rem;
 }
 
 .fly-video-inner {
@@ -1256,40 +1256,8 @@ body {
   pointer-events: none;
 }
 
-.fly-video-label {
-  position: absolute;
-  bottom: 28px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.92);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-.fly-video-label--left { left: 32px; }
-.fly-video-label--right { right: 32px; text-align: right; }
-
-.fly-video-copy { margin-bottom: 32px; }
-
-.fly-video-headline {
-  font-size: 41px;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: #5e6e7a;
-}
-
-@media (max-width: 600px) {
-  .fly-video-label--right { display: none; }
-}
-
-@media (max-width: 768px) {
-  .fly-video-headline { font-size: 1.6rem; white-space: normal; }
-}
-
 @media (max-width: 900px) {
-  .fly-video { padding: 4rem 1.5rem; }
+  .fly-video { padding: 4rem 1.5rem 7rem; }
 }
 
 /* ── PROBLEM SECTION — same container/gutter as .explore-routine and
@@ -1315,7 +1283,6 @@ body {
   grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
   grid-template-rows: auto 1fr;
   column-gap: 40px;
-  align-items: stretch;
   width: 100%;
 }
 
@@ -1329,62 +1296,55 @@ body {
   letter-spacing: -0.02em;
   color: #5e6e7a;
   white-space: nowrap;
-  margin-bottom: 1rem;
-}
-
-.problem-subtitle {
-  font-size: 1rem;
-  color: #7a8a94;
 }
 
 .problem-row-wrap {
   grid-column: 1;
   grid-row: 2;
-  display: flex;
-  align-items: center;
-  padding-bottom: 8cqw;
+  padding-top: 5.5rem;
 }
 
 .problem-old-ways {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 40px;
-  width: 100%;
-  align-items: flex-end;
 }
 
-.problem-item-imgbox {
-  height: 11.4cqw;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-}
-
-.problem-item-imgbox img {
-  max-width: 60%;
-  max-height: 9.7cqw;
-  width: auto;
-  height: auto;
+.problem-icon {
   display: block;
+  width: 54px;
+  height: 54px;
+  color: #5e6e7a;
+  margin-bottom: 14px;
 }
 
-.problem-old-ways figcaption { margin-top: 14px; }
+.problem-icon--img {
+  width: auto;
+}
+
+.problem-icon--wide {
+  width: 81px;
+  object-fit: contain;
+  object-position: left center;
+}
 
 .problem-old-ways-label {
   display: block;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #9aa5ab;
+  color: #5e6e7a;
+  opacity: 0.7;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .problem-old-ways-desc {
   display: block;
-  font-size: 13px;
+  font-size: 13.5px;
   line-height: 1.4;
-  color: #9aa5ab;
+  color: #5e6e7a;
+  opacity: 0.7;
   margin-top: 0.3rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -1395,28 +1355,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin: 0;
-}
-.problem-pilr img { width: 24cqw; max-width: 400px; height: auto; display: block; }
-.problem-pilr figcaption { margin-top: 18px; text-align: center; }
-
-.problem-pilr-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #33414a;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  justify-content: center;
 }
 
-.problem-pilr-desc {
+.problem-pilr img {
   display: block;
-  font-size: 15px;
-  color: #33414a;
-  margin-top: 0.3rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 230px;
+  transform: translate(-36px, 36px);
 }
 
 @media (max-width: 900px) {
@@ -1431,15 +1379,16 @@ body {
     text-align: center;
   }
   .problem-head { order: 1; }
-  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 0; }
-  .problem-row-wrap { order: 3; padding-bottom: 0; margin-top: 2rem; }
-  .problem-old-ways { justify-items: center; }
-  .problem-item-imgbox { justify-content: center; }
+  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 2.25rem; }
+  .problem-pilr img { max-height: 260px; }
+  .problem-row-wrap { order: 3; padding-top: 2rem; }
+  .problem-old-ways { grid-template-columns: 1fr; row-gap: 2rem; }
+  .problem-icon { margin-inline: auto; }
   .problem-headline { font-size: 1.7rem; white-space: normal; }
 }
 
 .explore-routine {
-  padding: 5.5rem 3rem 6rem;
+  padding: 3.5rem 3rem 6rem;
   background: var(--bg);
 }
 
@@ -1537,7 +1486,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 @media (max-width: 900px) {
-  .explore-routine { padding: 4rem 1.5rem; }
+  .explore-routine { padding: 3.5rem 1.5rem 4rem; }
   .explore-routine-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
@@ -1722,7 +1671,16 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    Scale it up to match, anchored to the bottom so it keeps the same
    baseline as Big pills / Small pills. */
 #capacity-2 img[alt="Powders"] {
-  transform: scale(1.15);
+  /* 1.15 * 0.92 — all three pods are scaled down 8%. The translateY
+     (scale delta * the img's 2.85rem bottom padding) keeps each pod's
+     bottom edge exactly where it was, since the scale origin is the
+     element's bottom edge, not the pod's. */
+  transform: translateY(-0.2622rem) scale(1.058);
+  transform-origin: bottom center;
+}
+
+#capacity-2 img[alt="Big pills"] {
+  transform: translateY(-0.228rem) scale(0.92);
   transform-origin: bottom center;
 }
 
@@ -1731,7 +1689,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    bottom-anchoring doesn't land it on quite the same visual baseline.
    Nudge it down slightly to compensate. */
 #capacity-2 img[alt="Small pills"] {
-  transform: translateY(6px);
+  transform: translateY(calc(6px - 0.228rem)) scale(0.92);
+  transform-origin: bottom center;
 }
 
 /* Push the whole card row down slightly for a bit more breathing room
@@ -2473,190 +2432,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .footer-col ul a:hover { color: #FFFFFF; }
-
-/* ── BLOG SECTION ─────────────────────────── */
-.blog-section {
-  padding: 6rem 0 4.5rem 3.5rem;
-  background: var(--bg);
-}
-
-.blog-section-inner {
-  max-width: 1800px;
-  margin: 0 auto;
-}
-
-.blog-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.blog-section-title {
-  font-size: 41px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: #5e6e7a;
-}
-
-.blog-carousel-wrap {
-  position: relative;
-}
-
-.blog-carousel {
-  display: flex;
-  gap: 1.25rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.blog-carousel::-webkit-scrollbar {
-  display: none;
-}
-
-.blog-card {
-  position: relative;
-  flex: 0 0 clamp(300px, 26vw, 400px);
-  aspect-ratio: 3 / 3.7;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: #EFEDE9;
-  scroll-snap-align: start;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  /* Shrinks the card's own box (so it takes up 5% less layout space)
-     and scales everything inside it proportionally — text, padding,
-     button — in one step, rather than recalculating every value. */
-  zoom: 0.95;
-}
-
-.blog-card-img {
-  position: absolute;
-  inset: 0;
-  background: #EFEDE9;
-}
-
-.blog-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  /* Matches the card's own radius — without this, Chrome can render a
-     thin seam line through a transformed (scaled/shifted) image, the
-     same rendering quirk fixed on the Explore Routine cards. */
-  border-radius: var(--radius);
-  filter: brightness(0.74) saturate(0.92);
-}
-
-.blog-card-img img[src*="Airport Asset"] {
-  transform: scale(1.05) translateY(-30px);
-}
-
-.blog-card-img img[src*="Gym Back Card"] {
-  transform: scale(1.2) translateY(-57px);
-}
-
-.blog-card-img img[src*="TSA Bin Bottom"] {
-  transform: scale(1.1) translateY(-45px);
-}
-
-.blog-card-img img[src*="Build Your Own System"] {
-  transform: scale(1.1) translateY(-35px);
-}
-
-.blog-card-img img[src*="Graduation Pic"] {
-  transform: scale(1.08) translateY(-10px) translateX(15px);
-}
-
-.blog-card-overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0.9rem 1.25rem 1.1rem;
-  /* Frosted-glass effect — the photo is still visible underneath,
-     just heavily blurred, so the title/button stay legible over any
-     photo without hiding the image behind a flat panel. */
-  background: rgba(20, 20, 20, 0.32);
-  backdrop-filter: blur(10px) saturate(1.15);
-  -webkit-backdrop-filter: blur(10px) saturate(1.15);
-}
-
-.blog-card-title {
-  font-size: 1.45rem;
-  font-weight: 550;
-  color: #FFFFFF;
-  line-height: 1.3;
-  margin-bottom: 1.6rem;
-}
-
-.blog-card-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 0.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: var(--radius);
-  padding: 0.65rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #FFFFFF;
-  background: transparent;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.blog-card-btn-arrow {
-  transition: transform 0.2s ease;
-}
-
-.blog-card-btn:hover .blog-card-btn-arrow {
-  transform: translateX(3px);
-}
-
-.blog-card-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.blog-carousel-nav {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-  /* Section has no right padding (so the card row can bleed to the
-     true edge), but the arrows should stay inset from it. */
-  padding-right: 3.5rem;
-}
-
-.blog-carousel-arrow {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(94, 110, 122, 0.3);
-  background: #FFFFFF;
-  color: #5e6e7a;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.blog-carousel-arrow:hover {
-  background: #5e6e7a;
-  color: #FFFFFF;
-}
-
-@media (max-width: 700px) {
-  .blog-section { padding: 4rem 0 4rem 1.5rem; }
-  .blog-card { flex-basis: 200px; }
-}
 
 /* ── WHY PILR HERO (new page, in progress) ─── */
 .wp-hero {
@@ -4588,6 +4363,13 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    .catalog-section wrapper used to provide. */
 .catalog-main .shop-card {
   scroll-margin-top: 100px;
+}
+
+/* Jumping in from a nav link (catalog.html#section-...) focuses the
+   target card, which makes the browser draw its blue focus ring. */
+.catalog-main .shop-card:target:focus,
+.catalog-main .shop-card:target:focus-visible {
+  outline: none;
 }
 
 .catalog-hero {
