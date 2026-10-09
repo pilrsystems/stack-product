@@ -1312,8 +1312,8 @@ body {
 
 .problem-icon {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   color: #5e6e7a;
   margin-bottom: 14px;
 }
@@ -1323,7 +1323,7 @@ body {
 }
 
 .problem-icon--wide {
-  width: 60px;
+  width: 78px;
   object-fit: contain;
   object-position: left center;
 }
