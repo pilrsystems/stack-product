@@ -1318,6 +1318,10 @@ body {
   margin-bottom: 14px;
 }
 
+.problem-icon--img {
+  width: auto;
+}
+
 .problem-old-ways-label {
   display: block;
   font-size: 10px;
