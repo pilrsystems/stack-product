@@ -1317,15 +1317,19 @@ body {
 
 .problem-item-imgbox img {
   max-width: 60%;
-  max-height: 9.7cqw;
+  max-height: 8.3cqw;
   width: auto;
   height: auto;
   display: block;
 }
 
+.problem-pilr-imgbox {
+  height: 14cqw;
+}
+
 .problem-pilr-imgbox img {
   max-width: 85%;
-  max-height: 11.4cqw;
+  max-height: 14cqw;
 }
 
 .problem-old-ways figcaption { margin-top: 14px; }
