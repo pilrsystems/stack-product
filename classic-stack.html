@@ -237,7 +237,7 @@
       column-gap: 56px; row-gap: 44px; margin-top: 1.5rem;
     }
     .btl-spec-label {
-      font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5e6e7a; font-weight: 700;
+      font-size: 1.15rem; color: #5e6e7a; font-weight: 500;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin: 0 0 0.4rem;
     }
@@ -251,46 +251,6 @@
       .btl-specs { grid-template-columns: 1fr; }
     }
 
-    /* COMPARISON — full-width, matches the page's own background,
-       sits between the "Stay consistent, anywhere." benefits section
-       and the FAQ. Headers/labels are normal-case body text now, not
-       the LABEL register; only the pilr logo is scaled up as the
-       featured column. Reuses the site's existing border/bg tokens
-       (#E5E4DF, rgba(66,85,99,0.15), --radius, --bg). */
-    .comparison-section { background: var(--bg); padding: 5rem 3rem; }
-    .comparison-table {
-      display: grid; grid-template-columns: 1.6fr repeat(3, 1fr);
-      max-width: 900px; margin: 0 auto;
-      border: 1.5px solid #E5E4DF; border-radius: var(--radius); overflow: hidden;
-      background: #fff;
-    }
-    .comparison-cell {
-      display: flex; align-items: center; justify-content: center;
-      padding: 1rem 1rem; border-bottom: 1px solid rgba(66,85,99,0.15);
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    .comparison-table > .comparison-cell:nth-last-child(-n+4) { border-bottom: none; }
-    .comparison-header {
-      font-size: 0.94rem; color: #7a8a94; font-weight: 600; text-align: center;
-      background: #FAFAF8; border-bottom: 1px solid rgba(66,85,99,0.15);
-    }
-    .comparison-header--pilr { gap: 0.4rem; }
-    .comparison-logo { height: 26px; width: auto; display: block; }
-    .comparison-label {
-      justify-content: flex-start; text-align: left;
-      font-size: 0.94rem; color: #5e6e7a;
-    }
-    .comparison-check { display: block; }
-    .comparison-dash { width: 14px; height: 2px; border-radius: 1px; background: rgba(122,138,148,0.4); display: block; }
-    /* Featured column — faint slate tint on every cell in the pilr
-       column (header + all 8 rows): 2nd of every 5 grid children. */
-    .comparison-table > .comparison-cell:nth-child(4n+2) { background: rgba(94,110,122,0.06); }
-    .comparison-table > .comparison-header.comparison-header--pilr { background: rgba(94,110,122,0.1); }
-    @media (max-width: 760px) {
-      .comparison-section { padding: 3rem 1.25rem; }
-      .comparison-table { grid-template-columns: 1.3fr repeat(3, 0.9fr); font-size: 0.9em; }
-      .comparison-cell { padding: 0.75rem 0.5rem; }
-    }
   </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
@@ -511,46 +471,50 @@
 
   <!-- COMPARISON -->
   <section class="comparison-section">
-    <div class="comparison-table">
-      <div class="comparison-cell comparison-header"></div>
-      <div class="comparison-cell comparison-header comparison-header--pilr"><img src="images/logov3-cropped.png" alt="pilr" class="comparison-logo" /></div>
-      <div class="comparison-cell comparison-header">7-day pill organizers</div>
-      <div class="comparison-cell comparison-header">Ziploc bags</div>
+    <div class="comparison-table-wrap">
+      <img class="comparison-photo comparison-photo--organizer" src="images/lifestyle_section/Problem Organizer-trimmed.png" alt="7-day pill organizer" />
+      <img class="comparison-photo comparison-photo--ziploc" src="images/lifestyle_section/Problem Ziplocks-trimmed.png" alt="Ziploc bags" />
+      <div class="comparison-table">
+        <div class="comparison-cell comparison-header"></div>
+        <div class="comparison-cell comparison-header comparison-header--pilr"><img src="images/logov3-cropped.png" alt="pilr" class="comparison-logo" /></div>
+        <div class="comparison-cell comparison-header">7-Day Pill Organizers</div>
+        <div class="comparison-cell comparison-header">Ziploc Bags</div>
 
-      <div class="comparison-cell comparison-label">TSA-compliant</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">Space-efficient</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
 
-      <div class="comparison-cell comparison-label">Leakproof seal</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">TSA-compliant</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
 
-      <div class="comparison-cell comparison-label">BPA-free</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">Built to last</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
 
-      <div class="comparison-cell comparison-label">Capsules &amp; powders, one system</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">Capsules &amp; powders</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
 
-      <div class="comparison-cell comparison-label">Built to last</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">Leakproof seal</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
 
-      <div class="comparison-cell comparison-label">Space-efficient</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">BPA-free</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
 
-      <div class="comparison-cell comparison-label">Temperature resistant</div>
-      <div class="comparison-cell comparison-mark"><svg class="comparison-check" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><polyline points="18 8 9.5 16 5.5 11.5" stroke="#FAFAF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
-      <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-label">Temperature resistant</div>
+        <div class="comparison-cell comparison-mark"><svg class="comparison-check" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><polyline points="4,10.5 8.5,15 16,5.5"/></svg></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+        <div class="comparison-cell comparison-mark"><span class="comparison-dash"></span></div>
+      </div>
     </div>
   </section>
 
