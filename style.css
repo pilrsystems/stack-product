@@ -1313,13 +1313,11 @@ body {
   align-items: flex-end;
 }
 
-.problem-pilr-imgbox img { max-height: 10.5cqw; }
-
 .problem-item-imgbox {
   height: 11.4cqw;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .problem-item-imgbox img {
@@ -1338,7 +1336,8 @@ body {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #9aa5ab;
+  color: #5e6e7a;
+  opacity: 0.4;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -1346,7 +1345,8 @@ body {
   display: block;
   font-size: 13px;
   line-height: 1.4;
-  color: #9aa5ab;
+  color: #5e6e7a;
+  opacity: 0.4;
   margin-top: 0.3rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -1357,14 +1357,14 @@ body {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #33414a;
+  color: #5e6e7a;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .problem-pilr-desc {
   display: block;
   font-size: 13px;
-  color: #33414a;
+  color: #5e6e7a;
   margin-top: 0.3rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
