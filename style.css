@@ -1279,15 +1279,9 @@ body {
 
 .problem-grid {
   container-type: inline-size;
-  display: grid;
-  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
-  column-gap: 40px;
-  align-items: stretch;
   width: 100%;
 }
 
-.problem-head { grid-column: 1; grid-row: 1; }
 .problem-head .why-label { margin-bottom: 1.25rem; }
 
 .problem-headline {
@@ -1306,8 +1300,6 @@ body {
 }
 
 .problem-row-wrap {
-  grid-column: 1;
-  grid-row: 2;
   display: flex;
   align-items: center;
   padding-bottom: 8cqw;
@@ -1315,11 +1307,13 @@ body {
 
 .problem-old-ways {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 40px;
   width: 100%;
   align-items: flex-end;
 }
+
+.problem-pilr-imgbox img { max-height: 10.5cqw; }
 
 .problem-item-imgbox {
   height: 11.4cqw;
@@ -1357,19 +1351,6 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.problem-pilr {
-  grid-column: 2;
-  grid-row: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  align-self: center;
-  margin: 0;
-}
-.problem-pilr img { max-height: 11.4cqw; width: auto; height: auto; display: block; }
-.problem-pilr figcaption { margin-top: 14px; text-align: center; }
-
 .problem-pilr-label {
   display: block;
   font-size: 10px;
@@ -1399,10 +1380,8 @@ body {
     flex-direction: column;
     text-align: center;
   }
-  .problem-head { order: 1; }
-  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 0; }
-  .problem-row-wrap { order: 3; padding-bottom: 0; margin-top: 2rem; }
-  .problem-old-ways { justify-items: center; }
+  .problem-row-wrap { padding-bottom: 0; margin-top: 2rem; }
+  .problem-old-ways { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; justify-items: center; }
   .problem-item-imgbox { justify-content: center; }
   .problem-headline { font-size: 1.7rem; white-space: normal; }
 }
