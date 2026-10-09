@@ -1366,30 +1366,6 @@ body {
   max-height: 230px;
 }
 
-.problem-pilr figcaption {
-  margin-top: 14px;
-  text-align: center;
-}
-
-.problem-pilr-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #5e6e7a;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-.problem-pilr-desc {
-  display: block;
-  font-size: 13px;
-  line-height: 1.4;
-  color: #5e6e7a;
-  margin-top: 0.3rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
 @media (max-width: 900px) {
   .problem-headline { white-space: normal; }
 }
