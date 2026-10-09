@@ -1310,6 +1310,10 @@ body {
   column-gap: 40px;
 }
 
+@media (min-width: 1200px) {
+  .problem-old-ways { width: 89.3%; }
+}
+
 .problem-icon {
   display: block;
   width: 54px;
