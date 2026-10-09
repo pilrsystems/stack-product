@@ -1144,7 +1144,7 @@ body {
 }
 
 .why-right h2 {
-  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
+  font-size: 41px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -1217,6 +1217,224 @@ body {
 .why-inner--reverse .why-right { order: 1; }
 
 /* ── EXPLORE ROUTINE ──────────────────────── */
+
+/* ── BUILT TO FLY VIDEO — uncropped native aspect ratio, bottom gradient,
+   corner labels, headline/subline below. ──────────────────────────── */
+.fly-video {
+  background: var(--bg);
+  padding: 3rem 3rem;
+}
+
+.fly-video-inner {
+  container-type: inline-size;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.fly-video-media {
+  position: relative;
+}
+
+.fly-video-el {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.9 / 1;
+  object-fit: cover;
+}
+
+.fly-video-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 15%;
+  background: linear-gradient(to top, rgba(51, 65, 74, 0.55), rgba(51, 65, 74, 0));
+  pointer-events: none;
+}
+
+.fly-video-label {
+  position: absolute;
+  bottom: 28px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.92);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.fly-video-label--left { left: 32px; }
+.fly-video-label--right { right: 32px; text-align: right; }
+
+.fly-video-copy { margin-bottom: 32px; }
+
+.fly-video-headline {
+  font-size: 41px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+}
+
+@media (max-width: 600px) {
+  .fly-video-label--right { display: none; }
+}
+
+@media (max-width: 768px) {
+  .fly-video-headline { font-size: 1.6rem; white-space: normal; }
+}
+
+@media (max-width: 900px) {
+  .fly-video { padding: 4rem 1.5rem; }
+}
+
+/* ── PROBLEM SECTION — same container/gutter as .explore-routine and
+   .capacity (1240px / 3rem sides), same eyebrow (.why-label) and h2
+   recipe as .capacity-inner h2 / .why-right h2, reused rather than
+   hard-coded. The old-way row is vertically centered in the space
+   under the subtitle via a flex:1 wrapper — no fixed margins, no
+   stagger, no animation. pilr is not resized to match that column's
+   height. ──────────────────────────────── */
+.problem {
+  background: var(--bg);
+  padding: 0 3rem 4rem;
+}
+
+.problem-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.problem-grid {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 40px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.problem-head { grid-column: 1; grid-row: 1; }
+.problem-head .why-label { margin-bottom: 1.25rem; }
+
+.problem-headline {
+  font-size: 41px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+  white-space: nowrap;
+  margin-bottom: 1rem;
+}
+
+.problem-subtitle {
+  font-size: 1rem;
+  color: #7a8a94;
+}
+
+.problem-row-wrap {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  padding-bottom: 8cqw;
+}
+
+.problem-old-ways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 40px;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.problem-item-imgbox {
+  height: 11.4cqw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.problem-item-imgbox img {
+  max-width: 60%;
+  max-height: 9.7cqw;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+.problem-old-ways figcaption { margin-top: 14px; }
+
+.problem-old-ways-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9aa5ab;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.problem-old-ways-desc {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #9aa5ab;
+  margin-top: 0.3rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.problem-pilr {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+}
+.problem-pilr img { width: 24cqw; max-width: 400px; height: auto; display: block; }
+.problem-pilr figcaption { margin-top: 18px; text-align: center; }
+
+.problem-pilr-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #33414a;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.problem-pilr-desc {
+  display: block;
+  font-size: 15px;
+  color: #33414a;
+  margin-top: 0.3rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .problem-headline { white-space: normal; }
+}
+
+@media (max-width: 768px) {
+  .problem { padding: 0 1.5rem 2.5rem; }
+  .problem-grid {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .problem-head { order: 1; }
+  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 0; }
+  .problem-row-wrap { order: 3; padding-bottom: 0; margin-top: 2rem; }
+  .problem-old-ways { justify-items: center; }
+  .problem-item-imgbox { justify-content: center; }
+  .problem-headline { font-size: 1.7rem; white-space: normal; }
+}
+
 .explore-routine {
   padding: 5.5rem 3rem 6rem;
   background: var(--bg);
@@ -1228,7 +1446,7 @@ body {
 }
 
 .explore-routine-title {
-  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
+  font-size: 41px;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: #5e6e7a;
@@ -1320,6 +1538,76 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .explore-routine-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* ── LIFESTYLE SECTION — same container/gutter as .explore-routine and
+   .capacity (1240px / 3rem sides). Three equal 3:4 portraits, no crop
+   beyond object-fit, no border/shadow/overlay. ─────────────────────── */
+.home-lifestyle {
+  background: var(--bg);
+  padding: 0 3rem 4rem;
+}
+
+.home-lifestyle-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.home-lifestyle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 40px;
+  align-items: start;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.home-lifestyle-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 40%;
+  display: block;
+}
+
+.home-lifestyle-item figcaption { margin-top: 14px; }
+
+.home-lifestyle-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.home-lifestyle-desc {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #7a8a94;
+  margin-top: 0.25rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+  .home-lifestyle { padding: 0 1.5rem 2.5rem; }
+  .home-lifestyle-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem;
+  }
+  .home-lifestyle-item {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+}
+
 .capacity {
   padding: 0 3rem 4rem;
   background: var(--bg);
@@ -1335,7 +1623,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .capacity-inner h2 {
-  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
+  font-size: 41px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -2203,7 +2491,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .blog-section-title {
-  font-size: clamp(1.6rem, 2.75vw, 2.35rem);
+  font-size: 41px;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: #5e6e7a;

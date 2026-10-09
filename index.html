@@ -180,6 +180,35 @@
     </div>
   </section>
 
+
+  <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
+       two corner labels, and a headline/subline below. Pauses off-screen;
+       shows only the poster under prefers-reduced-motion. -->
+  <section class="fly-video">
+    <div class="fly-video-inner">
+      <div class="fly-video-copy">
+        <p class="why-label">TSA Compliant</p>
+        <h2 class="fly-video-headline">Stop stuffing your pills and powders in your checked luggage.</h2>
+      </div>
+      <div class="fly-video-media">
+        <video
+          class="fly-video-el"
+          src="images/lifestyle_section/Built To Fly Video.mp4"
+          poster="images/lifestyle_section/Built To Fly Video Poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          width="1920"
+          height="1080"
+        ></video>
+        <div class="fly-video-gradient" aria-hidden="true"></div>
+        <span class="fly-video-label fly-video-label--left">Pack. Stack. Go.</span>
+        <span class="fly-video-label fly-video-label--right">Through security, in plain sight</span>
+      </div>
+    </div>
+  </section>
+
   <!-- EXPLORE ROUTINE — three-up image grid, one row, each linking to a
        shop entry point. Images are placeholders (flat color rectangles)
        until real lifestyle photos are ready. -->
@@ -209,6 +238,73 @@
             <span class="explore-routine-arrow">→</span>
           </div>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION — reuses the site's .why-label eyebrow and the
+       shared h2 heading recipe (same as .capacity-inner h2 / .why-right
+       h2), same 1240px/3rem container as the sections around it. The
+       old-way row is vertically centered in the space under the
+       subtitle (flex: 1 wrapper), completely still — no stagger, no
+       animation. pilr is not sized to match the old-way column's
+       height. -->
+  <section class="problem">
+    <div class="problem-inner">
+      <div class="problem-grid">
+        <div class="problem-head">
+          <p class="why-label">THE PROBLEM</p>
+          <h2 class="problem-headline">Routines don't break.<br>They get left behind.</h2>
+          <p class="problem-subtitle">Every trip has the same workarounds.</p>
+        </div>
+        <div class="problem-row-wrap">
+          <div class="problem-old-ways">
+            <figure>
+              <div class="problem-item-imgbox">
+                <img src="images/lifestyle_section/Problem Organizer-trimmed.png" alt="Blurred 7-day pill organizer labeled M T W T F S" width="459" height="256" loading="lazy" />
+              </div>
+              <figcaption><span class="problem-old-ways-label">7-day organizers</span><span class="problem-old-ways-desc">Too small. No room for powder.</span></figcaption>
+            </figure>
+            <figure>
+              <div class="problem-item-imgbox">
+                <img src="images/lifestyle_section/Problem Ziplocks-trimmed.png" alt="Two ziploc bags, one with pills and one with powder" width="450" height="272" loading="lazy" />
+              </div>
+              <figcaption><span class="problem-old-ways-label">Ziplocks</span><span class="problem-old-ways-desc">Leak. Get stopped at TSA.</span></figcaption>
+            </figure>
+            <figure>
+              <div class="problem-item-imgbox">
+                <img src="images/lifestyle_section/Problem Bottles Real-trimmed.png" alt="Three blurred supplement bottles" width="402" height="349" loading="lazy" />
+              </div>
+              <figcaption><span class="problem-old-ways-label">Full-size bottles</span><span class="problem-old-ways-desc">Heavy. Take over your bag.</span></figcaption>
+            </figure>
+          </div>
+        </div>
+        <figure class="problem-pilr">
+          <img src="images/lifestyle_section/Pilr Stack Cutout-trimmed.png" alt="The full pilr stack: lid and three pods" width="566" height="907" />
+          <figcaption><span class="problem-pilr-label">pilr</span><span class="problem-pilr-desc">One system. Leakproof. Clears TSA.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFESTYLE SECTION — three equal 3:4 portraits, same container/
+       gutters/padding as the sections around it. No heading, since
+       neither neighboring section pairs one here. -->
+  <section class="home-lifestyle">
+    <div class="home-lifestyle-inner">
+      <div class="home-lifestyle-grid">
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Carryon.jpg" alt="Holding the pilr stack by hand in an airplane seat" width="1000" height="1314" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Carry-on</span><span class="home-lifestyle-desc">Fits one hand.</span></figcaption>
+        </figure>
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Gym.jpg" alt="The pilr stack packed inside an open gym duffel bag" width="1000" height="1300" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Gym bag</span><span class="home-lifestyle-desc">Sits with the rest of your kit.</span></figcaption>
+        </figure>
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Morning.jpg" alt="The pilr stack open on a sunlit counter in the morning" width="1000" height="1322" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Morning</span><span class="home-lifestyle-desc">Part of the routine.</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -681,6 +777,27 @@
         btn.nextElementSibling.classList.toggle('is-open', !expanded);
       });
     });
+  </script>
+  <script>
+    (function() {
+      var vid = document.querySelector('.fly-video-el');
+      if (!vid) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        vid.removeAttribute('autoplay');
+        vid.pause();
+        return;
+      }
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            vid.play().catch(function() {});
+          } else {
+            vid.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+      io.observe(vid);
+    })();
   </script>
   <script>
     (function() {
