@@ -1225,7 +1225,7 @@ body {
    corner labels, headline/subline below. ──────────────────────────── */
 .fly-video {
   background: var(--bg);
-  padding: 3rem 3rem 5rem;
+  padding: 3rem 3rem 7rem;
 }
 
 .fly-video-inner {
@@ -1257,7 +1257,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .fly-video { padding: 4rem 1.5rem 5rem; }
+  .fly-video { padding: 4rem 1.5rem 7rem; }
 }
 
 /* ── PROBLEM SECTION — same container/gutter as .explore-routine and
