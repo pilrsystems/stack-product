@@ -1675,7 +1675,16 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    Scale it up to match, anchored to the bottom so it keeps the same
    baseline as Big pills / Small pills. */
 #capacity-2 img[alt="Powders"] {
-  transform: scale(1.15);
+  /* 1.15 * 0.92 — all three pods are scaled down 8%. The translateY
+     (scale delta * the img's 2.85rem bottom padding) keeps each pod's
+     bottom edge exactly where it was, since the scale origin is the
+     element's bottom edge, not the pod's. */
+  transform: translateY(-0.2622rem) scale(1.058);
+  transform-origin: bottom center;
+}
+
+#capacity-2 img[alt="Big pills"] {
+  transform: translateY(-0.228rem) scale(0.92);
   transform-origin: bottom center;
 }
 
@@ -1684,7 +1693,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    bottom-anchoring doesn't land it on quite the same visual baseline.
    Nudge it down slightly to compensate. */
 #capacity-2 img[alt="Small pills"] {
-  transform: translateY(6px);
+  transform: translateY(calc(6px - 0.228rem)) scale(0.92);
+  transform-origin: bottom center;
 }
 
 /* Push the whole card row down slightly for a bit more breathing room
