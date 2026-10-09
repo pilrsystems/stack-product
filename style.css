@@ -1329,7 +1329,7 @@ body {
 
 .problem-pilr-imgbox img {
   max-width: 85%;
-  max-height: 14cqw;
+  max-height: 12cqw;
 }
 
 .problem-old-ways figcaption { margin-top: 14px; }
@@ -1368,6 +1368,7 @@ body {
 .problem-pilr-desc {
   display: block;
   font-size: 13px;
+  line-height: 1.4;
   color: #5e6e7a;
   margin-top: 0.3rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
