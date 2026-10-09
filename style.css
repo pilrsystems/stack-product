@@ -1294,11 +1294,6 @@ body {
   margin-bottom: 1rem;
 }
 
-.problem-subtitle {
-  font-size: 1rem;
-  color: #7a8a94;
-}
-
 .problem-row-wrap {
   display: flex;
   align-items: center;
