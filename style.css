@@ -1256,17 +1256,6 @@ body {
   pointer-events: none;
 }
 
-.fly-video-tsa-label {
-  position: absolute;
-  bottom: 28px;
-  left: 32px;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #fff;
-}
-
 @media (max-width: 900px) {
   .fly-video { padding: 4rem 1.5rem; }
 }
