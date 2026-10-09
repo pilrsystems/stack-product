@@ -1279,9 +1279,14 @@ body {
 
 .problem-grid {
   container-type: inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 40px;
   width: 100%;
 }
 
+.problem-head { grid-column: 1; grid-row: 1; }
 .problem-head .why-label { margin-bottom: 1.25rem; }
 
 .problem-headline {
@@ -1291,48 +1296,27 @@ body {
   letter-spacing: -0.02em;
   color: #5e6e7a;
   white-space: nowrap;
-  margin-bottom: 1rem;
 }
 
 .problem-row-wrap {
-  display: flex;
-  align-items: center;
-  padding-bottom: 8cqw;
+  grid-column: 1;
+  grid-row: 2;
+  padding-top: 3.5rem;
 }
 
 .problem-old-ways {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 40px;
-  width: 100%;
-  align-items: flex-end;
 }
 
-.problem-item-imgbox {
-  height: 14cqw;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.problem-item-imgbox img {
-  max-width: 60%;
-  max-height: 8.3cqw;
-  width: auto;
-  height: auto;
+.problem-icon {
   display: block;
+  width: 40px;
+  height: 40px;
+  color: #5e6e7a;
+  margin-bottom: 14px;
 }
-
-.problem-item-imgbox--sm img {
-  max-height: 6.8cqw;
-}
-
-.problem-pilr-imgbox img {
-  max-width: 85%;
-  max-height: 12cqw;
-}
-
-.problem-old-ways figcaption { margin-top: 14px; }
 
 .problem-old-ways-label {
   display: block;
@@ -1353,6 +1337,27 @@ body {
   opacity: 0.4;
   margin-top: 0.3rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.problem-pilr {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.problem-pilr img {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+
+.problem-pilr figcaption {
+  margin-top: 14px;
+  text-align: center;
 }
 
 .problem-pilr-label {
@@ -1385,9 +1390,11 @@ body {
     flex-direction: column;
     text-align: center;
   }
-  .problem-row-wrap { padding-bottom: 0; margin-top: 2rem; }
-  .problem-old-ways { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; justify-items: center; }
-  .problem-item-imgbox { justify-content: center; }
+  .problem-head { order: 1; }
+  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 0; }
+  .problem-row-wrap { order: 3; padding-top: 2rem; }
+  .problem-old-ways { grid-template-columns: 1fr; row-gap: 2rem; }
+  .problem-icon { margin-inline: auto; }
   .problem-headline { font-size: 1.7rem; white-space: normal; }
 }
 

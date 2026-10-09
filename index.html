@@ -237,12 +237,9 @@
   </section>
 
   <!-- PROBLEM SECTION — reuses the site's .why-label eyebrow and the
-       shared h2 heading recipe (same as .capacity-inner h2 / .why-right
-       h2), same 1240px/3rem container as the sections around it. The
-       old-way row is vertically centered in the space under the
-       subtitle (flex: 1 wrapper), completely still — no stagger, no
-       animation. pilr is not sized to match the old-way column's
-       height. -->
+       shared h2 heading recipe, same 1240px/3rem container as the
+       sections around it. Left: headline + a row of line icons for the
+       old workarounds. Right: the pilr photo and caption. -->
   <section class="problem">
     <div class="problem-inner">
       <div class="problem-grid">
@@ -253,31 +250,23 @@
         <div class="problem-row-wrap">
           <div class="problem-old-ways">
             <figure>
-              <div class="problem-item-imgbox problem-item-imgbox--sm">
-                <img src="images/lifestyle_section/Problem Organizer-trimmed.png" alt="Blurred 7-day pill organizer labeled M T W T F S" width="459" height="256" loading="lazy" />
-              </div>
+              <svg class="problem-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="14" width="42" height="20" rx="2"/><path d="M3 20h42M9 14v20M15 14v20M21 14v20M27 14v20M33 14v20M39 14v20"/></svg>
               <figcaption><span class="problem-old-ways-label">7-day organizers</span><span class="problem-old-ways-desc">Too small. No room for powder.</span></figcaption>
             </figure>
             <figure>
-              <div class="problem-item-imgbox problem-item-imgbox--sm">
-                <img src="images/lifestyle_section/Problem Ziplocks-trimmed.png" alt="Two ziploc bags, one with pills and one with powder" width="450" height="272" loading="lazy" />
-              </div>
+              <svg class="problem-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="7" width="28" height="34" rx="3"/><path d="M10 14h28M10 17h28"/><circle cx="19" cy="27" r="2.5"/><circle cx="29" cy="24" r="2"/><circle cx="27" cy="33" r="2.5"/></svg>
               <figcaption><span class="problem-old-ways-label">Ziplocs</span><span class="problem-old-ways-desc">Leak. Get stopped at TSA.</span></figcaption>
             </figure>
             <figure>
-              <div class="problem-item-imgbox">
-                <img src="images/lifestyle_section/Problem Bottles Real-trimmed.png" alt="Three blurred supplement bottles" width="402" height="349" loading="lazy" />
-              </div>
+              <svg class="problem-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="17" y="4" width="14" height="6" rx="1.5"/><path d="M16 10h16a2 2 0 0 1 2 2v27a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V12a2 2 0 0 1 2-2z"/><rect x="18" y="20" width="12" height="14" rx="1"/><path d="M21 24h6M21 28h6"/></svg>
               <figcaption><span class="problem-old-ways-label">Full-size bottles</span><span class="problem-old-ways-desc">Heavy. Take over your bag.</span></figcaption>
-            </figure>
-            <figure>
-              <div class="problem-item-imgbox problem-pilr-imgbox">
-                <img src="images/lifestyle_section/Problem Pilr Pods.png" alt="Five open pilr pods with pills, powder, and gummies" width="700" height="569" loading="lazy" />
-              </div>
-              <figcaption><span class="problem-pilr-label">pilr</span><span class="problem-pilr-desc">One system. Leakproof. Clears TSA.</span></figcaption>
             </figure>
           </div>
         </div>
+        <figure class="problem-pilr">
+          <img src="images/lifestyle_section/Problem Pilr Pods.png" alt="Five open pilr pods with pills, powder, and gummies" width="700" height="569" loading="lazy" />
+          <figcaption><span class="problem-pilr-label">pilr</span><span class="problem-pilr-desc">One system. Leakproof. Clears TSA.</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
