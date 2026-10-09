@@ -1269,7 +1269,7 @@ body {
    height. ──────────────────────────────── */
 .problem {
   background: var(--bg);
-  padding: 0 3rem 7rem;
+  padding: 0 3rem 9rem;
 }
 
 .problem-inner {
@@ -1372,7 +1372,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .problem { padding: 0 1.5rem 7rem; }
+  .problem { padding: 0 1.5rem 9rem; }
   .problem-grid {
     display: flex;
     flex-direction: column;
