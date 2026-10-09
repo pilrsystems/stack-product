@@ -49,7 +49,7 @@ const SUPPLEMENTS = {
 // the free lid/scooper perk PilrCart grants automatically elsewhere.
 const ADD_ONS = {
   'single-lid':     { label: 'Single Lid',     price: 7, image: 'images/lifestyle_section/Full Render.png' },
-  'travel-scooper': { label: 'Travel Scooper', price: 9, image: 'images/lifestyle_section/Scooper.png' },
+  'travel-scooper': { label: 'Travel Scooper', price: 11, image: 'images/lifestyle_section/Scooper.png' },
 }
 
 // ── Individual pod GLB paths ─────────────────────────────────
