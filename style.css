@@ -1364,7 +1364,7 @@ body {
   max-width: 100%;
   height: auto;
   max-height: 230px;
-  transform: translate(-16px, 16px);
+  transform: translate(-36px, 36px);
 }
 
 @media (max-width: 900px) {
@@ -1379,7 +1379,7 @@ body {
     text-align: center;
   }
   .problem-head { order: 1; }
-  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 0; }
+  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 2.25rem; }
   .problem-pilr img { max-height: 260px; }
   .problem-row-wrap { order: 3; padding-top: 2rem; }
   .problem-old-ways { grid-template-columns: 1fr; row-gap: 2rem; }
