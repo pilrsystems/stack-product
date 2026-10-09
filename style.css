@@ -1364,6 +1364,7 @@ body {
   max-width: 100%;
   height: auto;
   max-height: 230px;
+  transform: translate(-16px, 16px);
 }
 
 @media (max-width: 900px) {
