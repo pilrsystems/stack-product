@@ -1309,7 +1309,7 @@ body {
 }
 
 .problem-item-imgbox {
-  height: 11.4cqw;
+  height: 14cqw;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -1323,8 +1323,8 @@ body {
   display: block;
 }
 
-.problem-pilr-imgbox {
-  height: 14cqw;
+.problem-item-imgbox--sm img {
+  max-height: 6.8cqw;
 }
 
 .problem-pilr-imgbox img {
