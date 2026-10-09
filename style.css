@@ -1315,14 +1315,20 @@ body {
 
 .problem-old-ways {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 40px;
   width: 100%;
-  align-items: flex-end;
+  align-items: center;
+}
+
+.problem-old-ways-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .problem-item-imgbox {
-  height: 11.4cqw;
+  height: 10cqw;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -1330,7 +1336,7 @@ body {
 
 .problem-item-imgbox img {
   max-width: 60%;
-  max-height: 9.7cqw;
+  max-height: 8.3cqw;
   width: auto;
   height: auto;
   display: block;
