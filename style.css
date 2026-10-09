@@ -1328,6 +1328,11 @@ body {
   display: block;
 }
 
+.problem-pilr-imgbox img {
+  max-width: 85%;
+  max-height: 11.4cqw;
+}
+
 .problem-old-ways figcaption { margin-top: 14px; }
 
 .problem-old-ways-label {
