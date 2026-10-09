@@ -1322,6 +1322,12 @@ body {
   width: auto;
 }
 
+.problem-icon--wide {
+  width: 60px;
+  object-fit: contain;
+  object-position: left center;
+}
+
 .problem-old-ways-label {
   display: block;
   font-size: 10px;
