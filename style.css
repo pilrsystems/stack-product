@@ -1339,7 +1339,7 @@ body {
    corner labels, headline/subline below. ──────────────────────────── */
 .fly-video {
   background: var(--bg);
-  padding: 3rem 3rem 7rem;
+  padding: 3rem 3rem 9rem;
 }
 
 .fly-video-inner {
@@ -1371,7 +1371,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .fly-video { padding: 4rem 1.5rem 7rem; }
+  .fly-video { padding: 4rem 1.5rem 9rem; }
 }
 
 /* ── PROBLEM SECTION — same container/gutter as .explore-routine and
@@ -1383,7 +1383,7 @@ body {
    height. ──────────────────────────────── */
 .problem {
   background: var(--bg);
-  padding: 0 3rem 4rem;
+  padding: 0 3rem 9rem;
 }
 
 .problem-inner {
@@ -1422,6 +1422,10 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 40px;
+}
+
+@media (min-width: 1200px) {
+  .problem-old-ways { width: 89.3%; }
 }
 
 .problem-icon {
@@ -1478,7 +1482,7 @@ body {
   max-width: 100%;
   height: auto;
   max-height: 230px;
-  transform: translate(-36px, 36px);
+  transform: translate(-56px, 56px);
 }
 
 @media (max-width: 900px) {
@@ -1486,14 +1490,14 @@ body {
 }
 
 @media (max-width: 768px) {
-  .problem { padding: 0 1.5rem 2.5rem; }
+  .problem { padding: 0 1.5rem 9rem; }
   .problem-grid {
     display: flex;
     flex-direction: column;
     text-align: center;
   }
   .problem-head { order: 1; }
-  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 2.25rem; }
+  .problem-pilr { order: 2; width: 70%; margin: 2rem auto 3.5rem; }
   .problem-pilr img { max-height: 260px; }
   .problem-row-wrap { order: 3; padding-top: 2rem; }
   .problem-old-ways { grid-template-columns: 1fr; row-gap: 2rem; }
