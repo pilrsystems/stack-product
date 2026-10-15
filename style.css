@@ -1339,7 +1339,7 @@ body {
    corner labels, headline/subline below. ──────────────────────────── */
 .fly-video {
   background: var(--bg);
-  padding: 3rem 3rem 9rem;
+  padding: 3rem 3rem 7rem;
 }
 
 .fly-video-inner {
@@ -1371,7 +1371,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .fly-video { padding: 4rem 1.5rem 9rem; }
+  .fly-video { padding: 4rem 1.5rem 7rem; }
 }
 
 /* ── PROBLEM SECTION — same container/gutter as .explore-routine and
@@ -1383,7 +1383,7 @@ body {
    height. ──────────────────────────────── */
 .problem {
   background: var(--bg);
-  padding: 0 3rem 9rem;
+  padding: 2rem 3rem 9rem;
 }
 
 .problem-inner {
@@ -1490,7 +1490,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .problem { padding: 0 1.5rem 9rem; }
+  .problem { padding: 2rem 1.5rem 9rem; }
   .problem-grid {
     display: flex;
     flex-direction: column;
