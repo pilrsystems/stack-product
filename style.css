@@ -609,6 +609,14 @@ body {
   transform: translate(-22%, 4%);
 }
 
+.hero-product-img--suitcase {
+  width: auto;
+  max-width: 480px;
+  height: auto;
+  max-height: 680px;
+  transform: none;
+}
+
 /* ── BUTTONS ──────────────────────────────── */
 .btn {
   display: inline-block;
@@ -830,6 +838,16 @@ body {
 
 .shop-card-img--large {
   padding: 0.5rem;
+}
+
+.shop-card-img--cover {
+  padding: 0;
+}
+.shop-card-img--cover img {
+  object-fit: cover;
+  object-position: 50% 35%;
+  transform: scale(0.75);
+  transform-origin: 100% 50%;
 }
 
 .shop-card-img-scale {
