@@ -575,9 +575,9 @@ body {
   white-space: normal;
 }
 
-/* Desktop headline is 15% smaller than the base clamp above. */
+/* Desktop headline is 15% + 5% smaller than the base clamp above. */
 @media (min-width: 901px) {
-  .hero-title { font-size: clamp(47.6px, min(7.08vw, 13.18svh), 102px); }
+  .hero-title { font-size: clamp(45.22px, min(6.726vw, 12.52svh), 96.9px); }
 }
 
 .hero-tagline {
@@ -588,6 +588,11 @@ body {
   color: #5e6e7a;
   max-width: 470px;
   margin: clamp(20px, 2.4vw, 34px) 0 0;
+}
+
+/* Desktop tagline is 3% smaller than the base clamp above. */
+@media (min-width: 901px) {
+  .hero-tagline { font-size: clamp(16.49px, 1.416vw, 20.37px); }
 }
 
 .hero-cta.btn {
