@@ -612,7 +612,7 @@ body {
 
 /* Desktop tagline is 3% + 10% smaller than the base clamp above. */
 @media (min-width: 901px) {
-  .hero-tagline { font-size: clamp(14.84px, 1.274vw, 18.33px); }
+  .hero-tagline { font-size: clamp(14.84px, 1.274vw, 18.33px); margin-top: 30px; }
 }
 
 /* The forced break after the comma is desktop-only; on phones the line
