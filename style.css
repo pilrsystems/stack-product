@@ -575,9 +575,11 @@ body {
   white-space: normal;
 }
 
-/* Desktop headline is 15% + 5% + 20% smaller than the base clamp above. */
+/* Desktop headline is 15% + 5% + 20% + 5% smaller than the base clamp above,
+   and runs on one line (the break only applies to the stacked layout). */
 @media (min-width: 901px) {
-  .hero-title { font-size: clamp(36.18px, min(5.381vw, 10.02svh), 77.52px); }
+  .hero-title { font-size: clamp(34.37px, min(5.112vw, 9.52svh), 73.64px); white-space: nowrap; }
+  .hero-title-br { display: none; }
 }
 
 .hero-tagline {
