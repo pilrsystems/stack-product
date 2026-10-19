@@ -516,7 +516,10 @@ body {
 .hero {
   position: relative;
   width: 100%;
-  height: clamp(640px, 57vw, 900px);
+  /* Fills exactly one screen on load, so scrolling goes straight to the next
+     section. The 640px floor keeps the copy from being squeezed on very
+     short windows. */
+  height: max(640px, 100svh);
   background: var(--bg);
   overflow: hidden;
 }
@@ -563,7 +566,7 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(56px, 8.33vw, 120px);
+  font-size: clamp(56px, min(8.33vw, 15.5svh), 120px);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.04em;
@@ -610,7 +613,7 @@ body {
   object-fit: cover;
   /* Slide the photo 125px right, capped at however much of its left side is
      currently cropped off (1693/783 aspect, hero height as in .hero). */
-  object-position: calc(100% + clamp(0px, 125px, calc(clamp(640px, 57vw, 900px) * 2.162 - 100vw))) bottom;
+  object-position: calc(100% + clamp(0px, 125px, calc(max(640px, 100svh) * 2.162 - 100vw))) bottom;
   transition: opacity 0.22s ease;
 }
 .hero-product-img--suitcase.is-fading { opacity: 0; }
