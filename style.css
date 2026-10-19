@@ -544,7 +544,7 @@ body {
   left: 0;
   /* Anchored from the bottom so the gap under the button is the same at every
      window height (it used to grow in fullscreen). */
-  bottom: 85px;
+  bottom: 80px;
   z-index: 2;
   display: flex;
   flex-direction: column;
