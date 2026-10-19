@@ -575,6 +575,11 @@ body {
   white-space: normal;
 }
 
+/* Desktop headline is 15% smaller than the base clamp above. */
+@media (min-width: 901px) {
+  .hero-title { font-size: clamp(47.6px, min(7.08vw, 13.18svh), 102px); }
+}
+
 .hero-tagline {
   font-size: clamp(17px, 1.46vw, 21px);
   font-weight: 500;
