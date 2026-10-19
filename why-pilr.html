@@ -397,6 +397,58 @@
     </div>
   </section>
 
+  <!-- HOW IT WORKS — click-to-play video (real 9:16 clip, capped at 80vh,
+       uncropped) with three chapter steps. Video source and chapter
+       timestamps are single constants in the script below. Moved here
+       from the homepage. -->
+  <section class="how-it-works">
+    <div class="how-it-works-inner">
+      <div class="how-it-works-media">
+        <video
+          class="how-video-el"
+          src="images/lifestyle_section/How It Works Video.mp4"
+          poster="images/lifestyle_section/How It Works Poster.jpg"
+          preload="metadata"
+          playsinline
+          muted
+          loop
+          width="1080"
+          height="1920"
+        ></video>
+      </div>
+      <div class="how-it-works-content">
+        <p class="why-label">HOW IT WORKS</p>
+        <h2 class="how-headline">Pack. Stack. Go.</h2>
+        <div class="how-steps">
+          <button class="how-step" type="button">
+            <div class="how-step-top">
+              <span class="how-step-num">01</span>
+              <span class="how-step-title">Pack</span>
+              <span class="how-step-time"></span>
+            </div>
+            <p class="how-step-desc">Scoop in powder. Load your pills.</p>
+          </button>
+          <button class="how-step" type="button">
+            <div class="how-step-top">
+              <span class="how-step-num">02</span>
+              <span class="how-step-title">Stack</span>
+              <span class="how-step-time"></span>
+            </div>
+            <p class="how-step-desc">Thread the pods together.</p>
+          </button>
+          <button class="how-step" type="button">
+            <div class="how-step-top">
+              <span class="how-step-num">03</span>
+              <span class="how-step-title">Go</span>
+              <span class="how-step-time"></span>
+            </div>
+            <p class="how-step-desc">Seal it and pack it.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER TOP (dark) -->
   <div class="footer-top">
     <div class="footer-top-inner">
@@ -570,6 +622,67 @@
         })
       })
     })()
+  </script>
+  <script>
+    (function() {
+      // Real clip is ~7s, not the 30-45s the layout was mocked up with —
+      // chapters are placeholder splits; edit to match real chapter times.
+      var HOW_IT_WORKS_CHAPTERS = [0, 2.5, 5];
+
+      var section = document.querySelector('.how-it-works');
+      if (!section) return;
+      var vid = section.querySelector('.how-video-el');
+      var steps = Array.prototype.slice.call(section.querySelectorAll('.how-step'));
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      steps.forEach(function(step, i) {
+        var t = HOW_IT_WORKS_CHAPTERS[i];
+        step.setAttribute('data-time', t);
+        var m = Math.floor(t / 60);
+        var s = Math.round(t % 60);
+        step.querySelector('.how-step-time').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      });
+
+      function play() { vid.play().catch(function() {}); }
+
+      if (!reduceMotion) {
+        section.addEventListener('mouseenter', play);
+        section.addEventListener('mouseleave', function() {
+          vid.pause();
+          vid.currentTime = 0;
+        });
+      }
+
+      // Hover has no equivalent on touch — let a tap toggle play/pause there.
+      vid.addEventListener('click', function() {
+        if (vid.paused || vid.ended) { play(); } else { vid.pause(); }
+      });
+
+      steps.forEach(function(step) {
+        step.addEventListener('click', function() {
+          vid.currentTime = parseFloat(step.getAttribute('data-time'));
+          play();
+        });
+      });
+
+      vid.addEventListener('timeupdate', function() {
+        var t = vid.currentTime;
+        var activeIndex = 0;
+        for (var i = 0; i < HOW_IT_WORKS_CHAPTERS.length; i++) {
+          if (t >= HOW_IT_WORKS_CHAPTERS[i]) activeIndex = i;
+        }
+        steps.forEach(function(step, i) {
+          step.classList.toggle('is-active', i === activeIndex);
+        });
+      });
+
+      var howIo = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting && !vid.paused) { vid.pause(); }
+        });
+      }, { threshold: 0.1 });
+      howIo.observe(vid);
+    })();
   </script>
 </body>
 </html>

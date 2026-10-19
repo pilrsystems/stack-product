@@ -22,11 +22,11 @@
 
   <!-- NAV -->
   <nav class="nav">
+    <div class="nav-inner">
     <a href="/" class="nav-logo">
       <img src="images/logov3-cropped.png" alt="pilr" class="nav-logo-img">
     </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="nav-links">
+    <ul class="nav-links" id="nav-links">
         <li class="nav-has-dropdown">
           <a href="./catalog.html">
             Shop
@@ -71,12 +71,14 @@
         <li><a href="./about.html">Our story</a></li>
         <li><a href="./faq.html">FAQ</a></li>
       </ul>
+    <div class="nav-right">
       <a href="./cart.html" class="nav-cart-btn" aria-label="Cart">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
       </a>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
+    </div>
     </div>
   </nav>
 
@@ -88,22 +90,35 @@
     <div class="hero-inner">
       <div class="hero-copy">
         <div class="hero-eyebrow">PACK&nbsp;&nbsp;&nbsp;STACK&nbsp;&nbsp;&nbsp;GO</div>
-        <p class="hero-tagline">A modular system for your daily supplements,<br>wherever life takes you.</p>
-        <h1 class="hero-title">Your routine. Anywhere.</h1>
-        <a href="./build-your-system.html" class="btn btn--white">build your system →</a>
+        <h1 class="hero-title">Your routine.<br>Anywhere.</h1>
+        <p class="hero-tagline">A modular system for your daily supplements, wherever life takes you.</p>
+        <a href="./build-your-system.html" class="btn btn--dark hero-cta">build your system →</a>
       </div>
       <div class="hero-product">
-        <img class="hero-product-img hero-product-img--suitcase" src="images/lifestyle_section/Hero Rimowa.png" alt="pilr pod on a Rimowa suitcase, ready to travel" />
+        <img class="hero-product-img hero-product-img--suitcase" id="hero-slide-img" src="images/lifestyle_section/Hero Rimowa.png" alt="pilr pod on a Rimowa suitcase, ready to travel" />
+      </div>
+      <div class="hero-slide-nav">
+        <span class="hero-slide-counter" id="hero-slide-counter">01 / 03</span>
+        <div class="hero-slide-dashes" id="hero-slide-dashes">
+          <button type="button" class="hero-slide-dash is-active" data-index="0" aria-label="Slide 1"></button>
+          <button type="button" class="hero-slide-dash" data-index="1" aria-label="Slide 2"></button>
+          <button type="button" class="hero-slide-dash" data-index="2" aria-label="Slide 3"></button>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SHOP CARDS -->
   <section class="shop">
+    <div class="shop-container">
+    <div class="shop-header-row">
+      <span class="shop-header-eyebrow">Shop the system</span>
+      <a href="./catalog.html" class="shop-header-viewall">View all →</a>
+    </div>
     <div class="shop-inner">
       <a href="./catalog.html#section-single-pods" class="shop-card">
-        <div class="shop-card-img shop-card-img--cover">
-          <img src="images/lifestyle_section/Single Pod Hand.png" alt="Single Pods" />
+        <div class="shop-card-img">
+          <img src="images/lifestyle_section/Single Pods.png" alt="Single Pods" />
         </div>
         <div class="shop-card-info">
           <h3>Single Pods</h3>
@@ -132,6 +147,7 @@
           <span class="shop-price"><span class="shop-price-lead">from</span> $24</span>
         </div>
       </a>
+    </div>
     </div>
   </section>
 
@@ -195,58 +211,62 @@
     </div>
   </section>
 
-
-  <!-- HOW IT WORKS — click-to-play video (real 9:16 clip, capped at 80vh,
-       uncropped) with three chapter steps. Video source and chapter
-       timestamps are single constants in the script below. -->
-  <section class="how-it-works">
-    <div class="how-it-works-inner">
-      <div class="how-it-works-media">
-        <video
-          class="how-video-el"
-          src="images/lifestyle_section/How It Works Video.mp4"
-          poster="images/lifestyle_section/How It Works Poster.jpg"
-          preload="metadata"
-          playsinline
-          muted
-          loop
-          width="1080"
-          height="1920"
-        ></video>
+  <!-- PROBLEM SECTION — reuses the site's existing section padding and
+       1240px container. The headline, word columns and hand photo sit
+       in one position:relative wrapper so the hand (positioned
+       absolutely, bottom:0) always lines up with the hairline directly
+       below the wrapper — see .problem-row / .problem-foot. The three
+       per-group labels (.problem-label--mobile) are markup-duplicated
+       and hidden via CSS: one shared label row for desktop (under the
+       single full-width hairline), one per-group label+hairline for
+       the stacked mobile layout — only one set is ever visible/in the
+       accessibility tree at a time. -->
+  <section class="problem">
+    <div class="problem-inner">
+      <div class="problem-row">
+        <h2 class="problem-headline">Many problems.<br>One solution.</h2>
+        <div class="problem-groups">
+          <div class="problem-group">
+            <ul class="problem-list">
+              <li>Flimsy</li>
+              <li>No room for powder</li>
+              <li>Too small</li>
+              <li>Cheap</li>
+            </ul>
+            <span class="problem-label problem-label--mobile">7-day organizers</span>
+          </div>
+          <div class="problem-group">
+            <ul class="problem-list">
+              <li>Leaks</li>
+              <li>Clumps</li>
+              <li>Ugly</li>
+              <li>Flagged at security</li>
+            </ul>
+            <span class="problem-label problem-label--mobile">Ziplocs</span>
+          </div>
+          <div class="problem-group">
+            <ul class="problem-list">
+              <li>Bulky</li>
+              <li>Heavy</li>
+              <li>Rattles</li>
+              <li>Unnecessary</li>
+            </ul>
+            <span class="problem-label problem-label--mobile">Full-size bottles</span>
+          </div>
+        </div>
+        <figure class="problem-pilr">
+          <img src="images/Home Page 1.png" alt="A hand holding three open pilr pods filled with powder and pills" width="861" height="1051" loading="lazy" />
+        </figure>
       </div>
-      <div class="how-it-works-content">
-        <p class="why-label">HOW IT WORKS</p>
-        <h2 class="how-headline">Pack. Stack. Go.</h2>
-        <div class="how-steps">
-          <button class="how-step" type="button">
-            <div class="how-step-top">
-              <span class="how-step-num">01</span>
-              <span class="how-step-title">Pack</span>
-              <span class="how-step-time"></span>
-            </div>
-            <p class="how-step-desc">Scoop in powder. Load your pills.</p>
-          </button>
-          <button class="how-step" type="button">
-            <div class="how-step-top">
-              <span class="how-step-num">02</span>
-              <span class="how-step-title">Stack</span>
-              <span class="how-step-time"></span>
-            </div>
-            <p class="how-step-desc">Thread the pods together.</p>
-          </button>
-          <button class="how-step" type="button">
-            <div class="how-step-top">
-              <span class="how-step-num">03</span>
-              <span class="how-step-title">Go</span>
-              <span class="how-step-time"></span>
-            </div>
-            <p class="how-step-desc">Seal it and pack it.</p>
-          </button>
+      <div class="problem-foot">
+        <div class="problem-labels">
+          <span class="problem-label">7-day organizers</span>
+          <span class="problem-label">Ziplocs</span>
+          <span class="problem-label">Full-size bottles</span>
         </div>
       </div>
     </div>
   </section>
-
 
   <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
        two corner labels, and a headline/subline below. Pauses off-screen;
@@ -299,40 +319,6 @@
             <span class="explore-routine-arrow">→</span>
           </div>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROBLEM SECTION — reuses the site's .why-label eyebrow and the
-       shared h2 heading recipe, same 1240px/3rem container as the
-       sections around it. Left: headline + a row of line icons for the
-       old workarounds. Right: the pilr photo and caption. -->
-  <section class="problem">
-    <div class="problem-inner">
-      <div class="problem-grid">
-        <div class="problem-head">
-          <p class="why-label">THE PROBLEM</p>
-          <h2 class="problem-headline">Infinite problems. One solution</h2>
-        </div>
-        <div class="problem-row-wrap">
-          <div class="problem-old-ways">
-            <figure>
-              <img class="problem-icon problem-icon--img problem-icon--wide" src="images/lifestyle_section/Problem Organizer Icon.png" alt="" width="400" height="119" loading="lazy" />
-              <figcaption><span class="problem-old-ways-label">7-day organizers</span><span class="problem-old-ways-desc">Too small. No room for powder.</span></figcaption>
-            </figure>
-            <figure>
-              <img class="problem-icon problem-icon--img" src="images/lifestyle_section/Problem Ziploc Icon.png" alt="" width="299" height="400" loading="lazy" />
-              <figcaption><span class="problem-old-ways-label">Ziplocs</span><span class="problem-old-ways-desc">Leak. Get stopped at TSA.</span></figcaption>
-            </figure>
-            <figure>
-              <img class="problem-icon problem-icon--img" src="images/lifestyle_section/Problem Bottle Icon.png" alt="" width="223" height="400" loading="lazy" />
-              <figcaption><span class="problem-old-ways-label">Full-size bottles</span><span class="problem-old-ways-desc">Heavy. Take over your bag.</span></figcaption>
-            </figure>
-          </div>
-        </div>
-        <figure class="problem-pilr">
-          <img src="images/Home Page 1.png" alt="A hand holding three open pilr pods filled with powder and pills" width="861" height="1051" loading="lazy" />
-        </figure>
       </div>
     </div>
   </section>
@@ -826,67 +812,6 @@
   </script>
   <script>
     (function() {
-      // Real clip is ~7s, not the 30-45s the layout was mocked up with —
-      // chapters are placeholder splits; edit to match real chapter times.
-      var HOW_IT_WORKS_CHAPTERS = [0, 2.5, 5];
-
-      var section = document.querySelector('.how-it-works');
-      if (!section) return;
-      var vid = section.querySelector('.how-video-el');
-      var steps = Array.prototype.slice.call(section.querySelectorAll('.how-step'));
-      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      steps.forEach(function(step, i) {
-        var t = HOW_IT_WORKS_CHAPTERS[i];
-        step.setAttribute('data-time', t);
-        var m = Math.floor(t / 60);
-        var s = Math.round(t % 60);
-        step.querySelector('.how-step-time').textContent = m + ':' + (s < 10 ? '0' : '') + s;
-      });
-
-      function play() { vid.play().catch(function() {}); }
-
-      if (!reduceMotion) {
-        section.addEventListener('mouseenter', play);
-        section.addEventListener('mouseleave', function() {
-          vid.pause();
-          vid.currentTime = 0;
-        });
-      }
-
-      // Hover has no equivalent on touch — let a tap toggle play/pause there.
-      vid.addEventListener('click', function() {
-        if (vid.paused || vid.ended) { play(); } else { vid.pause(); }
-      });
-
-      steps.forEach(function(step) {
-        step.addEventListener('click', function() {
-          vid.currentTime = parseFloat(step.getAttribute('data-time'));
-          play();
-        });
-      });
-
-      vid.addEventListener('timeupdate', function() {
-        var t = vid.currentTime;
-        var activeIndex = 0;
-        for (var i = 0; i < HOW_IT_WORKS_CHAPTERS.length; i++) {
-          if (t >= HOW_IT_WORKS_CHAPTERS[i]) activeIndex = i;
-        }
-        steps.forEach(function(step, i) {
-          step.classList.toggle('is-active', i === activeIndex);
-        });
-      });
-
-      var howIo = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (!entry.isIntersecting && !vid.paused) { vid.pause(); }
-        });
-      }, { threshold: 0.1 });
-      howIo.observe(vid);
-    })();
-  </script>
-  <script>
-    (function() {
       var grid = document.querySelector('.home-lifestyle-grid');
       if (!grid) return;
       var prevBtn = document.querySelector('.home-lifestyle-arrow--prev');
@@ -914,6 +839,70 @@
       grid.addEventListener('scroll', updateArrows);
       window.addEventListener('resize', updateArrows);
       updateArrows();
+    })();
+  </script>
+  <script>
+    (function() {
+      // Single source of truth for the hero slides. Slides 2 and 3 are
+      // placeholders reusing slide 1's image until real photos land —
+      // autoplay stays off while that's true, so it isn't cycling
+      // through three copies of the same picture.
+      var HERO_SLIDES = [
+        { src: 'images/lifestyle_section/Hero Rimowa.png', alt: 'pilr pod on a Rimowa suitcase, ready to travel' },
+        { src: 'images/lifestyle_section/Hero Rimowa.png', alt: 'pilr pod on a Rimowa suitcase, ready to travel' },
+        { src: 'images/lifestyle_section/Hero Rimowa.png', alt: 'pilr pod on a Rimowa suitcase, ready to travel' }
+      ];
+
+      var heroSection = document.getElementById('hero');
+      var slideImg = document.getElementById('hero-slide-img');
+      var counter = document.getElementById('hero-slide-counter');
+      var dashes = Array.prototype.slice.call(document.querySelectorAll('.hero-slide-dash'));
+      if (!heroSection || !slideImg || !dashes.length) return;
+
+      var current = 0;
+      var autoplayTimer = null;
+
+      function allSlidesIdentical() {
+        return HERO_SLIDES.every(function(s) { return s.src === HERO_SLIDES[0].src; });
+      }
+
+      function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+      function renderSlide(index) {
+        var slide = HERO_SLIDES[index];
+        slideImg.classList.add('is-fading');
+        setTimeout(function() {
+          slideImg.src = slide.src;
+          slideImg.alt = slide.alt;
+          slideImg.classList.remove('is-fading');
+        }, 220);
+        dashes.forEach(function(d, i) { d.classList.toggle('is-active', i === index); });
+        if (counter) counter.textContent = pad(index + 1) + ' / ' + pad(HERO_SLIDES.length);
+        current = index;
+      }
+
+      dashes.forEach(function(dash, i) {
+        dash.addEventListener('click', function() {
+          renderSlide(i);
+          resetAutoplay();
+        });
+      });
+
+      function startAutoplay() {
+        if (allSlidesIdentical()) return;
+        autoplayTimer = setInterval(function() {
+          renderSlide((current + 1) % HERO_SLIDES.length);
+        }, 5000);
+      }
+      function stopAutoplay() {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+      function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+      heroSection.addEventListener('mouseenter', stopAutoplay);
+      heroSection.addEventListener('mouseleave', startAutoplay);
+      startAutoplay();
     })();
   </script>
 </body>
