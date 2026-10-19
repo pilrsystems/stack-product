@@ -595,6 +595,12 @@ body {
   .hero-tagline { font-size: clamp(16.49px, 1.416vw, 20.37px); }
 }
 
+/* The forced break after the comma is desktop-only; on phones the line
+   wraps naturally instead of leaving "supplements," alone on a line. */
+@media (max-width: 900px) {
+  .hero-tagline-br { display: none; }
+}
+
 .hero-cta.btn {
   margin-top: clamp(28px, 3.2vw, 46px);
   font-size: 0.9rem;
