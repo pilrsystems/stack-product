@@ -591,6 +591,10 @@ body {
   padding: 1rem 2.3rem;
 }
 
+@media (min-width: 901px) {
+  .hero-cta.btn { margin-top: calc(clamp(28px, 3.2vw, 46px) - 5px); }
+}
+
 .hero-product {
   position: absolute;
   left: 50%;
