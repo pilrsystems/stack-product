@@ -542,7 +542,9 @@ body {
 .hero-copy {
   position: absolute;
   left: 0;
-  top: calc(28% + min(185px, max(0px, (100svh - 640px) * 2.1)));
+  /* Anchored from the bottom so the gap under the button is the same at every
+     window height (it used to grow in fullscreen). */
+  bottom: 85px;
   z-index: 2;
   display: flex;
   flex-direction: column;
