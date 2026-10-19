@@ -852,7 +852,7 @@ body {
 
 /* ── SHOP CARDS ───────────────────────────── */
 .shop {
-  padding: clamp(64px, 7.8vw, 112px) 0 clamp(72px, 8.9vw, 128px);
+  padding: 4rem 0 clamp(72px, 8.9vw, 128px);
   background: var(--bg);
 }
 
