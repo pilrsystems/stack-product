@@ -590,9 +590,11 @@ body {
 
 .hero-product {
   position: absolute;
-  right: 6%;
+  left: 50%;
   bottom: 0;
-  height: 84%;
+  width: 100vw;
+  height: 100%;
+  transform: translateX(-50%);
   z-index: 1;
 }
 
@@ -602,9 +604,13 @@ body {
 }
 
 .hero-product-img--suitcase {
+  width: 100%;
   height: 100%;
-  width: auto;
   max-width: none;
+  object-fit: cover;
+  object-position: right bottom;
+  -webkit-mask-image: linear-gradient(to right, transparent 36%, #000 52%);
+  mask-image: linear-gradient(to right, transparent 36%, #000 52%);
   transition: opacity 0.22s ease;
 }
 .hero-product-img--suitcase.is-fading { opacity: 0; }
@@ -4465,8 +4471,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
   .hero-product {
     position: static;
+    left: auto;
     right: auto;
     bottom: auto;
+    transform: none;
     height: auto;
     width: 100%;
     display: flex;
@@ -4475,7 +4483,11 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
   .hero-product-img--suitcase {
     height: auto;
-    width: 75%;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    object-position: 82% bottom;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .hero-slide-nav {
