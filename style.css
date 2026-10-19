@@ -1061,6 +1061,10 @@ body {
   padding-bottom: 28px;
 }
 
+/* The Classic Stack hand photo is cropped at the wrist, so it runs off the
+   bottom of its box (same as on the homepage card). */
+.catalog-main .shop-card-img--bleed { padding-bottom: 0; }
+
 .catalog-main .shop-price {
   font-size: 1.1rem;
 }
