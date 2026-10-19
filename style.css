@@ -969,6 +969,11 @@ body {
   .shop-inner .shop-card-img { flex: none; aspect-ratio: 383 / 335; }
 }
 
+/* Homepage cards don't reserve a second line for the description, so the
+   price sits right under a one-line description (prices only misalign if
+   a description wraps). */
+.shop-inner .shop-card-info p { min-height: 0; }
+
 .shop-card-info {
   padding: 6% 1.5rem 1.75rem 0.85rem;
   position: relative;
