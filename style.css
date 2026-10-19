@@ -650,6 +650,13 @@ body {
   opacity: 1;
 }
 
+/* Desktop: the dashes sit on the photo, so they're white (inactive ones a
+   bit stronger than the phone layout's 0.35 so they still read on it). */
+@media (min-width: 901px) {
+  .hero-slide-dash { background: #FFFFFF; opacity: 0.6; }
+  .hero-slide-dash.is-active { opacity: 1; }
+}
+
 /* ── BUTTONS ──────────────────────────────── */
 .btn {
   display: inline-block;
