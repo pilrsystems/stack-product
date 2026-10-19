@@ -608,7 +608,7 @@ body {
 }
 
 @media (min-width: 901px) {
-  .hero-cta.btn { margin-top: calc(clamp(28px, 3.2vw, 46px) - 10px); }
+  .hero-cta.btn { margin-top: 30px; }
 }
 
 .hero-product {
