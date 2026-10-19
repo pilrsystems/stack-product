@@ -611,9 +611,9 @@ body {
   height: 100%;
   max-width: none;
   object-fit: cover;
-  /* Slide the photo 95px right, capped at however much of its left side is
+  /* Slide the photo 65px right, capped at however much of its left side is
      currently cropped off (1693/783 aspect, hero height as in .hero). */
-  object-position: calc(100% + clamp(0px, 95px, calc(max(640px, 100svh) * 2.162 - 100vw))) bottom;
+  object-position: calc(100% + clamp(0px, 65px, calc(max(640px, 100svh) * 2.162 - 100vw))) bottom;
   transition: opacity 0.22s ease;
 }
 .hero-product-img--suitcase.is-fading { opacity: 0; }
