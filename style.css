@@ -575,9 +575,9 @@ body {
   white-space: normal;
 }
 
-/* Desktop headline is 15% + 5% smaller than the base clamp above. */
+/* Desktop headline is 15% + 5% + 20% smaller than the base clamp above. */
 @media (min-width: 901px) {
-  .hero-title { font-size: clamp(45.22px, min(6.726vw, 12.52svh), 96.9px); }
+  .hero-title { font-size: clamp(36.18px, min(5.381vw, 10.02svh), 77.52px); }
 }
 
 .hero-tagline {
@@ -590,9 +590,9 @@ body {
   margin: clamp(20px, 2.4vw, 34px) 0 0;
 }
 
-/* Desktop tagline is 3% smaller than the base clamp above. */
+/* Desktop tagline is 3% + 10% smaller than the base clamp above. */
 @media (min-width: 901px) {
-  .hero-tagline { font-size: clamp(16.49px, 1.416vw, 20.37px); }
+  .hero-tagline { font-size: clamp(14.84px, 1.274vw, 18.33px); }
 }
 
 /* The forced break after the comma is desktop-only; on phones the line
