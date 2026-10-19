@@ -620,20 +620,12 @@ body {
 
 .hero-slide-nav {
   position: absolute;
-  left: 0;
+  right: 0;
   bottom: 44px;
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 16px;
-}
-
-.hero-slide-counter {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #5e6e7a;
 }
 
 .hero-slide-dashes {
