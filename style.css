@@ -525,8 +525,10 @@ body {
      and is right-anchored, so on taller windows it would grow leftward into
      the text; 0.89 * height - 585px keeps the suitcase handle a constant
      585px from the right edge (65px at a ~730px-tall window). Never less
-     than 65px, and never more than the cropped-off room on the photo's left. */
-  --photo-shift: min(max(65px, calc(0.89 * var(--hero-h) - 585px)), max(0px, calc(var(--hero-h) * 2.162 - 100vw)));
+     than 65px, and never more than the cropped-off room on the photo's left
+     (--photo-ratio is the current slide's width/height, set by the slideshow
+     script). */
+  --photo-shift: min(max(65px, calc(0.89 * var(--hero-h) - 585px)), max(0px, calc(var(--hero-h) * var(--photo-ratio, 2.162) - 100vw)));
   background: var(--bg);
   overflow: hidden;
 }

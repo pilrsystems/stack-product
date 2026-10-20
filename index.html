@@ -849,7 +849,7 @@
       var HERO_SLIDES = [
         { src: 'images/Hero Banner 2 Compressed.jpg', alt: 'A hand holding three open pilr pods filled with powder and pills' },
         { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
-        { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
+        { src: 'images/Banner Image 3 Compressed.jpg', alt: 'Open pilr pods with powder, pills and gummies on a laptop resting on a Samsonite suitcase, seen from above' }
       ];
 
       // Load every slide up front so rotating never waits on a download.
@@ -869,6 +869,16 @@
       }
 
       function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+      // The photo's slide-right offset depends on its proportions, so keep
+      // --photo-ratio in step with whichever slide is showing.
+      function applyRatio() {
+        if (slideImg.naturalWidth && slideImg.naturalHeight) {
+          heroSection.style.setProperty('--photo-ratio', (slideImg.naturalWidth / slideImg.naturalHeight).toFixed(4));
+        }
+      }
+      slideImg.addEventListener('load', applyRatio);
+      if (slideImg.complete) applyRatio();
 
       function renderSlide(index) {
         var slide = HERO_SLIDES[index];
