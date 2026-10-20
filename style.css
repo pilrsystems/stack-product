@@ -717,7 +717,7 @@ body {
    strength (--scrim) is set per slide by the slideshow script. Desktop only;
    on phones the copy sits on the page background above the photo. */
 @media (min-width: 901px) {
-  .hero { --scrim: 0.4; }
+  .hero { --scrim: 0; }
 
   .hero-eyebrow,
   .hero-title,
