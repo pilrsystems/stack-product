@@ -850,7 +850,7 @@
         // scrim = strength of the dark gradient behind the (white) hero copy.
         { src: 'images/Hero Banner 2 Compressed.jpg', scrim: 0.4, alt: 'A hand holding three open pilr pods filled with powder and pills' },
         { src: 'images/Suitcase Home Page Pic.png', scrim: 0.55, alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
-        { src: 'images/Banner Image 4 Compressed.jpg', scrim: 0.66, alt: 'A black carry-on suitcase at an airport window with four open pilr pods lined up on top' }
+        { src: 'images/Banner Image 4 Compressed.jpg', scrim: 0.66, shiftX: 40, shiftY: 30, alt: 'A black carry-on suitcase at an airport window with four open pilr pods lined up on top' }
       ];
 
       // Load every slide up front so rotating never waits on a download.
@@ -887,6 +887,9 @@
         setTimeout(function() {
           slideImg.alt = slide.alt;
           heroSection.style.setProperty('--scrim', slide.scrim || 0);
+          // Per-slide nudge of the photo (px): shiftX moves it right, shiftY down.
+          heroSection.style.setProperty('--slide-x', (slide.shiftX || 0) + 'px');
+          heroSection.style.setProperty('--slide-y', (slide.shiftY || 0) + 'px');
           // A blank slide stays faded out (is-fading) instead of loading an image.
           if (slide.src) {
             slideImg.src = slide.src;
