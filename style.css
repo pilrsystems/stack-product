@@ -584,10 +584,10 @@ body {
   white-space: normal;
 }
 
-/* Desktop headline is 15% + 5% + 20% + 5% + 10% - then 5% back up - of the base clamp above,
+/* Desktop headline is 15% + 5% + 20% + 5% + 10% - then 5% back up, then 5% down - of the base clamp above,
    and runs on one line (the break only applies to the stacked layout). */
 @media (min-width: 901px) {
-  .hero-title { font-size: clamp(32.48px, min(4.831vw, 8.996svh), 69.59px); white-space: nowrap; }
+  .hero-title { font-size: clamp(30.86px, min(4.589vw, 8.546svh), 66.11px); white-space: nowrap; }
   .hero-title-br { display: none; }
 }
 
@@ -597,8 +597,8 @@ body {
    ~10.04 is the headline's width in multiples of its font size. */
 @media (min-width: 1201px) {
   .hero-title {
-    font-size: clamp(32.48px, min(4.831vw, 8.996svh,
-      calc((100vw - 0.89 * var(--hero-h) + var(--photo-shift) - 40px - max(5vw, (100vw - 1296px) / 2)) / 10.04)), 69.59px);
+    font-size: clamp(30.86px, min(4.589vw, 8.546svh,
+      calc((100vw - 0.89 * var(--hero-h) + var(--photo-shift) - 40px - max(5vw, (100vw - 1296px) / 2)) / 10.04)), 66.11px);
   }
 }
 
