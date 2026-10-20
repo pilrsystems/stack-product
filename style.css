@@ -707,6 +707,13 @@ body {
   .hero-slide-dash.is-active { opacity: 1; }
 }
 
+/* On the blank placeholder slide there's no photo behind the dashes, so they
+   go back to the slate blue (white would vanish on the page background). */
+@media (min-width: 901px) {
+  .hero.is-blank-slide .hero-slide-dash { background: #5e6e7a; opacity: 0.35; }
+  .hero.is-blank-slide .hero-slide-dash.is-active { opacity: 1; }
+}
+
 /* ── BUTTONS ──────────────────────────────── */
 .btn {
   display: inline-block;

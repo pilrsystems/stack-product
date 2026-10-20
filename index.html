@@ -101,6 +101,7 @@
         <div class="hero-slide-dashes" id="hero-slide-dashes">
           <button type="button" class="hero-slide-dash is-active" data-index="0" aria-label="Slide 1"></button>
           <button type="button" class="hero-slide-dash" data-index="1" aria-label="Slide 2"></button>
+          <button type="button" class="hero-slide-dash" data-index="2" aria-label="Slide 3"></button>
         </div>
       </div>
     </div>
@@ -847,11 +848,13 @@
       // through three copies of the same picture.
       var HERO_SLIDES = [
         { src: 'images/Hero Banner 2 Compressed.jpg', alt: 'A hand holding three open pilr pods filled with powder and pills' },
+        // Blank placeholder slide: no image, just the plain page background.
+        { src: null, alt: '' },
         { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
       ];
 
       // Load every slide up front so rotating never waits on a download.
-      HERO_SLIDES.forEach(function(s) { var im = new Image(); im.src = s.src; });
+      HERO_SLIDES.forEach(function(s) { if (s.src) { var im = new Image(); im.src = s.src; } });
 
       var heroSection = document.getElementById('hero');
       var slideImg = document.getElementById('hero-slide-img');
@@ -882,10 +885,14 @@
         var slide = HERO_SLIDES[index];
         slideImg.classList.add('is-fading');
         setTimeout(function() {
-          slideImg.src = slide.src;
           slideImg.alt = slide.alt;
-          slideImg.classList.remove('is-fading');
+          // A blank slide stays faded out (is-fading) instead of loading an image.
+          if (slide.src) {
+            slideImg.src = slide.src;
+            slideImg.classList.remove('is-fading');
+          }
         }, 220);
+        heroSection.classList.toggle('is-blank-slide', !slide.src);
         dashes.forEach(function(d, i) { d.classList.toggle('is-active', i === index); });
         if (counter) counter.textContent = pad(index + 1) + ' / ' + pad(HERO_SLIDES.length);
         current = index;
