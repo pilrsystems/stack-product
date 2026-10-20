@@ -848,9 +848,12 @@
       // through three copies of the same picture.
       var HERO_SLIDES = [
         { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
-        { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
+        { src: 'images/Hero Banner 2.png', alt: 'A hand holding three open pilr pods filled with powder and pills' },
         { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
       ];
+
+      // Load every slide up front so rotating never waits on a download.
+      HERO_SLIDES.forEach(function(s) { var im = new Image(); im.src = s.src; });
 
       var heroSection = document.getElementById('hero');
       var slideImg = document.getElementById('hero-slide-img');
