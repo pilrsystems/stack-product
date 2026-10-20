@@ -847,10 +847,10 @@
       // autoplay stays off while that's true, so it isn't cycling
       // through three copies of the same picture.
       var HERO_SLIDES = [
-        { src: 'images/Hero Banner 2 Compressed.jpg', alt: 'A hand holding three open pilr pods filled with powder and pills' },
-        { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
-        // dark: true puts a soft dark gradient behind the copy and switches it to white.
-        { src: 'images/Banner Image 4 Compressed.jpg', dark: true, alt: 'A black carry-on suitcase at an airport window with four open pilr pods lined up on top' }
+        // scrim = strength of the dark gradient behind the (white) hero copy.
+        { src: 'images/Hero Banner 2 Compressed.jpg', scrim: 0.4, alt: 'A hand holding three open pilr pods filled with powder and pills' },
+        { src: 'images/Suitcase Home Page Pic.png', scrim: 0.55, alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
+        { src: 'images/Banner Image 4 Compressed.jpg', scrim: 0.66, alt: 'A black carry-on suitcase at an airport window with four open pilr pods lined up on top' }
       ];
 
       // Load every slide up front so rotating never waits on a download.
@@ -886,7 +886,7 @@
         slideImg.classList.add('is-fading');
         setTimeout(function() {
           slideImg.alt = slide.alt;
-          heroSection.classList.toggle('is-dark-slide', !!slide.dark);
+          heroSection.style.setProperty('--scrim', slide.scrim || 0);
           // A blank slide stays faded out (is-fading) instead of loading an image.
           if (slide.src) {
             slideImg.src = slide.src;
