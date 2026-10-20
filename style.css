@@ -866,6 +866,9 @@ body {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  /* Inset by the cards' own side margin (0.85rem) so the header lines up with
+     the left edge of the first grey box and the right edge of the last. */
+  padding-inline: 0.85rem;
   margin-bottom: clamp(28px, 3.1vw, 44px);
 }
 
@@ -880,13 +883,22 @@ body {
 .shop-header-viewall {
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #2D4152;
+  color: #5e6e7a;
   text-decoration: none;
-  border-bottom: 1px solid rgba(45, 65, 82, 0.45);
+  border-bottom: 1px solid rgba(94, 110, 122, 0.45);
   padding-bottom: 4px;
+  transition: border-color 0.2s ease;
 }
+
+.shop-header-viewall-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.shop-header-viewall:hover { border-bottom-color: #5e6e7a; }
+.shop-header-viewall:hover .shop-header-viewall-arrow { transform: translateX(3px); }
 
 .shop-inner {
   display: grid;
