@@ -101,6 +101,7 @@
         <div class="hero-slide-dashes" id="hero-slide-dashes">
           <button type="button" class="hero-slide-dash is-active" data-index="0" aria-label="Slide 1"></button>
           <button type="button" class="hero-slide-dash" data-index="1" aria-label="Slide 2"></button>
+          <button type="button" class="hero-slide-dash" data-index="2" aria-label="Slide 3"></button>
         </div>
       </div>
     </div>
@@ -847,7 +848,9 @@
       // through three copies of the same picture.
       var HERO_SLIDES = [
         { src: 'images/Hero Banner 2 Compressed.jpg', alt: 'A hand holding three open pilr pods filled with powder and pills' },
-        { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
+        { src: 'images/Suitcase Home Page Pic.png', alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' },
+        // dark: true puts a soft dark gradient behind the copy and switches it to white.
+        { src: 'images/Banner Image 4 Compressed.jpg', dark: true, alt: 'A black carry-on suitcase at an airport window with four open pilr pods lined up on top' }
       ];
 
       // Load every slide up front so rotating never waits on a download.
@@ -883,6 +886,7 @@
         slideImg.classList.add('is-fading');
         setTimeout(function() {
           slideImg.alt = slide.alt;
+          heroSection.classList.toggle('is-dark-slide', !!slide.dark);
           // A blank slide stays faded out (is-fading) instead of loading an image.
           if (slide.src) {
             slideImg.src = slide.src;

@@ -707,6 +707,31 @@ body {
   .hero-slide-dash.is-active { opacity: 1; }
 }
 
+/* Dark slides (slide.dark in the slideshow script): a soft dark gradient behind
+   the copy, with the copy switched to white. Desktop only; on phones the copy
+   sits on the page background above the photo. */
+@media (min-width: 901px) {
+  .hero-eyebrow,
+  .hero-title,
+  .hero-tagline { transition: color 0.22s ease; }
+
+  .hero-product::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(18, 24, 30, 0.66) 0%, rgba(18, 24, 30, 0.5) 34%, rgba(18, 24, 30, 0) 66%);
+    opacity: 0;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
+  }
+
+  .hero.is-dark-slide .hero-product::after { opacity: 1; }
+  .hero.is-dark-slide .hero-eyebrow,
+  .hero.is-dark-slide .hero-title,
+  .hero.is-dark-slide .hero-tagline { color: #FFFFFF; }
+  .hero.is-dark-slide .hero-cta.btn { background: #FFFFFF; color: #5e6e7a; }
+}
+
 /* On the blank placeholder slide there's no photo behind the dashes, so they
    go back to the slate blue (white would vanish on the page background). */
 @media (min-width: 901px) {
