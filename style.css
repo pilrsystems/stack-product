@@ -1725,8 +1725,10 @@ body {
   line-height: normal;
   letter-spacing: -0.02em;
   color: #5e6e7a;
-  max-width: none;
+  /* Long headline: wrap it onto balanced lines so it stays clear of the hand. */
+  max-width: 60%;
   width: auto;
+  text-wrap: balance;
 }
 
 .explore-routine {
