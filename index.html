@@ -806,29 +806,61 @@
       if (!grid) return;
       var prevBtn = document.querySelector('.home-lifestyle-arrow--prev');
       var nextBtn = document.querySelector('.home-lifestyle-arrow--next');
-      var firstItem = grid.querySelector('.home-lifestyle-item');
+      var originals = Array.prototype.slice.call(grid.querySelectorAll('.home-lifestyle-item'));
+      if (!originals.length) return;
 
-      function cardStep() {
-        var style = getComputedStyle(grid);
-        var gap = parseFloat(style.columnGap || style.gap) || 0;
-        return firstItem.getBoundingClientRect().width + gap;
+      // Endless loop: a full copy of the photos sits before and after the real
+      // set. Whenever the scroll position drifts into a copy, it is moved back
+      // by exactly one set width, which looks identical, so it never runs out.
+      function makeCopies() {
+        return originals.map(function(el) {
+          var c = el.cloneNode(true);
+          c.setAttribute('aria-hidden', 'true');
+          c.querySelectorAll('img').forEach(function(im) { im.alt = ''; im.removeAttribute('loading'); });
+          return c;
+        });
+      }
+      var before = makeCopies();
+      var after = makeCopies();
+      before.forEach(function(c) { grid.insertBefore(c, originals[0]); });
+      after.forEach(function(c) { grid.appendChild(c); });
+
+      function setWidth() { return after[0].offsetLeft - originals[0].offsetLeft; }
+      function cardStep() { return originals[1] ? originals[1].offsetLeft - originals[0].offsetLeft : originals[0].offsetWidth; }
+
+      function jumpTo(left) {
+        grid.style.scrollSnapType = 'none';
+        grid.scrollLeft = left;
+        requestAnimationFrame(function() { grid.style.scrollSnapType = ''; });
       }
 
-      function updateArrows() {
-        var max = grid.scrollWidth - grid.clientWidth;
-        prevBtn.disabled = grid.scrollLeft <= 1;
-        nextBtn.disabled = grid.scrollLeft >= max - 1;
+      function normalize() {
+        var w = setWidth();
+        if (!w) return;
+        var x = grid.scrollLeft;
+        if (x < w * 0.5) jumpTo(x + w);
+        else if (x >= w * 1.5) jumpTo(x - w);
       }
+
+      var idleTimer = null;
+      grid.addEventListener('scroll', function() {
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(normalize, 140);
+      });
 
       prevBtn.addEventListener('click', function() {
+        normalize();
         grid.scrollBy({ left: -cardStep(), behavior: 'smooth' });
       });
       nextBtn.addEventListener('click', function() {
+        normalize();
         grid.scrollBy({ left: cardStep(), behavior: 'smooth' });
       });
-      grid.addEventListener('scroll', updateArrows);
-      window.addEventListener('resize', updateArrows);
-      updateArrows();
+
+      function start() { jumpTo(setWidth()); }
+      start();
+      window.addEventListener('resize', start);
+      window.addEventListener('load', start);
     })();
   </script>
   <script>
