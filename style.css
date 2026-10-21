@@ -1005,6 +1005,10 @@ body {
   transform: scale(1.35) translateY(-5%);
 }
 
+/* Homepage Build Your System card: shrink the photo ~10% inside its grey box
+   (scaled from the center, so the box itself is unchanged). */
+.shop-inner .shop-card-img-inset { transform: scale(0.9); }
+
 /* Homepage product cards: the grey image box is 383 x 335px at full width
    (scales down proportionally on narrower windows). */
 @media (min-width: 901px) {
