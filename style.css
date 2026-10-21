@@ -1731,6 +1731,10 @@ body {
   text-wrap: balance;
 }
 
+@media (max-width: 700px) {
+  .problem--v2 .problem-headline { max-width: 100%; }
+}
+
 .explore-routine {
   padding: 3.5rem 3rem 6rem;
   background: var(--bg);
