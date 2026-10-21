@@ -26,7 +26,7 @@
       display: flex; align-items: center; justify-content: center;
     }
     .pg-thumb.is-active { border-color: #5e6e7a; }
-    .pg-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 0.4rem; }
+    .pg-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .pg-thumb-placeholder {
       border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
       width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -39,9 +39,18 @@
     .pg-main-frame {
       background: #EFEDE9; border-radius: var(--radius); aspect-ratio: 1 / 1;
       display: flex; align-items: center; justify-content: center; padding: 0;
-      overflow: hidden;
+      overflow: hidden; position: relative;
     }
-    .pg-main-frame .pg-main-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    /* All slides are pre-rendered as real <img src> tags (so the
+       build's asset hashing applies to them) and stacked via absolute
+       position; JS toggles .is-active instead of rewriting innerHTML
+       from an unprocessed data-src path, which the build never
+       bundles. */
+    .pg-main-frame .pg-main-img {
+      display: block; width: 100%; height: 100%; object-fit: cover;
+      position: absolute; inset: 0; opacity: 0; pointer-events: none;
+    }
+    .pg-main-frame .pg-main-img.is-active { opacity: 1; pointer-events: auto; }
     .pg-main-frame .pg-main-placeholder {
       border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
       width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -143,18 +152,26 @@
     <div class="product-images-col">
       <div class="pg-gallery">
         <div class="pg-thumbs" id="pg-thumbs">
-          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Scooper.png" aria-label="Photo 1">
-            <img src="images/lifestyle_section/Scooper.png" alt="" />
+          <button type="button" class="pg-thumb is-active" aria-label="Photo 1">
+            <img src="images/lifestyle_section/Scooper 3.png" alt="" />
           </button>
-          <button type="button" class="pg-thumb" aria-label="Photo 2"><span class="pg-thumb-placeholder">Photo</span></button>
-          <button type="button" class="pg-thumb" aria-label="Photo 3"><span class="pg-thumb-placeholder">Photo</span></button>
-          <button type="button" class="pg-thumb" aria-label="Photo 4"><span class="pg-thumb-placeholder">Photo</span></button>
-          <button type="button" class="pg-thumb" aria-label="Photo 5"><span class="pg-thumb-placeholder">Photo</span></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 2">
+            <img src="images/lifestyle_section/Scooper 2.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" aria-label="Photo 3">
+            <img src="images/lifestyle_section/Scooper 4.png" alt="" />
+          </button>
+          <button type="button" class="pg-thumb" aria-label="Photo 4">
+            <img src="images/lifestyle_section/Scooper 5.png" alt="" />
+          </button>
         </div>
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img" id="pg-main-img" src="images/lifestyle_section/Scooper.png" alt="Travel Scooper" />
+            <img class="pg-main-img is-active" src="images/lifestyle_section/Scooper 3.png" alt="Travel Scooper" />
+            <img class="pg-main-img" src="images/lifestyle_section/Scooper 2.png" alt="Travel Scooper" />
+            <img class="pg-main-img" src="images/lifestyle_section/Scooper 4.png" alt="Travel Scooper" />
+            <img class="pg-main-img" src="images/lifestyle_section/Scooper 5.png" alt="Travel Scooper" />
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -366,17 +383,13 @@
   <script>
     ;(function () {
       var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pg-thumb'));
-      var mainFrame = document.getElementById('pg-main-frame');
+      var slides = Array.prototype.slice.call(document.querySelectorAll('.pg-main-img'));
       var prevBtn = document.getElementById('pg-prev');
       var nextBtn = document.getElementById('pg-next');
       var current = 0;
 
       function renderSlide(index) {
-        var thumb = thumbs[index];
-        var src = thumb.dataset.src;
-        mainFrame.innerHTML = src
-          ? '<img class="pg-main-img" id="pg-main-img" src="' + src + '" alt="Travel Scooper" />'
-          : '<div class="pg-main-placeholder">Product photo</div>';
+        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
         thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
         current = index;
       }
