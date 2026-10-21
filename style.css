@@ -1005,9 +1005,9 @@ body {
   transform: scale(1.35) translateY(-5%);
 }
 
-/* Homepage Build Your System card: shrink the photo ~10% inside its grey box
+/* Homepage Build Your System card: shrink the photo ~8% inside its grey box
    (scaled from the center, so the box itself is unchanged). */
-.shop-inner .shop-card-img-inset { transform: scale(0.9); }
+.shop-inner .shop-card-img-inset { transform: scale(0.92); }
 
 /* Homepage product cards: the grey image box is 383 x 335px at full width
    (scales down proportionally on narrower windows). */
@@ -1291,6 +1291,14 @@ body {
 .why {
   padding: 2.5rem 3rem 0;
   background: var(--bg);
+}
+
+/* Desktop: tighten the gap between the Shop the System cards and the Why
+   section. The pod photo has ~115px of empty space above the pod, so with
+   these values the visible gap (price text to top of pod) is about 150px. */
+@media (min-width: 901px) {
+  .shop { padding-bottom: 0; }
+  .why { padding-top: 5px; }
 }
 
 .why-inner {
