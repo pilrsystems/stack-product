@@ -1715,6 +1715,20 @@ body {
   .problem-foot { display: none; }
 }
 
+/* ── PROBLEM SECTION v2 (working copy) — everything here is scoped to
+   .problem--v2 so the original section above stays untouched. ──────────── */
+/* Headline matches the other sections' large titles (e.g. "Built around
+   your routine"): same size, weight and letter-spacing. */
+.problem--v2 .problem-headline {
+  font-size: 41px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+  max-width: none;
+  width: auto;
+}
+
 .explore-routine {
   padding: 3.5rem 3rem 6rem;
   background: var(--bg);
