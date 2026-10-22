@@ -1749,15 +1749,16 @@ body {
   object-position: left bottom;
 }
 
-/* Desktop: the row is kept tall enough for the hand photo, which is pinned to
-   the bottom of the row. */
+/* Desktop layout for the v2 row. */
 @media (min-width: 701px) {
   .problem--v2 .problem-row {
     display: flex;
     flex-direction: column;
-    min-height: min(36.3vw, 522px);
-    padding-bottom: 36px;
+    padding-bottom: 90px;
   }
+  /* Hand photo 10% smaller than the original (29.7vw / 427.68px), still pinned
+     to the bottom of the row; the shorter row lifts it up alongside the text. */
+  .problem--v2 .problem-pilr { width: min(26.73vw, 384.91px); }
   /* Icons and their labels sit right under the headline (no divider line). */
   .problem--v2 .problem-groups { align-items: start; }
   .problem--v2 .problem-label--mobile {
