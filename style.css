@@ -1735,6 +1735,36 @@ body {
   .problem--v2 .problem-headline { max-width: 100%; }
 }
 
+/* Icons instead of the crossed-out words (sizes carried over from the earlier
+   icon version of this section). */
+.problem--v2 .problem-icon {
+  display: block;
+  width: auto;
+  height: 54px;
+  margin-bottom: 0;
+}
+.problem--v2 .problem-icon--wide {
+  width: 81px;
+  object-fit: contain;
+  object-position: left bottom;
+}
+
+/* Desktop: the icons sit at the bottom of the row, just above the divider and
+   level with the labels beneath it; the row is tall enough for the hand. */
+@media (min-width: 701px) {
+  .problem--v2 .problem-row {
+    display: flex;
+    flex-direction: column;
+    min-height: min(36.3vw, 522px);
+    padding-bottom: 36px;
+  }
+  .problem--v2 .problem-groups { margin-top: auto; align-items: end; }
+}
+
+@media (max-width: 700px) {
+  .problem--v2 .problem-icon { margin-inline: 0; }
+}
+
 .explore-routine {
   padding: 3.5rem 3rem 6rem;
   background: var(--bg);
