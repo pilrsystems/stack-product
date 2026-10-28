@@ -5117,6 +5117,28 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .built-routine-btn:hover { background: #5e6e7a; color: #fff; }
 .built-routine-btn svg { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); display: block; }
 
+/* Homepage copy of the "Built to hold your routine" section: eyebrow and title
+   follow the other homepage sections (e.g. "Built around your routine": 41px,
+   weight 500, -0.02em). Scoped so the Classic Stack page keeps its own sizing. */
+.built-routine-section--home .why-label { margin-bottom: 1.25rem; }
+.built-routine-section--home .built-routine-title {
+  font-size: 41px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+}
+
+/* The section had no phone layout (two columns squeezed to ~150px each), so
+   stack it on narrow screens. */
+@media (max-width: 900px) {
+  .built-routine-section--home {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 4rem 1.5rem;
+  }
+}
+
 .product-benefits { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid #E5E4DF; border-radius: var(--radius); overflow: hidden; margin: 0 auto 4rem; background: #FAFAF8; max-width: 1380px; width: calc(100% - 6rem); }
 .product-benefits-text { padding: 3.5rem 3.5rem 2rem; display: flex; flex-direction: column; justify-content: center; }
 .product-benefits-title {
