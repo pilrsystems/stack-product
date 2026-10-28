@@ -5133,7 +5133,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 /* Table: the pill/powder names use the same size and style as the accordion
    labels (MODULAR, PORTABLE...) and the amounts on the right match them in
-   size. The button stretches to the full width of the (wider) table lines. */
+   size. The button is centered under the table lines. */
 .built-routine-section--home .built-routine-item {
   font-size: 0.75rem;
   font-weight: 500;
@@ -5142,7 +5142,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 .built-routine-section--home .built-routine-val { font-size: 0.75rem; }
 .built-routine-section--home .built-routine-btn {
-  align-self: stretch;
+  align-self: center;
+  width: min(100%, 360px);
   padding-left: 1rem;
   padding-right: 3.5rem;
 }
