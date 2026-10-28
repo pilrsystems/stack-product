@@ -5124,10 +5124,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 /* Line the section up with the other homepage sections: same 1240px content
    width / 3rem edges as .explore-routine-inner, text column on the left edge and
-   the photo on the right edge (both columns keep their previous 462px width). */
+   the photo on the right edge. The photo column is 438.9px (5% under its earlier 462px). */
 .built-routine-section--home {
   max-width: 1336px;
-  grid-template-columns: minmax(0, 562px) minmax(0, 462px);
+  grid-template-columns: minmax(0, 650px) minmax(0, 438.9px);
   justify-content: space-between;
 }
 
@@ -5143,8 +5143,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .built-routine-section--home .built-routine-val { font-size: 0.75rem; }
 .built-routine-section--home .built-routine-btn {
   align-self: center;
-  width: min(100%, 360px);
-  padding-left: 1rem;
+  width: min(100%, 330px);
+  /* Equal side padding so the label sits dead-center; the arrow is positioned
+     absolutely at the right and doesn't affect it. */
+  padding-left: 3.5rem;
   padding-right: 3.5rem;
 }
 .built-routine-section--home .built-routine-title {
