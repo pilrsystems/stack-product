@@ -67,9 +67,12 @@
     .layout-col-8-12 { grid-column: 8 / 13; }
     .layout-col-1-4 { grid-column: 1 / 5; }
     .layout-col-6-12 { grid-column: 6 / 13; }
+    .layout-col-1-7 { grid-column: 1 / 8; }
+    .layout-col-9-12 { grid-column: 9 / 13; }
     @media (max-width: 760px) {
       .layout-grid { grid-template-columns: 1fr; row-gap: var(--grid-gap); }
-      .layout-col-1-5, .layout-col-8-12, .layout-col-1-4, .layout-col-6-12 {
+      .layout-col-1-5, .layout-col-8-12, .layout-col-1-4, .layout-col-6-12,
+      .layout-col-1-7, .layout-col-9-12 {
         grid-column: 1 / -1;
       }
     }
@@ -181,6 +184,10 @@
     #product-info-inner .bc-guarantee-divider {
       width: 3px; height: 3px; border-radius: 50%; background: #c3ccd1; flex-shrink: 0;
     }
+    /* The Build Your System block's own top hairline is dropped on this
+       page so the guarantee line above it isn't sandwiched between two
+       lines. */
+    .page-classic-stack .bys-block { border-top: none; }
 
     /* Title + price on one row, price pushed to the far right - same
        pattern as the individual pod pages (pill/hybrid/powder-pod.html). */
@@ -295,6 +302,17 @@
     }
     .page-classic-stack .comparison-section.layout-grid {
       display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--grid-gap);
+    }
+    /* Table sits left of the text in the markup's column order (1-7) but
+       the text comes first in DOM order (so it stays text-first on
+       mobile) at columns 9-12 — a higher column than where the intro's
+       own span ends. Sparse auto-placement never moves its cursor
+       backwards, so without this the table would get pushed to its own
+       row below the text instead of sharing row 1 and centering against
+       it. */
+    .page-classic-stack .comparison-intro,
+    .page-classic-stack .comparison-table-wrap {
+      grid-row: 1;
     }
     /* TABLE — right edge is now just its grid column's own right
        edge (.layout-col-6-12, flush with the container), instead of
@@ -732,12 +750,12 @@
 
   <!-- COMPARISON -->
   <section class="comparison-section layout-container layout-grid">
-    <div class="comparison-intro layout-col-1-4">
+    <div class="comparison-intro layout-col-9-12">
       <p class="why-label">Compare</p>
       <h2 class="comparison-intro-title">The obvious solution.</h2>
       <a href="./build-your-system.html" class="comparison-intro-link">Build your system <span aria-hidden="true">&rarr;</span></a>
     </div>
-    <div class="comparison-table-wrap layout-col-6-12">
+    <div class="comparison-table-wrap layout-col-1-7">
       <img class="comparison-photo comparison-photo--organizer" src="images/lifestyle_section/Problem Organizer-trimmed.png" alt="7-day pill organizer" />
       <img class="comparison-photo comparison-photo--ziploc" src="images/lifestyle_section/Problem Ziplocks-trimmed.png" alt="Ziploc bags" />
       <div class="comparison-table">
