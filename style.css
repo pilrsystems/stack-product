@@ -5133,7 +5133,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 /* Desktop: photo on the left edge, text block on the right edge. (On phones the
    section stacks with the text first, as before.) */
 @media (min-width: 901px) {
-  .built-routine-section--home .built-routine-img { grid-column: 1; grid-row: 1; }
+  .built-routine-section--home .built-routine-img { grid-column: 1; grid-row: 1; transform: translateY(-24px); }
   .built-routine-section--home .built-routine-content { grid-column: 2; grid-row: 1; }
 }
 
