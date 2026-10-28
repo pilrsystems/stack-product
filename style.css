@@ -567,7 +567,7 @@ body {
 }
 
 .hero-eyebrow {
-  font-size: 0.6875rem;
+  font-size: 0.7219rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -577,7 +577,7 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(56px, min(8.33vw, 15.5svh), 120px);
+  font-size: clamp(58.8px, min(8.7465vw, 16.275svh), 126px);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.04em;
@@ -589,7 +589,7 @@ body {
 /* Desktop headline is 15% + 5% + 20% + 5% + 10% - then 5% back up, then 5% down - of the base clamp above,
    and runs on one line (the break only applies to the stacked layout). */
 @media (min-width: 901px) {
-  .hero-title { font-size: clamp(30.86px, min(4.589vw, 8.546svh), 66.11px); white-space: nowrap; }
+  .hero-title { font-size: clamp(32.4px, min(4.818vw, 8.973svh), 69.42px); white-space: nowrap; }
   .hero-title-br { display: none; }
 }
 
@@ -599,8 +599,8 @@ body {
    ~10.04 is the headline's width in multiples of its font size. */
 @media (min-width: 1201px) {
   .hero-title {
-    font-size: clamp(30.86px, min(4.589vw, 8.546svh,
-      calc((100vw - 0.89 * var(--hero-h) + var(--photo-shift) - 40px - max(5vw, (100vw - 1296px) / 2)) / 10.04)), 66.11px);
+    font-size: clamp(32.4px, min(4.818vw, 8.973svh,
+      calc((100vw - 0.89 * var(--hero-h) + var(--photo-shift) - 40px - max(5vw, (100vw - 1296px) / 2)) / 10.04)), 69.42px);
   }
 }
 
@@ -612,18 +612,18 @@ body {
 }
 
 .hero-tagline {
-  font-size: clamp(17px, 1.46vw, 21px);
+  font-size: clamp(17.85px, 1.533vw, 22.05px);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.01em;
   color: #5e6e7a;
-  max-width: 470px;
+  max-width: 494px;
   margin: clamp(20px, 2.4vw, 34px) 0 0;
 }
 
 /* Desktop tagline is 3% + 10% smaller than the base clamp above. */
 @media (min-width: 901px) {
-  .hero-tagline { font-size: clamp(14.84px, 1.274vw, 18.33px); margin-top: 30px; }
+  .hero-tagline { font-size: clamp(15.58px, 1.338vw, 19.25px); margin-top: 30px; }
 }
 
 /* The forced break after the comma is desktop-only; on phones the line
@@ -634,8 +634,8 @@ body {
 
 .hero-cta.btn {
   margin-top: clamp(28px, 3.2vw, 46px);
-  font-size: 0.9rem;
-  padding: 1rem 2.3rem;
+  font-size: 0.945rem;
+  padding: 1.05rem 2.415rem;
 }
 
 @media (min-width: 901px) {
