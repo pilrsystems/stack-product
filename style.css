@@ -567,7 +567,7 @@ body {
 }
 
 .hero-eyebrow {
-  font-size: 0.6875rem;
+  font-size: 0.7219rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -577,7 +577,7 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(56px, min(8.33vw, 15.5svh), 120px);
+  font-size: clamp(58.8px, min(8.7465vw, 16.275svh), 126px);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.04em;
@@ -589,7 +589,7 @@ body {
 /* Desktop headline is 15% + 5% + 20% + 5% + 10% - then 5% back up, then 5% down - of the base clamp above,
    and runs on one line (the break only applies to the stacked layout). */
 @media (min-width: 901px) {
-  .hero-title { font-size: clamp(30.86px, min(4.589vw, 8.546svh), 66.11px); white-space: nowrap; }
+  .hero-title { font-size: clamp(32.4px, min(4.818vw, 8.973svh), 69.42px); white-space: nowrap; }
   .hero-title-br { display: none; }
 }
 
@@ -599,8 +599,8 @@ body {
    ~10.04 is the headline's width in multiples of its font size. */
 @media (min-width: 1201px) {
   .hero-title {
-    font-size: clamp(30.86px, min(4.589vw, 8.546svh,
-      calc((100vw - 0.89 * var(--hero-h) + var(--photo-shift) - 40px - max(5vw, (100vw - 1296px) / 2)) / 10.04)), 66.11px);
+    font-size: clamp(32.4px, min(4.818vw, 8.973svh,
+      calc((100vw - 0.89 * var(--hero-h) + var(--photo-shift) - 40px - max(5vw, (100vw - 1296px) / 2)) / 10.04)), 69.42px);
   }
 }
 
@@ -612,18 +612,18 @@ body {
 }
 
 .hero-tagline {
-  font-size: clamp(17px, 1.46vw, 21px);
+  font-size: clamp(17.85px, 1.533vw, 22.05px);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.01em;
   color: #5e6e7a;
-  max-width: 470px;
+  max-width: 494px;
   margin: clamp(20px, 2.4vw, 34px) 0 0;
 }
 
 /* Desktop tagline is 3% + 10% smaller than the base clamp above. */
 @media (min-width: 901px) {
-  .hero-tagline { font-size: clamp(14.84px, 1.274vw, 18.33px); margin-top: 30px; }
+  .hero-tagline { font-size: clamp(15.58px, 1.338vw, 19.25px); margin-top: 30px; }
 }
 
 /* The forced break after the comma is desktop-only; on phones the line
@@ -634,8 +634,8 @@ body {
 
 .hero-cta.btn {
   margin-top: clamp(28px, 3.2vw, 46px);
-  font-size: 0.9rem;
-  padding: 1rem 2.3rem;
+  font-size: 0.945rem;
+  padding: 1.05rem 2.415rem;
 }
 
 @media (min-width: 901px) {
@@ -1747,6 +1747,17 @@ body {
   width: 81px;
   object-fit: contain;
   object-position: left bottom;
+}
+
+/* Icon labels use the same size and style as the table names in the
+   "Built to hold your routine" section (CREATINE, COLLAGEN...). */
+.problem--v2 .problem-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Desktop layout for the v2 row. */
@@ -5116,6 +5127,62 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 .built-routine-btn:hover { background: #5e6e7a; color: #fff; }
 .built-routine-btn svg { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); display: block; }
+
+/* Homepage copy of the "Built to hold your routine" section: eyebrow and title
+   follow the other homepage sections (e.g. "Built around your routine": 41px,
+   weight 500, -0.02em). Scoped so the Classic Stack page keeps its own sizing. */
+.built-routine-section--home .why-label { margin-bottom: 1.25rem; }
+
+/* Line the section up with the other homepage sections: same 1240px content
+   width / 3rem edges as .explore-routine-inner, photo column on the left edge and
+   the text block on the right edge. The photo column is 438.9px (5% under its earlier 462px). */
+.built-routine-section--home {
+  max-width: 1336px;
+  grid-template-columns: minmax(0, 438.9px) minmax(0, 650px);
+  justify-content: space-between;
+}
+/* Desktop: photo on the left edge, text block on the right edge. (On phones the
+   section stacks with the text first, as before.) */
+@media (min-width: 901px) {
+  .built-routine-section--home .built-routine-img { grid-column: 1; grid-row: 1; transform: translateY(-24px); }
+  .built-routine-section--home .built-routine-content { grid-column: 2; grid-row: 1; }
+}
+
+/* Table: the pill/powder names use the same size and style as the accordion
+   labels (MODULAR, PORTABLE...) and the amounts on the right match them in
+   size. The button is centered under the table lines. */
+.built-routine-section--home .built-routine-item {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #5e6e7a;
+}
+.built-routine-section--home .built-routine-val { font-size: 0.75rem; }
+.built-routine-section--home .built-routine-btn {
+  align-self: center;
+  width: min(100%, 330px);
+  /* Equal side padding so the label sits dead-center; the arrow is positioned
+     absolutely at the right and doesn't affect it. */
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+}
+.built-routine-section--home .built-routine-title {
+  font-size: 41px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+}
+
+/* The section had no phone layout (two columns squeezed to ~150px each), so
+   stack it on narrow screens. */
+@media (max-width: 900px) {
+  .built-routine-section--home {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 4rem 1.5rem;
+  }
+}
 
 .product-benefits { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid #E5E4DF; border-radius: var(--radius); overflow: hidden; margin: 0 auto 4rem; background: #FAFAF8; max-width: 1380px; width: calc(100% - 6rem); }
 .product-benefits-text { padding: 3.5rem 3.5rem 2rem; display: flex; flex-direction: column; justify-content: center; }
