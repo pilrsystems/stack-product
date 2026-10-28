@@ -20,6 +20,65 @@
        in full at the end of this task.
   ────────────────────────────────────────────────────────────── -->
   <style>
+    /* ══════════════════════════════════════════════════════════════
+       LAYOUT GRID SYSTEM — page-scoped test (classic-stack.html
+       only). One container + one 12-column grid, reused by every
+       section below the buy box (Built to travel, Compare, FAQ) and
+       by the hero's own outer edges, so every section's left/right
+       edges land on the same two lines. Written to be lifted into
+       style.css as-is if/when this rolls out to other pages — nothing
+       here references classic-stack-specific content.
+
+       Tokens:
+         --page-max     overall content width cap
+         --page-gutter  side inset from the viewport edge
+         --grid-gap     gap between the 12 grid columns
+         --layout-gap   vertical gap between every section on this
+                         page (hero → travel → compare → FAQ → footer)
+       Classes:
+         .layout-container  centers at --page-max, insets by --page-gutter
+         .layout-grid       12 equal columns inside it, gapped by --grid-gap
+         .layout-col-1-5 / -8-12 / -1-4 / -6-12   the column spans this
+                         page's sections place content on
+       Below 760px the grid collapses to a single column and every
+       .layout-col-* spans it full width; DOM order (already text-
+       before-visual in the markup) becomes the visual order. */
+    .page-classic-stack {
+      --page-max: 1296px;
+      --page-gutter: clamp(24px, 5vw, 72px);
+      --grid-gap: clamp(16px, 1.7vw, 24px);
+      --layout-gap: clamp(72px, 9vw, 128px);
+    }
+    .layout-container {
+      max-width: var(--page-max); margin: 0 auto;
+      padding-left: var(--page-gutter); padding-right: var(--page-gutter);
+      box-sizing: border-box; width: 100%;
+    }
+    .layout-grid {
+      display: grid; grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--grid-gap);
+    }
+    .layout-col-1-5 { grid-column: 1 / 6; }
+    .layout-col-8-12 { grid-column: 8 / 13; }
+    .layout-col-1-4 { grid-column: 1 / 5; }
+    .layout-col-6-12 { grid-column: 6 / 13; }
+    @media (max-width: 760px) {
+      .layout-grid { grid-template-columns: 1fr; row-gap: var(--grid-gap); }
+      .layout-col-1-5, .layout-col-8-12, .layout-col-1-4, .layout-col-6-12 {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* HERO EDGES — .product-hero/.product-images-col/#product-info-inner
+       are shared (style.css), reused unmodified by the other five
+       product pages; "do not redesign" means their own structure stays,
+       only their outer edges are pulled onto this page's container so
+       the gallery's left edge and the buy box's right edge equal
+       .layout-container's edges exactly. */
+    .page-classic-stack .product-hero { max-width: var(--page-max); }
+    .page-classic-stack .product-images-col { margin-left: var(--page-gutter); }
+    .page-classic-stack #product-info-inner { padding-right: var(--page-gutter); }
+
     /* Product gallery — square main image with a vertical thumbnail
        rail on the left and arrow nav either side, matching
        pill/hybrid/powder-pod.html's layout instead of the old shared
@@ -185,18 +244,155 @@
       .product-hero { grid-template-columns: 1fr; }
     }
 
-    /* TSA — full-width, page background, sits directly above the
-       Comparison section. Text column reuses the exact type recipe
-       from .built-routine-title/-desc/-row/-item/-val; compact
-       section with a fixed-width, uncropped photo. */
+    /* COMPARISON — sits between TSA and FAQ on this page (instead of
+       its usual spot further down, shared by the other product pages
+       via style.css). Give it the site's standard section gap below
+       so it doesn't run straight into FAQ.
+
+       Also adds an intro column (eyebrow/headline/link) to the left
+       of the table, page-scoped since the shared .comparison-section/
+       -table-wrap rules in style.css are reused by the other product
+       pages unchanged. Prefixed with body's .page-classic-stack class
+       to out-specificity those shared rules — Vite injects the
+       bundled style.css <link> after this inline <style> block in the
+       built HTML, so on specificity ties the external stylesheet
+       would otherwise win regardless of source order. */
+    /* .comparison-section is itself the .layout-container/.layout-grid
+       element (classes added in the markup) — resets the shared
+       background:/padding: so none of its own padding does spacing
+       work; the single vertical gap above it is margin-top, same as
+       every other section on this page. */
+    .comparison-section { margin-bottom: 0; }
+    .page-classic-stack .comparison-section {
+      margin-top: var(--layout-gap);
+      padding-top: 0; padding-bottom: 0;
+      align-items: center;
+    }
+    /* .comparison-section also carries .layout-container/.layout-grid,
+       but those are single-class rules (0,0,1,0) — a tie against this
+       same element's OWN global rule in style.css (also 0,0,1,0:
+       background/padding), which on a tie would win since Vite injects
+       style.css after this inline block in the built HTML. These two
+       three-class rules (0,0,3,0) settle that tie unconditionally,
+       carrying the actual container/grid values so .layout-container/
+       .layout-grid's generic versions don't need to. */
+    .page-classic-stack .comparison-section.layout-container {
+      max-width: var(--page-max); margin-left: auto; margin-right: auto;
+      padding-left: var(--page-gutter); padding-right: var(--page-gutter);
+      box-sizing: border-box;
+    }
+    .page-classic-stack .comparison-section.layout-grid {
+      display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--grid-gap);
+    }
+    /* TABLE — right edge is now just its grid column's own right
+       edge (.layout-col-6-12, flush with the container), instead of
+       a fixed 620px width pushed right with a negative margin. Column
+       proportions kept exactly as before (260:120:120:120, i.e.
+       13:6:6:6) but as fr so the table fills/shrinks with its column
+       instead of overflowing it below ~1150px-wide viewports. The two
+       decorative photos' left offsets are converted from fixed px
+       (tied to the old fixed 620px) to percentages of that same
+       13:6:6:6 ratio, so they stay centered above the 7-Day/Ziploc
+       columns at any width. Scoped above the shared mobile breakpoint
+       (760px) so the existing, already-fluid mobile layout is left
+       alone. */
+    .page-classic-stack .comparison-table-wrap { width: 100%; margin: 0; }
+    @media (min-width: 761px) {
+      .page-classic-stack .comparison-table { grid-template-columns: 13fr 6fr 6fr 6fr; }
+      .page-classic-stack .comparison-photo--organizer { left: 70.97%; }
+      .page-classic-stack .comparison-photo--ziploc { left: 90.32%; }
+    }
+    .comparison-intro-title {
+      font-size: 2.4rem; font-weight: 500; color: #5e6e7a;
+      line-height: 1.15; margin: 0 0 1.25rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .comparison-intro-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #5e6e7a; text-decoration: none;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .comparison-intro-link span { display: inline-block; transition: transform 0.15s ease; }
+    .comparison-intro-link:hover span { transform: translateX(4px); }
+
+    /* TSA — full-width, page background, now the first section right
+       after the product-hero/buy column, so it needs the standard
+       section gap above it (that spot has no built-in spacing of its
+       own). Text column reuses the exact type recipe from
+       .built-routine-title/-desc/-row/-item/-val; compact section
+       with a fixed-width, uncropped photo. */
+    /* Container matches .product-hero exactly (max-width:1440px,
+       1.5rem left inset, 3rem right inset) instead of its own
+       max-width:1100 — so the text's left edge lines up with the
+       gallery's left edge, and the photo's right edge lines up with
+       the buy box's right edge. */
+    /* .tsa-section is itself the .layout-container/.layout-grid
+       element (classes added in the markup) — its own box no longer
+       sets width/padding/columns, only the things a grid section
+       needs beyond that: the single vertical gap above it and
+       vertical centering of its two columns. */
     .tsa-section {
-      display: grid; grid-template-columns: 300px 1fr; align-items: center;
-      gap: 144px; max-width: 1100px; margin: 0 auto; padding: 48px 3rem;
-      min-height: 460px; box-sizing: border-box;
+      margin-top: var(--layout-gap);
+      align-items: center;
+      min-height: 460px;
       background: var(--bg);
     }
-    .tsa-photo { width: 300px; }
-    .tsa-photo img { width: 300px; height: auto; border-radius: 22px; display: block; }
+    .tsa-photo { width: 100%; position: relative; }
+
+    /* STACK — 3 photos layered front-to-back. Card width is the
+       stack's own width / 1.12 so that the back card (shifted right
+       the furthest, 12% of a card's width) lands exactly flush with
+       the stack's right edge: cardWidth*(1+0.12) = cardWidth*1.12 =
+       stackWidth. Nothing overflows the column at any width since
+       the stack itself is always 100% of .tsa-photo's width. */
+    .tsa-stack {
+      position: relative; width: 100%;
+      /* Each card is 11:15 but only 100%/1.12 wide, so a card's own
+         rendered height is (100%/1.12)*(15/11) of the stack's width —
+         shorter than a plain 11/15 box would be. Matching that here
+         (11/15 * 1.12 = 308/375) means the stack's own box is exactly
+         as tall as a card, no leftover space below it, so anything
+         centered vertically against this box (like the hint arrow)
+         lines up with the actual photo, not a taller empty box. */
+      aspect-ratio: 308 / 375;
+      cursor: pointer; outline: none;
+    }
+    .tsa-stack:focus-visible { outline: 2px solid var(--rp-slate); outline-offset: 4px; }
+    .tsa-stack-card {
+      position: absolute; top: 0; left: 0;
+      width: calc(100% / 1.12); aspect-ratio: 11 / 15; box-sizing: border-box;
+      box-shadow: 0 18px 40px rgba(45,65,82,0.16);
+      overflow: hidden;
+      transition: transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
+    }
+    .tsa-stack-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tsa-stack-card[data-pos="0"] { transform: translateX(0) scale(1); filter: brightness(1); opacity: 1; z-index: 3; }
+    .tsa-stack-card[data-pos="1"] { transform: translateX(6%) scale(0.965); filter: brightness(0.9); opacity: 1; z-index: 2; }
+    .tsa-stack-card[data-pos="2"] { transform: translateX(12%) scale(0.93); filter: brightness(0.8); opacity: 1; z-index: 1; }
+    /* Reused for both directions: the card leaving the front slides
+       further left and fades; the card entering the front from the
+       back is staged here first (transition briefly disabled in JS)
+       then animates in to the data-pos="0" look. Declared after the
+       data-pos rules so it wins the (equal-specificity) tie whenever
+       both apply to the same card at once. */
+    .tsa-stack-card.is-leaving { transform: translateX(-20%) scale(1); filter: brightness(1); opacity: 0; z-index: 4; }
+    @media (prefers-reduced-motion: reduce) {
+      .tsa-stack-card { transition: none; }
+    }
+    /* Floating hint arrow in the blank space to the right of the
+       stack — a visual nudge that the photos are browsable, not a
+       layout element (doesn't affect the stack's own sizing). Now
+       sits inside .tsa-stack itself (bottom-right corner, over the
+       front card) instead of floating in the margin beside it, since
+       the stack is flush with the container's right edge and there's
+       no margin left to float into. */
+    .tsa-stack-hint {
+      position: absolute; right: 12px; bottom: 12px; z-index: 5;
+      width: 32px; height: 32px; padding: 0; border: none; background: none;
+      color: #9aa7ae; cursor: pointer;
+    }
+    .tsa-stack-hint svg { display: block; width: 100%; height: 100%; }
     .tsa-title {
       font-size: 2.4rem; font-weight: 500; color: #5e6e7a;
       line-height: 1.15; margin: 0 0 1rem;
@@ -220,8 +416,7 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     @media (max-width: 760px) {
-      .tsa-section { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem; min-height: 0; }
-      .tsa-photo { margin: 0 auto; }
+      .tsa-section { min-height: 0; }
     }
 
     /* BUILT TO LAST — mirror of the TSA section (text/photo swapped),
@@ -258,6 +453,39 @@
       .btl-specs { grid-template-columns: 1fr; }
     }
 
+    /* FAQ — heading block (label+headline) on cols 1-4, left-aligned;
+       question list on cols 6-12, the exact same span as the compare
+       table above it, so their left/right edges match exactly. .wp-
+       faq-inner is itself the .layout-container/.layout-grid element
+       (classes added in the markup). Prefixed with body's
+       .page-classic-stack class purely to out-specificity the
+       same-named rules in style.css — Vite injects the bundled
+       style.css <link> after this inline <style> block in the built
+       HTML, so on specificity ties the external stylesheet would
+       otherwise win regardless of source order. */
+    .page-classic-stack .wp-faq { padding: 0; margin-top: var(--layout-gap); }
+    /* Last gap in the chain (FAQ -> footer). .footer-top is shared
+       (style.css), reused unmodified by every other page; only this
+       added margin-top is page-scoped. */
+    .page-classic-stack .footer-top { margin-top: var(--layout-gap); }
+    /* FAQ stays centered/single-column (as before this task), just
+       pulled onto the shared page container for its left/right edges
+       instead of its own max-width:1200. Same tie-breaker as
+       .comparison-section above: .wp-faq-inner's own global rule
+       (max-width:1200/margin:auto/grid-template-columns:1fr 1.6fr/
+       gap:4rem) is a same-specificity (0,0,1,0) tie against the
+       generic .layout-container class also on this element, which
+       style.css would win on a tie. This three-class rule (0,0,3,0)
+       settles it unconditionally — and drops the grid entirely in
+       favor of a centered flex column. */
+    .page-classic-stack .wp-faq-inner.layout-container {
+      max-width: var(--page-max); margin-left: auto; margin-right: auto;
+      padding-left: var(--page-gutter); padding-right: var(--page-gutter);
+      box-sizing: border-box;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .page-classic-stack .wp-faq-copy { text-align: center; }
+    .page-classic-stack .wp-faq-list { width: 100%; max-width: 700px; }
   </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
@@ -358,7 +586,7 @@
             <img src="images/lifestyle_section/Classic Stack Photo 5.png" alt="" />
           </button>
           <button type="button" class="pg-thumb" aria-label="Photo 6">
-            <img src="images/lifestyle_section/Classic Stack Photo 6.png" alt="" />
+            <img src="images/lifestyle_section/Build Your System Video Poster.jpg" alt="" />
           </button>
         </div>
         <div class="pg-main">
@@ -369,7 +597,7 @@
             <img class="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 3.png" alt="The Classic Stack" />
             <img class="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 4.png" alt="The Classic Stack" />
             <img class="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 5.png" alt="The Classic Stack" />
-            <img class="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 6.png" alt="The Classic Stack" />
+            <video class="pg-main-img" src="images/lifestyle_section/Build Your System Video.mp4" poster="images/lifestyle_section/Build Your System Video Poster.jpg" autoplay muted loop playsinline aria-label="pilr pod held against a white backdrop"></video>
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -449,7 +677,7 @@
 
       <!-- 11. Add-ons -->
       <a href="./build-your-system.html" class="bys-block" aria-label="Build your system">
-        <img class="bys-photo" src="images/lifestyle_section/Pods Floating.png" alt="pilr pods stacked in mid-air" width="450" height="300" loading="lazy" />
+        <img class="bys-photo" src="images/lifestyle_section/Build Your System Photo.png" alt="pilr pods stacked together" width="450" height="300" loading="lazy" />
         <div class="bys-text">
           <div>
             <p class="bys-label">Build Your System</p>
@@ -461,51 +689,43 @@
     </div></div>
   </div>
 
-  <!-- LIFESTYLE IMAGE -->
-  <section class="built-routine-section"><div class="built-routine-content"><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><a href="./size-guide.html" class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="pilr lifestyle" /></div></section>
-
   <!-- TSA -->
-  <section class="tsa-section">
-    <div class="tsa-photo"><img src="images/lifestyle_section/TSA Binshot.jpg" alt="pilr pods packed in a TSA bin" /></div>
-    <div class="tsa-content">
+  <section class="tsa-section layout-container layout-grid">
+    <div class="tsa-content layout-col-1-5">
+      <p class="why-label">TSA Compliant</p>
       <h2 class="tsa-title">Built to travel</h2>
-      <p class="tsa-desc">TSA flags any powder container over 350 mL (12 oz) for extra screening. Every pilr pod comes in well under that. Stack as many as your routine needs, and each one clears on the same terms.</p>
+      <p class="tsa-desc">TSA flags powder containers over 350 mL (12 oz) for extra screening. Every pilr pod comes in well under that.</p>
       <div class="tsa-table">
         <div class="tsa-row"><span class="tsa-item">Powder Pod</span><span class="tsa-val">180.6 mL &mdash; under the threshold</span></div>
-        <div class="tsa-row"><span class="tsa-item">Stacked pods</span><span class="tsa-val">Compliant, no limits</span></div>
+        <div class="tsa-row"><span class="tsa-item">Stacked pods</span><span class="tsa-val">Each pod clears on its own</span></div>
       </div>
     </div>
-  </section>
-
-  <!-- BUILT TO LAST -->
-  <section class="btl-section">
-    <div class="btl-content">
-      <h2 class="tsa-title">Built to last</h2>
-      <div class="btl-specs">
-        <div>
-          <p class="btl-spec-label">BPA-free</p>
-          <p class="btl-spec-desc">Molded from Tritan &mdash; the material trusted for water bottles and lab equipment.</p>
+    <div class="tsa-photo layout-col-8-12">
+      <div class="tsa-stack" id="tsa-stack" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Built to travel photos &mdash; use the arrow keys, swipe, or the buttons below to browse">
+        <div class="tsa-stack-card" data-pos="0">
+          <img src="images/lifestyle_section/TSA Binshot.jpg" alt="pilr pods packed in a TSA security bin" />
         </div>
-        <div>
-          <p class="btl-spec-label">Leakproof</p>
-          <p class="btl-spec-desc">An airtight seal. Nothing gets in, nothing gets out.</p>
+        <div class="tsa-stack-card" data-pos="1">
+          <img src="images/lifestyle_section/travel-sunset-plane.jpg" alt="pilr pod lid backlit by a sunset over an airplane wing" />
         </div>
-        <div>
-          <p class="btl-spec-label">Temperature resistant</p>
-          <p class="btl-spec-desc">Heat, cold, humidity &mdash; the seal holds regardless.</p>
+        <div class="tsa-stack-card" data-pos="2">
+          <img src="images/lifestyle_section/travel-delta.jpg" alt="pilr pod on a carry-on suitcase at the gate, Delta planes on the tarmac" />
         </div>
-        <div>
-          <p class="btl-spec-label">Drop resistant</p>
-          <p class="btl-spec-desc">Survives a fall that would ruin anything else.</p>
-        </div>
+        <button type="button" class="tsa-stack-hint" id="tsa-stack-hint" aria-label="Next photo" tabindex="-1">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><polyline points="9 5 16 12 9 19" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
-    <div class="btl-photo"><img src="images/lifestyle_section/Built to Last Airport.jpg" alt="pilr pod in a backpack side pocket at the airport" /></div>
   </section>
 
   <!-- COMPARISON -->
-  <section class="comparison-section">
-    <div class="comparison-table-wrap">
+  <section class="comparison-section layout-container layout-grid">
+    <div class="comparison-intro layout-col-1-4">
+      <p class="why-label">Compare</p>
+      <h2 class="comparison-intro-title">The obvious solution.</h2>
+      <a href="./build-your-system.html" class="comparison-intro-link">Build your system <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="comparison-table-wrap layout-col-6-12">
       <img class="comparison-photo comparison-photo--organizer" src="images/lifestyle_section/Problem Organizer-trimmed.png" alt="7-day pill organizer" />
       <img class="comparison-photo comparison-photo--ziploc" src="images/lifestyle_section/Problem Ziplocks-trimmed.png" alt="Ziploc bags" />
       <div class="comparison-table">
@@ -552,32 +772,10 @@
     </div>
   </section>
 
-  <!-- THE PILR SYSTEM -->
-  <section class="pilr-system-section">
-    <p class="pilr-system-eyebrow">The Classic Stack</p>
-    <div class="pilr-system-pods">
-      <div>
-        <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img" src="images/lifestyle_section/Powder Pod Render.png" alt="Powder Pod" /></div>
-        <p class="pilr-system-pod-name">Powder Pod</p>
-        <p class="pilr-system-pod-desc">Powder-sealed tight</p>
-      </div>
-      <div>
-        <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img pilr-system-pod-img--lower" src="images/lifestyle_section/Hybrid Pod.png" alt="Big Pill Pod" /></div>
-        <p class="pilr-system-pod-name">Big Pill Pod</p>
-        <p class="pilr-system-pod-desc">For medium &amp; large sized capsules</p>
-      </div>
-      <div>
-        <div class="pilr-system-pod-img-wrap"><img class="pilr-system-pod-img pilr-system-pod-img--lower-pill" src="images/lifestyle_section/Pill Pod.png" alt="Small Pill Pod" /></div>
-        <p class="pilr-system-pod-name">Small Pill Pod</p>
-        <p class="pilr-system-pod-desc">Built for smaller capsules</p>
-      </div>
-    </div>
-  </section>
-
   <!-- FAQ -->
     <!-- FAQ -->
   <section class="wp-faq">
-    <div class="wp-faq-inner">
+    <div class="wp-faq-inner layout-container">
       <div class="wp-faq-copy">
         <p class="wp-faq-eyebrow">FAQ</p>
         <h2 class="wp-faq-headline">Questions</h2>
@@ -749,6 +947,141 @@
       });
       prevBtn.addEventListener('click', function () { renderSlide((current - 1 + thumbs.length) % thumbs.length); });
       nextBtn.addEventListener('click', function () { renderSlide((current + 1) % thumbs.length); });
+    })();
+  </script>
+  <script>
+    // BUILT TO TRAVEL — 3-photo layered stack. `order` holds the
+    // three card elements in current front->back visual order; each
+    // card's data-pos (0/1/2) is what the CSS above actually reads.
+    ;(function () {
+      var stack = document.getElementById('tsa-stack');
+      if (!stack) return;
+      var cards = Array.prototype.slice.call(stack.querySelectorAll('.tsa-stack-card'));
+      var DURATION = 450;
+      var animating = false;
+
+      var order = cards.slice().sort(function (a, b) {
+        return parseInt(a.getAttribute('data-pos'), 10) - parseInt(b.getAttribute('data-pos'), 10);
+      });
+
+      function reduceMotion() {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
+      function snap(card, pos) {
+        card.classList.remove('is-leaving');
+        card.style.transition = 'none';
+        card.setAttribute('data-pos', pos);
+        void card.offsetWidth; // force reflow so the transition stays off for this change
+        card.style.transition = '';
+      }
+
+      function next() {
+        if (animating) return;
+        var front = order[0];
+
+        if (reduceMotion()) {
+          order.slice(1).forEach(function (card, i) { snap(card, i); });
+          snap(front, 2);
+          order.push(order.shift());
+          return;
+        }
+
+        animating = true;
+        front.classList.add('is-leaving');
+        order.slice(1).forEach(function (card, i) { card.setAttribute('data-pos', i); });
+
+        window.setTimeout(function () {
+          snap(front, 2);
+          order.push(order.shift());
+          animating = false;
+        }, DURATION);
+      }
+
+      function prev() {
+        if (animating) return;
+        var back = order[order.length - 1];
+
+        if (reduceMotion()) {
+          order.slice(0, order.length - 1).forEach(function (card, i) { snap(card, i + 1); });
+          snap(back, 0);
+          order.unshift(order.pop());
+          return;
+        }
+
+        animating = true;
+        snap(back, 0);
+        back.classList.add('is-leaving');
+        order.slice(0, order.length - 1).forEach(function (card, i) { card.setAttribute('data-pos', i + 1); });
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { back.classList.remove('is-leaving'); });
+        });
+
+        window.setTimeout(function () {
+          order.unshift(order.pop());
+          animating = false;
+        }, DURATION);
+      }
+
+      stack.addEventListener('click', function () { next(); userTriggered(); });
+
+      stack.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); userTriggered(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); userTriggered(); }
+      });
+
+      var touchStartX = null;
+      stack.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      stack.addEventListener('touchend', function (e) {
+        if (touchStartX === null) return;
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        touchStartX = null;
+        if (Math.abs(dx) < 30) return;
+        if (dx < 0) next(); else prev();
+        userTriggered();
+      }, { passive: true });
+
+      var hint = document.getElementById('tsa-stack-hint');
+      if (hint) {
+        hint.addEventListener('click', function (e) {
+          e.stopPropagation(); // sits over the stack's own click-to-advance area
+          next();
+          userTriggered();
+        });
+      }
+
+      // AUTOPLAY — advances every 3s; pauses while the pointer/keyboard
+      // focus is on the stack and whenever the tab isn't visible, and
+      // restarts its 3s window after any manual navigation so it
+      // doesn't fire right on top of one. Off entirely under
+      // prefers-reduced-motion, same as the slide transition itself.
+      var AUTOPLAY_MS = 3000;
+      var autoplayTimer = null;
+
+      function stopAutoplay() {
+        if (autoplayTimer) { window.clearInterval(autoplayTimer); autoplayTimer = null; }
+      }
+      function startAutoplay() {
+        if (reduceMotion() || autoplayTimer) return;
+        autoplayTimer = window.setInterval(next, AUTOPLAY_MS);
+      }
+      function userTriggered() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      stack.addEventListener('mouseenter', stopAutoplay);
+      stack.addEventListener('mouseleave', startAutoplay);
+      stack.addEventListener('focusin', stopAutoplay);
+      stack.addEventListener('focusout', startAutoplay);
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stopAutoplay(); else startAutoplay();
+      });
+
+      startAutoplay();
     })();
   </script>
   <script src="./pilr-cart.js"></script>

@@ -5018,15 +5018,16 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    placeholder color. No box/border/shadow — just the one hairline
    above it, matching the accordion dividers. */
 .bys-block {
-  display: flex; flex-direction: column; gap: 0.9rem;
+  display: flex; flex-direction: row; align-items: center; gap: 1.25rem;
   padding: 1.75rem 0; border-top: 1px solid rgba(66,85,99,0.15);
   text-decoration: none; cursor: pointer;
 }
 .bys-photo {
-  width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
+  width: 120px; height: 120px; flex-shrink: 0; aspect-ratio: 1 / 1; object-fit: cover;
   border-radius: var(--radius); background: #EFEDE9;
 }
 .bys-text {
+  flex: 1; min-width: 0;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 }
 .bys-label {
@@ -5495,25 +5496,25 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex; align-items: center; justify-content: center;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border-bottom: 1px solid #ececea;
-  height: 44.625px;
+  height: 48px;
 }
 .comparison-table > .comparison-cell:first-child { background: var(--bg); border: none; }
 .comparison-header {
-  font-size: 0.6875rem; color: #5e6e7a; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
+  font-size: 0.75rem; color: #5e6e7a; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
   padding: 0 11.9px;
-  height: 63.75px;
+  height: 66px;
   background: #FAFAF8;
   border-bottom: none;
 }
 .comparison-header--pilr { background: #F4F4F5; }
-.comparison-logo { height: 22.1px; width: auto; display: block; }
+.comparison-logo { height: 24px; width: auto; display: block; }
 .comparison-label {
   justify-content: flex-start; text-align: left;
-  font-size: 0.95rem; color: #7a8a94; line-height: 1.65;
+  font-size: 1.05rem; color: #7a8a94; line-height: 1.65;
   padding-left: 20.4px;
   background: #FAFAF8;
 }
-.comparison-check { display: block; color: #6e7a84; width: 17px; height: 17px; }
+.comparison-check { display: block; color: #6e7a84; width: 18px; height: 18px; }
 .comparison-dash { width: 15.3px; height: 1.7px; background: #d6d9db; display: block; }
 .comparison-table > .comparison-cell:nth-child(4n+2):not(.comparison-header) { background: #F4F4F5; }
 
