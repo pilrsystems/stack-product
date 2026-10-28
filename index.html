@@ -14,8 +14,70 @@
     gtag('config', 'G-85BFGXZB1R');
   </script>
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=VqA2pQ"></script>
+  <!-- Page-scoped container override: aligns every homepage section (except
+       the hero) to the exact same edges as .shop-container (calc(100% - 10vw),
+       max-width 1296px, centered). Scoped to .page-home and compounded with
+       each class so it out-specifies the shared style.css rules regardless of
+       the built <link> order; other pages that reuse these classes
+       (.why-inner, .built-routine-section, .footer-top, etc.) are untouched. -->
+  <style>
+    .page-home .why-inner,
+    .page-home .problem-inner,
+    .page-home .explore-routine-inner,
+    .page-home .fly-video-inner,
+    .page-home .home-lifestyle-inner,
+    .page-home .built-routine-section,
+    .page-home .footer-top-inner,
+    .page-home .site-footer-social-inner,
+    .page-home .site-footer-inner {
+      width: calc(100% - 10vw);
+      max-width: 1296px;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+    .page-home .built-routine-section {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .page-home .built-routine-section .built-routine-content { order: 2; }
+    .page-home .built-routine-section .built-routine-img { order: 1; }
+    .page-home .why,
+    .page-home .problem,
+    .page-home .explore-routine,
+    .page-home .fly-video,
+    .page-home .home-lifestyle,
+    .page-home .footer-top,
+    .page-home .site-footer,
+    .page-home .site-footer-social-row,
+    .page-home .site-footer-bottom {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    /* .why-right normally bleeds -24px left into the column gap so its text
+       aligns with the gap on desktop; that assumes the old 24px side
+       padding, which no longer exists here, so it'd overflow the viewport
+       once .why-inner stacks to a single column on mobile. */
+    @media (max-width: 900px) {
+      .page-home .why-right {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+    /* Same story: .home-lifestyle-grid's -1.5rem bleed assumes the old
+       1.5rem side padding on .home-lifestyle, which is now 0 here, so it'd
+       overshoot the viewport instead of landing flush with the container. */
+    @media (max-width: 768px) {
+      .page-home .home-lifestyle-grid {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="page-home">
 
   <!-- NAV OVERLAY -->
   <div class="nav-overlay" id="nav-overlay"></div>
@@ -157,7 +219,7 @@
         <img src="images/IG 2.png" alt="pilr supplement system" />
       </div>
       <div class="why-right">
-        <p class="why-label">WHAT WE MAKE, AND WHY</p>
+        <p class="why-label">What pilr is</p>
         <h2>Stay consistent with your routine, no matter where life takes you</h2>
         <div class="why-accordion-list">
           <div class="why-accordion-item">
@@ -214,6 +276,7 @@
   <section class="problem">
     <div class="problem-inner">
       <div class="problem-row">
+        <p class="why-label">What pilr isn't</p>
         <h2 class="problem-headline">Many problems.<br>One solution.</h2>
         <div class="problem-groups">
           <div class="problem-group">
@@ -261,41 +324,6 @@
   <!-- BUILT TO HOLD YOUR ROUTINE — replaces the v2 problem section;
        markup/classes reused as-is from classic-stack.html so it picks
        up the existing shared .built-routine-* rules in style.css. -->
-  <section class="built-routine-section"><div class="built-routine-content"><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><a href="./size-guide.html" class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="pilr lifestyle" /></div></section>
-
-  <!-- EXPLORE ROUTINE — three-up image grid, one row, each linking to a
-       shop entry point. Images are placeholders (flat color rectangles)
-       until real lifestyle photos are ready. -->
-  <section class="explore-routine">
-    <div class="explore-routine-inner">
-      <p class="why-label">FOR WHEREVER YOU GO</p>
-      <h2 class="explore-routine-title">Built around your routine</h2>
-      <div class="explore-routine-grid">
-        <a href="./catalog.html#section-single-pods" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 11.jpg" alt="Individual pods" /></div>
-          <div class="explore-routine-caption">
-            <span>Individual pods</span>
-            <span class="explore-routine-arrow">→</span>
-          </div>
-        </a>
-        <a href="./classic-stack.html" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/About Film Pic.JPG" alt="The Classic Stack" /></div>
-          <div class="explore-routine-caption">
-            <span>The Classic Stack</span>
-            <span class="explore-routine-arrow">→</span>
-          </div>
-        </a>
-        <a href="./build-your-system.html" class="explore-routine-card">
-          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 7.jpg" alt="Build your own" /></div>
-          <div class="explore-routine-caption">
-            <span>Build your own</span>
-            <span class="explore-routine-arrow">→</span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
        two corner labels, and a headline/subline below. Pauses off-screen;
        shows only the poster under prefers-reduced-motion. -->
@@ -314,9 +342,16 @@
           height="1080"
         ></video>
         <div class="fly-video-gradient" aria-hidden="true"></div>
+        <div class="fly-video-overlay">
+          <p class="fly-video-eyebrow">TSA-Compliant</p>
+          <h2 class="fly-video-headline">Nothing to hide.</h2>
+        </div>
+        <div class="fly-video-timer" aria-hidden="true">0:00</div>
       </div>
     </div>
   </section>
+
+  <section class="built-routine-section"><div class="built-routine-content"><p class="why-label">Capacity</p><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><a href="./size-guide.html" class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="built-routine-img"><img src="images/lifestyle_section/Capacity Section.png" alt="Three pilr pods stacked, open to show powder, capsules, and pills" /></div></section>
 
   <!-- LIFESTYLE SECTION — 3:4 portraits in a horizontally scrollable row,
        same container/gutters/padding as the sections around it. No
@@ -365,6 +400,39 @@
           <img src="images/lifestyle_section/evening.png" alt="The pilr stack on a nightstand next to a lit lamp in the evening" width="2068" height="2918" loading="lazy" style="object-position: 65% 60%;" />
           <figcaption><span class="home-lifestyle-label">Evening</span><span class="home-lifestyle-desc">Within reach.</span></figcaption>
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORE ROUTINE — three-up image grid, one row, each linking to a
+       shop entry point. Images are placeholders (flat color rectangles)
+       until real lifestyle photos are ready. -->
+  <section class="explore-routine">
+    <div class="explore-routine-inner">
+      <p class="why-label">FOR WHEREVER YOU GO</p>
+      <h2 class="explore-routine-title">Built around your routine</h2>
+      <div class="explore-routine-grid">
+        <a href="./catalog.html#section-single-pods" class="explore-routine-card">
+          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 11.jpg" alt="Individual pods" /></div>
+          <div class="explore-routine-caption">
+            <span>Individual pods</span>
+            <span class="explore-routine-arrow">→</span>
+          </div>
+        </a>
+        <a href="./classic-stack.html" class="explore-routine-card">
+          <div class="explore-routine-img"><img src="images/lifestyle_section/About Film Pic.JPG" alt="The Classic Stack" /></div>
+          <div class="explore-routine-caption">
+            <span>The Classic Stack</span>
+            <span class="explore-routine-arrow">→</span>
+          </div>
+        </a>
+        <a href="./build-your-system.html" class="explore-routine-card">
+          <div class="explore-routine-img"><img src="images/lifestyle_section/Film Photo 7.jpg" alt="Build your own" /></div>
+          <div class="explore-routine-caption">
+            <span>Build your own</span>
+            <span class="explore-routine-arrow">→</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -711,6 +779,44 @@
     }]);
   </script>
   <script>
+    (function() {
+      var groups = document.querySelectorAll('.problem-groups > .problem-group');
+      var labels = document.querySelectorAll('.problem-labels > .problem-label');
+      if (!groups.length || !labels.length || groups.length !== labels.length) return;
+
+      function naturalWidth(el) {
+        var clone = el.cloneNode(true);
+        clone.style.position = 'absolute';
+        clone.style.visibility = 'hidden';
+        clone.style.whiteSpace = 'nowrap';
+        clone.style.width = 'auto';
+        clone.style.left = '-9999px';
+        clone.style.top = '-9999px';
+        document.body.appendChild(clone);
+        var w = clone.offsetWidth;
+        document.body.removeChild(clone);
+        return w;
+      }
+
+      function sync() {
+        groups.forEach(function(g) { g.style.width = ''; });
+        labels.forEach(function(l) { l.style.width = ''; });
+        if (window.innerWidth <= 700) return;
+        groups.forEach(function(g, i) {
+          var w = Math.max(naturalWidth(g), naturalWidth(labels[i])) + 2;
+          g.style.width = w + 'px';
+          labels[i].style.width = w + 'px';
+        });
+      }
+
+      sync();
+      window.addEventListener('resize', sync);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(sync);
+      }
+    })();
+  </script>
+  <script>
     document.querySelectorAll('.why-accordion-trigger:not(.why-accordion-trigger--static)').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var expanded = btn.getAttribute('aria-expanded') === 'true';
@@ -723,6 +829,19 @@
     (function() {
       var vid = document.querySelector('.fly-video-el');
       if (!vid) return;
+
+      var timer = document.querySelector('.fly-video-timer');
+      if (timer) {
+        var formatTime = function(seconds) {
+          var s = Math.floor(seconds % 60);
+          var m = Math.floor(seconds / 60);
+          return m + ':' + (s < 10 ? '0' : '') + s;
+        };
+        vid.addEventListener('timeupdate', function() {
+          timer.textContent = formatTime(vid.currentTime);
+        });
+      }
+
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         vid.removeAttribute('autoplay');
         vid.pause();

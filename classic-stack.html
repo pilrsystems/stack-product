@@ -25,34 +25,39 @@
        only). One container + one 12-column grid, reused by every
        section below the buy box (Built to travel, Compare, FAQ) and
        by the hero's own outer edges, so every section's left/right
-       edges land on the same two lines. Written to be lifted into
-       style.css as-is if/when this rolls out to other pages — nothing
-       here references classic-stack-specific content.
+       edges land on the same two lines. The container recipe is
+       copied exactly from the homepage's "Shop the system" section
+       (.shop-container in style.css: width:calc(100% - 10vw);
+       max-width:1296px; margin-inline:auto — a pure width calc, no
+       separate inner padding) instead of the page's own earlier
+       max-width+padding version, so this page's gutters match the
+       homepage's at every viewport, not just up to ~1440px. Written
+       to be lifted into style.css as-is if/when this rolls out to
+       other pages — nothing here references classic-stack-specific
+       content.
 
        Tokens:
-         --page-max     overall content width cap
-         --page-gutter  side inset from the viewport edge
-         --grid-gap     gap between the 12 grid columns
-         --layout-gap   vertical gap between every section on this
-                         page (hero → travel → compare → FAQ → footer)
+         --page-max    overall content width cap (matches .shop-container)
+         --grid-gap    gap between the 12 grid columns
+         --layout-gap  vertical gap between every section on this
+                       page (hero → travel → compare → FAQ → footer)
        Classes:
-         .layout-container  centers at --page-max, insets by --page-gutter
+         .layout-container  width:calc(100% - 10vw) capped at --page-max,
+                       centered — identical box model to .shop-container
          .layout-grid       12 equal columns inside it, gapped by --grid-gap
          .layout-col-1-5 / -8-12 / -1-4 / -6-12   the column spans this
-                         page's sections place content on
+                       page's sections place content on
        Below 760px the grid collapses to a single column and every
        .layout-col-* spans it full width; DOM order (already text-
        before-visual in the markup) becomes the visual order. */
     .page-classic-stack {
       --page-max: 1296px;
-      --page-gutter: clamp(24px, 5vw, 72px);
       --grid-gap: clamp(16px, 1.7vw, 24px);
       --layout-gap: clamp(72px, 9vw, 128px);
     }
     .layout-container {
-      max-width: var(--page-max); margin: 0 auto;
-      padding-left: var(--page-gutter); padding-right: var(--page-gutter);
-      box-sizing: border-box; width: 100%;
+      width: calc(100% - 10vw); max-width: var(--page-max);
+      margin-inline: auto; box-sizing: border-box;
     }
     .layout-grid {
       display: grid; grid-template-columns: repeat(12, 1fr);
@@ -74,10 +79,17 @@
        product pages; "do not redesign" means their own structure stays,
        only their outer edges are pulled onto this page's container so
        the gallery's left edge and the buy box's right edge equal
-       .layout-container's edges exactly. */
-    .page-classic-stack .product-hero { max-width: var(--page-max); }
-    .page-classic-stack .product-images-col { margin-left: var(--page-gutter); }
-    .page-classic-stack #product-info-inner { padding-right: var(--page-gutter); }
+       .layout-container's edges exactly. Since the container's gutter
+       is now baked entirely into its own width (no inner padding), the
+       inner gutters that used to live on .product-images-col/
+       #product-info-inner are zeroed out — the gallery/buy box now sit
+       flush at .product-hero's own edges, same as .shop-inner's cards
+       sit flush at .shop-container's edges. */
+    .page-classic-stack .product-hero {
+      width: calc(100% - 10vw); max-width: var(--page-max);
+    }
+    .page-classic-stack .product-images-col { margin-left: 0; }
+    .page-classic-stack #product-info-inner { padding-right: 0; }
 
     /* Product gallery — square main image with a vertical thumbnail
        rail on the left and arrow nav either side, matching
@@ -265,7 +277,7 @@
     .comparison-section { margin-bottom: 0; }
     .page-classic-stack .comparison-section {
       margin-top: var(--layout-gap);
-      padding-top: 0; padding-bottom: 0;
+      padding: 0;
       align-items: center;
     }
     /* .comparison-section also carries .layout-container/.layout-grid,
@@ -277,8 +289,8 @@
        carrying the actual container/grid values so .layout-container/
        .layout-grid's generic versions don't need to. */
     .page-classic-stack .comparison-section.layout-container {
-      max-width: var(--page-max); margin-left: auto; margin-right: auto;
-      padding-left: var(--page-gutter); padding-right: var(--page-gutter);
+      width: calc(100% - 10vw); max-width: var(--page-max);
+      margin-left: auto; margin-right: auto;
       box-sizing: border-box;
     }
     .page-classic-stack .comparison-section.layout-grid {
@@ -479,8 +491,8 @@
        settles it unconditionally — and drops the grid entirely in
        favor of a centered flex column. */
     .page-classic-stack .wp-faq-inner.layout-container {
-      max-width: var(--page-max); margin-left: auto; margin-right: auto;
-      padding-left: var(--page-gutter); padding-right: var(--page-gutter);
+      width: calc(100% - 10vw); max-width: var(--page-max);
+      margin-left: auto; margin-right: auto;
       box-sizing: border-box;
       display: flex; flex-direction: column; align-items: center; gap: 1rem;
     }

@@ -1571,6 +1571,48 @@ body {
   pointer-events: none;
 }
 
+.fly-video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  text-align: center;
+  padding: 0 1.5rem;
+  pointer-events: none;
+}
+
+.fly-video-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.fly-video-headline {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.fly-video-timer {
+  position: absolute;
+  top: clamp(16px, 2.5vw, 28px);
+  right: clamp(16px, 2.5vw, 28px);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #FFFFFF;
+}
+
 @media (max-width: 900px) {
   .fly-video { padding: 4rem 1.5rem 7rem; }
 }
@@ -1594,7 +1636,7 @@ body {
 
 .problem-row {
   position: relative;
-  padding-bottom: clamp(40px, 5.56vw, 80px);
+  padding-bottom: 2.75rem;
 }
 
 .problem-headline {
@@ -1609,9 +1651,8 @@ body {
 }
 
 .problem-groups {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: clamp(24px, 2.78vw, 40px);
+  display: flex;
+  justify-content: space-between;
   width: 58%;
 }
 
@@ -1667,9 +1708,8 @@ body {
 }
 
 .problem-labels {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: clamp(24px, 2.78vw, 40px);
+  display: flex;
+  justify-content: space-between;
   width: 58%;
 }
 
