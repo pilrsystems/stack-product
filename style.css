@@ -1749,6 +1749,17 @@ body {
   object-position: left bottom;
 }
 
+/* Icon labels use the same size and style as the table names in the
+   "Built to hold your routine" section (CREATINE, COLLAGEN...). */
+.problem--v2 .problem-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 /* Desktop layout for the v2 row. */
 @media (min-width: 701px) {
   .problem--v2 .problem-row {
