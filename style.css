@@ -5123,12 +5123,18 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .built-routine-section--home .why-label { margin-bottom: 1.25rem; }
 
 /* Line the section up with the other homepage sections: same 1240px content
-   width / 3rem edges as .explore-routine-inner, text column on the left edge and
-   the photo on the right edge. The photo column is 438.9px (5% under its earlier 462px). */
+   width / 3rem edges as .explore-routine-inner, photo column on the left edge and
+   the text block on the right edge. The photo column is 438.9px (5% under its earlier 462px). */
 .built-routine-section--home {
   max-width: 1336px;
-  grid-template-columns: minmax(0, 650px) minmax(0, 438.9px);
+  grid-template-columns: minmax(0, 438.9px) minmax(0, 650px);
   justify-content: space-between;
+}
+/* Desktop: photo on the left edge, text block on the right edge. (On phones the
+   section stacks with the text first, as before.) */
+@media (min-width: 901px) {
+  .built-routine-section--home .built-routine-img { grid-column: 1; grid-row: 1; }
+  .built-routine-section--home .built-routine-content { grid-column: 2; grid-row: 1; }
 }
 
 /* Table: the pill/powder names use the same size and style as the accordion
