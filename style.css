@@ -1760,6 +1760,28 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+/* Each icon is centered over its label, and the three columns have a bit more
+   room between them. The bottles item shows two bottles side by side. */
+@media (min-width: 701px) {
+  .problem--v2 .problem-groups {
+    width: 62%;
+    column-gap: clamp(36px, 4vw, 60px);
+  }
+  .problem--v2 .problem-label { white-space: nowrap; }
+}
+.problem--v2 .problem-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.problem--v2 .problem-icon--wide { object-position: center bottom; }
+.problem--v2 .problem-icon-pair {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
 /* Desktop layout for the v2 row. */
 @media (min-width: 701px) {
   .problem--v2 .problem-row {
