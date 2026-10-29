@@ -201,66 +201,8 @@
     </div>
   </section>
 
-  <!-- PROBLEM SECTION — reuses the site's existing section padding and
-       1240px container. The headline, word columns and hand photo sit
-       in one position:relative wrapper so the hand (positioned
-       absolutely, bottom:0) always lines up with the hairline directly
-       below the wrapper — see .problem-row / .problem-foot. The three
-       per-group labels (.problem-label--mobile) are markup-duplicated
-       and hidden via CSS: one shared label row for desktop (under the
-       single full-width hairline), one per-group label+hairline for
-       the stacked mobile layout — only one set is ever visible/in the
-       accessibility tree at a time. -->
-  <section class="problem">
-    <div class="problem-inner">
-      <div class="problem-row">
-        <h2 class="problem-headline">Many problems.<br>One solution.</h2>
-        <div class="problem-groups">
-          <div class="problem-group">
-            <ul class="problem-list">
-              <li>Flimsy</li>
-              <li>No room for powder</li>
-              <li>Too small</li>
-              <li>Cheap</li>
-            </ul>
-            <span class="problem-label problem-label--mobile">7-day organizers</span>
-          </div>
-          <div class="problem-group">
-            <ul class="problem-list">
-              <li>Leaks</li>
-              <li>Clumps</li>
-              <li>Ugly</li>
-              <li>Flagged at security</li>
-            </ul>
-            <span class="problem-label problem-label--mobile">Ziplocs</span>
-          </div>
-          <div class="problem-group">
-            <ul class="problem-list">
-              <li>Bulky</li>
-              <li>Heavy</li>
-              <li>Rattles</li>
-              <li>Unnecessary</li>
-            </ul>
-            <span class="problem-label problem-label--mobile">Full-size bottles</span>
-          </div>
-        </div>
-        <figure class="problem-pilr">
-          <img src="images/Home Page 1.png" alt="A hand holding three open pilr pods filled with powder and pills" width="861" height="1051" loading="lazy" />
-        </figure>
-      </div>
-      <div class="problem-foot">
-        <div class="problem-labels">
-          <span class="problem-label">7-day organizers</span>
-          <span class="problem-label">Ziplocs</span>
-          <span class="problem-label">Full-size bottles</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROBLEM SECTION (v2) — duplicate of the section above, used as the working copy
-       for the redesign so the original can be compared against it. Scope all edits to
-       .problem--v2 so the original is not touched. -->
+  <!-- PROBLEM SECTION (v2) — icons version. Its styles are scoped to .problem--v2
+       and build on the shared .problem rules in style.css. -->
   <section class="problem problem--v2">
     <div class="problem-inner">
       <div class="problem-row">
