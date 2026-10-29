@@ -1792,6 +1792,8 @@ body {
   /* Hand photo 10% smaller than the original (29.7vw / 427.68px), still pinned
      to the bottom of the row; the shorter row lifts it up alongside the text. */
   .problem--v2 .problem-pilr { width: min(26.73vw, 384.91px); }
+  /* Nudge the hand 32px down and 16px left (desktop only). */
+  .problem--v2 .problem-pilr img { transform: translate(-16px, 32px); }
   /* Icons and their labels sit right under the headline (no divider line). */
   .problem--v2 .problem-groups { align-items: start; }
   .problem--v2 .problem-label--mobile {
