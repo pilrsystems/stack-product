@@ -1731,6 +1731,10 @@ body {
   text-wrap: balance;
 }
 
+/* Headline stays on one line on desktop (it wraps naturally on phones). */
+@media (min-width: 701px) {
+  .problem--v2 .problem-headline { max-width: none; white-space: nowrap; }
+}
 @media (max-width: 700px) {
   .problem--v2 .problem-headline { max-width: 100%; }
 }
@@ -1811,7 +1815,7 @@ body {
      row's own bottom padding (28px) put its bottom edge level with the last title. */
   .problem--v2 .problem-pilr {
     top: auto;
-    bottom: 118px;
+    bottom: 128px;
   }
   /* Nudge the hand 26px left (desktop only). */
   .problem--v2 .problem-pilr img { transform: translate(-26px, 0); }
