@@ -1815,10 +1815,10 @@ body {
      row's own bottom padding (28px) put its bottom edge level with the last title. */
   .problem--v2 .problem-pilr {
     top: auto;
-    bottom: 118px;
+    bottom: 103px;
   }
-  /* Nudge the hand 26px left (desktop only). */
-  .problem--v2 .problem-pilr img { transform: translate(-26px, 0); }
+  /* Nudge the hand 33px left (desktop only). */
+  .problem--v2 .problem-pilr img { transform: translate(-33px, 0); }
   .problem--v2 .problem-items { width: 63%; max-width: 780px; }
 }
 
