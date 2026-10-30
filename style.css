@@ -1815,7 +1815,7 @@ body {
      row's own bottom padding (28px) put its bottom edge level with the last title. */
   .problem--v2 .problem-pilr {
     top: auto;
-    bottom: 128px;
+    bottom: 118px;
   }
   /* Nudge the hand 26px left (desktop only). */
   .problem--v2 .problem-pilr img { transform: translate(-26px, 0); }
