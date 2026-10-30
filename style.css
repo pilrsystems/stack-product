@@ -1774,12 +1774,10 @@ body {
   row-gap: 0.85rem;
   align-items: center;
   padding: 1.75rem 0;
-  border-top: 1px solid rgba(66, 85, 99, 0.18);
 }
 .problem--v2 .problem-acc-icon { grid-area: icon; }
 .problem--v2 .problem-label { grid-area: label; text-align: center; }
 .problem--v2 .problem-desc { grid-area: desc; }
-.problem--v2 .problem-item:last-child { border-bottom: 1px solid rgba(66, 85, 99, 0.18); }
 .problem--v2 .problem-acc-icon {
   display: flex;
   align-items: center;
