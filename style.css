@@ -1760,37 +1760,32 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* Each icon is centered over its label, and the three columns have a bit more
-   room between them. The bottles item shows two bottles side by side. */
-@media (min-width: 701px) {
-  .problem--v2 .problem-groups {
-    width: 62%;
-    column-gap: clamp(36px, 4vw, 60px);
-  }
-  .problem--v2 .problem-label { white-space: nowrap; }
-}
-.problem--v2 .problem-group {
+/* The three problems are a collapsible list (same accordion pattern and click
+   handling as the "Why" accordion above): icon + label, plus sign on the right,
+   description opens underneath. */
+.problem--v2 .problem-accordion { margin-top: 0; }
+.problem--v2 .problem-acc-label {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  gap: 1.1rem;
 }
-.problem--v2 .problem-icon--wide { object-position: center bottom; }
-.problem--v2 .problem-icon-pair {
+.problem--v2 .problem-acc-icon {
+  flex: 0 0 64px;
   display: flex;
-  align-items: flex-end;
-  gap: 14px;
+  align-items: center;
+  justify-content: center;
 }
-
-/* Short description under each icon label. */
-.problem--v2 .problem-desc {
-  margin: 0.6rem 0 0;
-  max-width: 100%;
+.problem--v2 .problem-acc-icon .problem-icon { height: 34px; width: auto; }
+.problem--v2 .problem-acc-icon .problem-icon--wide { width: 52px; height: 34px; object-fit: contain; object-position: center; }
+.problem--v2 .problem-icon-pair { display: flex; align-items: center; gap: 8px; }
+.problem--v2 .why-accordion-panel .problem-desc {
+  margin: 0;
+  padding-left: calc(64px + 1.1rem);
+  padding-right: 2.5rem;
   font-size: 0.88rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #7a8a94;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  text-wrap: pretty;
 }
 
 /* Desktop layout for the v2 row. */
@@ -1813,17 +1808,11 @@ body {
   }
   /* Nudge the hand 52px down and 26px left (desktop only). */
   .problem--v2 .problem-pilr img { transform: translate(-26px, 52px); }
-  /* Icons and their labels sit right under the headline (no divider line). */
-  .problem--v2 .problem-groups { align-items: start; }
-  .problem--v2 .problem-label--mobile {
-    display: block;
-    margin-top: 14px;
-  }
-  .problem--v2 .problem-foot { display: none; }
+  .problem--v2 .problem-accordion { width: 56%; max-width: 660px; }
 }
 
 @media (max-width: 700px) {
-  .problem--v2 .problem-icon { margin-inline: 0; }
+  .problem--v2 .problem-accordion { order: 3; width: 100%; margin-top: 0; }
 }
 
 .explore-routine {
