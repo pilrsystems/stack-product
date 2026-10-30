@@ -1760,32 +1760,34 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* The three problems are a collapsible list (same accordion pattern and click
-   handling as the "Why" accordion above): icon + label, plus sign on the right,
-   description opens underneath. */
-.problem--v2 .problem-accordion { margin-top: 0; }
-.problem--v2 .problem-acc-label {
-  display: flex;
+/* The three problems are stacked rows: icon, title, then the description
+   right beside them, with a thin line between rows. */
+.problem--v2 .problem-items { margin-top: 0; }
+.problem--v2 .problem-item {
+  display: grid;
+  grid-template-columns: 84px 200px minmax(0, 1fr);
+  column-gap: 1.4rem;
   align-items: center;
-  gap: 1.1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(66, 85, 99, 0.18);
 }
+.problem--v2 .problem-item:last-child { border-bottom: 1px solid rgba(66, 85, 99, 0.18); }
 .problem--v2 .problem-acc-icon {
-  flex: 0 0 64px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.problem--v2 .problem-acc-icon .problem-icon { height: 34px; width: auto; }
-.problem--v2 .problem-acc-icon .problem-icon--wide { width: 52px; height: 34px; object-fit: contain; object-position: center; }
-.problem--v2 .problem-icon-pair { display: flex; align-items: center; gap: 8px; }
-.problem--v2 .why-accordion-panel .problem-desc {
+.problem--v2 .problem-acc-icon .problem-icon { height: 46px; width: auto; }
+.problem--v2 .problem-acc-icon .problem-icon--wide { width: 70px; height: 46px; object-fit: contain; object-position: center; }
+.problem--v2 .problem-icon-pair { display: flex; align-items: center; gap: 10px; }
+.problem--v2 .problem-label { font-size: 0.875rem; }
+.problem--v2 .problem-desc {
   margin: 0;
-  padding-left: calc(64px + 1.1rem);
-  padding-right: 2.5rem;
   font-size: 0.88rem;
-  line-height: 1.65;
+  line-height: 1.6;
   color: #7a8a94;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-wrap: pretty;
 }
 
 /* Desktop layout for the v2 row. */
@@ -1808,11 +1810,16 @@ body {
   }
   /* Nudge the hand 52px down and 26px left (desktop only). */
   .problem--v2 .problem-pilr img { transform: translate(-26px, 52px); }
-  .problem--v2 .problem-accordion { width: 56%; max-width: 660px; }
+  .problem--v2 .problem-items { width: 63%; max-width: 780px; }
 }
 
 @media (max-width: 700px) {
-  .problem--v2 .problem-accordion { order: 3; width: 100%; margin-top: 0; }
+  .problem--v2 .problem-items { order: 3; width: 100%; }
+  .problem--v2 .problem-item {
+    grid-template-columns: 72px minmax(0, 1fr);
+    row-gap: 0.6rem;
+  }
+  .problem--v2 .problem-desc { grid-column: 1 / -1; }
 }
 
 .explore-routine {
