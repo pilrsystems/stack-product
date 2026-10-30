@@ -1782,6 +1782,17 @@ body {
   gap: 14px;
 }
 
+/* Short description under each icon label. */
+.problem--v2 .problem-desc {
+  margin: 0.6rem 0 0;
+  max-width: 100%;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #7a8a94;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-wrap: pretty;
+}
+
 /* Desktop layout for the v2 row. */
 @media (min-width: 701px) {
   .problem--v2 .problem-row {
@@ -1792,6 +1803,14 @@ body {
   /* Hand photo 10% smaller than the original (29.7vw / 427.68px), still pinned
      to the bottom of the row; the shorter row lifts it up alongside the text. */
   .problem--v2 .problem-pilr { width: min(26.73vw, 384.91px); }
+  /* Anchor the hand from the top of the row (instead of the bottom) so it stays
+     level with the headline when the text block above/below it grows. 350px is
+     the row height it was originally tuned against; 1.2206 is the photo's
+     height/width ratio. */
+  .problem--v2 .problem-pilr {
+    bottom: auto;
+    top: calc(350px - 1.2206 * min(26.73vw, 384.91px));
+  }
   /* Nudge the hand 52px down and 26px left (desktop only). */
   .problem--v2 .problem-pilr img { transform: translate(-26px, 52px); }
   /* Icons and their labels sit right under the headline (no divider line). */
