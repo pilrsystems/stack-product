@@ -1762,7 +1762,8 @@ body {
 
 /* The three problems are stacked rows: icon, title, then the description
    right beside them, with a thin line between rows. */
-.problem--v2 .problem-items { margin-top: 0; }
+/* Pull the list up under the headline (the headline keeps 2.75rem below it otherwise). */
+.problem--v2 .problem-items { margin-top: -1.75rem; }
 .problem--v2 .problem-item {
   display: grid;
   /* Icon with its title centered underneath on the left, description beside it. */
@@ -1771,7 +1772,7 @@ body {
     "icon  desc"
     "label desc";
   column-gap: 2.25rem;
-  row-gap: 0.85rem;
+  row-gap: 0.4rem;
   align-items: center;
   padding: 1.75rem 0;
 }
@@ -1786,7 +1787,7 @@ body {
 .problem--v2 .problem-acc-icon .problem-icon { height: 46px; width: auto; }
 .problem--v2 .problem-acc-icon .problem-icon--wide { width: 70px; height: 46px; object-fit: contain; object-position: center; }
 .problem--v2 .problem-icon-pair { display: flex; align-items: center; gap: 10px; }
-.problem--v2 .problem-label { font-size: 0.875rem; }
+.problem--v2 .problem-label { font-size: 0.8125rem; }
 .problem--v2 .problem-desc {
   margin: 0;
   font-size: 0.88rem;
@@ -1806,16 +1807,14 @@ body {
   /* Hand photo 10% smaller than the original (29.7vw / 427.68px), still pinned
      to the bottom of the row; the shorter row lifts it up alongside the text. */
   .problem--v2 .problem-pilr { width: min(26.73vw, 384.91px); }
-  /* Anchor the hand from the top of the row (instead of the bottom) so it stays
-     level with the headline when the text block above/below it grows. 350px is
-     the row height it was originally tuned against; 1.2206 is the photo's
-     height/width ratio. */
+  /* The hand sits on the bottom of the list: row padding (90px) + the last
+     row's own bottom padding (28px) put its bottom edge level with the last title. */
   .problem--v2 .problem-pilr {
-    bottom: auto;
-    top: calc(350px - 1.2206 * min(26.73vw, 384.91px));
+    top: auto;
+    bottom: 118px;
   }
-  /* Nudge the hand 52px down and 26px left (desktop only). */
-  .problem--v2 .problem-pilr img { transform: translate(-26px, 52px); }
+  /* Nudge the hand 26px left (desktop only). */
+  .problem--v2 .problem-pilr img { transform: translate(-26px, 0); }
   .problem--v2 .problem-items { width: 63%; max-width: 780px; }
 }
 
