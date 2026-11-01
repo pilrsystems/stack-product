@@ -1715,124 +1715,89 @@ body {
   .problem-foot { display: none; }
 }
 
-/* ── PROBLEM SECTION v2 (working copy) — everything here is scoped to
-   .problem--v2 so the original section above stays untouched. ──────────── */
-/* Headline matches the other sections' large titles (e.g. "Built around
-   your routine"): same size, weight and letter-spacing. */
+/* ── PROBLEM SECTION v2 — four cards: three gray problem cards plus a slate
+   pilr card with a photo. Scoped to .problem--v2. ─────────────────────── */
 .problem--v2 .problem-headline {
   font-size: 41px;
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.02em;
   color: #5e6e7a;
-  /* Long headline: wrap it onto balanced lines so it stays clear of the hand. */
-  max-width: 60%;
-  width: auto;
-  text-wrap: balance;
+  margin-bottom: 2rem;
 }
-
-/* Headline stays on one line on desktop (it wraps naturally on phones). */
 @media (min-width: 701px) {
-  .problem--v2 .problem-headline { max-width: none; white-space: nowrap; }
+  .problem--v2 .problem-headline { white-space: nowrap; }
 }
-@media (max-width: 700px) {
-  .problem--v2 .problem-headline { max-width: 100%; }
-}
+.problem--v2 .problem-row { padding-bottom: 0; }
 
-/* Icons instead of the crossed-out words (sizes carried over from the earlier
-   icon version of this section). */
-.problem--v2 .problem-icon {
-  display: block;
-  width: auto;
-  height: 54px;
-  margin-bottom: 0;
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
 }
-.problem--v2 .problem-icon--wide {
-  width: 81px;
-  object-fit: contain;
-  object-position: left bottom;
-}
-
-/* Icon labels use the same size and style as the table names in the
-   "Built to hold your routine" section (CREATINE, COLLAGEN...). */
-.problem--v2 .problem-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.problem-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 2 / 3;
+  padding: 1.4rem 1.4rem 1.6rem;
+  background: #e8eaea;
   color: #5e6e7a;
+  overflow: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
-/* The three problems are stacked rows: icon, title, then the description
-   right beside them, with a thin line between rows. */
-/* Pull the list up under the headline (the headline keeps 2.75rem below it otherwise). */
-.problem--v2 .problem-items { margin-top: -1.75rem; }
-.problem--v2 .problem-item {
-  display: grid;
-  /* Icon with its title centered underneath on the left, description beside it. */
-  grid-template-columns: 210px minmax(0, 1fr);
-  grid-template-areas:
-    "icon  desc"
-    "label desc";
-  column-gap: 2.25rem;
-  row-gap: 0.4rem;
-  align-items: center;
-  padding: 1.75rem 0;
-}
-.problem--v2 .problem-acc-icon { grid-area: icon; }
-.problem--v2 .problem-label { grid-area: label; text-align: center; }
-.problem--v2 .problem-desc { grid-area: desc; }
-.problem--v2 .problem-acc-icon {
+.problem-card-num { font-size: 0.7rem; letter-spacing: 0.1em; color: #5e6e7a; }
+.problem-card-icon {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
 }
-.problem--v2 .problem-acc-icon .problem-icon { height: 46px; width: auto; }
-.problem--v2 .problem-acc-icon .problem-icon--wide { width: 70px; height: 46px; object-fit: contain; object-position: center; }
-.problem--v2 .problem-icon-pair { display: flex; align-items: center; gap: 10px; }
-.problem--v2 .problem-label { font-size: 0.8125rem; }
-.problem--v2 .problem-desc {
+.problem-card-icon img { display: block; width: auto; height: 76px; }
+.problem-card-icon img.problem-card-icon--wide { width: 118px; height: 76px; object-fit: contain; }
+.problem-card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e6e7a;
+  margin-bottom: 0.7rem;
+}
+.problem-card-desc {
   margin: 0;
   font-size: 0.88rem;
-  line-height: 1.6;
+  line-height: 1.55;
   color: #7a8a94;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-wrap: pretty;
 }
-
-/* Desktop layout for the v2 row. */
-@media (min-width: 701px) {
-  .problem--v2 .problem-row {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 90px;
-  }
-  /* Hand photo 10% smaller than the original (29.7vw / 427.68px), still pinned
-     to the bottom of the row; the shorter row lifts it up alongside the text. */
-  .problem--v2 .problem-pilr { width: min(26.73vw, 384.91px); }
-  /* The hand sits on the bottom of the list: row padding (90px) + the last
-     row's own bottom padding (28px) put its bottom edge level with the last title. */
-  .problem--v2 .problem-pilr {
-    top: auto;
-    bottom: 103px;
-  }
-  /* Nudge the hand 33px left (desktop only). */
-  .problem--v2 .problem-pilr img { transform: translate(-33px, 0); }
-  .problem--v2 .problem-items { width: 63%; max-width: 780px; }
+/* Slate pilr card */
+.problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
+.problem-card--pilr .problem-card-photo { flex: 0 0 46%; min-height: 0; }
+.problem-card--pilr .problem-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.problem-card-body { flex: 1; display: flex; flex-direction: column; padding: 1.3rem 1.4rem 1.6rem; }
+.problem-card-brand { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
+.problem-card--pilr .problem-card-desc { color: rgba(255,255,255,0.92); }
+.problem-card-link {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #fff;
+  text-decoration: none;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(255,255,255,0.6);
 }
+.problem-card-link:hover { border-bottom-color: #fff; }
 
-@media (max-width: 700px) {
-  .problem--v2 .problem-items { order: 3; width: 100%; }
-  .problem--v2 .problem-item {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "icon"
-      "label"
-      "desc";
-    row-gap: 0.7rem;
-    text-align: center;
-  }
+@media (max-width: 900px) {
+  .problem-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .problem-cards { grid-template-columns: minmax(0, 1fr); }
+  .problem-card { aspect-ratio: auto; min-height: 20rem; }
+  .problem-card--pilr .problem-card-photo { flex-basis: 14rem; }
 }
 
 .explore-routine {
@@ -5651,7 +5616,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 /* Homepage (desktop): every gap between sections is ~151px of visible white
    space, matching Shop cards -> Why. */
 @media (min-width: 901px) {
-  .problem--v2 { padding-top: 40px; padding-bottom: 0; }
+  .problem--v2 { padding-top: 40px; padding-bottom: 102px; }
   .built-routine-section--home { padding-top: 64px; padding-bottom: 117px; }
   .home-lifestyle { padding-bottom: 101px; }
   .fly-video { padding-bottom: 93px; }
