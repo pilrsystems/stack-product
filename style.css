@@ -1755,7 +1755,7 @@ body {
   padding-top: 12px; /* keeps the icons where they were when the text moved up */
 }
 .problem-card-icon img { display: block; width: auto; height: 98.8px; }
-.problem-card:nth-child(2) .problem-card-icon img { height: 103.7px; }
+.problem-card:nth-child(2) .problem-card-icon img { height: 106.8px; }
 .problem-card:nth-child(3) .problem-card-icon img { height: 93.9px; }
 .problem-card-icon img.problem-card-icon--wide { width: 153.9px; height: 98.8px; object-fit: contain; }
 .problem-card-label {
