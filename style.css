@@ -1785,10 +1785,9 @@ body {
 .problem-card--pilr .problem-card-desc { min-height: 3.1em; }
 .problem-card--pilr .problem-card-desc { color: rgba(255,255,255,0.92); }
 .problem-card-link {
-  margin-top: 13px;
+  margin-top: 7px;
+  margin-bottom: 6px;
   align-self: center;
-  position: relative;
-  top: -6px;
   font-size: 0.684rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -1798,6 +1797,21 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.6);
 }
 .problem-card-link:hover { border-bottom-color: #fff; }
+/* The whole pilr card is the link: the anchor's ::after stretches over the card. */
+.problem-card-link::after { content: ""; position: absolute; inset: 0; }
+.problem-card--pilr {
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.problem-card--pilr:hover,
+.problem-card--pilr:focus-within {
+  transform: translateY(-4px);
+  background: #52626f;
+  box-shadow: 0 10px 24px rgba(51, 65, 74, 0.22);
+}
+.problem-card--pilr:hover .problem-card-link { border-bottom-color: #fff; }
+.problem-card-link:focus-visible { outline: none; }
+.problem-card--pilr:has(.problem-card-link:focus-visible) { outline: 2px solid #fff; outline-offset: -6px; }
 
 @media (max-width: 900px) {
   .problem-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
