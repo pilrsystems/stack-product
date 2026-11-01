@@ -1739,14 +1739,13 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 3 / 4;
   padding: 1.4rem 1.4rem 1.6rem;
   background: #e8eaea;
   color: #5e6e7a;
   overflow: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.problem-card-num { font-size: 0.7rem; letter-spacing: 0.1em; color: #5e6e7a; }
 .problem-card-icon {
   flex: 1;
   display: flex;
@@ -1754,8 +1753,8 @@ body {
   justify-content: center;
   gap: 12px;
 }
-.problem-card-icon img { display: block; width: auto; height: 76px; }
-.problem-card-icon img.problem-card-icon--wide { width: 118px; height: 76px; object-fit: contain; }
+.problem-card-icon img { display: block; width: auto; height: 104px; }
+.problem-card-icon img.problem-card-icon--wide { width: 162px; height: 104px; object-fit: contain; }
 .problem-card-label {
   font-size: 0.75rem;
   font-weight: 600;
