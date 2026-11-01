@@ -897,6 +897,12 @@ body {
   margin-inline: auto;
 }
 
+/* Desktop: the grey card tiles (inset 0.85rem inside the container) line up with
+   the 3rem-padded, 1240px-max containers of the sections below. */
+@media (min-width: 901px) {
+  .shop-container { width: min(100% - 4.3rem, 1240px + 1.7rem); max-width: none; }
+}
+
 .shop-header-row {
   display: flex;
   align-items: baseline;
