@@ -1735,15 +1735,16 @@ body {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
-/* Desktop: cards 5% smaller (the row is 95% wide, left-aligned with the headline). */
-@media (min-width: 901px) {
-  .problem-cards { width: 95%; }
+/* Desktop: once the container hits its 1240px cap, the row stops 40px short so the
+   last card lines up with the right edge of the Why section content above. */
+@media (min-width: 1336px) {
+  .problem-cards { width: calc(100% - 40px); }
 }
 .problem-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 0.764;
   padding: 1.33rem 1.33rem calc(1.52rem + 12px);
   background: #e8eaea;
   color: #5e6e7a;
