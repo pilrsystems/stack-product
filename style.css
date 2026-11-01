@@ -1741,7 +1741,7 @@ body {
   flex-direction: column;
   aspect-ratio: 0.79;
   padding: 1.33rem 1.33rem calc(1.52rem + 12px);
-  background: #e8eaea;
+  background: #eef0f0;
   color: #5e6e7a;
   overflow: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
