@@ -1774,7 +1774,7 @@ body {
 }
 /* Slate pilr card */
 .problem-card:not(.problem-card--pilr) .problem-card-label,
-.problem-card:not(.problem-card--pilr) .problem-card-desc { text-align: center; }
+.problem-card:not(.problem-card--pilr) .problem-card-desc { text-align: center; min-height: 4.65em; }
 .problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
 .problem-card--pilr .problem-card-photo { flex: 0 0 46%; min-height: 0; }
 .problem-card--pilr .problem-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
