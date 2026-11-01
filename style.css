@@ -1723,7 +1723,7 @@ body {
   line-height: normal;
   letter-spacing: -0.02em;
   color: #5e6e7a;
-  margin-bottom: 2.75rem;
+  margin-bottom: 48px;
 }
 @media (min-width: 701px) {
   .problem--v2 .problem-headline { white-space: nowrap; }
