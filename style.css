@@ -1780,8 +1780,8 @@ body {
 .problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
 /* Product photo (transparent PNG) sits at the top of the card, above the text. */
 .problem-card-art {
-  position: absolute; left: 50%; top: 32px; transform: translateX(-50%);
-  width: 72%; height: auto; pointer-events: none;
+  position: absolute; left: 50%; top: 24px; transform: translateX(-50%);
+  width: 52%; height: auto; pointer-events: none;
 }
 .problem-card-body { flex: 1; justify-content: flex-end; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1.33rem calc(1.52rem + 2px); }
 /* The pilr logo sits on the same line as the other cards' titles, and the
