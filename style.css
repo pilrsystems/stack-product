@@ -1778,9 +1778,14 @@ body {
 .problem-card:not(.problem-card--pilr) .problem-card-desc { text-align: center; }
 .problem-card:not(.problem-card--pilr) .problem-card-desc { min-height: 4.65em; }
 .problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
-/* Product photo (transparent PNG) sits behind the text at the top of the card:
-   the arms run off the top and left edges, the pods end above the text. */
-.problem-card-art { position: absolute; left: -12px; top: -80px; width: 82%; height: auto; pointer-events: none; }
+/* Hand photo (transparent PNG) sits at the top of the card, above the text. */
+.problem-card-art {
+  position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+  width: 76%; height: auto; pointer-events: none;
+  /* The wrist fades into the blue just above the text. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 84%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 84%);
+}
 .problem-card-body { flex: 1; justify-content: flex-end; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1.33rem calc(1.52rem + 2px); }
 /* The pilr logo sits on the same line as the other cards' titles, and the
    description starts where theirs do. */
