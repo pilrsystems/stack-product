@@ -1790,7 +1790,7 @@ body {
 /* The pilr logo sits on the same line as the other cards' titles, and the
    description starts where theirs do. */
 .problem-card-brand { display: flex; align-items: center; justify-content: center; height: 15px; margin-bottom: 13px; }
-.problem-card-brand img { display: block; height: 24px; width: auto; flex: none; }
+.problem-card-brand img { display: block; height: 22.8px; width: auto; flex: none; }
 .problem-card--pilr .problem-card-desc { min-height: 3.1em; }
 .problem-card--pilr .problem-card-desc { color: rgba(255,255,255,0.92); }
 .problem-card-link {
