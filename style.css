@@ -1754,6 +1754,8 @@ body {
   gap: 12px;
 }
 .problem-card-icon img { display: block; width: auto; height: 104px; }
+.problem-card:nth-child(2) .problem-card-icon img { height: 109.2px; }
+.problem-card:nth-child(3) .problem-card-icon img { height: 98.8px; }
 .problem-card-icon img.problem-card-icon--wide { width: 162px; height: 104px; object-fit: contain; }
 .problem-card-label {
   font-size: 0.75rem;
@@ -1771,6 +1773,8 @@ body {
   text-wrap: pretty;
 }
 /* Slate pilr card */
+.problem-card:not(.problem-card--pilr) .problem-card-label,
+.problem-card:not(.problem-card--pilr) .problem-card-desc { text-align: center; }
 .problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
 .problem-card--pilr .problem-card-photo { flex: 0 0 46%; min-height: 0; }
 .problem-card--pilr .problem-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
