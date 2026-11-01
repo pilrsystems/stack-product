@@ -1723,7 +1723,7 @@ body {
   line-height: normal;
   letter-spacing: -0.02em;
   color: #5e6e7a;
-  margin-bottom: 2rem;
+  margin-bottom: 2.75rem;
 }
 @media (min-width: 701px) {
   .problem--v2 .problem-headline { white-space: nowrap; }
@@ -1735,12 +1735,16 @@ body {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
+/* Desktop: cards 5% smaller (the row is 95% wide, left-aligned with the headline). */
+@media (min-width: 901px) {
+  .problem-cards { width: 95%; }
+}
 .problem-card {
   position: relative;
   display: flex;
   flex-direction: column;
   aspect-ratio: 3 / 4;
-  padding: 1.4rem 1.4rem 1.6rem;
+  padding: 1.33rem 1.33rem 1.52rem;
   background: #e8eaea;
   color: #5e6e7a;
   overflow: hidden;
@@ -1753,12 +1757,12 @@ body {
   justify-content: center;
   gap: 12px;
 }
-.problem-card-icon img { display: block; width: auto; height: 104px; }
-.problem-card:nth-child(2) .problem-card-icon img { height: 109.2px; }
-.problem-card:nth-child(3) .problem-card-icon img { height: 98.8px; }
-.problem-card-icon img.problem-card-icon--wide { width: 162px; height: 104px; object-fit: contain; }
+.problem-card-icon img { display: block; width: auto; height: 98.8px; }
+.problem-card:nth-child(2) .problem-card-icon img { height: 103.7px; }
+.problem-card:nth-child(3) .problem-card-icon img { height: 93.9px; }
+.problem-card-icon img.problem-card-icon--wide { width: 153.9px; height: 98.8px; object-fit: contain; }
 .problem-card-label {
-  font-size: 0.75rem;
+  font-size: 0.7125rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1767,7 +1771,7 @@ body {
 }
 .problem-card-desc {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.836rem;
   line-height: 1.55;
   color: #7a8a94;
   text-wrap: pretty;
@@ -1777,20 +1781,24 @@ body {
 .problem-card:not(.problem-card--pilr) .problem-card-desc { text-align: center; }
 .problem-card:not(.problem-card--pilr) .problem-card-desc { min-height: 4.65em; }
 .problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
-.problem-card--pilr .problem-card-photo { flex: 0 0 46%; min-height: 0; }
+.problem-card--pilr .problem-card-photo { min-height: 0; }
 .problem-card--pilr .problem-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.problem-card-body { flex: 1; display: flex; flex-direction: column; padding: 1.3rem 1.4rem 1.6rem; }
-.problem-card-brand { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.7rem; }
+.problem-card-body { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1.33rem 1.52rem; }
+/* The pilr logo sits on the same line as the other cards' titles, and the
+   description starts where theirs do. */
+.problem-card-brand { font-size: 1.3775rem; font-weight: 600; letter-spacing: -0.01em; line-height: 15px; margin-bottom: 9px; }
+.problem-card--pilr .problem-card-photo { flex: 1 1 0; margin-bottom: 14px; }
+.problem-card--pilr .problem-card-desc { min-height: 3.1em; }
 .problem-card--pilr .problem-card-desc { color: rgba(255,255,255,0.92); }
 .problem-card-link {
-  margin-top: auto;
-  align-self: flex-start;
-  font-size: 0.72rem;
+  margin-top: 3px;
+  align-self: center;
+  font-size: 0.684rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   color: #fff;
   text-decoration: none;
-  padding-bottom: 0.45rem;
+  padding-bottom: 4px;
   border-bottom: 1px solid rgba(255,255,255,0.6);
 }
 .problem-card-link:hover { border-bottom-color: #fff; }
