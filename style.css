@@ -1756,7 +1756,7 @@ body {
 }
 .problem-card-icon img { display: block; width: auto; height: 98.8px; }
 .problem-card:nth-child(2) .problem-card-icon img { height: 106.8px; }
-.problem-card:nth-child(3) .problem-card-icon img { height: 93.9px; }
+.problem-card:nth-child(3) .problem-card-icon img { height: 91.1px; }
 .problem-card-icon img.problem-card-icon--wide { width: 183.75px; height: 98.8px; object-fit: contain; }
 .problem-card-label {
   font-size: 0.7125rem;
