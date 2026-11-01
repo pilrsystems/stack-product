@@ -1787,6 +1787,8 @@ body {
 .problem-card-link {
   margin-top: 13px;
   align-self: center;
+  position: relative;
+  top: -6px;
   font-size: 0.684rem;
   font-weight: 600;
   letter-spacing: 0.14em;
