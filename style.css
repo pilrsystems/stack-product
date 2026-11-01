@@ -1348,7 +1348,7 @@ body {
 }
 
 .why-right h2 {
-  font-size: 41px;
+  font-size: 39px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -1718,7 +1718,7 @@ body {
 /* ── PROBLEM SECTION v2 — four cards: three gray problem cards plus a slate
    pilr card with a photo. Scoped to .problem--v2. ─────────────────────── */
 .problem--v2 .problem-headline {
-  font-size: 41px;
+  font-size: 39px;
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.02em;
@@ -1818,7 +1818,7 @@ body {
 }
 
 .explore-routine-title {
-  font-size: 41px;
+  font-size: 39px;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: #5e6e7a;
@@ -5191,7 +5191,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   padding-right: 3.5rem;
 }
 .built-routine-section--home .built-routine-title {
-  font-size: 41px;
+  font-size: 39px;
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.02em;
