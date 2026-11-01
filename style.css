@@ -1780,8 +1780,8 @@ body {
 .problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
 /* Hand photo (transparent PNG) sits at the top of the card, above the text. */
 .problem-card-art {
-  position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-  width: 76%; height: auto; pointer-events: none;
+  position: absolute; left: 50%; top: 10px; transform: translateX(-50%);
+  width: 60.8%; height: auto; pointer-events: none;
   /* The wrist fades into the blue just above the text. */
   -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 84%);
   mask-image: linear-gradient(to bottom, #000 68%, transparent 84%);
