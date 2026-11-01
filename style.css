@@ -1357,6 +1357,11 @@ body {
 }
 
 .why-accordion-list { display: flex; flex-direction: column; }
+/* Wide desktop: the accordion lines and + icons run 40px further right so they
+   end on the same right edge as the cards in the sections above and below. */
+@media (min-width: 1351px) {
+  .why-accordion-list { margin-right: -40px; }
+}
 
 .why-accordion-item { border-top: 1px solid rgba(66,85,99,0.18); }
 .why-accordion-item:first-child { border-top: none; }
