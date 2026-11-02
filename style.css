@@ -1982,7 +1982,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .home-lifestyle-grid {
   display: flex;
-  gap: 40px;
+  gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -1990,37 +1990,55 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 .home-lifestyle-grid::-webkit-scrollbar { display: none; }
 
+/* Three photos fill the row; the rest are a swipe/arrow away. */
 .home-lifestyle-item {
-  flex: 0 0 340px;
+  position: relative;
+  flex: 0 0 calc((100% - 40px) / 3);
   scroll-snap-align: start;
 }
 
 .home-lifestyle-item img {
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: 50% 40%;
   display: block;
 }
 
-.home-lifestyle-item figcaption { margin-top: 14px; }
+/* White caption in the bottom-left corner of the photo, over a soft dark
+   gradient so it stays readable. */
+.home-lifestyle-item::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+.home-lifestyle-item figcaption {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  right: 20px;
+  z-index: 1;
+}
 
 .home-lifestyle-label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #5e6e7a;
+  color: #fff;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .home-lifestyle-desc {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
-  color: #7a8a94;
+  color: #fff;
   margin-top: 0.25rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
