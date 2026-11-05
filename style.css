@@ -3762,7 +3762,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .faq-group + .faq-group {
-  margin-top: 4rem;
+  margin-top: calc(4rem + 25px);
 }
 
 .faq-group-title {
@@ -3772,7 +3772,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-weight: 500;
   color: #5e6e7a;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: calc(1.5rem + 10px);
 }
 
 .faq-card {
