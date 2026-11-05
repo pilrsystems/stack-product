@@ -36,7 +36,7 @@
             <div class="nav-dropdown-inner">
               <div class="nav-drop-grid">
                 <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System.png" alt="Build Your System"></div>
+                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Build Your System</span>
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
@@ -117,7 +117,7 @@
     <div class="shop-inner">
       <a href="./catalog.html#section-single-pods" class="shop-card">
         <div class="shop-card-img">
-          <img src="images/lifestyle_section/Single Pods.png" alt="Single Pods" />
+          <img class="shop-card-img-pod" src="images/lifestyle_section/Single Pods.png" alt="Single Pods" />
         </div>
         <div class="shop-card-info">
           <h3>Single Pods</h3>
@@ -201,6 +201,32 @@
     </div>
   </section>
 
+  <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
+       and a centered label + headline over the picture. Pauses off-screen;
+       shows only the poster under prefers-reduced-motion. -->
+  <section class="fly-video">
+    <div class="fly-video-inner">
+      <div class="fly-video-media">
+        <video
+          class="fly-video-el"
+          src="images/lifestyle_section/Built To Fly Video.mp4"
+          poster="images/lifestyle_section/Built To Fly Video Poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          width="1920"
+          height="1080"
+        ></video>
+        <div class="fly-video-gradient" aria-hidden="true"></div>
+        <div class="fly-video-copy">
+          <p class="fly-video-label">TSA-compliant</p>
+          <h2 class="fly-video-headline">Nothing to hide.</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROBLEM SECTION (v2) — icons version. Its styles are scoped to .problem--v2
        and build on the shared .problem rules in style.css. -->
   <section class="problem problem--v2">
@@ -225,10 +251,10 @@
             <p class="problem-card-desc">Built to hold months of supplements, not the handful of servings you actually need when traveling.</p>
           </div>
           <div class="problem-card problem-card--pilr">
-            <img class="problem-card-art" src="images/lifestyle_section/Problem Card 4 Pods 3b.png" alt="" width="700" height="848" loading="lazy" />
+            <img class="problem-card-art" src="images/lifestyle_section/One Solution Image.webp" alt="" width="900" height="763" loading="lazy" />
             <div class="problem-card-body">
               <div class="problem-card-brand"><img src="images/lifestyle_section/Problem Card 4 Logo.png" alt="pilr" width="133" height="92" /></div>
-              <p class="problem-card-desc">One modular system for pills and powders.</p>
+              <p class="problem-card-desc">A modular system for your pills and powders, built around the way you travel.</p>
               <a class="problem-card-link" href="./build-your-system.html">BUILD YOUR SYSTEM →</a>
             </div>
           </div>
@@ -237,17 +263,17 @@
     </div>
   </section>
 
-  <!-- BUILT TO HOLD YOUR ROUTINE — sits below the v2 problem section;
-       markup/classes reused as-is from classic-stack.html so it picks
-       up the existing shared .built-routine-* rules in style.css. -->
-  <section class="built-routine-section built-routine-section--home"><div class="built-routine-content"><p class="why-label">DESIGNED WITH INTENTION</p><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><a href="./size-guide.html" class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="pilr lifestyle" /></div></section>
 
   <!-- LIFESTYLE SECTION — 3:4 portraits in a horizontally scrollable row,
-       same container/gutters/padding as the sections around it. No
-       heading, since neither neighboring section pairs one here; the
-       scroll arrows sit top-right in its place. -->
+       same container/gutters/padding as the sections around it. A
+       centered title and subline sit above it; the scroll arrows sit
+       top-right of the row. -->
   <section class="home-lifestyle">
     <div class="home-lifestyle-inner">
+      <div class="home-lifestyle-header">
+        <h2 class="home-lifestyle-title">Life doesn't stay in one place</h2>
+        <p class="home-lifestyle-sub">Designed to make your everyday essentials easier to take anywhere.</p>
+      </div>
       <div class="home-lifestyle-nav">
         <button class="home-lifestyle-arrow home-lifestyle-arrow--prev" type="button" aria-label="Previous photo">
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 2 L5 8 L10 14" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
@@ -258,62 +284,51 @@
       </div>
       <div class="home-lifestyle-grid">
         <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/Lifestyle Carryon.jpg" alt="Holding the pilr stack by hand in an airplane seat" width="1000" height="1314" loading="lazy" />
-          <figcaption><span class="home-lifestyle-label">Carry-on</span><span class="home-lifestyle-desc">Fits one hand.</span></figcaption>
+          <img src="images/lifestyle_section/Lifestyle Section Image 2.jpg" alt="Close-up of the pilr lid against an airplane wing at sunset" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">In the air</span><span class="home-lifestyle-desc">Goes where you go.</span></figcaption>
         </figure>
         <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/Lifestyle Gym.jpg" alt="The pilr stack packed inside an open gym duffel bag" width="1000" height="1300" loading="lazy" />
-          <figcaption><span class="home-lifestyle-label">Gym bag</span><span class="home-lifestyle-desc">Sits with the rest of your kit.</span></figcaption>
+          <img src="images/lifestyle_section/Lifestyle Section Image 7.jpg" alt="A hand holding the pilr stack next to a passport" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Through TSA</span><span class="home-lifestyle-desc">Clears security with you.</span></figcaption>
         </figure>
         <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/Lifestyle Morning.jpg" alt="The pilr stack open on a sunlit counter in the morning" width="1000" height="1322" loading="lazy" />
-          <figcaption><span class="home-lifestyle-label">Morning</span><span class="home-lifestyle-desc">Part of the routine.</span></figcaption>
+          <img src="images/lifestyle_section/Lifestyle Section Image 4.jpg" alt="Hands holding a pilr pod above an assortment of open pods with powders and supplements" loading="lazy" style="object-position: 50% 80%;" />
+          <figcaption><span class="home-lifestyle-label">Your system</span><span class="home-lifestyle-desc">Built your way.</span></figcaption>
         </figure>
         <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/flight.png" alt="Close-up of the pilr lid against an airplane wing at sunset" width="2011" height="2681" loading="lazy" style="object-position: 50% 50%;" />
-          <figcaption><span class="home-lifestyle-label">In flight</span><span class="home-lifestyle-desc">Goes where you go.</span></figcaption>
-        </figure>
-        <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/toiletry.png" alt="A hand placing the pilr stack into a black toiletry bag" width="2178" height="2873" loading="lazy" style="object-position: 50% 35%;" />
-          <figcaption><span class="home-lifestyle-label">Toiletry bag</span><span class="home-lifestyle-desc">Slides in with the rest.</span></figcaption>
-        </figure>
-        <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/suitcase.png" alt="The pilr stack and a black bag on top of a suitcase" width="2136" height="2828" loading="lazy" style="object-position: 30% 30%;" />
-          <figcaption><span class="home-lifestyle-label">Packed</span><span class="home-lifestyle-desc">Ready before you are.</span></figcaption>
-        </figure>
-        <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/boat.png" alt="The pilr stack in a boat cup holder on the water" width="2011" height="2682" loading="lazy" style="object-position: 50% 60%;" />
+          <img src="images/lifestyle_section/Lifestyle Section Image 1.jpg" alt="The pilr stack sitting in a boat cup holder on the water" loading="lazy" />
           <figcaption><span class="home-lifestyle-label">Weekend</span><span class="home-lifestyle-desc">Out on the water.</span></figcaption>
         </figure>
         <figure class="home-lifestyle-item">
-          <img src="images/lifestyle_section/evening.png" alt="The pilr stack on a nightstand next to a lit lamp in the evening" width="2068" height="2918" loading="lazy" style="object-position: 65% 60%;" />
-          <figcaption><span class="home-lifestyle-label">Evening</span><span class="home-lifestyle-desc">Within reach.</span></figcaption>
+          <img src="images/lifestyle_section/Lifestyle Section Image 5.jpg" alt="Open pilr pods lined up on an airport window ledge with a plane outside" loading="lazy" style="object-position: 50% 58%;" />
+          <figcaption><span class="home-lifestyle-label">Layover</span><span class="home-lifestyle-desc">Ready at the gate.</span></figcaption>
+        </figure>
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Section Image 9.jpg" alt="The pilr stack packed inside an open gray gym duffel bag" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Gym bag</span><span class="home-lifestyle-desc">Ready for every session.</span></figcaption>
+        </figure>
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Section Image 8.jpg" alt="Two pilr pods on a sunlit table next to a green cup" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Morning</span><span class="home-lifestyle-desc">Part of your routine.</span></figcaption>
+        </figure>
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Section Image 3.jpg" alt="A hand holding the pilr stack in an airplane seat" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Carry-on</span><span class="home-lifestyle-desc">Fits in one hand.</span></figcaption>
+        </figure>
+        <figure class="home-lifestyle-item">
+          <img src="images/lifestyle_section/Lifestyle Image 10.jpg" alt="Three open pilr pods filled with powder, gummies and capsules on top of a black suitcase" loading="lazy" />
+          <figcaption><span class="home-lifestyle-label">Packed</span><span class="home-lifestyle-desc">Easily fits in your suitcase.</span></figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- BUILT TO FLY VIDEO — uncropped, native 16:9, with a bottom gradient,
-       two corner labels, and a headline/subline below. Pauses off-screen;
-       shows only the poster under prefers-reduced-motion. -->
-  <section class="fly-video">
-    <div class="fly-video-inner">
-      <div class="fly-video-media">
-        <video
-          class="fly-video-el"
-          src="images/lifestyle_section/Built To Fly Video.mp4"
-          poster="images/lifestyle_section/Built To Fly Video Poster.jpg"
-          autoplay
-          muted
-          loop
-          playsinline
-          width="1920"
-          height="1080"
-        ></video>
-        <div class="fly-video-gradient" aria-hidden="true"></div>
-      </div>
-    </div>
-  </section>
+  <!-- BUILT TO HOLD YOUR ROUTINE — sits below the v2 problem section;
+       markup/classes reused as-is from classic-stack.html so it picks
+       up the existing shared .built-routine-* rules in style.css. -->
+  <section class="built-routine-section built-routine-section--home"><div class="built-routine-content"><p class="why-label">DESIGNED WITH INTENTION</p><h2 class="built-routine-title">Built to hold your routine</h2><p class="built-routine-desc">We didn't just pick a size and hope it worked. We researched the most common pills and powders people take daily and built each pod around those real volumes.</p><div class="built-routine-table"><div class="built-routine-row"><span class="built-routine-item">CREATINE</span><span class="built-routine-val">~ 70-75g</span></div><div class="built-routine-row"><span class="built-routine-item">COLLAGEN</span><span class="built-routine-val">~ 60g</span></div><div class="built-routine-row"><span class="built-routine-item">FISH OIL</span><span class="built-routine-val">17 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">MAGNESIUM</span><span class="built-routine-val">26 capsules</span></div><div class="built-routine-row"><span class="built-routine-item">COQ10</span><span class="built-routine-val">10 capsules</span></div></div><a href="./size-guide.html" class="built-routine-btn">VIEW THE FULL TEST <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#5e6e7a"/><line x1="7.5" y1="12" x2="16.5" y2="12" stroke="white" stroke-width="2" stroke-linecap="round"/><polyline points="12.5 8.5 16.5 12 12.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><div class="built-routine-img"><img src="images/lifestyle_section/Hand Transparent Background.png" alt="pilr lifestyle" /></div></section>
+
+
 
   <!-- EXPLORE ROUTINE — three-up image grid, one row, each linking to a
        shop entry point. Images are placeholders (flat color rectangles)
@@ -775,6 +790,51 @@
         normalize();
         grid.scrollBy({ left: cardStep(), behavior: 'smooth' });
       });
+
+      // Click-and-drag with a mouse. Touch already scrolls natively, so only
+      // the mouse is handled here. Snapping is switched off while dragging,
+      // then the row eases to the nearest photo on release (a quick flick
+      // carries it a little further).
+      var drag = null;
+      grid.addEventListener('dragstart', function(e) { e.preventDefault(); });
+      grid.addEventListener('pointerdown', function(e) {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        normalize();
+        drag = { x: e.clientX, left: grid.scrollLeft, lastX: e.clientX, lastT: e.timeStamp, v: 0 };
+        grid.style.scrollSnapType = 'none';
+        grid.style.scrollBehavior = 'auto';
+        grid.classList.add('is-dragging');
+        grid.setPointerCapture(e.pointerId);
+      });
+      grid.addEventListener('pointermove', function(e) {
+        if (!drag) return;
+        grid.scrollLeft = drag.left - (e.clientX - drag.x);
+        var dt = e.timeStamp - drag.lastT;
+        if (dt > 0) drag.v = (drag.lastX - e.clientX) / dt;
+        drag.lastX = e.clientX;
+        drag.lastT = e.timeStamp;
+      });
+      function endDrag(e) {
+        if (!drag) return;
+        var v = drag.v;
+        drag = null;
+        grid.classList.remove('is-dragging');
+        if (grid.hasPointerCapture(e.pointerId)) grid.releasePointerCapture(e.pointerId);
+        var origin = before[0].offsetLeft;
+        var items = grid.querySelectorAll('.home-lifestyle-item');
+        var aim = grid.scrollLeft + Math.max(-1, Math.min(1, v)) * 200;
+        var best = grid.scrollLeft, bestDist = Infinity;
+        items.forEach(function(it) {
+          var pos = it.offsetLeft - origin;
+          var d = Math.abs(pos - aim);
+          if (d < bestDist) { bestDist = d; best = pos; }
+        });
+        grid.style.scrollSnapType = '';
+        grid.style.scrollBehavior = '';
+        grid.scrollTo({ left: best, behavior: 'smooth' });
+      }
+      grid.addEventListener('pointerup', endDrag);
+      grid.addEventListener('pointercancel', endDrag);
 
       function start() { jumpTo(setWidth()); }
       start();

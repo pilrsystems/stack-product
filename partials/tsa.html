@@ -1,0 +1,28 @@
+  <!-- TSA -->
+  <section class="tsa-section layout-container layout-grid">
+    <div class="tsa-content layout-col-1-5">
+      <p class="why-label">TSA Compliant</p>
+      <h2 class="tsa-title">Built to travel</h2>
+      <p class="tsa-desc">TSA flags powder containers over 350 mL (12 oz) for extra screening. Every pilr pod comes in well under that.</p>
+      <div class="tsa-table">
+        <div class="tsa-row"><span class="tsa-item">{{name}}</span><span class="tsa-val">{{volume}} &mdash; under the threshold</span></div>
+        <div class="tsa-row"><span class="tsa-item">Stacked pods</span><span class="tsa-val">Each pod clears on its own</span></div>
+      </div>
+    </div>
+    <div class="tsa-photo layout-col-8-12">
+      <div class="tsa-stack" id="tsa-stack" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Built to travel photos &mdash; use the arrow keys, swipe, or the buttons below to browse">
+        <div class="tsa-stack-card" data-pos="0">
+          <img src="images/lifestyle_section/TSA Binshot.jpg" alt="pilr pods packed in a TSA security bin" />
+        </div>
+        <div class="tsa-stack-card" data-pos="1">
+          <img src="images/lifestyle_section/travel-sunset-plane.jpg" alt="pilr pod lid backlit by a sunset over an airplane wing" />
+        </div>
+        <div class="tsa-stack-card" data-pos="2">
+          <img src="images/lifestyle_section/travel-delta.jpg" alt="pilr pod on a carry-on suitcase at the gate, Delta planes on the tarmac" />
+        </div>
+        <button type="button" class="tsa-stack-hint" id="tsa-stack-hint" aria-label="Next photo" tabindex="-1">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><polyline points="9 5 16 12 9 19" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>

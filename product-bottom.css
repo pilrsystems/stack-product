@@ -1,0 +1,327 @@
+/* Shared by classic-stack.html, powder-pod.html, hybrid-pod.html and
+   pill-pod.html: styles for the sections under the buy box (Built to
+   travel, Compare, FAQ). Edit here and every one of those pages changes.
+   Scoped to body.page-product-bottom. */
+/* ══════════════════════════════════════════════════════════════
+   LAYOUT GRID SYSTEM — page-scoped test (classic-stack.html
+   only). One container + one 12-column grid, reused by every
+   section below the buy box (Built to travel, Compare, FAQ) and
+   by the hero's own outer edges, so every section's left/right
+   edges land on the same two lines. The container recipe is
+   copied exactly from the homepage's "Shop the system" section
+   (.shop-container in style.css: width:calc(100% - 10vw);
+   max-width:1296px; margin-inline:auto — a pure width calc, no
+   separate inner padding) instead of the page's own earlier
+   max-width+padding version, so this page's gutters match the
+   homepage's at every viewport, not just up to ~1440px. Written
+   to be lifted into style.css as-is if/when this rolls out to
+   other pages — nothing here references classic-stack-specific
+   content.
+
+   Tokens:
+     --page-max    overall content width cap (matches .shop-container)
+     --grid-gap    gap between the 12 grid columns
+     --layout-gap  vertical gap between every section on this
+                   page (hero → travel → compare → FAQ → footer)
+   Classes:
+     .layout-container  width:calc(100% - 10vw) capped at --page-max,
+                   centered — identical box model to .shop-container
+     .layout-grid       12 equal columns inside it, gapped by --grid-gap
+     .layout-col-1-5 / -8-12 / -1-4 / -6-12   the column spans this
+                   page's sections place content on
+   Below 760px the grid collapses to a single column and every
+   .layout-col-* spans it full width; DOM order (already text-
+   before-visual in the markup) becomes the visual order. */
+.page-product-bottom {
+  --page-max: 1296px;
+  --grid-gap: clamp(16px, 1.7vw, 24px);
+  --layout-gap: clamp(72px, 9vw, 128px);
+}
+.layout-container {
+  width: calc(100% - 10vw); max-width: var(--page-max);
+  margin-inline: auto; box-sizing: border-box;
+}
+.layout-grid {
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+}
+.layout-col-1-5 { grid-column: 1 / 6; }
+.layout-col-8-12 { grid-column: 8 / 13; }
+.layout-col-1-4 { grid-column: 1 / 5; }
+.layout-col-6-12 { grid-column: 6 / 13; }
+.layout-col-1-7 { grid-column: 1 / 8; }
+.layout-col-9-12 { grid-column: 9 / 13; }
+.layout-col-8-11 { grid-column: 8 / 12; }
+@media (max-width: 760px) {
+  .layout-grid { grid-template-columns: 1fr; row-gap: var(--grid-gap); }
+  .layout-col-1-5, .layout-col-8-12, .layout-col-1-4, .layout-col-6-12,
+  .layout-col-1-7, .layout-col-9-12, .layout-col-8-11 {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* COMPARISON — sits between TSA and FAQ on this page (instead of
+   its usual spot further down, shared by the other product pages
+   via style.css). Give it the site's standard section gap below
+   so it doesn't run straight into FAQ.
+
+   Also adds an intro column (eyebrow/headline/link) to the left
+   of the table, page-scoped since the shared .comparison-section/
+   -table-wrap rules in style.css are reused by the other product
+   pages unchanged. Prefixed with body's .page-product-bottom class
+   to out-specificity those shared rules — Vite injects the
+   bundled style.css <link> after this inline <style> block in the
+   built HTML, so on specificity ties the external stylesheet
+   would otherwise win regardless of source order. */
+/* .comparison-section is itself the .layout-container/.layout-grid
+   element (classes added in the markup) — resets the shared
+   background:/padding: so none of its own padding does spacing
+   work; the single vertical gap above it is margin-top, same as
+   every other section on this page. */
+.comparison-section { margin-bottom: 0; }
+.page-product-bottom .comparison-section {
+  margin-top: calc(var(--layout-gap) + 50px);
+  padding: 0;
+  align-items: center;
+}
+/* .comparison-section also carries .layout-container/.layout-grid,
+   but those are single-class rules (0,0,1,0) — a tie against this
+   same element's OWN global rule in style.css (also 0,0,1,0:
+   background/padding), which on a tie would win since Vite injects
+   style.css after this inline block in the built HTML. These two
+   three-class rules (0,0,3,0) settle that tie unconditionally,
+   carrying the actual container/grid values so .layout-container/
+   .layout-grid's generic versions don't need to. */
+.page-product-bottom .comparison-section.layout-container {
+  width: calc(100% - 10vw); max-width: var(--page-max);
+  margin-left: auto; margin-right: auto;
+  box-sizing: border-box;
+}
+.page-product-bottom .comparison-section.layout-grid {
+  display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--grid-gap);
+}
+/* Table sits left of the text in the markup's column order (1-7) but
+   the text comes first in DOM order (so it stays text-first on
+   mobile) at columns 9-12 — a higher column than where the intro's
+   own span ends. Sparse auto-placement never moves its cursor
+   backwards, so without this the table would get pushed to its own
+   row below the text instead of sharing row 1 and centering against
+   it. */
+.page-product-bottom .comparison-intro,
+.page-product-bottom .comparison-table-wrap {
+  grid-row: 1;
+}
+/* TABLE — right edge is now just its grid column's own right
+   edge (.layout-col-6-12, flush with the container), instead of
+   a fixed 620px width pushed right with a negative margin. Column
+   proportions kept exactly as before (260:120:120:120, i.e.
+   13:6:6:6) but as fr so the table fills/shrinks with its column
+   instead of overflowing it below ~1150px-wide viewports. The two
+   decorative photos' left offsets are converted from fixed px
+   (tied to the old fixed 620px) to percentages of that same
+   13:6:6:6 ratio, so they stay centered above the 7-Day/Ziploc
+   columns at any width. Scoped above the shared mobile breakpoint
+   (760px) so the existing, already-fluid mobile layout is left
+   alone. */
+.page-product-bottom .comparison-table-wrap { width: 100%; margin: 0; }
+@media (min-width: 761px) {
+  /* 10% narrower than its column, plus 20px so the label column has more
+     room between the words and the grey pilr column, plus 12px extra for each
+     of the three data columns (pilr / 7-day organizers / Ziploc) so there is
+     more room between them. X is the table's width minus those 56px; the
+     columns split it 13:6:6:6 and then add their extra back. */
+  .page-product-bottom .comparison-table-wrap { width: calc(90% + 56px); }
+  .page-product-bottom .comparison-table { grid-template-columns: calc((100% - 56px) * 13 / 31 + 20px) repeat(3, calc((100% - 56px) * 6 / 31 + 12px)); }
+  .page-product-bottom .comparison-photo--organizer { left: calc((100% - 56px) * 22 / 31 + 38px); }
+  .page-product-bottom .comparison-photo--ziploc { left: calc((100% - 56px) * 28 / 31 + 50px); }
+  /* The two small pictures above the table: 5% bigger and 2px higher. */
+  .page-product-bottom .comparison-photo { bottom: calc(100% + 12.7px); }
+  .page-product-bottom .comparison-photo--organizer { width: 63.3px; }
+  .page-product-bottom .comparison-photo--ziploc { width: 50.6px; }
+  /* Compare / The obvious solution text block: 58px to the right.
+     The table (with its two small pictures) is 5px to the right. */
+  .page-product-bottom .comparison-intro { transform: translateX(58px); }
+  .page-product-bottom .comparison-table-wrap { transform: translateX(5px); }
+}
+.comparison-intro-title {
+  font-size: 2.4rem; font-weight: 500; color: #5e6e7a;
+  line-height: 1.15; margin: 0 0 1.25rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.comparison-intro-desc {
+  font-size: 0.95rem; color: #7a8a94; line-height: 1.65; margin: 0 0 1.75rem;
+  max-width: 460px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.comparison-intro-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #5e6e7a; text-decoration: none;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.comparison-intro-link span { display: inline-block; transition: transform 0.15s ease; }
+.comparison-intro-link:hover span { transform: translateX(4px); }
+
+/* TSA — full-width, page background, now the first section right
+   after the product-hero/buy column, so it needs the standard
+   section gap above it (that spot has no built-in spacing of its
+   own). Text column reuses the exact type recipe from
+   .built-routine-title/-desc/-row/-item/-val; compact section
+   with a fixed-width, uncropped photo. */
+/* Container matches .product-hero exactly (max-width:1440px,
+   1.5rem left inset, 3rem right inset) instead of its own
+   max-width:1100 — so the text's left edge lines up with the
+   gallery's left edge, and the photo's right edge lines up with
+   the buy box's right edge. */
+/* .tsa-section is itself the .layout-container/.layout-grid
+   element (classes added in the markup) — its own box no longer
+   sets width/padding/columns, only the things a grid section
+   needs beyond that: the single vertical gap above it and
+   vertical centering of its two columns. */
+.tsa-section {
+  margin-top: var(--layout-gap);
+  align-items: center;
+  min-height: 460px;
+  background: var(--bg);
+}
+.tsa-photo { width: 100%; position: relative; }
+/* Built to travel text block (label, title, description, table): 30px to the right. */
+@media (min-width: 761px) {
+  .tsa-content { transform: translateX(30px); }
+}
+
+/* STACK — 3 photos layered front-to-back. Card width is the
+   stack's own width / 1.12 so that the back card (shifted right
+   the furthest, 12% of a card's width) lands exactly flush with
+   the stack's right edge: cardWidth*(1+0.12) = cardWidth*1.12 =
+   stackWidth. Nothing overflows the column at any width since
+   the stack itself is always 100% of .tsa-photo's width. */
+.tsa-stack {
+  position: relative; width: 100%;
+  /* Each card is 11:15 but only 100%/1.12 wide, so a card's own
+     rendered height is (100%/1.12)*(15/11) of the stack's width —
+     shorter than a plain 11/15 box would be. Matching that here
+     (11/15 * 1.12 = 308/375) means the stack's own box is exactly
+     as tall as a card, no leftover space below it, so anything
+     centered vertically against this box (like the hint arrow)
+     lines up with the actual photo, not a taller empty box. */
+  aspect-ratio: 308 / 375;
+  cursor: pointer; outline: none;
+}
+.tsa-stack:focus-visible { outline: 2px solid var(--rp-slate); outline-offset: 4px; }
+.tsa-stack-card {
+  position: absolute; top: 0; left: 0;
+  width: calc(100% / 1.12); aspect-ratio: 11 / 15; box-sizing: border-box;
+  box-shadow: 0 18px 40px rgba(45,65,82,0.16);
+  overflow: hidden;
+  transition: transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
+}
+.tsa-stack-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tsa-stack-card[data-pos="0"] { transform: translateX(0) scale(1); filter: brightness(1); opacity: 1; z-index: 3; }
+.tsa-stack-card[data-pos="1"] { transform: translateX(6%) scale(0.965); filter: brightness(0.9); opacity: 1; z-index: 2; }
+.tsa-stack-card[data-pos="2"] { transform: translateX(12%) scale(0.93); filter: brightness(0.8); opacity: 1; z-index: 1; }
+/* Reused for both directions: the card leaving the front slides
+   further left and fades; the card entering the front from the
+   back is staged here first (transition briefly disabled in JS)
+   then animates in to the data-pos="0" look. Declared after the
+   data-pos rules so it wins the (equal-specificity) tie whenever
+   both apply to the same card at once. */
+.tsa-stack-card.is-leaving { transform: translateX(-20%) scale(1); filter: brightness(1); opacity: 0; z-index: 4; }
+@media (prefers-reduced-motion: reduce) {
+  .tsa-stack-card { transition: none; }
+}
+/* Floating hint arrow in the blank space to the right of the
+   stack — a visual nudge that the photos are browsable, not a
+   layout element (doesn't affect the stack's own sizing). Now
+   sits inside .tsa-stack itself (bottom-right corner, over the
+   front card) instead of floating in the margin beside it, since
+   the stack is flush with the container's right edge and there's
+   no margin left to float into. */
+.tsa-stack-hint {
+  position: absolute; right: 12px; bottom: 12px; z-index: 5;
+  width: 32px; height: 32px; padding: 0; border: none; background: none;
+  color: #9aa7ae; cursor: pointer;
+}
+.tsa-stack-hint svg { display: block; width: 100%; height: 100%; }
+.tsa-title {
+  font-size: 2.4rem; font-weight: 500; color: #5e6e7a;
+  line-height: 1.15; margin: 0 0 1rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.tsa-desc {
+  font-size: 0.95rem; color: #7a8a94; line-height: 1.65; margin: 0 0 2rem;
+  max-width: 460px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.tsa-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.7rem 0; border-bottom: 1px solid #E5E4DF;
+}
+.tsa-item {
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5e6e7a; font-weight: 700;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.tsa-val {
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+@media (max-width: 760px) {
+  .tsa-section { min-height: 0; }
+}
+
+
+/* FAQ — heading block (label+headline) on cols 1-4, left-aligned;
+   question list on cols 6-12, the exact same span as the compare
+   table above it, so their left/right edges match exactly. .wp-
+   faq-inner is itself the .layout-container/.layout-grid element
+   (classes added in the markup). Prefixed with body's
+   .page-product-bottom class purely to out-specificity the
+   same-named rules in style.css — Vite injects the bundled
+   style.css <link> after this inline <style> block in the built
+   HTML, so on specificity ties the external stylesheet would
+   otherwise win regardless of source order. */
+.page-product-bottom .wp-faq { padding: 0; margin-top: calc(var(--layout-gap) + 10px); }
+/* Last gap in the chain (FAQ -> footer). .footer-top is shared
+   (style.css), reused unmodified by every other page; only this
+   added margin-top is page-scoped. */
+.page-product-bottom .footer-top { margin-top: var(--layout-gap); }
+/* FAQ stays centered/single-column (as before this task), just
+   pulled onto the shared page container for its left/right edges
+   instead of its own max-width:1200. Same tie-breaker as
+   .comparison-section above: .wp-faq-inner's own global rule
+   (max-width:1200/margin:auto/grid-template-columns:1fr 1.6fr/
+   gap:4rem) is a same-specificity (0,0,1,0) tie against the
+   generic .layout-container class also on this element, which
+   style.css would win on a tie. This three-class rule (0,0,3,0)
+   settles it unconditionally — and drops the grid entirely in
+   favor of a centered flex column. */
+.page-product-bottom .wp-faq-inner.layout-container {
+  width: calc(100% - 10vw); max-width: var(--page-max);
+  margin-left: auto; margin-right: auto;
+  box-sizing: border-box;
+  display: flex; flex-direction: column; align-items: center; gap: calc(1rem + 14px);
+}
+.page-product-bottom .wp-faq-copy { text-align: center; }
+.page-product-bottom .wp-faq-list { width: 100%; max-width: 700px; }
+
+/* "View the full size guide" button in the first FAQ answer: the outlined box
+   from the main FAQ page, a little smaller, and on hover the box fills in. */
+.page-product-bottom .faq-answer-link {
+  padding: 0.3rem 0.62rem;
+  font-size: 0.58rem;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.page-product-bottom .faq-answer-link:hover {
+  background: #5e6e7a;
+  border-color: #5e6e7a;
+  color: #fff;
+}
+
+/* "The pilr system" section under the buy area: same vertical rhythm as the
+   other sections on these pages. */
+.page-product-bottom .pilr-system-section { padding: 0; margin-top: calc(var(--layout-gap) - 30px); }
+
+/* "Questions" headline: 11px closer to the "FAQ" label above it (moved visually,
+   so the question list below doesn't shift). */
+.page-product-bottom .wp-faq-headline { position: relative; top: -11px; }

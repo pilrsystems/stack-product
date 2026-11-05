@@ -37,7 +37,7 @@ const SUPPLEMENTS = {
   // ADD_ONS below for price/image, kept separate since renderChips only
   // needs id + label.
   addons: [
-    { id: 'single-lid',     label: 'Single Lid' },
+    { id: 'single-lid',     label: 'Extra Single Lid' },
     { id: 'travel-scooper', label: 'Travel Scooper' },
   ],
 }
@@ -176,10 +176,20 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.35))
 
 const key = new THREE.DirectionalLight(0xffffff, 4.5)
 key.position.set(5, 8, 6)
-key.castShadow = !isMobile
-key.shadow.mapSize.set(1024, 1024)
-key.shadow.bias = -0.001
+// The key light lights the pods but no longer casts the floor shadow: from
+// its angle (up and to the right) the tilted stack's shadow landed far to
+// the lower left, detached from the stack. A second, shadow-only light
+// (intensity 0, so it adds no brightness) sits almost overhead instead, so
+// the shadow falls just under the stack.
+key.castShadow = false
 scene.add(key)
+
+const shadowLight = new THREE.DirectionalLight(0xffffff, 0)
+shadowLight.position.set(1.2, 9, 2.5)
+shadowLight.castShadow = !isMobile
+shadowLight.shadow.mapSize.set(1024, 1024)
+shadowLight.shadow.bias = -0.001
+scene.add(shadowLight)
 
 const fill = new THREE.DirectionalLight(0xd0eeff, 1.8)
 fill.position.set(-5, 2, 4)
@@ -211,11 +221,23 @@ const OUTER_REST_ROT_Z = THREE.MathUtils.degToRad(15)
 const OUTER_REST_ROT_X = THREE.MathUtils.degToRad(-8)
 const OUTER_REST_POS_Y = isMobile ? 0.05 : -0.15
 
+// Where the stack rests vertically. Normally OUTER_REST_POS_Y; shifts up a
+// little when the extra lid is lying below the stack (see applyFraming).
+let restPosY = OUTER_REST_POS_Y
+
 const outerGroup = new THREE.Group()
 outerGroup.rotation.z = OUTER_REST_ROT_Z
 outerGroup.rotation.x = OUTER_REST_ROT_X
 outerGroup.position.y = OUTER_REST_POS_Y
 scene.add(outerGroup)
+
+// Holds the extra lid. Same scale and orientation as the stack's own group,
+// so a lid placed here lines up with the stack (and shares its tilt/spin
+// through outerGroup).
+const lidHolder = new THREE.Group()
+lidHolder.scale.setScalar(isMobile ? 18.5 : 16.5)
+lidHolder.rotation.x = THREE.MathUtils.degToRad(90)
+outerGroup.add(lidHolder)
 
 // ── Model state ──────────────────────────────────────────────
 let sections        = []
@@ -225,6 +247,32 @@ let currentGlbScene = null
 // (not clickable, no label, no "View inside" panel of its own) but still
 // animated alongside them for drop-in and detail-view fly-away.
 let lidSection       = null
+// The paid "Extra Single Lid" add-on: a second lid. It lives in its own
+// group (lidHolder, below), not in the stack, so it survives pod changes: it
+// sits centered on its own when there are no pods, and glides to a spot
+// below the stack when there are. `extraLid` is the live mesh
+// ({ mesh, restZ }); `stackBottomY` is the stack's lowest point (null when
+// there are no pods).
+let extraLid         = null
+let stackBottomY     = null
+let extraLidLabelEl  = null
+let extraLidAdding   = false
+const EXTRA_LID_GAP  = 0.62   // world units between the underside of the bottom pod and the top of the lid
+const EXTRA_LID_RISE = 0.14   // how far below its spot the lid starts when it rises in
+// With no pods the lid sits mid-canvas, level with the camera, so it's tilted
+// back toward the viewer to show its top face, and that tilt is held fixed
+// relative to the viewer (it doesn't turn with the stack's slow spin, which
+// would show the lid's underside half the time). Under a stack it just follows
+// the stack. lidAloneBlend is 0 when following the stack, 1 when held fixed;
+// it's tweened when pods come and go.
+const LID_ALONE_TILT = THREE.MathUtils.degToRad(35)
+const lidAloneBlend  = { v: 0 }
+const LID_HEAD_START = 0.3   // seconds the lid gets to move before new pods start dropping
+// With the extra lid out, the stack + lid sit lower than the plain centered fit by this
+// many screen pixels measured at the middle of the canvas (about 10px at the top edge,
+// since the top of the stack is seen in perspective),
+// using spare room at the bottom of the canvas.
+const LID_FRAMING_SHIFT_PX = 12
 // Measured pod height per type, keyed by pod name — populated the first
 // time each type loads (see buildStack). Lets the stacking gap stay
 // constant across different selections instead of depending on which
@@ -331,6 +379,7 @@ async function buildStack(podTypes, onReady) {
   }
   sections        = []
   lidSection      = null
+  stackBottomY    = null
   modelLoaded     = false
   currentPodTypes = [...podTypes]
 
@@ -488,6 +537,11 @@ async function buildStack(podTypes, onReady) {
 
     lidSection = { mesh: lidScene, restZ: lidScene.position.z }
 
+    // Where the stack's real lowest point is (measured from the actual
+    // geometry, since a pod's bounding box can have empty space below it) —
+    // the extra lid is placed relative to this.
+    stackBottomY = preciseBox(sections.map(s => s.mesh)).min.y
+
     modelLoaded = true
     document.getElementById('system-loading')?.classList.add('hidden')
 
@@ -610,7 +664,7 @@ function updateLabels() {
 }
 
 // ── Drop animation ───────────────────────────────────────────
-function playDrop() {
+function playDrop(startDelay = 0) {
   // Lid drops in last, continuing the same cascade right after the top pod.
   const all = lidSection ? [...sections, lidSection] : sections
   if (!all.length) return
@@ -619,7 +673,7 @@ function playDrop() {
 
   const tl = gsap.timeline()
   all.forEach((s, i) => {
-    tl.to(s.mesh.position, { z: s.restZ, duration: 0.72, ease: 'power3.out' }, i * 0.18)
+    tl.to(s.mesh.position, { z: s.restZ, duration: 0.72, ease: 'power3.out' }, startDelay + i * 0.18)
   })
 }
 
@@ -669,6 +723,10 @@ function enterDetailView(sectionIndex) {
   if (lidSection) {
     gsap.to(lidSection.mesh.position, { z: lidSection.restZ - FLY_OFFSET, duration: 0.55, ease: 'power2.in', delay: 0.05 })
   }
+  // The extra lid lies below the stack, so it flies off downward.
+  if (extraLid) {
+    gsap.to(extraLid.mesh.position, { z: extraLid.restZ + FLY_OFFSET, duration: 0.55, ease: 'power2.in', delay: 0.05 })
+  }
 
   gsap.to(outerGroup.rotation, { x: 0, z: 0, duration: 0.85, ease: 'power2.inOut' })
   gsap.to(outerGroup.position, { y: 0, duration: 0.85, ease: 'power2.inOut' })
@@ -713,13 +771,16 @@ function exitDetailView() {
   })
 
   gsap.to(outerGroup.rotation, { x: OUTER_REST_ROT_X, z: OUTER_REST_ROT_Z, duration: 0.9, ease: 'power2.inOut' })
-  gsap.to(outerGroup.position, { y: OUTER_REST_POS_Y, duration: 0.9, ease: 'power2.inOut' })
+  gsap.to(outerGroup.position, { y: restPosY, duration: 0.9, ease: 'power2.inOut' })
 
   sections.forEach((s, i) => {
     gsap.to(s.mesh.position, { z: s.restZ, duration: 0.7, ease: 'power3.out', delay: 0.25 + i * 0.08 })
   })
   if (lidSection) {
     gsap.to(lidSection.mesh.position, { z: lidSection.restZ, duration: 0.7, ease: 'power3.out', delay: 0.25 + sections.length * 0.08 })
+  }
+  if (extraLid) {
+    gsap.to(extraLid.mesh.position, { z: extraLid.restZ, duration: 0.7, ease: 'power3.out', delay: 0.25 + (sections.length + 1) * 0.08 })
   }
 }
 
@@ -793,6 +854,246 @@ canvasEl.addEventListener('touchend', (e) => {
 
 document.getElementById('system-back-btn')?.addEventListener('click', exitDetailView)
 
+
+// ── Extra Single Lid (paid add-on) ───────────────────────────
+// A second lid, same model as the one capping the stack. With no pods it
+// sits centered on its own; with pods it lies centered below the stack as a
+// separate extra. It shares the stack's tilt and slow spin (via outerGroup),
+// and adding/removing it never rebuilds the pods.
+function ensureExtraLidLabel() {
+  if (extraLidLabelEl?.isConnected) return extraLidLabelEl
+  const container = document.getElementById('system-labels')
+  if (!container) return null
+  const el = document.createElement('div')
+  el.className = 'blabel blabel-right'
+  el.innerHTML = `
+    <div class="blabel-dot"></div>
+    <div class="blabel-line"></div>
+    <div class="blabel-text"><span class="blabel-name">Extra lid</span></div>
+  `
+  container.appendChild(el)
+  extraLidLabelEl = el
+  return el
+}
+
+// Tight bounding box (from the real vertices, not the loose per-object
+// boxes) of some objects, measured with the outer tilt/spin zeroed so it
+// lines up with the stack's own axes.
+function preciseBox(objects) {
+  const rx = outerGroup.rotation.x, ry = outerGroup.rotation.y
+  const rz = outerGroup.rotation.z, py = outerGroup.position.y
+  outerGroup.rotation.set(0, 0, 0)
+  outerGroup.position.y = 0
+  outerGroup.updateMatrixWorld(true)
+  const box = new THREE.Box3()
+  objects.forEach(o => box.union(new THREE.Box3().setFromObject(o, true)))
+  outerGroup.rotation.x = rx; outerGroup.rotation.y = ry
+  outerGroup.rotation.z = rz; outerGroup.position.y = py
+  outerGroup.updateMatrixWorld(true)
+  return box
+}
+
+// The lid model, loaded once and measured/oriented like the lid on the stack.
+let lidTemplate = null
+let lidTemplatePromise = null
+function getLidTemplate() {
+  if (!lidTemplatePromise) {
+    lidTemplatePromise = loadPod(LID_GLB).then(gltf => {
+      const s = gltf.scene
+      const mat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.75, metalness: 0.0 })
+      s.traverse(m => { if (m.isMesh) { m.castShadow = true; m.material = mat } })
+      measurePod(s)
+      lidTemplate = s
+      return s
+    })
+  }
+  return lidTemplatePromise
+}
+
+// The z (inside lidHolder) the lid should rest at: just below the stack's
+// lowest point when there are pods, otherwise centered on the stack's own
+// center line. World y is -z * scale inside lidHolder, so moving z up moves
+// the lid down.
+function lidAloneTarget() { return stackBottomY === null ? 1 : 0 }
+
+// Called every frame: orients the lid holder. Following the stack it is just
+// the base orientation (its world orientation is then outerGroup's tilt/spin
+// times that). Held fixed, it counter-rotates outerGroup so its world
+// orientation is a constant tilt toward the viewer.
+const _qFollow = new THREE.Quaternion()
+const _qFixed  = new THREE.Quaternion()
+const _eul     = new THREE.Euler()
+function updateLidHolderOrientation() {
+  if (!extraLid) return
+  _qFollow.setFromEuler(_eul.set(THREE.MathUtils.degToRad(90), 0, 0))
+  _qFixed.copy(outerGroup.quaternion).invert()
+    .multiply(new THREE.Quaternion().setFromEuler(_eul.set(THREE.MathUtils.degToRad(90) + LID_ALONE_TILT, 0, 0)))
+  lidHolder.quaternion.slerpQuaternions(_qFollow, _qFixed, lidAloneBlend.v)
+}
+
+function extraLidTargetZ(mesh) {
+  // Measure as if the holder were already at its final orientation (with
+  // outerGroup zeroed by preciseBox, that is just the base orientation plus
+  // the alone tilt).
+  const savedQ = lidHolder.quaternion.clone()
+  lidHolder.rotation.set(THREE.MathUtils.degToRad(90) + lidAloneTarget() * LID_ALONE_TILT, 0, 0)
+  const box   = preciseBox([mesh])
+  lidHolder.quaternion.copy(savedQ)
+  const scale = lidHolder.scale.x
+  if (stackBottomY !== null) {
+    return mesh.position.z + (box.max.y - (stackBottomY - EXTRA_LID_GAP)) / scale
+  }
+  return mesh.position.z + ((box.max.y + box.min.y) / 2) / scale
+}
+
+async function addExtraLid(delay = 0) {
+  if (extraLid || extraLidAdding) return
+  extraLidAdding = true
+  const tpl = await getLidTemplate()
+  extraLidAdding = false
+  // The chip may have been switched off (or the lid added) while loading.
+  if (!selected.addons.has('single-lid') || extraLid) return
+
+  const mesh = tpl.clone(true)
+  lidHolder.add(mesh)
+  lidAloneBlend.v = lidAloneTarget()
+  updateLidHolderOrientation()
+  const restZ = extraLidTargetZ(mesh)
+  mesh.position.z = restZ + EXTRA_LID_RISE
+  extraLid = { mesh, restZ }
+  gsap.to(mesh.position, { z: restZ, duration: 0.7, ease: 'power3.out', delay })
+  applyFraming()
+}
+
+// Pods were added/removed: glide the lid to its new spot (below the new
+// stack, or back to the center if the stack is gone).
+function moveExtraLid(delay = 0) {
+  if (!extraLid) return
+  extraLid.restZ = extraLidTargetZ(extraLid.mesh)
+  if (inDetailView || transitioning) return
+  gsap.killTweensOf(extraLid.mesh.position)
+  gsap.to(extraLid.mesh.position, { z: extraLid.restZ, duration: 0.7, ease: 'power3.out', delay })
+  gsap.killTweensOf(lidAloneBlend)
+  gsap.to(lidAloneBlend, { v: lidAloneTarget(), duration: 0.7, ease: 'power3.out', delay })
+}
+
+function removeExtraLid() {
+  if (!extraLid) return
+  const lid = extraLid
+  extraLid = null
+  extraLidLabelEl?.classList.remove('visible')
+  gsap.killTweensOf(lid.mesh.position)
+  gsap.to(lid.mesh.position, {
+    z: lid.restZ + EXTRA_LID_RISE, duration: 0.4, ease: 'power2.in',
+    onComplete: () => lid.mesh.parent?.remove(lid.mesh),
+  })
+}
+
+// Vertical extent of the stack, and (optionally) the extra lid at its rest
+// spot, measured with the outer tilt/spin zeroed.
+function stackSpanY(includeExtraLid) {
+  const rx = outerGroup.rotation.x, ry = outerGroup.rotation.y
+  const rz = outerGroup.rotation.z, py = outerGroup.position.y
+  outerGroup.rotation.set(0, 0, 0)
+  outerGroup.position.y = 0
+  outerGroup.updateMatrixWorld(true)
+
+  // Measure the pods (and top lid) at their rest spots, not wherever the
+  // drop-in animation currently has them.
+  const resting = [...sections, ...(lidSection ? [lidSection] : [])]
+  const savedStackZ = resting.map(s => s.mesh.position.z)
+  resting.forEach(s => { s.mesh.position.z = s.restZ })
+  outerGroup.updateMatrixWorld(true)
+
+  const box = new THREE.Box3()
+  if (currentGlbScene) box.expandByObject(currentGlbScene)
+  resting.forEach((s, i) => { s.mesh.position.z = savedStackZ[i] })
+  if (includeExtraLid && extraLid) {
+    const savedZ = extraLid.mesh.position.z
+    extraLid.mesh.position.z = extraLid.restZ
+    outerGroup.updateMatrixWorld(true)
+    box.expandByObject(extraLid.mesh)
+    extraLid.mesh.position.z = savedZ
+  }
+
+  outerGroup.rotation.x = rx; outerGroup.rotation.y = ry
+  outerGroup.rotation.z = rz; outerGroup.position.y = py
+  outerGroup.updateMatrixWorld(true)
+  return { min: box.min.y, max: box.max.y }
+}
+
+// Camera distance and stack height for the current selection. With no extra
+// lid, or no pods, this is exactly what it always was. With pods plus the
+// lid, the stack and lid are re-centered together and the camera only backs
+// off if the pair wouldn't otherwise fit in the frame.
+function applyFraming() {
+  if (inDetailView) return
+  const base = idealCameraZ(currentPodTypes.length)
+  let posY = OUTER_REST_POS_Y
+  let camZ = base
+  if (extraLid && currentGlbScene && currentPodTypes.length) {
+    const s = stackSpanY(false), a = stackSpanY(true)
+    const stackH = s.max - s.min, allH = a.max - a.min
+    if (stackH > 0) {
+      posY = OUTER_REST_POS_Y - ((a.max + a.min) / 2 - (s.max + s.min) / 2)
+      // Only back the camera off if stack + lid would otherwise run out of
+      // frame: the camera sees 2 * z * tan(fov / 2) of height at distance z,
+      // and the pair should use at most ~87% of that.
+      const needed = allH * 1.15 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)))
+      camZ = Math.max(base, needed)
+      // Nudge everything down a few screen pixels (world units = px / px-per-unit
+      // at the camera distance). The camera distance and the spacing between
+      // the pods and the lid are untouched, so only the position changes.
+      const pxPerUnit = canvasEl.getBoundingClientRect().height / (2 * camZ * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)))
+      posY -= LID_FRAMING_SHIFT_PX / pxPerUnit
+    }
+  }
+  restPosY = posY
+  CAMERA_REST_POS.z = camZ
+  gsap.to(camera.position, { z: camZ, duration: 0.6, ease: 'power2.out' })
+  if (!transitioning) gsap.to(outerGroup.position, { y: posY, duration: 0.6, ease: 'power2.out' })
+}
+
+// Adds, removes or repositions the extra lid to match the chip and the
+// current pods, then re-frames.
+function syncExtraLid(delay = 0) {
+  const want = selected.addons.has('single-lid')
+  if (want && !extraLid) { addExtraLid(delay); return }
+  if (!want && extraLid) { removeExtraLid(); applyFraming(); return }
+  if (want && extraLid) { moveExtraLid(delay); applyFraming() }
+}
+
+// Keeps the small "Extra lid" tag next to the lid (same projection the pod
+// labels use), and hides it in the detail view or when there's no lid.
+function updateExtraLidLabel() {
+  if (!extraLid || inDetailView || transitioning) { extraLidLabelEl?.classList.remove('visible'); return }
+  const el = ensureExtraLidLabel()
+  if (!el) return
+
+  const rx = outerGroup.rotation.x, ry = outerGroup.rotation.y
+  const rz = outerGroup.rotation.z, py = outerGroup.position.y
+  outerGroup.rotation.set(0, 0, 0)
+  outerGroup.position.y = 0
+  outerGroup.updateMatrixWorld(true)
+  const box = new THREE.Box3()
+  extraLid.mesh.traverse(c => { if (c.isMesh) box.expandByObject(c) })
+  const center = new THREE.Vector3()
+  box.getCenter(center)
+  const anchor = outerGroup.worldToLocal(center)
+  outerGroup.rotation.x = rx; outerGroup.rotation.y = ry
+  outerGroup.rotation.z = rz; outerGroup.position.y = py
+  outerGroup.updateMatrixWorld(true)
+
+  const rect  = canvasEl.getBoundingClientRect()
+  const world = anchor.clone()
+  outerGroup.localToWorld(world)
+  const ndc = world.project(camera)
+  const edgeOffset = (rect.height / camera.position.z) * 0.95
+  el.style.left = ((ndc.x * 0.5 + 0.5) * rect.width + edgeOffset) + 'px'
+  el.style.top  = ((ndc.y * -0.5 + 0.5) * rect.height) + 'px'
+  el.classList.add('visible')
+}
+
 // ── Render loop ──────────────────────────────────────────────
 const clock = new THREE.Clock()
 function animate() {
@@ -800,7 +1101,9 @@ function animate() {
   clock.getDelta()
   if (idleActive && modelLoaded) outerGroup.rotation.y += 0.004
   camera.lookAt(cameraTarget)
+  updateLidHolderOrientation()
   updateLabels()
+  updateExtraLidLabel()
   renderer.render(scene, camera)
 }
 
@@ -1167,12 +1470,15 @@ function updateSystem() {
   if (podKey !== lastPodKey) {
     lastPodKey = podKey
     buildStack(stackToShow, () => {
-      playDrop()
-      if (!inDetailView) {
-        const targetZ = idealCameraZ(stackToShow.length)
-        CAMERA_REST_POS.z = targetZ
-        gsap.to(camera.position, { z: targetZ, duration: 0.6, ease: 'power2.out' })
-      }
+      // If the extra lid is out, it moves out of the way first: it starts
+      // gliding to its new spot right away, and the pods wait a moment before
+      // dropping in so they never pass in front of it.
+      const lidInPlay = !!extraLid && selected.addons.has('single-lid')
+      if (lidInPlay) syncExtraLid(0)
+      playDrop(lidInPlay ? LID_HEAD_START : 0)
+      // (Lid picked but not out yet: it rises in after the pods have dropped.)
+      if (!lidInPlay) syncExtraLid(0.2 + (stackToShow.length + 1) * 0.18)
+      if (!inDetailView) applyFraming()
     })
   } else {
     // Same stack shape — just update labels
@@ -1181,6 +1487,8 @@ function updateSystem() {
       const nameEl = el.querySelector('.blabel-name')
       if (nameEl) nameEl.textContent = labelNames[i] ?? currentPodTypes[i]
     })
+    // Same pods: just add or remove the extra lid if that chip changed.
+    syncExtraLid()
   }
 
   updateSummary(pillPods, hybridPods, powderPods)

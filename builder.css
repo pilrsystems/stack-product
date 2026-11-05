@@ -732,6 +732,19 @@ body.system-page {
   gap: 7px;
 }
 
+/* Desktop: the Build Your System panel is a fixed-height column that was
+   leaving a lot of blank space under the last row, so its vertical spacing
+   is loosened a little. Phones, and desktop windows shorter than 712px (where
+   the looser spacing would make the panel scroll), keep the tighter spacing. */
+@media (min-width: 701px) and (min-height: 712px) {
+  #system-selector .bas-desc { margin-bottom: 1rem; }
+  #system-selector .bas-section-q { margin-bottom: 1rem; }
+  #system-selector .bas-category-block { margin-bottom: 1.5rem; }
+  #system-selector .bas-category-block:nth-last-child(2) { margin-bottom: 0.6rem; }
+  #system-selector .bas-cat-label { margin-bottom: 0.75rem; }
+  #system-selector .supp-chips { gap: 8px; }
+}
+
 .supp-chip {
   font-size: 0.78rem;
   font-family: 'Inter', sans-serif;
@@ -813,6 +826,15 @@ body.system-page {
 .bas-cta-btn:hover {
   background: #344554;
 }
+
+/* The system builds live as chips are picked, and on desktop the summary is
+   already beside the stack, so this button is only for the stacked layout
+   (phones), where it scrolls down to the summary. */
+@media (min-width: 701px) {
+  .bas-cta-btn { display: none; }
+}
+/* Leave room for the fixed header when the button scrolls the summary into view. */
+#sys-panel-edit { scroll-margin-top: 78px; }
 
 /* Edit Your System panel content */
 .sys-edit-desc {

@@ -179,7 +179,7 @@ body {
 
 .nav-dropdown-inner {
   width: 100%;
-  padding: 2rem 3rem;
+  padding: 2.15rem 3rem;
   display: flex;
   gap: 2rem;
   align-items: stretch;
@@ -309,7 +309,7 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 0;
-  padding: 0.35rem 0.5rem;
+  padding: 0.37rem 0.53rem;
   border-radius: var(--radius);
   background: transparent;
   transition: opacity 0.2s;
@@ -318,11 +318,11 @@ body {
 .nav-drop-card:hover { opacity: 0.7; }
 
 .nav-drop-img {
-  width: 88px;
-  height: 88px;
+  width: clamp(96px, 7.43vw, 107px);
+  height: clamp(96px, 7.43vw, 107px);
   flex-shrink: 0;
   border-radius: var(--radius);
-  background: #e4e2de;
+  background: #F5F5F5;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -369,24 +369,24 @@ body {
 }
 
 .nav-drop-img--large img {
-  width: 100%;
-  height: 100%;
-  transform: scale(1.15) translateY(-5%);
+  width: 84%;
+  height: 84%;
+  transform: none;
 }
 
 .nav-drop-text {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.42rem;
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  padding-left: 0.5rem;
+  padding-left: calc(0.53rem + 6.5px);
 }
 
 .nav-drop-title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.93rem;
   font-weight: 500;
   color: #4a5a67;
   letter-spacing: -0.01em;
@@ -396,13 +396,13 @@ body {
 .nav-drop-card .nav-drop-desc {
   display: block;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   color: #7a8a94;
   line-height: 1.2;
   text-transform: none;
   letter-spacing: normal;
   white-space: normal;
-  width: 170px;
+  width: clamp(170px, 12.5vw, 180px);
   word-wrap: break-word;
 }
 
@@ -1013,7 +1013,11 @@ body {
 
 /* Homepage Build Your System card: shrink the photo ~8% inside its grey box
    (scaled from the center, so the box itself is unchanged). */
-.shop-inner .shop-card-img-inset { transform: scale(0.92); }
+.shop-inner .shop-card-img-inset { transform: translateY(2px) scale(0.892); }
+/* Homepage Single Pods card: photo sits 4px higher in its grey box. */
+.shop-inner .shop-card-img-pod { transform: translateY(-4px); }
+/* Catalog page: same card, shrunk 3% inside its grey box. */
+.catalog-main .shop-card-img-inset { transform: translateY(2px) scale(0.97); }
 
 /* Homepage product cards: the grey image box is 383 x 335px at full width
    (scales down proportionally on narrower windows). */
@@ -1582,6 +1586,35 @@ body {
   pointer-events: none;
 }
 
+.fly-video-copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.fly-video-label {
+  margin: 0 0 0.6em;
+  font-size: clamp(8px, 0.85cqw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fly-video-headline {
+  margin: 0;
+  font-size: clamp(20px, 3.4cqw, 46px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
 @media (max-width: 900px) {
   .fly-video { padding: 4rem 1.5rem 7rem; }
 }
@@ -1788,21 +1821,21 @@ body {
 .problem-card:not(.problem-card--pilr) .problem-card-label,
 .problem-card:not(.problem-card--pilr) .problem-card-desc { text-align: center; }
 .problem-card:not(.problem-card--pilr) .problem-card-desc { min-height: 4.65em; }
-.problem-card--pilr { padding: 0; background: #5e6e7a; color: #fff; }
+.problem-card--pilr { padding: 0; background: #818E99; color: #fff; }
 /* Product photo (transparent PNG) sits at the top of the card, above the text. */
 .problem-card-art {
-  position: absolute; left: 50%; top: 26px; transform: translateX(-50%);
-  width: 52.49%; height: auto; pointer-events: none;
+  position: absolute; left: 50%; top: 47px; transform: translateX(-50%);
+  width: 60.2%; height: auto; pointer-events: none;
 }
-.problem-card-body { flex: 1; justify-content: flex-end; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1.33rem calc(1.52rem + 2px); }
+.problem-card-body { flex: 1; justify-content: flex-end; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1.33rem calc(1.52rem - 10px); }
 /* The pilr logo sits on the same line as the other cards' titles, and the
    description starts where theirs do. */
-.problem-card-brand { display: flex; align-items: center; justify-content: center; height: 15px; margin-bottom: 13px; }
+.problem-card-brand { display: flex; align-items: center; justify-content: center; height: 15px; margin-bottom: 13.5px; }
 .problem-card-brand img { display: block; height: 22.8px; width: auto; flex: none; }
 .problem-card--pilr .problem-card-desc { min-height: 3.1em; }
 .problem-card--pilr .problem-card-desc { color: rgba(255,255,255,0.92); }
 .problem-card-link {
-  margin-top: 7px;
+  margin-top: 19px;
   margin-bottom: 6px;
   align-self: center;
   font-size: 0.684rem;
@@ -1954,6 +1987,32 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   margin: 0 auto;
 }
 
+.home-lifestyle-header {
+  display: none; /* title + description hidden for now; delete this line to bring them back */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home-lifestyle-title {
+  font-size: 39px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.02em;
+  color: #5e6e7a;
+  margin: 0;
+}
+
+.home-lifestyle-sub {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #5e6e7a;
+  max-width: 560px;
+  margin: 0.75rem auto 0;
+}
+@media (min-width: 769px) {
+  .home-lifestyle-sub { max-width: none; white-space: nowrap; }
+}
+
 .home-lifestyle-nav {
   display: flex;
   justify-content: flex-end;
@@ -1961,8 +2020,15 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   margin-bottom: 1rem;
 }
 
+/* Desktop: the title/description sit 19px lower, overlapping the arrow
+   row's band (arrows are right-aligned, the text is centered). Top padding
+   and the negative bottom margin cancel out, so the arrows don't move. */
+@media (min-width: 769px) {
+  .home-lifestyle-header { padding-top: 19px; margin-bottom: -15px; }
+}
+
 .home-lifestyle-arrow {
-  width: 32px;
+  width: 28px;
   height: 32px;
   display: flex;
   align-items: center;
@@ -1989,6 +2055,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   scrollbar-width: none;
 }
 .home-lifestyle-grid::-webkit-scrollbar { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .home-lifestyle-grid { cursor: grab; }
+  .home-lifestyle-grid.is-dragging { cursor: grabbing; user-select: none; }
+}
 
 /* Three photos fill the row; the rest are a swipe/arrow away. */
 .home-lifestyle-item {
@@ -2006,31 +2076,30 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: block;
 }
 
-/* White caption in the bottom-left corner of the photo, over a soft dark
-   gradient so it stays readable. */
+/* Caption over the bottom-left of the photo: small bold white all-caps label
+   and a white description, on a soft dark gradient. */
 .home-lifestyle-item::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 40%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  height: 45%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
   pointer-events: none;
 }
 .home-lifestyle-item figcaption {
   position: absolute;
   left: 20px;
-  bottom: 18px;
   right: 20px;
+  bottom: 16px;
   z-index: 1;
 }
-
 .home-lifestyle-label {
   display: block;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.6);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -3589,7 +3658,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-faq-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 500;
-  color: #46545e;
+  color: #5e6e7a;
   line-height: 1.2;
 }
 
@@ -4903,7 +4972,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-hero {
   text-align: center;
-  padding: 8.75rem 1rem 3rem;
+  padding: 8.75rem 1rem 4rem;
   max-width: 100%;
   margin: 0 auto;
 }
@@ -4921,7 +4990,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .catalog-hero-title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 3rem;
+  font-size: 44px;
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -5136,27 +5205,31 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .pilr-system-section { padding: 7rem 3rem 4rem; text-align: center; background: var(--bg); max-width: 1440px; margin: 0 auto; width: 100%; }
+/* Single Lid: 30px less above the section than the default 7rem. */
+.page-single-lid .pilr-system-section { padding-top: calc(7rem - 30px); }
 .pilr-system-eyebrow {
-  /* Same recipe as .why-label — the eyebrow used elsewhere on the
-     site (600/0.14em/uppercase/#5e6e7a), sized up from the standard
-     11px since this one stands alone as a section header. */
-  font-size: 1.7rem; font-weight: 600; letter-spacing: 0.14em;
+  /* Same weight and spacing as the "PILLS & SMALL CAPSULES" category labels
+     on the Build Your System page (.bas-cat-label), sized up to work as a
+     section heading, in the same #5e6e7a as the site's other headings. */
+  font-size: 1.7rem; font-weight: 600; letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #5e6e7a; margin-bottom: 0.75rem;
+  position: relative; top: 20px; /* title and line sit 20px lower, closer to the pods (layout unchanged) */
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .pilr-system-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
   color: #7a8a94; margin-bottom: 4.5rem;
+  position: relative; top: 16px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .pilr-system-pods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 4rem; max-width: 980px; margin: 0 auto; }
 .pilr-system-pod-img-wrap { height: 270px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 1rem; }
 .pilr-system-pod-img { width: auto; max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
-.pilr-system-pod-img--lower { transform: translateY(9px); max-width: 87%; }
+.pilr-system-pod-img--lower { transform: translateY(9px) scale(0.99); transform-origin: center bottom; max-width: 87%; } /* Big Pill Pod: 1% smaller, bottom edge stays put */
 .pilr-system-pod-img--lower-pill { transform: translateY(16px); max-width: 87%; }
-.pilr-system-pod-name { font-size: 1.2rem; font-weight: 600; color: #5e6e7a; margin-bottom: 0.25rem; text-transform: capitalize; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.pilr-system-pod-name { font-size: 1.2rem; font-weight: 500; color: #5e6e7a; margin-bottom: 0.25rem; text-transform: capitalize; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .pilr-system-pod-desc { font-size: 0.9rem; color: #7a8a94; line-height: 1.4; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 .product-lifestyle { width: 100%; overflow: hidden; }
@@ -5612,50 +5685,50 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .comparison-table-wrap {
   position: relative;
-  width: 833px;
+  width: 750px;
   margin: 0 auto;
 }
 
 .comparison-photo {
   position: absolute;
-  bottom: calc(100% + 11.9px);
+  bottom: calc(100% + 10.7px);
   display: block;
   height: auto;
   filter: blur(1.4px);
   opacity: 0.85;
 }
-.comparison-photo--organizer { width: 59.5px; left: 603.5px; transform: translateX(-50%); }
-.comparison-photo--ziploc { width: 47.6px; left: 756.5px; transform: translateX(-50%); }
+.comparison-photo--organizer { width: 60.3px; left: 543.2px; transform: translateX(-50%); }
+.comparison-photo--ziploc { width: 48.2px; left: 680.9px; transform: translateX(-50%); }
 
 .comparison-table {
   display: grid;
-  grid-template-columns: 374px repeat(3, 153px);
+  grid-template-columns: 336.6px repeat(3, 137.7px);
   background: transparent;
 }
 .comparison-cell {
   display: flex; align-items: center; justify-content: center;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border-bottom: 1px solid #ececea;
-  height: 48px;
+  height: 48.6px;
 }
 .comparison-table > .comparison-cell:first-child { background: var(--bg); border: none; }
 .comparison-header {
-  font-size: 0.75rem; color: #5e6e7a; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
-  padding: 0 11.9px;
-  height: 66px;
+  font-size: 0.756rem; color: #5e6e7a; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
+  padding: 0 10.7px;
+  height: 66.6px;
   background: #FAFAF8;
   border-bottom: none;
 }
 .comparison-header--pilr { background: #F4F4F5; }
-.comparison-logo { height: 24px; width: auto; display: block; }
+.comparison-logo { height: 24.3px; width: auto; display: block; }
 .comparison-label {
   justify-content: flex-start; text-align: left;
-  font-size: 1.05rem; color: #7a8a94; line-height: 1.65;
-  padding-left: 20.4px;
+  font-size: 0.945rem; color: #7a8a94; line-height: 1.65;
+  padding-left: 18.4px;
   background: #FAFAF8;
 }
-.comparison-check { display: block; color: #6e7a84; width: 18px; height: 18px; }
-.comparison-dash { width: 15.3px; height: 1.7px; background: #d6d9db; display: block; }
+.comparison-check { display: block; color: #6e7a84; width: 18.9px; height: 18.9px; }
+.comparison-dash { width: 15.75px; height: 1.71px; background: #d6d9db; display: block; }
 .comparison-table > .comparison-cell:nth-child(4n+2):not(.comparison-header) { background: #F4F4F5; }
 
 @media (max-width: 760px) {
@@ -5669,11 +5742,17 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .comparison-photo--ziploc { width: 33px; left: 88.75%; }
 }
 
-/* Homepage (desktop): every gap between sections is ~151px of visible white
-   space, matching Shop cards -> Why. */
+/* Homepage (desktop): every gap between sections is ~100px of visible white
+   space (target range 90-115px). */
 @media (min-width: 901px) {
-  .problem--v2 { padding-top: 40px; padding-bottom: 102px; }
-  .built-routine-section--home { padding-top: 64px; padding-bottom: 117px; }
-  .home-lifestyle { padding-bottom: 101px; }
-  .fly-video { padding-bottom: 93px; }
+  .problem--v2 { padding-top: 60px; padding-bottom: 107px; }
+  .built-routine-section--home { padding-top: 64px; padding-bottom: 105px; }
+  .home-lifestyle { padding-bottom: 71px; }
+  .fly-video { padding-top: 70px; padding-bottom: 60px; }
+  .explore-routine { padding-top: 0; }
+  /* Hero -> Shop, and Shop -> Why (the pod photo has ~115px of empty space
+     above the pod, so Why is pulled up 5px; Shop sits above it so the
+     cards stay clickable). */
+  .shop { padding-top: 65px; position: relative; z-index: 1; }
+  .why { margin-top: -5px; }
 }

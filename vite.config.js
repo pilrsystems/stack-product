@@ -1,8 +1,43 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
+import { readFileSync } from 'fs'
+
+// Shared page sections. A page writes
+//   <!--@include partials/compare.html-->
+// or, with values for {{placeholders}} inside the partial,
+//   <!--@include partials/tsa.html name="Powder Pod" volume="180.6 mL"-->
+// and the file's contents are dropped in at that spot. Edit the file in
+// partials/ and every page that includes it changes. Works in the dev server
+// (a change to a partial reloads the page) and in `vite build`.
+const INCLUDE = /<!--@include\s+(\S+?)((?:\s+\w+="[^"]*")*)\s*-->/g
+function htmlPartials() {
+  const dir = resolve(__dirname, 'partials')
+  return {
+    name: 'html-partials',
+    transformIndexHtml: {
+      order: 'pre',
+      handler(html) {
+        return html.replace(INCLUDE, (_, file, attrs) => {
+          let text = readFileSync(resolve(__dirname, file), 'utf8')
+          for (const m of attrs.matchAll(/(\w+)="([^"]*)"/g)) {
+            text = text.split('{{' + m[1] + '}}').join(m[2])
+          }
+          return text
+        })
+      },
+    },
+    configureServer(server) {
+      server.watcher.add(dir)
+      server.watcher.on('change', (f) => {
+        if (f.startsWith(dir)) server.ws.send({ type: 'full-reload' })
+      })
+    },
+  }
+}
 
 export default defineConfig({
   base: '/',
+  plugins: [htmlPartials()],
   server: {
     allowedHosts: true,
   },
