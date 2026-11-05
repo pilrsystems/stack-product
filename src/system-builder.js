@@ -48,7 +48,7 @@ const SUPPLEMENTS = {
 // the *paid* ids (not '-free'), so an add-on purchase never merges with
 // the free lid/scooper perk PilrCart grants automatically elsewhere.
 const ADD_ONS = {
-  'single-lid':     { label: 'Single Lid',     price: 7, image: 'images/lifestyle_section/Full Render.png' },
+  'single-lid':     { label: 'Single Lid',     price: 7, image: 'images/lifestyle_section/Full Render.png', maxQty: 5 },
   'travel-scooper': { label: 'Travel Scooper', price: 11, image: 'images/lifestyle_section/Scooper.png' },
 }
 
@@ -123,6 +123,19 @@ let currentPodTypes = []
 // it doesn't need to recompute calcPods() itself.
 let currentPodCounts   = { pillPods: 0, hybridPods: 0, powderPods: 0 }
 let currentAddonIds      = []   // selected ADD_ONS ids, same reasoning as currentPodCounts above
+// How many of each selected add-on. Only add-ons with a maxQty (the Single
+// Lid) can go above 1. openAddonRows remembers which add-on summary rows are
+// expanded, since the summary is rebuilt on every change.
+const addonQty = {}
+const openAddonRows = new Set()
+const qtyOf = id => addonQty[id] ?? 1
+const addonQtyTotal = () => [...selected.addons].reduce((n, id) => n + qtyOf(id), 0)
+function removeAddon(id) {
+  selected.addons.delete(id)
+  delete addonQty[id]
+  openAddonRows.delete(id)
+  document.querySelector(`.supp-chip[data-id="${id}"]`)?.classList.remove('selected')
+}
 let currentCartTotal     = 0
 let currentCartListTotal = 0   // sum of the struck-through list prices, for the Add to Cart button
 let isClassicStackCart = false
@@ -255,6 +268,8 @@ let lidSection       = null
 // there are no pods).
 let extraLid         = null
 let stackBottomY     = null
+let stackTopY        = null
+let stackRadius      = 0.7
 let extraLidLabelEl  = null
 let extraLidAdding   = false
 const EXTRA_LID_GAP  = 0.62   // world units between the underside of the bottom pod and the top of the lid
@@ -266,13 +281,42 @@ const EXTRA_LID_RISE = 0.14   // how far below its spot the lid starts when it r
 // the stack. lidAloneBlend is 0 when following the stack, 1 when held fixed;
 // it's tweened when pods come and go.
 const LID_ALONE_TILT = THREE.MathUtils.degToRad(35)
-const lidAloneBlend  = { v: 0 }
+// Under a stack the lid is also held facing the viewer, turned up more steeply
+// so its face reads clearly instead of lying edge-on below the pods.
+const LID_BELOW_TILT = THREE.MathUtils.degToRad(65)
+const lidTilt        = { v: LID_ALONE_TILT }   // current tilt, tweened between the two
+const lidAloneBlend  = { v: 1 }
+// Where the extra lid goes when there are pods:
+//   'back'  - a smaller lid floating behind the stack, peeking out to its right
+//   'below' - a full-size lid turned up under the stack (older layout, kept)
+// With no pods the lid is always centered at full size.
+const EXTRA_LID_PLACEMENT = 'back'
+const backMode = () => EXTRA_LID_PLACEMENT === 'back'
+const LID_BACK_TILT     = THREE.MathUtils.degToRad(0)    // 0 = lying flat; 90 = standing up, face straight toward the viewer
+// The lid is anchored to a spot on the SCREEN (not the 3D scene), so it stays in
+// the canvas's bottom-left corner however the camera moves. Sizes are fractions
+// of the canvas height; the main pods back off a little to leave it room.
+const LID_CORNER_NX     = -0.64                       // horizontal screen spot (-1 = left edge, 1 = right edge)
+const LID_CORNER_NY     = -0.58                       // vertical screen spot (-1 = bottom edge)
+const LID_CORNER_SIZE   = 0.28                        // lid diameter on screen (fraction of canvas height)
+const LID_ALONE_SIZE    = 0.30                        // ...when it's the only thing on screen
+const LID_CORNER_PULLBACK = 1.10                      // camera distance multiplier with the lid out (1 = pods at full size; 1.10 = about 9% smaller)
+const LID_DIAMETER_UNITS = 1.45                       // the lid's width in scene units at scale 1
+const lidPose = { nx: 0, ny: 0, d: LID_ALONE_SIZE, g: 1 }   // screen spot, size, and grow-in (0 -> 1)
+const HOLDER_BASE_SCALE = isMobile ? 18.5 : 16.5
+const lidHolderY     = { v: 0 }   // vertical offset of the lid (stack-axis units), tweened as pods come and go
+// Master switch for the 3D "extra lid" render. Off: picking the Extra Single Lid
+// chip only adds it to the summary and cart; the canvas shows just the pods.
+// Everything else about the lid (placement, tilt, label, framing) is kept below
+// and comes back by setting this to true.
+const SHOW_EXTRA_LID_RENDER = true
 const LID_HEAD_START = 0.3   // seconds the lid gets to move before new pods start dropping
 // With the extra lid out, the stack + lid sit lower than the plain centered fit by this
-// many screen pixels measured at the middle of the canvas (about 10px at the top edge,
-// since the top of the stack is seen in perspective),
+// many screen pixels measured at the middle of the canvas (a bit less at the top edge,
+// since the top of the stack is seen in perspective). Raised from 12 when the lid was
+// turned up to face the viewer, because the taller lid pulls the pair upward,
 // using spare room at the bottom of the canvas.
-const LID_FRAMING_SHIFT_PX = 12
+const LID_FRAMING_SHIFT_PX = 28
 // Measured pod height per type, keyed by pod name — populated the first
 // time each type loads (see buildStack). Lets the stacking gap stay
 // constant across different selections instead of depending on which
@@ -380,6 +424,7 @@ async function buildStack(podTypes, onReady) {
   sections        = []
   lidSection      = null
   stackBottomY    = null
+  stackTopY       = null
   modelLoaded     = false
   currentPodTypes = [...podTypes]
 
@@ -540,7 +585,10 @@ async function buildStack(podTypes, onReady) {
     // Where the stack's real lowest point is (measured from the actual
     // geometry, since a pod's bounding box can have empty space below it) —
     // the extra lid is placed relative to this.
-    stackBottomY = preciseBox(sections.map(s => s.mesh)).min.y
+    const podsBox = preciseBox(sections.map(s => s.mesh))
+    stackBottomY  = podsBox.min.y
+    stackTopY     = podsBox.max.y
+    stackRadius   = Math.max(0.3, (podsBox.max.x - podsBox.min.x) / 2)
 
     modelLoaded = true
     document.getElementById('system-loading')?.classList.add('hidden')
@@ -608,6 +656,16 @@ function computeLabelAnchors() {
 
 function updateLabels() {
   if (!labelEls.length || !labelAnchors.length) return
+  // With the lid in the bottom-left corner, keep every pod label on the right
+  // so none of them runs into it.
+  const forceRight = backMode() && !!extraLid && currentPodTypes.length > 0
+  labelEls.forEach((el, i) => {
+    const want = forceRight ? 'right' : (i % 2 === 0 ? 'right' : 'left')
+    if (!el.classList.contains('blabel-' + want)) {
+      el.classList.remove('blabel-left', 'blabel-right')
+      el.classList.add('blabel-' + want)
+    }
+  })
   const rect   = canvasEl.getBoundingClientRect()
   const hidden = inDetailView || transitioning
 
@@ -869,7 +927,7 @@ function ensureExtraLidLabel() {
   el.innerHTML = `
     <div class="blabel-dot"></div>
     <div class="blabel-line"></div>
-    <div class="blabel-text"><span class="blabel-name">Extra lid</span></div>
+    <div class="blabel-text"><span class="blabel-name">Single Lid</span></div>
   `
   container.appendChild(el)
   extraLidLabelEl = el
@@ -895,14 +953,17 @@ function preciseBox(objects) {
 
 // The lid model, loaded once and measured/oriented like the lid on the stack.
 let lidTemplate = null
+let lidTemplateCenterZ = 0   // where the lid's own center sits along its axis, so it can be centered on its holder
 let lidTemplatePromise = null
 function getLidTemplate() {
   if (!lidTemplatePromise) {
     lidTemplatePromise = loadPod(LID_GLB).then(gltf => {
       const s = gltf.scene
       const mat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.75, metalness: 0.0 })
-      s.traverse(m => { if (m.isMesh) { m.castShadow = true; m.material = mat } })
-      measurePod(s)
+      // (The corner lid floats on its own, so it doesn't cast a shadow on the floor.)
+      s.traverse(m => { if (m.isMesh) { m.castShadow = !backMode(); m.material = mat } })
+      const lm = measurePod(s)
+      lidTemplateCenterZ = (lm.zMin + lm.zMax) / 2
       lidTemplate = s
       return s
     })
@@ -914,12 +975,30 @@ function getLidTemplate() {
 // lowest point when there are pods, otherwise centered on the stack's own
 // center line. World y is -z * scale inside lidHolder, so moving z up moves
 // the lid down.
-function lidAloneTarget() { return stackBottomY === null ? 1 : 0 }
+// 1 = held still, tilted toward the viewer; 0 = turns and leans with the stack.
+// In the corner (with pods) the lid turns exactly like the pods do; on its own it
+// is held facing the viewer.
+function lidAloneTarget() { return (backMode() && stackBottomY !== null) ? 0 : 1 }
+function lidTiltTarget() {
+  if (stackBottomY === null) return LID_ALONE_TILT
+  return backMode() ? LID_BACK_TILT : LID_BELOW_TILT
+}
+// Where the lid should be (back placement): centered and large when there are
+// no pods, otherwise smaller in the canvas's bottom-left corner.
+function lidPoseTarget() {
+  if (!backMode() || stackBottomY === null) return { nx: 0, ny: 0, d: LID_ALONE_SIZE }
+  // Up to 4 pods the lid stays the same size. Beyond that the camera backs off and the
+  // pods shrink, so the lid shrinks by the same proportion to keep matching them.
+  const n = currentPodTypes.length
+  const keepUp = Math.min(1, idealCameraZ(4) / idealCameraZ(Math.max(n, 1)))
+  return { nx: LID_CORNER_NX, ny: LID_CORNER_NY, d: LID_CORNER_SIZE * keepUp }
+}
 
 // Called every frame: orients the lid holder. Following the stack it is just
 // the base orientation (its world orientation is then outerGroup's tilt/spin
 // times that). Held fixed, it counter-rotates outerGroup so its world
 // orientation is a constant tilt toward the viewer.
+const _tgt     = new THREE.Vector3()
 const _qFollow = new THREE.Quaternion()
 const _qFixed  = new THREE.Quaternion()
 const _eul     = new THREE.Euler()
@@ -927,27 +1006,55 @@ function updateLidHolderOrientation() {
   if (!extraLid) return
   _qFollow.setFromEuler(_eul.set(THREE.MathUtils.degToRad(90), 0, 0))
   _qFixed.copy(outerGroup.quaternion).invert()
-    .multiply(new THREE.Quaternion().setFromEuler(_eul.set(THREE.MathUtils.degToRad(90) + LID_ALONE_TILT, 0, 0)))
+    .multiply(new THREE.Quaternion().setFromEuler(_eul.set(THREE.MathUtils.degToRad(90) + lidTilt.v, 0, 0)))
   lidHolder.quaternion.slerpQuaternions(_qFollow, _qFixed, lidAloneBlend.v)
+  if (backMode()) {
+    // Anchored to a screen spot: find the point on the stack's mid-depth plane (z = 0)
+    // that lands there, and size the lid so it covers a set fraction of the canvas.
+    const rect = canvasEl.getBoundingClientRect()
+    camera.updateMatrixWorld(true)
+    _tgt.set(lidPose.nx, lidPose.ny, 0.5).unproject(camera).sub(camera.position).normalize()
+    const t = -camera.position.z / _tgt.z
+    _tgt.multiplyScalar(t).add(camera.position)               // world point on z = 0
+    const dist       = camera.position.z
+    const pxPerUnit  = rect.height / (2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)))
+    const unitsWide  = (lidPose.d * rect.height) / pxPerUnit
+    lidHolder.scale.setScalar(Math.max(0.001, HOLDER_BASE_SCALE * (unitsWide / LID_DIAMETER_UNITS) * lidPose.g))
+    outerGroup.updateMatrixWorld(true)
+    lidHolder.position.copy(outerGroup.worldToLocal(_tgt))
+  } else {
+    lidHolder.scale.setScalar(HOLDER_BASE_SCALE)
+    lidHolder.position.set(0, lidHolderY.v, 0)
+  }
 }
 
-function extraLidTargetZ(mesh) {
-  // Measure as if the holder were already at its final orientation (with
-  // outerGroup zeroed by preciseBox, that is just the base orientation plus
-  // the alone tilt).
+// The lid is centered on its holder; the holder is what moves it (see
+// lidHolderTargetY). Moving the lid along its own axis only means "down" when it
+// lies flat, and it's now turned up toward the viewer.
+function extraLidTargetZ() {
+  return -lidTemplateCenterZ
+}
+
+// Half the lid's height on screen at its final tilt.
+function lidHalfHeight(mesh) {
   const savedQ = lidHolder.quaternion.clone()
-  lidHolder.rotation.set(THREE.MathUtils.degToRad(90) + lidAloneTarget() * LID_ALONE_TILT, 0, 0)
-  const box   = preciseBox([mesh])
+  const savedP = lidHolder.position.clone()
+  lidHolder.position.set(0, 0, 0)
+  lidHolder.rotation.set(THREE.MathUtils.degToRad(90) + lidTiltTarget(), 0, 0)
+  const box = preciseBox([mesh])
   lidHolder.quaternion.copy(savedQ)
-  const scale = lidHolder.scale.x
-  if (stackBottomY !== null) {
-    return mesh.position.z + (box.max.y - (stackBottomY - EXTRA_LID_GAP)) / scale
-  }
-  return mesh.position.z + ((box.max.y + box.min.y) / 2) / scale
+  lidHolder.position.copy(savedP)
+  return (box.max.y - box.min.y) / 2
+}
+
+// Where the lid's holder sits vertically: at the middle with no pods, otherwise
+// so the top of the (turned-up) lid is EXTRA_LID_GAP below the stack.
+function lidHolderTargetY(mesh) {
+  return stackBottomY === null ? 0 : stackBottomY - EXTRA_LID_GAP - lidHalfHeight(mesh)
 }
 
 async function addExtraLid(delay = 0) {
-  if (extraLid || extraLidAdding) return
+  if (!SHOW_EXTRA_LID_RENDER || extraLid || extraLidAdding) return
   extraLidAdding = true
   const tpl = await getLidTemplate()
   extraLidAdding = false
@@ -957,11 +1064,24 @@ async function addExtraLid(delay = 0) {
   const mesh = tpl.clone(true)
   lidHolder.add(mesh)
   lidAloneBlend.v = lidAloneTarget()
-  updateLidHolderOrientation()
-  const restZ = extraLidTargetZ(mesh)
-  mesh.position.z = restZ + EXTRA_LID_RISE
-  extraLid = { mesh, restZ }
-  gsap.to(mesh.position, { z: restZ, duration: 0.7, ease: 'power3.out', delay })
+  lidTilt.v = lidTiltTarget()
+  lidHolderY.v = lidHolderTargetY(mesh)
+  const restZ = extraLidTargetZ()
+  if (backMode()) {
+    // Appears in place (small, behind the stack, or centered if there are no pods)
+    // by growing from nothing.
+    const t = lidPoseTarget()
+    Object.assign(lidPose, { nx: t.nx, ny: t.ny, d: t.d, g: 0 })
+    mesh.position.z = restZ
+    extraLid = { mesh, restZ }
+    updateLidHolderOrientation()
+    gsap.to(lidPose, { g: 1, duration: 0.6, ease: 'back.out(1.6)', delay })
+  } else {
+    updateLidHolderOrientation()
+    mesh.position.z = restZ + EXTRA_LID_RISE
+    extraLid = { mesh, restZ }
+    gsap.to(mesh.position, { z: restZ, duration: 0.7, ease: 'power3.out', delay })
+  }
   applyFraming()
 }
 
@@ -969,12 +1089,21 @@ async function addExtraLid(delay = 0) {
 // stack, or back to the center if the stack is gone).
 function moveExtraLid(delay = 0) {
   if (!extraLid) return
-  extraLid.restZ = extraLidTargetZ(extraLid.mesh)
+  extraLid.restZ = extraLidTargetZ()
   if (inDetailView || transitioning) return
   gsap.killTweensOf(extraLid.mesh.position)
   gsap.to(extraLid.mesh.position, { z: extraLid.restZ, duration: 0.7, ease: 'power3.out', delay })
+  gsap.killTweensOf(lidTilt)
+  gsap.to(lidTilt, { v: lidTiltTarget(), duration: 0.7, ease: 'power3.out', delay })
   gsap.killTweensOf(lidAloneBlend)
   gsap.to(lidAloneBlend, { v: lidAloneTarget(), duration: 0.7, ease: 'power3.out', delay })
+  gsap.killTweensOf(lidHolderY)
+  gsap.to(lidHolderY, { v: lidHolderTargetY(extraLid.mesh), duration: 0.7, ease: 'power3.out', delay })
+  if (backMode()) {
+    const t = lidPoseTarget()
+    gsap.killTweensOf(lidPose)
+    gsap.to(lidPose, { nx: t.nx, ny: t.ny, d: t.d, duration: 0.8, ease: 'power3.out', delay })
+  }
 }
 
 function removeExtraLid() {
@@ -1009,11 +1138,19 @@ function stackSpanY(includeExtraLid) {
   if (currentGlbScene) box.expandByObject(currentGlbScene)
   resting.forEach((s, i) => { s.mesh.position.z = savedStackZ[i] })
   if (includeExtraLid && extraLid) {
+    // Measure the lid at its final orientation (with the outer tilt/spin zeroed
+    // that is just the base orientation plus the tilt).
+    const savedLidQ = lidHolder.quaternion.clone()
+    const savedLidP = lidHolder.position.clone()
+    lidHolder.rotation.set(THREE.MathUtils.degToRad(90) + lidTiltTarget(), 0, 0)
+    lidHolder.position.set(0, lidHolderTargetY(extraLid.mesh), 0)
     const savedZ = extraLid.mesh.position.z
     extraLid.mesh.position.z = extraLid.restZ
     outerGroup.updateMatrixWorld(true)
     box.expandByObject(extraLid.mesh)
     extraLid.mesh.position.z = savedZ
+    lidHolder.quaternion.copy(savedLidQ)
+    lidHolder.position.copy(savedLidP)
   }
 
   outerGroup.rotation.x = rx; outerGroup.rotation.y = ry
@@ -1031,7 +1168,9 @@ function applyFraming() {
   const base = idealCameraZ(currentPodTypes.length)
   let posY = OUTER_REST_POS_Y
   let camZ = base
-  if (extraLid && currentGlbScene && currentPodTypes.length) {
+  if (backMode() && extraLid && currentPodTypes.length) {
+    camZ = base * LID_CORNER_PULLBACK
+  } else if (!backMode() && extraLid && currentGlbScene && currentPodTypes.length) {
     const s = stackSpanY(false), a = stackSpanY(true)
     const stackH = s.max - s.min, allH = a.max - a.min
     if (stackH > 0) {
@@ -1069,6 +1208,26 @@ function updateExtraLidLabel() {
   if (!extraLid || inDetailView || transitioning) { extraLidLabelEl?.classList.remove('visible'); return }
   const el = ensureExtraLidLabel()
   if (!el) return
+  const q = qtyOf('single-lid')
+  const nameEl = el.querySelector('.blabel-name')
+  const text = q > 1 ? `Single Lid ×${q}` : 'Single Lid'
+  if (nameEl && nameEl.textContent !== text) nameEl.textContent = text
+
+  if (backMode()) {
+    // Under the lid, centered on its screen spot.
+    if (!extraLid.mesh.visible) { el.classList.remove('visible'); return }
+    const rect = canvasEl.getBoundingClientRect()
+    el.classList.add('blabel-below'); el.classList.remove('blabel-right')
+    // The lid turns, so hang the label from a steady spot: its screen center plus
+    // roughly half its on-screen height (a flat lid is thin, a tilted one taller).
+    const radiusPx = lidPose.d * rect.height * 0.5 * lidPose.g
+    const halfH    = radiusPx * (0.42 + 0.28 * lidAloneBlend.v)
+    el.style.left = ((lidPose.nx * 0.5 + 0.5) * rect.width) + 'px'
+    el.style.top  = (((-lidPose.ny * 0.5 + 0.5) * rect.height) + halfH + 10) + 'px'
+    el.classList.add('visible')
+    return
+  }
+  el.classList.remove('blabel-below'); el.classList.add('blabel-right')
 
   const rx = outerGroup.rotation.x, ry = outerGroup.rotation.y
   const rz = outerGroup.rotation.z, py = outerGroup.position.y
@@ -1174,7 +1333,7 @@ function makeLidRow(chevron) {
         <div class="sys-acc-pod-info">
           <div class="sys-acc-info-field">
             <span class="sys-acc-info-label">Included</span>
-            <span class="sys-acc-info-value">Free with any pod — extra lids are available at checkout.</span>
+            <span class="sys-acc-info-value">Free with the purchase of any pod — extra lids are available under add ons.</span>
           </div>
         </div>
       </div>
@@ -1187,11 +1346,22 @@ function makeLidRow(chevron) {
 function makeAddonRow(id, chevron) {
   const addon = ADD_ONS[id]
   if (!addon) return ''
-  return `<div class="sys-acc-row">
+  const qty   = qtyOf(id)
+  const multi = (addon.maxQty ?? 1) > 1
+  const open  = multi && openAddonRows.has(id) ? ' open' : ''
+  const name  = multi && qty > 1 ? `${addon.label} ×${qty}` : addon.label
+  const stepper = multi ? `
+          <div class="sys-qty" data-addon-id="${id}">
+            <span class="sys-qty-label">Quantity</span>
+            <button type="button" class="sys-qty-btn" data-dir="-1" aria-label="Fewer ${addon.label}s"${qty <= 1 ? ' disabled' : ''}>−</button>
+            <span class="sys-qty-val" aria-live="polite">${qty}</span>
+            <button type="button" class="sys-qty-btn" data-dir="1" aria-label="More ${addon.label}s"${qty >= addon.maxQty ? ' disabled' : ''}>+</button>
+          </div>` : ''
+  return `<div class="sys-acc-row${open}" data-addon-row="${id}">
     <button class="sys-acc-header">
       <span class="sys-acc-dot"></span>
-      <span class="sys-acc-name">${addon.label}</span>
-      <span class="sys-acc-price">${formatPrice(addon.price)}</span>
+      <span class="sys-acc-name">${name}</span>
+      <span class="sys-acc-price">${formatPrice(addon.price * qty)}</span>
       ${chevron}
     </button>
     <div class="sys-acc-body">
@@ -1199,9 +1369,9 @@ function makeAddonRow(id, chevron) {
         <div class="sys-acc-pod-img-wrap">
           <img src="${addon.image}" alt="${addon.label}" class="sys-acc-pod-img" />
         </div>
-        <div class="sys-acc-pod-info">
+        <div class="sys-acc-pod-info">${stepper}
           <div class="sys-acc-pod-actions">
-            <button class="sys-acc-remove" data-addon-id="${id}">× Remove ${addon.label}</button>
+            <button class="sys-acc-remove" data-addon-id="${id}">× Remove ${addon.label}${multi && qty > 1 ? 's' : ''}</button>
           </div>
         </div>
       </div>
@@ -1216,7 +1386,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   currentPodCounts = { pillPods, hybridPods, powderPods }
   const addonIds   = [...selected.addons]
   currentAddonIds  = addonIds
-  const addonTotal = addonIds.reduce((sum, id) => sum + (ADD_ONS[id]?.price ?? 0), 0)
+  const addonTotal = addonIds.reduce((sum, id) => sum + (ADD_ONS[id]?.price ?? 0) * qtyOf(id), 0)
 
   if (total === 0 && addonIds.length === 0) {
     el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
@@ -1282,7 +1452,11 @@ function updateSummary(pillPods, hybridPods, powderPods) {
     updateCartButton()
 
     el.querySelectorAll('.sys-acc-header').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.sys-acc-row').classList.toggle('open'))
+      btn.addEventListener('click', () => {
+        const row = btn.closest('.sys-acc-row')
+        row.classList.toggle('open')
+        if (row.dataset.addonRow) row.classList.contains('open') ? openAddonRows.add(row.dataset.addonRow) : openAddonRows.delete(row.dataset.addonRow)
+      })
     })
     document.getElementById('sys-acc-remove-bundle')?.addEventListener('click', e => {
       e.stopPropagation()
@@ -1295,9 +1469,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
     el.querySelectorAll('.sys-acc-remove[data-addon-id]').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation()
-        const id = btn.dataset.addonId
-        selected.addons.delete(id)
-        document.querySelector(`.supp-chip[data-id="${id}"]`)?.classList.remove('selected')
+        removeAddon(btn.dataset.addonId)
         updateSystem()
       })
     })
@@ -1369,16 +1541,18 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   updateCartButton()
 
   el.querySelectorAll('.sys-acc-header').forEach(btn => {
-    btn.addEventListener('click', () => btn.closest('.sys-acc-row').classList.toggle('open'))
+    btn.addEventListener('click', () => {
+      const row = btn.closest('.sys-acc-row')
+      row.classList.toggle('open')
+      if (row.dataset.addonRow) row.classList.contains('open') ? openAddonRows.add(row.dataset.addonRow) : openAddonRows.delete(row.dataset.addonRow)
+    })
   })
 
   el.querySelectorAll('.sys-acc-remove').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation()
       if (btn.dataset.addonId) {
-        const id = btn.dataset.addonId
-        selected.addons.delete(id)
-        document.querySelector(`.supp-chip[data-id="${id}"]`)?.classList.remove('selected')
+        removeAddon(btn.dataset.addonId)
         updateSystem()
         return
       }
@@ -1397,7 +1571,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 function updateCartButton() {
   const btn = document.getElementById('system-add-to-cart-btn')
   if (!btn) return
-  const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + currentAddonIds.length
+  const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + addonQtyTotal()
   btn.disabled = totalQty === 0
   if (totalQty === 0) {
     btn.textContent = 'Add to Cart'
@@ -1441,7 +1615,7 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
   currentAddonIds.forEach(id => {
     const addon = ADD_ONS[id]
     if (!addon) return
-    window.PilrCart?.add({ id, title: addon.label, price: addon.price, image: addon.image }, 1)
+    window.PilrCart?.add({ id, title: addon.label, price: addon.price, image: addon.image }, qtyOf(id))
   })
 
   const btn  = this
@@ -1449,6 +1623,17 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
   btn.textContent = 'Added ✓'
   btn.disabled = true
   setTimeout(() => { btn.innerHTML = orig; btn.disabled = false }, 1200)
+})
+
+document.getElementById('system-summary-content')?.addEventListener('click', e => {
+  const btn = e.target.closest('.sys-qty-btn')
+  if (!btn || btn.disabled) return
+  e.stopPropagation()
+  const id    = btn.closest('.sys-qty')?.dataset.addonId
+  const addon = ADD_ONS[id]
+  if (!addon || !selected.addons.has(id)) return
+  addonQty[id] = Math.max(1, Math.min(addon.maxQty ?? 1, qtyOf(id) + Number(btn.dataset.dir)))
+  updateSystem()
 })
 
 function updateSystem() {
@@ -1492,6 +1677,14 @@ function updateSystem() {
   }
 
   updateSummary(pillPods, hybridPods, powderPods)
+
+  // The add-on chip reads "Extra Single Lid ×2" once there's more than one.
+  document.querySelectorAll('#addons-row .supp-chip').forEach(chip => {
+    const s = SUPPLEMENTS.addons.find(a => a.id === chip.dataset.id)
+    if (!s) return
+    const q = selected.addons.has(s.id) && (ADD_ONS[s.id]?.maxQty ?? 1) > 1 ? qtyOf(s.id) : 1
+    chip.textContent = q > 1 ? `${s.label} ×${q}` : s.label
+  })
 }
 
 // ── Chip renderer ────────────────────────────────────────────
@@ -1508,9 +1701,12 @@ function renderChips(category, containerId) {
       if (selected[category].has(s.id)) {
         selected[category].delete(s.id)
         btn.classList.remove('selected')
+        if (category === 'addons') { delete addonQty[s.id]; openAddonRows.delete(s.id) }
       } else {
         selected[category].add(s.id)
         btn.classList.add('selected')
+        // A quantity-capable add-on opens its summary row so the − / + are visible.
+        if (category === 'addons') { addonQty[s.id] = 1; if ((ADD_ONS[s.id]?.maxQty ?? 1) > 1) openAddonRows.add(s.id) }
       }
       updateSystem()
     })

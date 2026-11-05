@@ -214,6 +214,16 @@ body.system-page {
 /* Right-side: dot → line → text, JS places dot at pod edge */
 .blabel-right { transform: translate(0, -50%); }
 
+/* Label centered under the extra lid in the bottom-left corner: the same dot,
+   line and text as the pod labels, stacked top to bottom with a vertical line. */
+.blabel-below {
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, 0);
+}
+.blabel-below .blabel-line { width: 1px; height: 16px; }
+.blabel-below .blabel-text { padding: 0.3rem 0 0; align-items: center; }
+
 /* Left-side: text → line → dot (row-reverse), JS places dot at pod edge */
 .blabel-left {
   flex-direction: row-reverse;
@@ -1108,6 +1118,46 @@ body.system-page {
   margin-top: 0.5rem;
   padding-top: 0.65rem;
   border-top: 1px solid #E5E4DF;
+}
+
+.sys-qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.sys-qty-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7a8a94;
+  margin-right: 0.15rem;
+}
+.sys-qty-btn {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: 1.5px solid rgba(66,85,99,0.2);
+  border-radius: var(--radius);
+  color: #5e6e7a;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.sys-qty-btn:hover:not(:disabled) { background: #5e6e7a; border-color: #5e6e7a; color: #fff; }
+.sys-qty-btn:disabled { opacity: 0.35; cursor: default; }
+.sys-qty-val {
+  min-width: 1.4rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5e6e7a;
 }
 
 .sys-acc-remove {

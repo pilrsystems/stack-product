@@ -139,7 +139,7 @@
   .page-product-bottom .comparison-photo { bottom: calc(100% + 12.7px); }
   .page-product-bottom .comparison-photo--organizer { width: 63.3px; }
   .page-product-bottom .comparison-photo--ziploc { width: 50.6px; }
-  /* Compare / The obvious solution text block: 58px to the right.
+  /* Compare / headline text block: 58px to the right.
      The table (with its two small pictures) is 5px to the right. */
   .page-product-bottom .comparison-intro { transform: translateX(58px); }
   .page-product-bottom .comparison-table-wrap { transform: translateX(5px); }
