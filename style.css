@@ -5770,3 +5770,117 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .shop { padding-top: 65px; position: relative; z-index: 1; }
   .why { margin-top: -5px; }
 }
+
+/* ══ PHONE (<= 600px): header + homepage hero ═════════════════════════
+   Header: menu (three lines) top-left, logo centered, cart top-right, and the
+   menu now slides in from the left. These rules apply on every page, since the
+   header is the same everywhere. Hero: the photo fills the first screen with the
+   headline, tagline and button on top of it. */
+@media (max-width: 600px) {
+  /* Header */
+  .nav { padding: 1.1rem 0; }
+  .nav-inner { grid-template-columns: 1fr auto 1fr; }
+  .nav-right { display: contents; }            /* cart + menu button become grid items of .nav-inner */
+  .nav-hamburger { grid-column: 1; grid-row: 1; justify-self: start; gap: 4px; padding: 15px 14px; margin: -15px -14px; }   /* 45 x 44px tap area, icon position unchanged */
+  .nav-hamburger span { width: 17px; background: #5e6e7a; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav-logo { grid-column: 2; grid-row: 1; justify-self: center; }
+  .nav-logo-img { height: 22px; position: relative; top: 1px; }   /* 1px lower so it sits optically centered in the bar */
+  .nav-cart-btn { grid-column: 3; grid-row: 1; justify-self: end; padding: 12px; margin: -12px; }                   /* 44 x 44px tap area */
+  .nav-links {
+    left: 0;
+    right: auto;
+    border-left: none;
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);
+  }
+  .nav-links.open { transform: translateX(0); }
+
+  /* Hero: photo behind the copy */
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    max-height: 900px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .hero-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0;
+  }
+  .hero-product {
+    position: absolute;
+    inset: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    z-index: 0;
+    display: block;
+  }
+  .hero-product-img--suitcase {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: 78% 40%;
+    transform: none;
+  }
+  /* The photos are wide banners with the subject on the right, so show the
+     slice that holds it. */
+  .hero-product-img--suitcase[src*="Hero Banner 2"]  { object-position: 80% 40%; }
+  .hero-product-img--suitcase[src*="Hero Banner 4"]  { object-position: 72% 40%; }
+  .hero-product-img--suitcase[src*="Suitcase Home"]  { object-position: 74% 40%; }
+  /* Soft dark gradient from the bottom so the white copy stays readable. */
+  .hero-product::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(18, 24, 30, 0.8) 0%, rgba(18, 24, 30, 0.66) 36%, rgba(18, 24, 30, 0.36) 54%, rgba(18, 24, 30, 0) 74%);
+    pointer-events: none;
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-eyebrow,
+  .hero-title,
+  .hero-tagline { color: #FFFFFF; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35); }
+  .hero-eyebrow { font-size: 0.7rem; margin-bottom: 0.7rem; }
+  .hero-title { font-size: clamp(36px, 11vw, 46px); line-height: 1.02; }
+  .hero-title-br { display: inline; }
+  .hero-tagline { font-size: 0.9375rem; line-height: 1.45; margin-top: 0.9rem; max-width: 22rem; text-wrap: balance; }
+  .hero-cta.btn {
+    display: block;
+    width: calc(100% - 2rem);     /* 16px more room on each side than the text margin */
+    max-width: 20rem;
+    margin-top: 1.4rem;
+    padding: 1.05rem 1.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+    background: #FFFFFF;
+    color: #5e6e7a;
+  }
+  .hero-slide-nav {
+    position: relative;
+    z-index: 2;
+    margin-top: 1.4rem;
+    justify-content: center;
+  }
+  .hero-slide-dash { background: #FFFFFF; opacity: 0.55; }
+  .hero-slide-dash.is-active { opacity: 1; }
+}
