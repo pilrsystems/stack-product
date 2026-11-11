@@ -5896,3 +5896,99 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .hero-slide-dash { background: #FFFFFF; opacity: 0.55; }
   .hero-slide-dash.is-active { opacity: 1; }
 }
+
+.nav-drop-card.nav-drop-phone, .nav-dropdown-inner .nav-shop-all { display: none; }   /* phone-menu extras */
+
+/* ══ PHONE MENU (<= 600px) ═══════════════════════════════════════════
+   The three-line button opens a frosted panel under the header (instead of a
+   slide-in sidebar): a row of tabs (Shop is the one with content) and, under it,
+   the Shop products as thumbnail rows. Square corners. Same markup on every page,
+   so this restyles the existing menu list and its Shop dropdown. */
+@media (max-width: 600px) {
+  .nav-overlay {
+    background: rgba(12, 16, 20, 0.1);
+  }
+  .nav-dim-overlay { display: none; }          /* the desktop dropdown's dim layer isn't used here */
+
+  .nav-links {
+    position: fixed;
+    top: 66px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    justify-self: stretch;                     /* the desktop rule centers it, which would shrink it to its contents */
+    height: auto;
+    max-height: calc(100svh - 66px - 16px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+    align-content: start;
+    gap: 0;
+    padding: 12px 12px 18px;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+    backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+  }
+  .nav-links.open {
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
+  }
+
+  /* The tab row: Shop, Why pilr, Our story, FAQ. */
+  .nav-has-dropdown { display: contents; }     /* its link and its dropdown become grid items of the list */
+  .nav-links > li:not(.nav-has-dropdown) { display: flex; }
+  .nav-links > li > a,
+  .nav-has-dropdown > a {
+    padding: 11px 12px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #5e6e7a;
+    border-radius: 0;
+  }
+  .nav-has-dropdown > a { background: rgba(94, 110, 122, 0.14); color: #46545e; }   /* Shop is the open tab */
+
+  /* The Shop products, always visible under the tabs. */
+  .nav-has-dropdown .nav-dropdown {
+    display: block;
+    order: 5;
+    grid-column: 1 / -1;
+    position: static;
+    width: auto;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  .nav-dropdown-inner { padding: 16px 0 0; display: block; }
+  .nav-drop-grid { display: grid; grid-template-columns: 1fr; align-content: start; gap: 6px; max-height: 352px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+  .nav-drop-desktop { display: none !important; }
+  .nav-links .nav-drop-card.nav-drop-phone { display: flex; }
+  .nav-links .nav-dropdown-inner a.nav-shop-all { display: flex; justify-content: flex-end; padding: 20px 4px 0; gap: 0.35em; }
+  .nav-shop-all-text { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .nav-links .nav-shop-all { font-size: 11.5px; font-weight: 500; letter-spacing: normal; text-transform: none; color: #3d4b56; }
+  .nav-links .nav-drop-card { padding: 4px 0; letter-spacing: normal; text-transform: none; font-size: 1rem; }
+  .nav-drop-img { width: 64px; height: 64px; scale: none; }
+  .nav-drop-text { padding-left: 18px; gap: 0.3rem; }
+  .nav-drop-title { font-size: 0.83rem; font-weight: 500; color: #3d4b56; }
+  .nav-drop-card .nav-drop-desc { width: auto; font-size: 0.65rem; line-height: 1.3; color: #4d5b66; }
+  .nav-links .nav-drop-img { background: rgba(255,255,255,0.2); border-radius: 6px; }
+  .nav-links .nav-drop-img img { mix-blend-mode: multiply; }
+}
