@@ -5788,10 +5788,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .nav { padding: 1.1rem 0; }
   .nav-inner { grid-template-columns: 1fr auto 1fr; }
   .nav-right { display: contents; }            /* cart + menu button become grid items of .nav-inner */
-  .nav-hamburger { grid-column: 1; grid-row: 1; justify-self: start; gap: 4px; padding: 15px 14px; margin: -15px -14px; }   /* 45 x 44px tap area, icon position unchanged */
-  .nav-hamburger span { width: 17px; background: #5e6e7a; }
-  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav-hamburger { grid-column: 1; grid-row: 1; justify-self: start; gap: 3.5px; padding: 15px 14px; margin: -15px -14px; }   /* 45 x 44px tap area, icon position unchanged */
+  .nav-hamburger span { width: 15px; background: #5e6e7a; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
   .nav-logo { grid-column: 2; grid-row: 1; justify-self: center; }
   .nav-logo-img { height: 22px; position: relative; top: 1px; }   /* 1px lower so it sits optically centered in the bar */
   .nav-cart-btn { grid-column: 3; grid-row: 1; justify-self: end; padding: 12px; margin: -12px; }                   /* 44 x 44px tap area */
@@ -5926,17 +5926,15 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     display: grid;
-    grid-template-columns: repeat(4, auto);
-    justify-content: space-between;
+    grid-template-columns: 1fr repeat(4, auto) 1fr;   /* the four tabs sit in the middle columns, so they centre as one group */
+    justify-content: normal;
     align-content: start;
     gap: 0;
-    padding: 12px 12px 18px;
-    background: rgba(255, 255, 255, 0.5);
-    -webkit-backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
-    backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 0;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+    padding: 0;
+    row-gap: 7px;                              /* the gap between the tab bar and the product panel */
+    background: none;
+    border: none;
+    box-shadow: none;
     transform: translateY(-8px);
     opacity: 0;
     visibility: hidden;
@@ -5951,13 +5949,30 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
   }
 
-  /* The tab row: Shop, Why pilr, Our story, FAQ. */
+  /* The tab row: Shop, Why pilr, Our story, FAQ. It sits on its own frosted bar (::before). */
+  .nav-links::before {
+    content: '';
+    grid-area: 1 / 1 / 2 / -1;
+    align-self: stretch;                       /* the list's own align-items would otherwise collapse it to a line */
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+    backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+  }
+  .nav-has-dropdown > a { grid-area: 1 / 2; margin: 7px 0; }
+  .nav-has-dropdown > a .nav-chevron { display: none; }   /* its reserved space pushed the Shop label off-centre in its highlight */
+  .nav-has-dropdown > a, .nav-links > li:not(.nav-has-dropdown) { position: relative; z-index: 1; }   /* above the bar's frosted layer */
+  .nav-links > li:nth-child(2) { grid-area: 1 / 3; margin: 7px 0; }
+  .nav-links > li:nth-child(3) { grid-area: 1 / 4; margin: 7px 0; }
+  .nav-links > li:nth-child(4) { grid-area: 1 / 5; margin: 7px 0; }
   .nav-has-dropdown { display: contents; }     /* its link and its dropdown become grid items of the list */
   .nav-links > li:not(.nav-has-dropdown) { display: flex; }
   .nav-links > li > a,
   .nav-has-dropdown > a {
-    padding: 11px 12px;
-    font-size: 0.72rem;
+    padding: 8px 19px;
+    line-height: 1.2;
+    font-size: 9.5px;
     font-weight: 500;
     letter-spacing: 0.1em;
     color: #5e6e7a;
@@ -5975,14 +5990,15 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     opacity: 1;
     pointer-events: auto;
     transform: none;
-    background: none;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;      /* the panel already blurs; a second layer here shows as a lighter box */
+    grid-row: 2;
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+    backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+    padding: 12px 12px 18px;
   }
-  .nav-dropdown-inner { padding: 16px 0 0; display: block; }
+  .nav-dropdown-inner { padding: 4px 0 0; display: block; }
   .nav-drop-grid { display: grid; grid-template-columns: 1fr; align-content: start; gap: 6px; max-height: 352px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
   .nav-drop-desktop { display: none !important; }
   .nav-links .nav-drop-card.nav-drop-phone { display: flex; }
@@ -5992,8 +6008,43 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .nav-links .nav-drop-card { padding: 4px 0; letter-spacing: normal; text-transform: none; font-size: 1rem; }
   .nav-drop-img { width: 64px; height: 64px; scale: none; }
   .nav-drop-text { padding-left: 18px; gap: 0.3rem; }
-  .nav-drop-title { font-size: 0.83rem; font-weight: 500; color: #3d4b56; }
-  .nav-drop-card .nav-drop-desc { width: auto; font-size: 0.65rem; line-height: 1.3; color: #4d5b66; }
+  .nav-drop-title { font-size: 13px; font-weight: 500; color: #3d4b56; }
+  .nav-drop-card .nav-drop-desc { width: auto; font-size: 9.8px; line-height: 1.3; color: #4d5b66; }
   .nav-links .nav-drop-img { background: rgba(255,255,255,0.2); border-radius: 3px; }
   .nav-links .nav-drop-img img { mix-blend-mode: multiply; }
+}
+
+/* PHONE: no blue tap/selection highlight on the header logo, menu button or cart */
+@media (max-width: 600px) {
+  .nav-logo, .nav-logo-img, .nav-hamburger, .nav-cart-btn {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .nav-logo-img { -webkit-user-drag: none; }
+}
+
+/* PHONE: press feedback on "Shop All Products": quick dark highlight behind the link while tapped */
+@media (max-width: 600px) {
+  .nav-links .nav-dropdown-inner a.nav-shop-all {
+    -webkit-tap-highlight-color: transparent;
+    width: fit-content; margin: 16px 0 0 auto; padding: 4px 6px;
+    transition: background-color .15s ease;
+  }
+  .nav-links .nav-dropdown-inner a.nav-shop-all:active { background-color: rgba(0, 0, 0, 0.3); }
+}
+
+/* PHONE: tapping a menu tab or product row shows the same quick dark highlight as "Shop All Products" (no blue flash) */
+@media (max-width: 600px) {
+  .nav-links > li > a,
+  .nav-has-dropdown > a,
+  .nav-links .nav-drop-card {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    transition: background-color .15s ease;
+  }
+  .nav-links > li > a:active,
+  .nav-has-dropdown > a:active,
+  .nav-links .nav-drop-card:active { background-color: rgba(0, 0, 0, 0.3); opacity: 1; }
 }
