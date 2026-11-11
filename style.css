@@ -5785,16 +5785,17 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    headline, tagline and button on top of it. */
 @media (max-width: 600px) {
   /* Header */
-  .nav { padding: 1.1rem 0; }
+  .nav { padding: 1.21rem 0; }   /* header 10% taller (about 63px) */
   .nav-inner { grid-template-columns: 1fr auto 1fr; }
   .nav-right { display: contents; }            /* cart + menu button become grid items of .nav-inner */
-  .nav-hamburger { grid-column: 1; grid-row: 1; justify-self: start; gap: 3.5px; padding: 15px 14px; margin: -15px -14px; }   /* 45 x 44px tap area, icon position unchanged */
-  .nav-hamburger span { width: 15px; background: #5e6e7a; }
-  .nav-hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-  .nav-hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+  .nav-hamburger { grid-column: 1; grid-row: 1; justify-self: start; gap: 4px; padding: 15px 14px; margin: -15px -14px; }   /* 45 x 44px tap area, icon position unchanged */
+  .nav-hamburger span { width: 17px; height: 2px; background: #5e6e7a; }   /* whole-pixel sizes so all three bars draw the same thickness at any screen scale */
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
   .nav-logo { grid-column: 2; grid-row: 1; justify-self: center; }
-  .nav-logo-img { height: 22px; position: relative; top: 1px; }   /* 1px lower so it sits optically centered in the bar */
-  .nav-cart-btn { grid-column: 3; grid-row: 1; justify-self: end; padding: 12px; margin: -12px; }                   /* 44 x 44px tap area */
+  .nav-logo-img { height: 24.2px; position: relative; top: 1px; }   /* 1px lower so it sits optically centered in the bar */
+  .nav-cart-btn { grid-column: 3; grid-row: 1; justify-self: end; padding: 12px; margin: -12px; }
+  .nav-cart-btn svg { width: 22px; height: 22px; }                   /* 44 x 44px tap area */
   .nav-links {
     left: 0;
     right: auto;
@@ -5915,14 +5916,14 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
   .nav-links {
     position: fixed;
-    top: 66px;
+    top: 72px;
     left: 12px;
     right: 12px;
     width: auto;
     max-width: none;
     justify-self: stretch;                     /* the desktop rule centers it, which would shrink it to its contents */
     height: auto;
-    max-height: calc(100svh - 66px - 16px);
+    max-height: calc(100svh - 72px - 16px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     display: grid;
@@ -6103,14 +6104,14 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .why-right .why-label { text-align: center; }
   .why-right h2 { text-align: center; }
   .why-label { font-size: 10.5px; margin-bottom: 0.9rem; }   /* 10% smaller */
-  .why-right h2 { margin-bottom: 26px; }   /* with the render's own blank top edge this leaves about 45px to the top of the first pod */
+  .why-right h2 { margin-bottom: 30px; }   /* with the render's own blank top edge this leaves about 45px to the top of the first pod */
   .why-right h2,
   .problem--v2 .problem-headline,
   .home-lifestyle-title,
   .built-routine-section--home .built-routine-title,
   .explore-routine-title { font-size: 25px; letter-spacing: -0.03em; }                   /* the same on every homepage section title */
 
-  .why-accordion-list { width: 82%; max-width: 300px; margin: 23px auto 0; }
+  .why-accordion-list { width: 82%; max-width: 300px; margin: 25.5px auto 0; }
   .why-accordion-label { font-size: 0.68rem; }
   .why-accordion-num { font-size: 0.64rem; }
   .why-accordion-icon { font-size: 1.25rem; }
@@ -6131,13 +6132,13 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 @media (max-width: 600px) { .why-h2-br { display: inline; } }
 
 /* PHONE: "The way we pack today" section: label and title centred, with the four cards
-   centred under them, 240 x 240px, so they fit the screen. */
+   centred under them, 230 x 230px, so they fit the screen. */
 @media (max-width: 600px) {
   .problem--v2 { padding-left: 1.5rem; padding-right: 1.5rem; }
   .problem--v2 .why-label { text-align: center; }
   .problem--v2 .problem-headline { order: 1; text-align: center; margin-bottom: 38.7px; }   /* about 40px from the letters to the first card */
   .problem--v2 .problem-cards { order: 2; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 12px; }
-  .problem--v2 .problem-card { width: min(100%, 240px); aspect-ratio: 1; min-height: 0; }   /* 240 x 240 squares */
+  .problem--v2 .problem-card { width: min(100%, 230px); aspect-ratio: 1; min-height: 0; }   /* 230 x 230 squares */
   .problem-card-icon img { height: 75.05px; }                                  /* icons 20% smaller too */
   .problem-card:nth-child(2) .problem-card-icon img { height: 81.13px; }
   .problem-card:nth-child(3) .problem-card-icon img { height: 69.26px; }
@@ -6149,11 +6150,13 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .problem--v2 .problem-card-desc { font-size: 11px; line-height: 1.45; }
   .problem--v2 .problem-card:not(.problem--pilr):not(.problem-card--pilr) .problem-card-desc { min-height: 0; }
   .problem--v2 .problem-card--pilr { padding: 0; }
-  .problem--v2 .problem-card-body { padding: 0 14px 14px; }
+  .problem--v2 .problem-card-body { padding: 0 12px 13px; }
   .problem--v2 .problem-card--pilr .problem-card-desc { min-height: 0; }
-  .problem--v2 .problem-card-brand { margin-bottom: 8px; }
-  .problem--v2 .problem-card-link { margin-top: 12px; margin-bottom: 2px; }
-  .problem--v2 .problem-card-art { top: 12px; width: 41.56%; }                  /* keeps the pilr photo clear of the logo and text in the smaller card */
+  .problem--v2 .problem-card-brand { margin-bottom: 10px; height: 13px; }
+  .problem--v2 .problem-card-brand img { height: 18.92px; }   /* pilr logo about 16% smaller than on desktop */
+  .problem--v2 .problem-card-link { font-size: 8.9px; }       /* link text about 10% smaller */
+  .problem--v2 .problem-card-link { margin-top: 9px; margin-bottom: 1px; }
+  .problem--v2 .problem-card-art { top: 23px; width: 45.99%; }   /* about 100px wide, as before */                  /* keeps the pilr photo clear of the logo and text in the smaller card */
 }
 
 /* PHONE: the "Nothing to hide" clip is the portrait phone video, cropped 30px top and bottom */
@@ -6162,11 +6165,11 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .fly-video-copy { display: none; }   /* no "TSA-compliant / Nothing to hide." text over the phone video */
 }
 
-/* PHONE: 68px between the last "What we make, and why" row and the video */
+/* PHONE: 75px between the last "What we make, and why" row and the video */
 @media (max-width: 600px) {
-  .why { padding-bottom: 34px; }
-  .fly-video { padding-top: 34px; padding-bottom: 34px; }
-  .problem--v2 { padding-top: 33px; }   /* about 68px of blank space between the video and "The way we pack today" */
+  .why { padding-bottom: 37px; }
+  .fly-video { padding-top: 38px; padding-bottom: 37px; }
+  .problem--v2 { padding-top: 37px; padding-bottom: 80px; }   /* 80px from the pilr card to the photo row below */   /* about 75px of blank space between the video and "The way we pack today" */
 }
 
 /* PHONE: every section's small label sits the same distance above its title (16.5px to the letters) */
@@ -6179,4 +6182,32 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .problem--v2 .problem-headline,
   .built-routine-section--home .built-routine-title,
   .explore-routine-title { line-height: 1.2; }
+}
+
+/* PHONE: the lifestyle photo row stays inside the page's side margins (white space left and right of the
+   photos) instead of running off both screen edges. The next photo still peeks in, cut off at the margin. */
+@media (max-width: 600px) {
+  .home-lifestyle-grid { margin: 0; padding: 0; }
+  .home-lifestyle-label { font-size: 11px; }   /* photo captions */
+  .home-lifestyle-desc { font-size: 12.5px; margin-top: 2.25px; }   /* about 8.5px from the label letters to the description letters */
+  .home-lifestyle-item figcaption { bottom: 12px; }   /* 4px lower than on desktop */
+}
+
+/* PHONE: "Designed with intention" label, title and description are centred */
+@media (max-width: 600px) {
+  .built-routine-section--home .why-label,
+  .built-routine-section--home .built-routine-title,
+  .built-routine-section--home .built-routine-desc { text-align: center; }
+}
+
+/* PHONE: the hand photo sits under the "Built to hold your routine" description, above the ingredient list */
+@media (max-width: 600px) {
+  .built-routine-section--home { gap: 0; }
+  .built-routine-section--home .built-routine-content { display: contents; }   /* label, title, text, table and button become direct items so the photo can slot in */
+  .built-routine-section--home .why-label { order: 1; }
+  .built-routine-section--home .built-routine-title { order: 2; margin-bottom: 20px; }
+  .built-routine-section--home .built-routine-desc { order: 3; font-size: 13px; margin-bottom: 24px; }
+  .built-routine-section--home .built-routine-img { order: 4; width: 76%; margin: 0 auto 28px; }   /* 24% smaller than full width, centred, under the description */
+  .built-routine-section--home .built-routine-table { order: 5; }
+  .built-routine-section--home .built-routine-btn { order: 6; justify-self: center; }
 }
