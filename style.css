@@ -133,7 +133,7 @@ body {
 .nav-dim-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(12, 16, 20, 0.25);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
@@ -161,7 +161,9 @@ body {
   top: 100%;
   left: 50%;
   width: 100vw;
-  background: #fafaf8;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+  backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
   border-top: 1px solid #e8e3dc;
   box-shadow: 0 12px 40px rgba(0,0,0,0.07);
   opacity: 0;
@@ -322,7 +324,7 @@ body {
   height: clamp(96px, 7.43vw, 107px);
   flex-shrink: 0;
   border-radius: var(--radius);
-  background: #F5F5F5;
+  background: rgba(255, 255, 255, 0.2);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -331,6 +333,7 @@ body {
 }
 
 .nav-drop-img img {
+  mix-blend-mode: multiply;
   width: 95%;
   height: 95%;
   object-fit: contain;
@@ -5976,6 +5979,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     border: none;
     box-shadow: none;
     padding: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;      /* the panel already blurs; a second layer here shows as a lighter box */
   }
   .nav-dropdown-inner { padding: 16px 0 0; display: block; }
   .nav-drop-grid { display: grid; grid-template-columns: 1fr; align-content: start; gap: 6px; max-height: 352px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
@@ -5989,6 +5994,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .nav-drop-text { padding-left: 18px; gap: 0.3rem; }
   .nav-drop-title { font-size: 0.83rem; font-weight: 500; color: #3d4b56; }
   .nav-drop-card .nav-drop-desc { width: auto; font-size: 0.65rem; line-height: 1.3; color: #4d5b66; }
-  .nav-links .nav-drop-img { background: rgba(255,255,255,0.2); border-radius: 6px; }
+  .nav-links .nav-drop-img { background: rgba(255,255,255,0.2); border-radius: 3px; }
   .nav-links .nav-drop-img img { mix-blend-mode: multiply; }
 }
