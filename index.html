@@ -95,7 +95,10 @@
         <a href="./build-your-system.html" class="btn btn--dark hero-cta">build your system →</a>
       </div>
       <div class="hero-product">
-        <img class="hero-product-img hero-product-img--suitcase" id="hero-slide-img" src="images/Hero Banner 2 Compressed 3.jpg" alt="A hand holding three open pilr pods filled with powder and pills" />
+        <picture>
+          <source id="hero-slide-src-mobile" media="(max-width: 600px)" srcset="images/lifestyle_section/Mobile%20Hero%203.jpg" />
+          <img class="hero-product-img hero-product-img--suitcase" id="hero-slide-img" data-mobile="3" src="images/Hero Banner 2 Compressed 3.jpg" alt="A hand holding three open pilr pods filled with powder and pills" />
+        </picture>
       </div>
       <div class="hero-slide-nav">
         <div class="hero-slide-dashes" id="hero-slide-dashes">
@@ -850,16 +853,31 @@
       // through three copies of the same picture.
       var HERO_SLIDES = [
         // scrim = strength of the dark gradient behind the (white) hero copy.
-        { src: 'images/Hero Banner 2 Compressed 3.jpg', scrim: 0, alt: 'A hand holding three open pilr pods filled with powder and pills' },
-        { src: 'images/Hero Banner 4 Compressed 2.jpg', scrim: 0.45, alt: 'A man in a navy blazer holding a pilr pod and a passport against a blue-gray gradient' },
-        { src: 'images/Suitcase Home Page Pic.png', scrim: 0.55, alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
+        // mobileSrc = optional portrait image used on phones (<= 600px wide).
+        // On phones the hero shows ONLY the slides that have a mobileSrc (so a
+        // slide without one is desktop-only, and its dash is hidden), in
+        // mobileOrder; on larger screens every slide shows, in array order, using src.
+        { src: 'images/Hero Banner 2 Compressed 3.jpg', mobileSrc: 'images/lifestyle_section/Mobile Hero 1.jpg', mobileOrder: 2, mobileAlt: 'A hand holding an open pilr pod with a scoop of powder in it', scrim: 0, alt: 'A hand holding three open pilr pods filled with powder and pills' },
+        { src: 'images/Hero Banner 4 Compressed 2.jpg', mobileSrc: 'images/lifestyle_section/Mobile Hero 2.jpg', mobileOrder: 3, mobileAlt: 'A pilr pod on a suitcase next to a passport and headphones', scrim: 0.45, alt: 'A man in a navy blazer holding a pilr pod and a passport against a blue-gray gradient' },
+        { src: 'images/Suitcase Home Page Pic.png', mobileSrc: 'images/lifestyle_section/Mobile Hero 3.jpg', mobileOrder: 1, mobileAlt: 'A hand holding three open pilr pods filled with powder, capsules and pills', scrim: 0.55, alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
       ];
 
       // Load every slide up front so rotating never waits on a download.
-      HERO_SLIDES.forEach(function(s) { if (s.src) { var im = new Image(); im.src = s.src; } });
+      var phoneMQ = window.matchMedia('(max-width: 600px)');
+      function pickSlides() {
+        if (!phoneMQ.matches) return HERO_SLIDES;
+        return HERO_SLIDES.filter(function(s) { return s.mobileSrc; })
+          .sort(function(a, b) { return (a.mobileOrder || 99) - (b.mobileOrder || 99); });
+      }
+      var slides = pickSlides();
+      slides.forEach(function(s) {
+        var url = (phoneMQ.matches && s.mobileSrc) ? s.mobileSrc : s.src;
+        if (url) { var im = new Image(); im.src = url; }
+      });
 
       var heroSection = document.getElementById('hero');
       var slideImg = document.getElementById('hero-slide-img');
+      var mobileSource = document.getElementById('hero-slide-src-mobile');
       var counter = document.getElementById('hero-slide-counter');
       var dashes = Array.prototype.slice.call(document.querySelectorAll('.hero-slide-dash'));
       if (!heroSection || !slideImg || !dashes.length) return;
@@ -868,7 +886,7 @@
       var autoplayTimer = null;
 
       function allSlidesIdentical() {
-        return HERO_SLIDES.every(function(s) { return s.src === HERO_SLIDES[0].src; });
+        return slides.every(function(s) { return s.src === slides[0].src; });
       }
 
       function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -883,24 +901,36 @@
       slideImg.addEventListener('load', applyRatio);
       if (slideImg.complete) applyRatio();
 
+      // First paint already shows the first phone slide (via the <source> above);
+      // describe it accurately for screen readers.
+      if (phoneMQ.matches && slides[0].mobileAlt) slideImg.alt = slides[0].mobileAlt;
+
+      // Dashes beyond the number of slides this device shows are hidden.
+      function syncDashes() {
+        dashes.forEach(function(d, i) { d.hidden = i >= slides.length; });
+      }
+      syncDashes();
+
       function renderSlide(index) {
-        var slide = HERO_SLIDES[index];
+        var slide = slides[index];
         slideImg.classList.add('is-fading');
         setTimeout(function() {
-          slideImg.alt = slide.alt;
+          slideImg.alt = (phoneMQ.matches && slide.mobileAlt) || slide.alt;
           heroSection.style.setProperty('--scrim', slide.scrim || 0);
           // Per-slide nudge of the photo (px): shiftX moves it right, shiftY down.
           heroSection.style.setProperty('--slide-x', (slide.shiftX || 0) + 'px');
           heroSection.style.setProperty('--slide-y', (slide.shiftY || 0) + 'px');
           // A blank slide stays faded out (is-fading) instead of loading an image.
           if (slide.src) {
+            if (mobileSource) mobileSource.srcset = slide.mobileSrc ? encodeURI(slide.mobileSrc) : '';   // (srcset can't hold raw spaces) empty = phones fall back to slideImg.src
+            slideImg.dataset.mobile = slide.mobileSrc ? String(HERO_SLIDES.indexOf(slide) + 1) : '';   // which phone photo is showing (used to frame it in CSS)
             slideImg.src = slide.src;
             slideImg.classList.remove('is-fading');
           }
         }, 220);
         heroSection.classList.toggle('is-blank-slide', !slide.src);
         dashes.forEach(function(d, i) { d.classList.toggle('is-active', i === index); });
-        if (counter) counter.textContent = pad(index + 1) + ' / ' + pad(HERO_SLIDES.length);
+        if (counter) counter.textContent = pad(index + 1) + ' / ' + pad(slides.length);
         current = index;
       }
 
@@ -914,7 +944,7 @@
       function startAutoplay() {
         if (allSlidesIdentical()) return;
         autoplayTimer = setInterval(function() {
-          renderSlide((current + 1) % HERO_SLIDES.length);
+          renderSlide((current + 1) % slides.length);
         }, 5000);
       }
       function stopAutoplay() {
@@ -922,6 +952,18 @@
         autoplayTimer = null;
       }
       function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+      // Crossing the phone breakpoint (rotating a tablet, resizing a window)
+      // swaps the slide set and starts over from the first slide.
+      function onBreakpointChange() {
+        stopAutoplay();
+        slides = pickSlides();
+        syncDashes();
+        renderSlide(0);
+        startAutoplay();
+      }
+      if (phoneMQ.addEventListener) phoneMQ.addEventListener('change', onBreakpointChange);
+      else if (phoneMQ.addListener) phoneMQ.addListener(onBreakpointChange);
 
       startAutoplay();
     })();
