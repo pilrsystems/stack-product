@@ -172,6 +172,7 @@
         </div>
       </a>
     </div>
+    <div class="shop-progress" aria-hidden="true"><span class="shop-progress-fill"></span></div>
     </div>
   </section>
 
@@ -183,7 +184,7 @@
       </div>
       <div class="why-right">
         <p class="why-label">WHAT WE MAKE, AND WHY</p>
-        <h2>Stay consistent with your routine, no matter where life takes you</h2>
+        <h2>Stay consistent with your<br class="why-h2-br"> routine, wherever life takes you</h2>
         <div class="why-accordion-list">
           <div class="why-accordion-item">
             <button class="why-accordion-trigger" aria-expanded="false">
@@ -989,6 +990,24 @@
 
       startAutoplay();
     })();
+  
+    // ── Phone: shop cards swipe sideways; the thin bar under them shows where you are ──
+    ;(function () {
+      var track = document.querySelector('.shop-inner')
+      var fill = document.querySelector('.shop-progress-fill')
+      if (!track || !fill) return
+      function update() {
+        var max = track.scrollWidth - track.clientWidth
+        var share = max > 0 ? track.clientWidth / track.scrollWidth : 1
+        var travel = 1 - share
+        var pos = max > 0 ? track.scrollLeft / max : 0
+        fill.style.width = (share * 100) + '%'
+        fill.style.transform = 'translateX(' + (pos * travel / share * 100) + '%)'
+      }
+      track.addEventListener('scroll', update, { passive: true })
+      window.addEventListener('resize', update)
+      update()
+    })()
   </script>
 </body>
 </html>

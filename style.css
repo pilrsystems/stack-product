@@ -5863,7 +5863,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   }
   .hero-copy {
     position: relative;
-    top: -11px;                /* eyebrow, headline, tagline and button sit 11px higher than the base position; the slide dashes stay put */
+    top: -6px;                 /* eyebrow, headline, tagline and button sit 6px higher than the base position; the slide dashes stay put */
     z-index: 2;
     width: 100%;
     align-items: center;
@@ -5880,10 +5880,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .hero-cta.btn {
     display: block;
     width: calc(100% - 3.5rem);   /* 28px more room on each side than the text margin */
-    max-width: 18.5rem;
+    max-width: 16rem;
     margin-top: 1.4rem;
-    padding: 0.92rem 1.25rem;
-    font-size: 0.74rem;
+    padding: 0.8rem 1.25rem;
+    font-size: 0.68rem;
     text-align: center;
     background: #FFFFFF;
     color: #5e6e7a;
@@ -6048,3 +6048,82 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .nav-has-dropdown > a:active,
   .nav-links .nav-drop-card:active { background-color: rgba(0, 0, 0, 0.3); opacity: 1; }
 }
+
+/* PHONE: the three homepage shop cards swipe sideways (next card peeks in) instead of stacking */
+.shop-progress { display: none; }
+@media (max-width: 600px) {
+  .shop-inner {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    margin-inline: calc(-5vw);                 /* run edge to edge past the section's side margin */
+    padding-inline: 5vw;
+    scroll-padding-inline: 5vw;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .shop-inner::-webkit-scrollbar { display: none; }
+  .shop-inner .shop-card { flex: 0 0 68%; scroll-snap-align: start; }
+  .shop-inner .shop-card[href*="build-your-system"] { order: -1; }   /* Classic Stack, Build Your System, then Single Pods */
+  .shop-inner .shop-card-info h3 { font-size: 0.98rem; }
+  .shop-inner .shop-card-info p { font-size: 0.78rem; }
+  .shop-inner .shop-card { aspect-ratio: auto; }
+  .shop-inner .shop-card-img { flex: none; aspect-ratio: 383 / 335; }   /* same image box on every card */
+  .shop-inner .shop-card-info p { min-height: 0; margin-bottom: 0.5rem; }  /* same 0.5rem under the title and under the description */
+  .shop-inner .shop-card-info { padding-bottom: 1rem; }
+  .shop-inner .shop-price { font-size: 0.98rem; }                        /* matches the title */
+  .shop-inner .shop-price-lead { font-size: 0.81rem; }
+  .shop-inner .shop-price-strike { font-size: 0.71rem; }
+  .shop-inner .shop-card-badge { font-size: 0.526rem; padding: 0.191rem 0.497rem; left: 0.6rem; }
+  .shop-progress {
+    display: block;
+    height: 3px;
+    margin: 4px 0.85rem 0;                    /* lines up with the card images above */
+    background: rgba(94, 110, 122, 0.22);
+    overflow: hidden;
+  }
+  .shop-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
+}
+
+/* PHONE: homepage "What we make, and why" section: label + title above the pod render,
+   the render centred, and the four accordion rows right under it, narrower and centred.
+   The section eyebrows and titles across the homepage share one smaller size. */
+@media (max-width: 600px) {
+  .why-inner { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .why-right { display: contents; }               /* label, title and accordion become direct children so they can be re-ordered */
+  .why-right .why-label { order: 1; }
+  .why-right h2 { order: 2; }
+  .why-left { order: 3; height: auto; width: 100%; max-width: 342px; margin: 0 auto; aspect-ratio: 342 / 320; }   /* same framing as a 390px phone, at any phone or in-between width */
+  .why-accordion-list { order: 4; }
+  .why-left img { height: 100%; transform: scale(1.045); }   /* 5% smaller than before (was 1.1) and no sideways shift, so it sits centred */
+
+  .why-right .why-label { text-align: center; }
+  .why-right h2 { text-align: center; }
+  .why-label { font-size: 10.5px; margin-bottom: 0.9rem; }   /* 10% smaller */
+  .why-right h2 { margin-bottom: 26px; }   /* with the render's own blank top edge this leaves about 45px to the top of the first pod */
+  .why-right h2,
+  .problem--v2 .problem-headline,
+  .home-lifestyle-title,
+  .built-routine-section--home .built-routine-title,
+  .explore-routine-title { font-size: 25px; letter-spacing: -0.03em; }                   /* the same on every homepage section title */
+
+  .why-accordion-list { width: 82%; max-width: 300px; margin: 20px auto 0; }
+  .why-accordion-label { font-size: 0.68rem; }
+  .why-accordion-num { font-size: 0.64rem; }
+  .why-accordion-icon { font-size: 1.25rem; }
+  .why-accordion-panel p { font-size: 11px; }
+}
+
+/* PHONE: about 68px of visible blank space between the shop-card swipe bar and the "What we make, and why" label */
+@media (max-width: 600px) {
+  .shop { padding-bottom: 33px; }
+  .why { padding-top: 34px; }
+
+}
+
+/* PHONE: the "What we make, and why" title always breaks after "your", so "routine," starts line two */
+.why-h2-br { display: none; }
+@media (max-width: 600px) { .why-h2-br { display: inline; } }
