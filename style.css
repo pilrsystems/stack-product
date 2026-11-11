@@ -6110,7 +6110,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .built-routine-section--home .built-routine-title,
   .explore-routine-title { font-size: 25px; letter-spacing: -0.03em; }                   /* the same on every homepage section title */
 
-  .why-accordion-list { width: 82%; max-width: 300px; margin: 20px auto 0; }
+  .why-accordion-list { width: 82%; max-width: 300px; margin: 23px auto 0; }
   .why-accordion-label { font-size: 0.68rem; }
   .why-accordion-num { font-size: 0.64rem; }
   .why-accordion-icon { font-size: 1.25rem; }
@@ -6119,7 +6119,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 /* PHONE: about 68px of visible blank space between the shop-card swipe bar and the "What we make, and why" label */
 @media (max-width: 600px) {
-  .shop { padding-bottom: 33px; }
+  .shop { padding-top: 42.5px; padding-bottom: 33px; }   /* 45px from the bottom of the hero to the top of "Shop the system" */
+  .shop-header-eyebrow,
+  .shop-header-viewall { font-size: 9.7px; }   /* "Shop the system" and "View all" */
   .why { padding-top: 34px; }
 
 }
@@ -6127,3 +6129,54 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 /* PHONE: the "What we make, and why" title always breaks after "your", so "routine," starts line two */
 .why-h2-br { display: none; }
 @media (max-width: 600px) { .why-h2-br { display: inline; } }
+
+/* PHONE: "The way we pack today" section: label and title centred, with the four cards
+   centred under them, 240 x 240px, so they fit the screen. */
+@media (max-width: 600px) {
+  .problem--v2 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .problem--v2 .why-label { text-align: center; }
+  .problem--v2 .problem-headline { order: 1; text-align: center; margin-bottom: 38.7px; }   /* about 40px from the letters to the first card */
+  .problem--v2 .problem-cards { order: 2; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 12px; }
+  .problem--v2 .problem-card { width: min(100%, 240px); aspect-ratio: 1; min-height: 0; }   /* 240 x 240 squares */
+  .problem-card-icon img { height: 75.05px; }                                  /* icons 20% smaller too */
+  .problem-card:nth-child(2) .problem-card-icon img { height: 81.13px; }
+  .problem-card:nth-child(3) .problem-card-icon img { height: 69.26px; }
+  .problem-card-icon img.problem-card-icon--wide { width: 139.65px; height: 75.05px; }
+  /* tighter insides so icon, title and text all fit the 250px square */
+  .problem--v2 .problem-card { padding: 14px 14px 18px; }
+  .problem--v2 .problem-card-icon { padding-top: 0; }
+  .problem--v2 .problem-card-label { margin-bottom: 9px; font-size: 10.7px; }
+  .problem--v2 .problem-card-desc { font-size: 11px; line-height: 1.45; }
+  .problem--v2 .problem-card:not(.problem--pilr):not(.problem-card--pilr) .problem-card-desc { min-height: 0; }
+  .problem--v2 .problem-card--pilr { padding: 0; }
+  .problem--v2 .problem-card-body { padding: 0 14px 14px; }
+  .problem--v2 .problem-card--pilr .problem-card-desc { min-height: 0; }
+  .problem--v2 .problem-card-brand { margin-bottom: 8px; }
+  .problem--v2 .problem-card-link { margin-top: 12px; margin-bottom: 2px; }
+  .problem--v2 .problem-card-art { top: 12px; width: 41.56%; }                  /* keeps the pilr photo clear of the logo and text in the smaller card */
+}
+
+/* PHONE: the "Nothing to hide" clip is the portrait phone video, cropped 30px top and bottom */
+@media (max-width: 600px) {
+  .fly-video-el { aspect-ratio: 342 / 482; object-position: 50% 50%; }   /* 482px tall at 390px wide: the 608px-tall clip loses 63px off the top and 63px off the bottom; the file isn't changed */
+  .fly-video-copy { display: none; }   /* no "TSA-compliant / Nothing to hide." text over the phone video */
+}
+
+/* PHONE: 68px between the last "What we make, and why" row and the video */
+@media (max-width: 600px) {
+  .why { padding-bottom: 34px; }
+  .fly-video { padding-top: 34px; padding-bottom: 34px; }
+  .problem--v2 { padding-top: 33px; }   /* about 68px of blank space between the video and "The way we pack today" */
+}
+
+/* PHONE: every section's small label sits the same distance above its title (16.5px to the letters) */
+@media (max-width: 600px) {
+  .why-right .why-label,
+  .problem--v2 .why-label,
+  .built-routine-section--home .why-label,
+  .explore-routine .why-label { margin-bottom: 8.5px; }
+  .why-right h2,
+  .problem--v2 .problem-headline,
+  .built-routine-section--home .built-routine-title,
+  .explore-routine-title { line-height: 1.2; }
+}

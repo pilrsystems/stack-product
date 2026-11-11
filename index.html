@@ -235,9 +235,11 @@
       <div class="fly-video-media">
         <video
           class="fly-video-el"
-          src="images/lifestyle_section/Built To Fly Video.mp4"
+          data-src="images/lifestyle_section/Built To Fly Video.mp4"
+          data-src-mobile="images/lifestyle_section/Mobile Home Page Vid 1.mp4"
           poster="images/lifestyle_section/Built To Fly Video Poster.jpg"
-          autoplay
+          data-poster-mobile="images/lifestyle_section/Mobile Home Page Vid 1 Poster.jpg"
+          preload="none"
           muted
           loop
           playsinline
@@ -743,14 +745,29 @@
     (function() {
       var vid = document.querySelector('.fly-video-el');
       if (!vid) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        vid.removeAttribute('autoplay');
-        vid.pause();
-        return;
+      // Phones get the portrait clip, everything else the wide one. Neither is
+      // downloaded until the section is about a screen away, so the video never
+      // slows the first load.
+      var phone = window.matchMedia('(max-width: 600px)').matches;
+      var src = phone ? vid.getAttribute('data-src-mobile') : vid.getAttribute('data-src');
+      if (phone) vid.setAttribute('poster', vid.getAttribute('data-poster-mobile'));
+      var loaded = false;
+      function load() {
+        if (loaded) return;
+        loaded = true;
+        vid.src = src;
+        vid.load();
       }
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      var near = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) { load(); near.disconnect(); }
+      }, { rootMargin: '100% 0px' });
+      near.observe(vid);
       var io = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
+            load();
             vid.play().catch(function() {});
           } else {
             vid.pause();
