@@ -388,6 +388,7 @@
           </div>
         </a>
       </div>
+      <div class="explore-progress" aria-hidden="true"><span class="explore-progress-fill"></span></div>
     </div>
   </section>
 
@@ -1020,6 +1021,23 @@
         var pos = max > 0 ? track.scrollLeft / max : 0
         fill.style.width = (share * 100) + '%'
         fill.style.transform = 'translateX(' + (pos * travel / share * 100) + '%)'
+      }
+      track.addEventListener('scroll', update, { passive: true })
+      window.addEventListener('resize', update)
+      update()
+    })()
+  
+    // ── Phone: "Made to move with you" cards swipe sideways; the thin bar under them shows where you are ──
+    ;(function () {
+      var track = document.querySelector('.explore-routine-grid')
+      var fill = document.querySelector('.explore-progress-fill')
+      if (!track || !fill) return
+      function update() {
+        var max = track.scrollWidth - track.clientWidth
+        var share = max > 0 ? track.clientWidth / track.scrollWidth : 1
+        var pos = max > 0 ? track.scrollLeft / max : 0
+        fill.style.width = (share * 100) + '%'
+        fill.style.transform = 'translateX(' + (pos * (1 - share) / share * 100) + '%)'
       }
       track.addEventListener('scroll', update, { passive: true })
       window.addEventListener('resize', update)

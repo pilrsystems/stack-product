@@ -6103,7 +6103,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
   .why-right .why-label { text-align: center; }
   .why-right h2 { text-align: center; }
-  .why-label { font-size: 10.5px; margin-bottom: 0.9rem; }   /* 10% smaller */
+  .why-label { font-size: 11.5px; margin-bottom: 0.9rem; }   /* 10% smaller */
   .why-right h2 { margin-bottom: 30px; }   /* with the render's own blank top edge this leaves about 45px to the top of the first pod */
   .why-right h2,
   .problem--v2 .problem-headline,
@@ -6111,11 +6111,11 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .built-routine-section--home .built-routine-title,
   .explore-routine-title { font-size: 25px; letter-spacing: -0.03em; }                   /* the same on every homepage section title */
 
-  .why-accordion-list { width: 82%; max-width: 300px; margin: 25.5px auto 0; }
+  .why-accordion-list { width: 100%; max-width: none; margin: 25.5px auto 0; }   /* the same width as the video below: numbers line up with its left edge, + signs with its right edge */
   .why-accordion-label { font-size: 0.68rem; }
   .why-accordion-num { font-size: 0.64rem; }
   .why-accordion-icon { font-size: 1.25rem; }
-  .why-accordion-panel p { font-size: 11px; }
+  .why-accordion-panel p { font-size: 13px; }
 }
 
 /* PHONE: about 68px of visible blank space between the shop-card swipe bar and the "What we make, and why" label */
@@ -6138,25 +6138,25 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .problem--v2 .why-label { text-align: center; }
   .problem--v2 .problem-headline { order: 1; text-align: center; margin-bottom: 38.7px; }   /* about 40px from the letters to the first card */
   .problem--v2 .problem-cards { order: 2; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 12px; }
-  .problem--v2 .problem-card { width: min(100%, 230px); aspect-ratio: 1; min-height: 0; }   /* 230 x 230 squares */
-  .problem-card-icon img { height: 75.05px; }                                  /* icons 20% smaller too */
-  .problem-card:nth-child(2) .problem-card-icon img { height: 81.13px; }
-  .problem-card:nth-child(3) .problem-card-icon img { height: 69.26px; }
-  .problem-card-icon img.problem-card-icon--wide { width: 139.65px; height: 75.05px; }
+  .problem--v2 .problem-card { width: min(100%, 264.5px); aspect-ratio: 1; min-height: 0; }   /* 264.5 x 264.5 squares (15% bigger than 230) */
+  .problem-card-icon img { height: 86.31px; }                                  /* icons, text and logo 15% bigger than before */
+  .problem-card:nth-child(2) .problem-card-icon img { height: 93.3px; }
+  .problem-card:nth-child(3) .problem-card-icon img { height: 79.65px; }
+  .problem-card-icon img.problem-card-icon--wide { width: 160.6px; height: 86.31px; }
   /* tighter insides so icon, title and text all fit the 250px square */
-  .problem--v2 .problem-card { padding: 14px 14px 18px; }
+  .problem--v2 .problem-card { padding: 16px 16px 20.7px; }
   .problem--v2 .problem-card-icon { padding-top: 0; }
-  .problem--v2 .problem-card-label { margin-bottom: 9px; font-size: 10.7px; }
-  .problem--v2 .problem-card-desc { font-size: 11px; line-height: 1.45; }
+  .problem--v2 .problem-card-label { margin-bottom: 10.35px; font-size: 12.3px; }
+  .problem--v2 .problem-card-desc { font-size: 12.65px; line-height: 1.45; }
   .problem--v2 .problem-card:not(.problem--pilr):not(.problem-card--pilr) .problem-card-desc { min-height: 0; }
   .problem--v2 .problem-card--pilr { padding: 0; }
-  .problem--v2 .problem-card-body { padding: 0 12px 13px; }
+  .problem--v2 .problem-card-body { padding: 0 13.8px 15px; }
   .problem--v2 .problem-card--pilr .problem-card-desc { min-height: 0; }
-  .problem--v2 .problem-card-brand { margin-bottom: 10px; height: 13px; }
-  .problem--v2 .problem-card-brand img { height: 18.92px; }   /* pilr logo about 16% smaller than on desktop */
-  .problem--v2 .problem-card-link { font-size: 8.9px; }       /* link text about 10% smaller */
-  .problem--v2 .problem-card-link { margin-top: 9px; margin-bottom: 1px; }
-  .problem--v2 .problem-card-art { top: 23px; width: 45.99%; }   /* about 100px wide, as before */                  /* keeps the pilr photo clear of the logo and text in the smaller card */
+  .problem--v2 .problem-card-brand { margin-bottom: 11.5px; height: 15px; }
+  .problem--v2 .problem-card-brand img { height: 21.32px; }   /* pilr logo about 16% smaller than on desktop */
+  .problem--v2 .problem-card-link { font-size: 10.24px; }       /* link text about 10% smaller */
+  .problem--v2 .problem-card-link { margin-top: 10.35px; margin-bottom: 1.15px; }
+  .problem--v2 .problem-card-art { top: 26.5px; width: 46.91%; }   /* about 100px wide, as before */                  /* keeps the pilr photo clear of the logo and text in the smaller card */
 }
 
 /* PHONE: the "Nothing to hide" clip is the portrait phone video, cropped 30px top and bottom */
@@ -6210,4 +6210,70 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .built-routine-section--home .built-routine-img { order: 4; width: 76%; margin: 0 auto 28px; }   /* 24% smaller than full width, centred, under the description */
   .built-routine-section--home .built-routine-table { order: 5; }
   .built-routine-section--home .built-routine-btn { order: 6; justify-self: center; }
+}
+
+/* PHONE: "For wherever you go / Made to move with you": label and title centred, and the three cards
+   (Individual pods, The Classic Stack, Build your own) swipe sideways inside the page margins. */
+@media (max-width: 600px) {
+  .explore-routine .why-label,
+  .explore-routine-title { text-align: center; }
+  .explore-routine-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .explore-routine-grid::-webkit-scrollbar { display: none; }
+  .explore-routine-card { flex: 0 0 80%; scroll-snap-align: start; }
+}
+@media (max-width: 600px) {
+  /* the photo crops were tuned for the wider desktop cards; shift them less in the narrower phone cards so no blank strip shows */
+  a[href="./build-your-system.html"] .explore-routine-img img { transform: scale(1.55) translateY(-29px); }
+  a[href="./classic-stack.html"] .explore-routine-img img { transform: scale(1.85) translateY(-24px) translateX(30px); }
+  a[href="./catalog.html#section-single-pods"] .explore-routine-img img { transform: scale(1.35) translateX(20px); }
+}
+
+/* PHONE: 80px between the "View the full test" button and "For wherever you go" */
+@media (max-width: 600px) {
+  .built-routine-section--home { padding-bottom: 40px; }
+  .explore-routine { padding-top: 40px; }
+}
+
+/* PHONE: thin position bar under the "Made to move with you" cards, so it's clear they swipe */
+.explore-progress { display: none; }
+@media (max-width: 600px) {
+  .explore-progress { display: block; height: 3px; margin-top: 23.7px; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
+  .explore-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
+}
+
+/* PHONE: footer laid out like a phone footer should be: the link groups first, two across (Shop and
+   Company side by side, Support under Shop), then the email sign-up in one row, then the social
+   icons and the copyright / payment row, all on the same 24px side margins. */
+@media (max-width: 600px) {
+  .footer-top { padding: 3rem 1.5rem 2.25rem; }
+  .footer-top-inner { display: flex; flex-direction: column; gap: 2.5rem; }
+  .footer-links-grid {
+    order: 1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+    justify-content: stretch;
+  }
+  .footer-col h4 { font-size: 0.82rem; margin-bottom: 0.9rem; }
+  .footer-col ul { gap: 0.2rem; }
+  .footer-col ul a { display: inline-block; padding: 0.3rem 0; font-size: 0.8rem; }
+  .footer-newsletter { order: 2; }
+  .footer-newsletter h3 { font-size: 1.15rem; }
+  .footer-newsletter > p:not(.footer-legal) { white-space: normal; margin-bottom: 1rem; }
+  .footer-email-row { flex-direction: row; width: 100%; max-width: none; padding: 0.2rem 0.2rem 0.2rem 1rem; }
+  .footer-email-row input { border: none; font-size: 0.85rem; }
+  .footer-legal { max-width: none; }
+
+  .site-footer { padding: 0; }
+  .site-footer-social-row,
+  .site-footer-bottom { padding: 0 1.5rem; }
+  .site-footer-inner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 0 1.4rem; }
 }
