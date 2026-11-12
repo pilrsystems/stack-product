@@ -6298,3 +6298,25 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .problem-progress { order: 3; display: block; height: 3px; margin-top: 23.7px; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
   .problem-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
 }
+
+/* PHONE: Shop All (catalog) page. Centred heading block, then the products two across (Hears-style):
+   a rounded image tile, then the name, a short description (two lines at most) and the price. */
+@media (max-width: 600px) {
+  .catalog-main { padding: 0 1.5rem; }
+  .catalog-hero { padding: 116.9px 0 1.75rem; }   /* about 55px from the header to the label */
+  .catalog-hero-eyebrow { font-size: 10px; margin-bottom: 8.5px; }
+  .catalog-hero-title { font-size: min(27px, 7.4vw); font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; white-space: normal; }
+  .catalog-hero-desc { font-size: 12.5px; line-height: 1.55; margin-top: 12px; }
+
+  .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; padding-bottom: 3rem; }
+  .catalog-main .shop-card { scroll-margin-top: 80px; }
+  .catalog-main .shop-card-img { margin: 0; padding: 14px; aspect-ratio: 1 / 1; }
+  .catalog-main .shop-card-img--bleed { padding-bottom: 0; }
+  .catalog-main .shop-card-info { padding: 12px 2px 0; }
+  .catalog-main .shop-card-info h3 { font-size: 14.5px; margin-bottom: 4px; }
+  .catalog-main .shop-card-info p {
+    font-size: 11.5px; line-height: 1.4; margin-bottom: 8px; min-height: 0;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .catalog-main .shop-price { font-size: 14.5px; }
+}
