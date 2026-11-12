@@ -287,6 +287,7 @@
             </div>
           </div>
         </div>
+        <div class="problem-progress" aria-hidden="true"><span class="problem-progress-fill"></span></div>
       </div>
     </div>
   </section>
@@ -1031,6 +1032,23 @@
     ;(function () {
       var track = document.querySelector('.explore-routine-grid')
       var fill = document.querySelector('.explore-progress-fill')
+      if (!track || !fill) return
+      function update() {
+        var max = track.scrollWidth - track.clientWidth
+        var share = max > 0 ? track.clientWidth / track.scrollWidth : 1
+        var pos = max > 0 ? track.scrollLeft / max : 0
+        fill.style.width = (share * 100) + '%'
+        fill.style.transform = 'translateX(' + (pos * (1 - share) / share * 100) + '%)'
+      }
+      track.addEventListener('scroll', update, { passive: true })
+      window.addEventListener('resize', update)
+      update()
+    })()
+  
+    // ── Phone: "The way we pack today" cards swipe sideways; the thin bar under them shows where you are ──
+    ;(function () {
+      var track = document.querySelector('.problem-cards')
+      var fill = document.querySelector('.problem-progress-fill')
       if (!track || !fill) return
       function update() {
         var max = track.scrollWidth - track.clientWidth

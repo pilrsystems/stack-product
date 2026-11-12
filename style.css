@@ -5910,7 +5910,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    so this restyles the existing menu list and its Shop dropdown. */
 @media (max-width: 600px) {
   .nav-overlay {
-    background: rgba(12, 16, 20, 0.1);
+    background: rgba(12, 16, 20, 0.25);
   }
   .nav-dim-overlay { display: none; }          /* the desktop dropdown's dim layer isn't used here */
 
@@ -5932,7 +5932,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     align-content: start;
     gap: 0;
     padding: 0;
-    row-gap: 7px;                              /* the gap between the tab bar and the product panel */
+    row-gap: 7.7px;                            /* the gap between the tab bar and the product panel */
     background: none;
     border: none;
     box-shadow: none;
@@ -5961,19 +5961,19 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     border: 1px solid rgba(255, 255, 255, 0.55);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
   }
-  .nav-has-dropdown > a { grid-area: 1 / 2; margin: 7px 0; }
+  .nav-has-dropdown > a { grid-area: 1 / 2; margin: 7.7px 0; }
   .nav-has-dropdown > a .nav-chevron { display: none; }   /* its reserved space pushed the Shop label off-centre in its highlight */
   .nav-has-dropdown > a, .nav-links > li:not(.nav-has-dropdown) { position: relative; z-index: 1; }   /* above the bar's frosted layer */
-  .nav-links > li:nth-child(2) { grid-area: 1 / 3; margin: 7px 0; }
-  .nav-links > li:nth-child(3) { grid-area: 1 / 4; margin: 7px 0; }
-  .nav-links > li:nth-child(4) { grid-area: 1 / 5; margin: 7px 0; }
+  .nav-links > li:nth-child(2) { grid-area: 1 / 3; margin: 7.7px 0; }
+  .nav-links > li:nth-child(3) { grid-area: 1 / 4; margin: 7.7px 0; }
+  .nav-links > li:nth-child(4) { grid-area: 1 / 5; margin: 7.7px 0; }
   .nav-has-dropdown { display: contents; }     /* its link and its dropdown become grid items of the list */
   .nav-links > li:not(.nav-has-dropdown) { display: flex; }
   .nav-links > li > a,
   .nav-has-dropdown > a {
-    padding: 8px 19px;
+    padding: 8.8px min(20.9px, calc((100vw - 258px) / 8));   /* narrower phones get a little less side padding so the four tabs always fit the bar */
     line-height: 1.2;
-    font-size: 9.5px;
+    font-size: 12.54px;
     font-weight: 500;
     letter-spacing: 0.1em;
     color: #5e6e7a;
@@ -5997,20 +5997,20 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
     backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
     border: 1px solid rgba(255, 255, 255, 0.55);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
-    padding: 12px 12px 18px;
+    padding: 13.2px 13.2px 19.8px;
   }
-  .nav-dropdown-inner { padding: 4px 0 0; display: block; }
-  .nav-drop-grid { display: grid; grid-template-columns: 1fr; align-content: start; gap: 6px; max-height: 352px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+  .nav-dropdown-inner { padding: 4.4px 0 0; display: block; }
+  .nav-drop-grid { display: grid; grid-template-columns: 1fr; align-content: start; gap: 7.26px; max-height: min(426px, calc(100svh - 310px)); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
   .nav-drop-desktop { display: none !important; }
   .nav-links .nav-drop-card.nav-drop-phone { display: flex; }
   .nav-links .nav-dropdown-inner a.nav-shop-all { display: flex; justify-content: flex-end; padding: 20px 4px 0; gap: 0.35em; }
-  .nav-shop-all-text { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-  .nav-links .nav-shop-all { font-size: 11.5px; font-weight: 500; letter-spacing: normal; text-transform: none; color: #3d4b56; }
-  .nav-links .nav-drop-card { padding: 4px 0; letter-spacing: normal; text-transform: none; font-size: 1rem; }
-  .nav-drop-img { width: 64px; height: 64px; scale: none; }
-  .nav-drop-text { padding-left: 18px; gap: 0.3rem; }
-  .nav-drop-title { font-size: 13px; font-weight: 500; color: #3d4b56; }
-  .nav-drop-card .nav-drop-desc { width: auto; font-size: 9.8px; line-height: 1.3; color: #4d5b66; }
+  .nav-shop-all-text { text-decoration: underline; text-underline-offset: 4.8px; text-decoration-thickness: 1px; }
+  .nav-links .nav-shop-all { font-size: 13.9px; font-weight: 500; letter-spacing: normal; text-transform: none; color: #3d4b56; }
+  .nav-links .nav-drop-card { padding: 4.84px 0; letter-spacing: normal; text-transform: none; font-size: 1rem; }
+  .nav-drop-img { width: 77.44px; height: 77.44px; scale: none; }
+  .nav-drop-text { padding-left: 21.8px; gap: 5.8px; }
+  .nav-drop-title { font-size: 15.73px; font-weight: 500; color: #3d4b56; }
+  .nav-drop-card .nav-drop-desc { width: auto; font-size: 11.86px; line-height: 1.3; color: #4d5b66; }
   .nav-links .nav-drop-img { background: rgba(255,255,255,0.2); border-radius: 3px; }
   .nav-links .nav-drop-img img { mix-blend-mode: multiply; }
 }
@@ -6030,7 +6030,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 @media (max-width: 600px) {
   .nav-links .nav-dropdown-inner a.nav-shop-all {
     -webkit-tap-highlight-color: transparent;
-    width: fit-content; margin: 16px 0 0 auto; padding: 4px 6px;
+    width: fit-content; margin: 19.4px 0 0 auto; padding: 4.84px 7.3px;
     transition: background-color .15s ease;
   }
   .nav-links .nav-dropdown-inner a.nav-shop-all:active { background-color: rgba(0, 0, 0, 0.3); }
@@ -6138,25 +6138,25 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .problem--v2 .why-label { text-align: center; }
   .problem--v2 .problem-headline { order: 1; text-align: center; margin-bottom: 38.7px; }   /* about 40px from the letters to the first card */
   .problem--v2 .problem-cards { order: 2; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 12px; }
-  .problem--v2 .problem-card { width: min(100%, 264.5px); aspect-ratio: 1; min-height: 0; }   /* 264.5 x 264.5 squares (15% bigger than 230) */
-  .problem-card-icon img { height: 86.31px; }                                  /* icons, text and logo 15% bigger than before */
-  .problem-card:nth-child(2) .problem-card-icon img { height: 93.3px; }
-  .problem-card:nth-child(3) .problem-card-icon img { height: 79.65px; }
-  .problem-card-icon img.problem-card-icon--wide { width: 160.6px; height: 86.31px; }
+  .problem--v2 .problem-card { width: min(100%, 200px); aspect-ratio: 1; min-height: 0; }   /* 200 x 200 squares */
+  .problem-card-icon img { height: 63.31px; }                                  /* icons, text, logo and spacing scaled to the 200px card */
+  .problem-card:nth-child(2) .problem-card-icon img { height: 68.43px; }
+  .problem-card:nth-child(3) .problem-card-icon img { height: 58.39px; }
+  .problem-card-icon img.problem-card-icon--wide { width: 117.8px; height: 63.31px; position: relative; top: 3px; }   /* 7-day organizer icon sits 3px lower */
   /* tighter insides so icon, title and text all fit the 250px square */
-  .problem--v2 .problem-card { padding: 16px 16px 20.7px; }
-  .problem--v2 .problem-card-icon { padding-top: 0; }
-  .problem--v2 .problem-card-label { margin-bottom: 10.35px; font-size: 12.3px; }
-  .problem--v2 .problem-card-desc { font-size: 12.65px; line-height: 1.45; }
-  .problem--v2 .problem-card:not(.problem--pilr):not(.problem-card--pilr) .problem-card-desc { min-height: 0; }
+  .problem--v2 .problem-card { padding: 12.1px 12.1px 13.6px; }   /* text sits 2px lower than before */
+  .problem--v2 .problem-card-icon { padding-top: 0; padding-bottom: 2px; }   /* keeps the icon where it was */
+  .problem--v2 .problem-card-label { margin-bottom: 7.8px; font-size: 9.3px; }
+  .problem--v2 .problem-card-desc { font-size: 9.56px; line-height: 1.45; }
+  .problem--v2 .problem-card:not(.problem--pilr):not(.problem-card--pilr) .problem-card-desc { min-height: 4.35em; }   /* room for three lines, so every card's title (and icon) sits at the same height */
   .problem--v2 .problem-card--pilr { padding: 0; }
-  .problem--v2 .problem-card-body { padding: 0 13.8px 15px; }
+  .problem--v2 .problem-card-body { padding: 0 10.45px 6.4px; }
   .problem--v2 .problem-card--pilr .problem-card-desc { min-height: 0; }
-  .problem--v2 .problem-card-brand { margin-bottom: 11.5px; height: 15px; }
-  .problem--v2 .problem-card-brand img { height: 21.32px; }   /* pilr logo about 16% smaller than on desktop */
-  .problem--v2 .problem-card-link { font-size: 10.24px; }       /* link text about 10% smaller */
-  .problem--v2 .problem-card-link { margin-top: 10.35px; margin-bottom: 1.15px; }
-  .problem--v2 .problem-card-art { top: 26.5px; width: 46.91%; }   /* about 100px wide, as before */                  /* keeps the pilr photo clear of the logo and text in the smaller card */
+  .problem--v2 .problem-card-brand { margin-bottom: 8.7px; height: 11.4px; }
+  .problem--v2 .problem-card-brand img { height: 16.1px; }   /* pilr logo about 16% smaller than on desktop */
+  .problem--v2 .problem-card-link { font-size: 7.75px; }       /* link text about 10% smaller */
+  .problem--v2 .problem-card-link { margin-top: 7.8px; margin-bottom: 0.87px; }
+  .problem--v2 .problem-card-art { top: 24px; width: 45.5%; }   /* about 100px wide, as before */                  /* keeps the pilr photo clear of the logo and text in the smaller card */
 }
 
 /* PHONE: the "Nothing to hide" clip is the portrait phone video, cropped 30px top and bottom */
@@ -6168,8 +6168,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 /* PHONE: 75px between the last "What we make, and why" row and the video */
 @media (max-width: 600px) {
   .why { padding-bottom: 37px; }
-  .fly-video { padding-top: 38px; padding-bottom: 37px; }
-  .problem--v2 { padding-top: 37px; padding-bottom: 80px; }   /* 80px from the pilr card to the photo row below */   /* about 75px of blank space between the video and "The way we pack today" */
+  .fly-video { padding-top: 38px; padding-bottom: 42px; }
+  .problem--v2 { padding-top: 42px; padding-bottom: 85px; }   /* 85px from the swipe bar to the photo row below */   /* about 85px of blank space between the video and "The way we pack today" */
 }
 
 /* PHONE: every section's small label sits the same distance above its title (16.5px to the letters) */
@@ -6206,7 +6206,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .built-routine-section--home .built-routine-content { display: contents; }   /* label, title, text, table and button become direct items so the photo can slot in */
   .built-routine-section--home .why-label { order: 1; }
   .built-routine-section--home .built-routine-title { order: 2; margin-bottom: 20px; }
-  .built-routine-section--home .built-routine-desc { order: 3; font-size: 13px; margin-bottom: 24px; }
+  .built-routine-section--home .built-routine-desc { order: 3; font-size: 13.5px; margin-bottom: 24px; }
   .built-routine-section--home .built-routine-img { order: 4; width: 76%; margin: 0 auto 28px; }   /* 24% smaller than full width, centred, under the description */
   .built-routine-section--home .built-routine-table { order: 5; }
   .built-routine-section--home .built-routine-btn { order: 6; justify-self: center; }
@@ -6276,4 +6276,25 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .site-footer-social-row,
   .site-footer-bottom { padding: 0 1.5rem; }
   .site-footer-inner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 0 1.4rem; }
+}
+
+/* PHONE: the four "The way we pack today" cards sit in one row you swipe sideways (right to left),
+   inside the page margins, with a thin position bar under them like the other swipe rows. */
+.problem-progress { display: none; }
+@media (max-width: 600px) {
+  .problem--v2 .problem-cards {
+    display: flex;
+    grid-template-columns: none;
+    justify-items: normal;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .problem--v2 .problem-cards::-webkit-scrollbar { display: none; }
+  .problem--v2 .problem-card { flex: 0 0 min(100%, 200px); scroll-snap-align: start; }
+  .problem-progress { order: 3; display: block; height: 3px; margin-top: 23.7px; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
+  .problem-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
 }

@@ -34,6 +34,8 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     .sg-header { margin-bottom: 3.5rem; }
+    /* phone: SIZE GUIDE label, title and description centred; the description shrinks with the screen width so it stays on one line */
+    @media (max-width: 600px) { .sg-header { text-align: center; } .sg-header .sg-subtitle { font-size: min(0.98rem, 3.65vw); white-space: nowrap; } }
 
     /* ── Pod specs ─────────────────────────────────────────── */
     .sg-specs {
