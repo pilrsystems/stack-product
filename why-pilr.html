@@ -294,9 +294,10 @@
       <div class="how-it-works-media">
         <video
           class="how-video-el"
-          src="images/lifestyle_section/How It Works Video.mp4"
+          data-src="images/lifestyle_section/How It Works Video.mp4"
+          data-src-mobile="images/lifestyle_section/How It Works Video Mobile.mp4"
           poster="images/lifestyle_section/How It Works Poster.jpg"
-          preload="metadata"
+          preload="none"
           playsinline
           muted
           loop
@@ -658,17 +659,46 @@
         step.querySelector('.how-step-time').textContent = m + ':' + (s < 10 ? '0' : '') + s;
       });
 
-      function play() { vid.play().catch(function() {}); }
+      // The clip is only downloaded when the section is about a screen away (phones get a small
+      // 720p copy), so it never slows the first load of the page.
+      var phone = window.matchMedia('(max-width: 600px)').matches;
+      var src = phone ? vid.getAttribute('data-src-mobile') : vid.getAttribute('data-src');
+      var loaded = false;
+      function ensureLoaded() {
+        if (loaded) return;
+        loaded = true;
+        vid.src = src;
+        vid.load();
+      }
+      function play() { ensureLoaded(); vid.play().catch(function() {}); }
+
+      var nearIo = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) { ensureLoaded(); nearIo.disconnect(); }
+      }, { rootMargin: '100% 0px' });
+      nearIo.observe(vid);
 
       if (!reduceMotion) {
-        section.addEventListener('mouseenter', play);
+        // Desktop with a mouse: plays while the pointer is over the section.
+        section.addEventListener('mouseenter', function() { if (!autoplayInView) play(); });
         section.addEventListener('mouseleave', function() {
+          if (autoplayInView) return;
           vid.pause();
           vid.currentTime = 0;
         });
       }
 
-      // Hover has no equivalent on touch — let a tap toggle play/pause there.
+      // Phones and touch screens (no hover): the clip plays by itself while it is on screen, and pauses when it is not.
+      var autoplayInView = !reduceMotion && (phone || window.matchMedia('(hover: none)').matches);
+      if (autoplayInView) {
+        var playIo = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) { play(); } else { vid.pause(); }
+          });
+        }, { threshold: 0.35 });
+        playIo.observe(vid);
+      }
+
+      // A tap still toggles play/pause.
       vid.addEventListener('click', function() {
         if (vid.paused || vid.ended) { play(); } else { vid.pause(); }
       });

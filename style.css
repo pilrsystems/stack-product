@@ -3035,7 +3035,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.01em;
-  color: #46545e;
+  color: #5e6e7a;
   margin-bottom: 1.5rem;
 }
 
@@ -3128,7 +3128,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-stat-number {
   font-size: clamp(2.4rem, 4vw, 3.2rem);
   font-weight: 400;
-  color: #46545e;
+  color: #5e6e7a;
   line-height: 1.1;
   margin-bottom: 1rem;
 }
@@ -3174,7 +3174,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-science-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 500;
-  color: #46545e;
+  color: #5e6e7a;
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
@@ -3266,7 +3266,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-break-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 500;
-  color: #46545e;
+  color: #5e6e7a;
   line-height: 1.2;
   margin-bottom: 2.5rem;
 }
@@ -3312,7 +3312,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-break-panel-title {
   font-size: 1.7rem;
   font-weight: 500;
-  color: #46545e;
+  color: #5e6e7a;
   margin-bottom: 1rem;
 }
 
@@ -3415,7 +3415,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-system-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 500;
-  color: #46545e;
+  color: #5e6e7a;
   line-height: 1.2;
   margin-bottom: 3rem;
 }
@@ -3439,7 +3439,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .wp-system-card-img {
   aspect-ratio: 1 / 1.1;
-  background: #EAE9E5;
+  background: #F5F5F5;                          /* the same grey as the shop product cards */
   border-radius: var(--radius);
   display: flex;
   align-items: center;
@@ -3451,7 +3451,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .wp-system-card:hover .wp-system-card-img {
-  background: #E0DFDA;
+  background: #EDEDED;
 }
 
 .wp-system-card-img img {
@@ -3472,7 +3472,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-system-card-title {
   font-size: 1.15rem;
   font-weight: 600;
-  color: #46545e;
+  color: #5e6e7a;
   margin-bottom: 0.5rem;
 }
 
@@ -3568,7 +3568,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .wp-materials-headline {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 500;
-  color: #46545e;
+  color: #5e6e7a;
   line-height: 1.2;
   margin-bottom: 1.25rem;
 }
@@ -5718,8 +5718,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   filter: blur(1.4px);
   opacity: 0.85;
 }
-.comparison-photo--organizer { width: 60.3px; left: 543.2px; transform: translateX(-50%); }
-.comparison-photo--ziploc { width: 48.2px; left: 680.9px; transform: translateX(-50%); }
+.comparison-photo--organizer { width: 63.3px; left: 543.2px; transform: translateX(-50%); }
+.comparison-photo--ziploc { width: 53.1px; left: 680.9px; transform: translateX(-50%); }   /* 5% bigger than the original 48.2px */
 
 .comparison-table {
   display: grid;
@@ -6388,7 +6388,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .wp-stats { padding-top: 60px; padding-bottom: 50px; }
   .wp-science { padding-top: 50px; padding-bottom: 50px; }   /* 100px between the last stat and "The premise", and 100px between the research card and "Where routines break" */
   .wp-break { padding-top: 50px; padding-bottom: 55px; }
-  .wp-system { padding-top: 55px; }   /* 110px between the end of "Where routines break" and "The system" */
+  .wp-system { padding-top: 55px; padding-bottom: 75px; }   /* 110px between the end of "Where routines break" and "The system"; 150px from the swipe bar to "Materials" */
+  .wp-materials { padding-top: 75px; }
   .wp-science-inner { gap: 26px; }   /* with the paragraph's own bottom margin, about 50px between the paragraph and the research card */
 }
 
@@ -6448,7 +6449,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   }
   .wp-system-grid::-webkit-scrollbar { display: none; }
   .wp-system-card { flex: 0 0 74%; scroll-snap-align: start; }
-  .wp-system-progress { display: block; height: 3px; margin: 24px 0 40px; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
+  .wp-system-progress { display: block; height: 3px; margin: 24px 0 0; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
   .wp-system-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
 }
 
@@ -6463,4 +6464,122 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .wp-system-grid { margin-bottom: 0; }
   .wp-system { padding-bottom: 80px; }
   .wp-materials { padding-top: 80px; }
+}
+
+/* PHONE: the comparison section (shared by the Why pilr page and the product pages). Order: "Compare" label and title,
+   centred; then the table, sized to fit the screen; then the description and the "Build your system" link. */
+@media (max-width: 600px) {
+  .comparison-section.layout-container,
+  .page-product-bottom .comparison-section.layout-container { width: calc(100% - 3rem); }
+  .comparison-section.layout-grid.layout-container,
+  .page-product-bottom .comparison-section.layout-grid.layout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .page-product-bottom .comparison-intro,
+  .comparison-intro { display: contents; transform: none; }
+  .comparison-intro .why-label { order: 1; text-align: center; margin-bottom: 3px; }
+  .comparison-intro .comparison-intro-title,
+  .page-product-bottom .comparison-intro .comparison-intro-title { order: 2; text-align: center; font-size: 28.8px; letter-spacing: normal; line-height: 1.2; margin: 0; }   /* the same size as the other Why pilr titles */
+  .page-product-bottom .comparison-section .comparison-table-wrap,
+  .comparison-section .comparison-table-wrap { order: 3; width: 100%; transform: none; margin: 65px 0 23.2px; }   /* 65px above the table: room for the two small pictures plus a 48px gap under the title */
+  .comparison-intro .comparison-intro-desc,
+  .page-product-bottom .comparison-intro .comparison-intro-desc { order: 4; text-align: center; font-size: 13.5px; line-height: 1.6; margin: 0 auto 10.8px; max-width: 24rem; }
+  .comparison-intro-link,
+  .page-product-bottom .comparison-intro-link {     /* "Build your system" as a filled button */
+    order: 5;
+    justify-content: center;
+    width: min(100%, 13.495rem);             /* the button box 5% bigger than the last version (12.852rem) */
+    padding: 11.11px 19.05px;
+    font-size: 9.3px;
+    background: #5e6e7a;
+    color: #fff;
+    border-radius: var(--radius);
+  }
+
+  .comparison-table { grid-template-columns: 1.3fr repeat(3, 0.9fr); }
+  .comparison-cell { padding: 0.65rem 0.3rem; }
+  .comparison-header { font-size: 8.55px; letter-spacing: 0.06em; padding: 0 3px 4px; }   /* 4px more room under the column titles; the titles themselves don't move */
+  .comparison-label { font-size: 11.4px; line-height: 1.35; padding-left: 0.3rem; }
+  .comparison-logo { height: 17.96px; }   /* pilr logo 10% smaller */
+  .comparison-header--pilr { position: relative; }
+  .comparison-header--pilr::before {            /* the grey column reaches 20px above the logo, like the web table */
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 100%;
+    height: 18.5px;
+    background: #F4F4F5;
+  }
+  .comparison-check { width: 17.96px; height: 17.96px; }
+  .comparison-dash { width: 14.96px; height: 1.63px; }
+  .comparison-photo--organizer { width: 48.5px; left: 66.4%; }   /* 5% bigger than before */
+  .comparison-photo--ziploc { width: 43.2px; left: 88.8%; }   /* 5% bigger than before */
+}
+
+/* PHONE: Why pilr page, 120px between the swipe bar under "The system" and "Materials", and 120px between the last
+   "Materials" card and the "Compare" label */
+@media (max-width: 600px) {
+  .wp-system { padding-bottom: 60px; }
+  .wp-materials { padding-top: 60px; padding-bottom: 60px; }
+  .page-product-bottom.why-compare { padding-top: 60px; }
+}
+
+.compare-title-br { display: none; }   /* only the phone layout breaks the comparison title */
+@media (max-width: 600px) { .compare-title-br { display: inline; } }
+
+.compare-header-br { display: inline; }   /* "Bags" sits on its own line under "Ziploc" (phone and web) */
+
+/* Comparison table (phone and web): the two small pictures above the table sit a little higher.
+   Both are anchored to the table's top edge, so a bottom margin lifts them. */
+.comparison-photo--organizer { margin-bottom: 1px; }
+.comparison-photo--ziploc { margin-bottom: 2px; }
+
+/* PHONE: the two small pictures sit another 2px higher, for a bit more room above the column headers */
+@media (max-width: 600px) {
+  .comparison-photo--organizer { margin-bottom: 5px; }
+  .comparison-photo--ziploc { margin-bottom: 8px; }
+}
+
+/* WEB: the Ziploc picture above the comparison table sits 2px higher */
+@media (min-width: 761px) {
+  .comparison-photo--ziploc { margin-bottom: 4px; }
+}
+
+/* WEB / TABLET: Why pilr page, 150px between the "Materials" content and the two small pictures above the comparison table */
+@media (min-width: 601px) {
+  .page-product-bottom.why-compare { padding-top: 106px; }
+}
+
+/* PHONE: "How it works". Order: label, title, the video, then the three steps. The title matches the other
+   Why pilr titles (28.8px, #5e6e7a), centred. */
+@media (max-width: 600px) {
+  .how-it-works-inner { display: flex; flex-direction: column; align-items: stretch; row-gap: 0; }   /* stretch, so the steps are as wide as the video */
+  .how-it-works-content { display: contents; }
+  .how-it-works-content .why-label { order: 1; text-align: center; }
+  .how-it-works .how-headline { order: 2; font-size: 28.8px; font-weight: 500; line-height: 1.2; letter-spacing: normal; color: #5e6e7a; text-align: center; margin: 0 0 33.3px; }
+  .how-it-works .how-it-works-media { order: 3; margin: 0 auto 36px; }
+  .how-it-works .how-steps { order: 4; }
+  .page-product-bottom.why-compare { padding-bottom: 65px; }   /* 105px between the "Build your system" button and "How it works" */
+}
+
+/* PHONE: tapping a "How it works" step shows a subtle grey press shade instead of the browser's blue flash */
+@media (max-width: 600px) {
+  .how-step {
+    padding: 19px 0 10px;                    /* tighter than web; the "01 PACK 0:00" line sits 3px lower, closer to its description */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    transition: background-color .15s ease;
+  }
+  .how-step-desc { margin-top: 3.4px; }   /* the description stays where it was; only the title line moved down */
+  .how-step:active { background-color: rgba(0, 0, 0, 0.06); }
+  .how-step:focus { outline: none; }
+  .how-step:focus-visible { outline: none; }
+}
+
+/* PHONE: the "How it works" clip is cropped 10px off the top and 10px off the bottom (the video file is unchanged) */
+@media (max-width: 600px) {
+  .how-it-works .how-it-works-media { overflow: hidden; }
+  .how-it-works .how-video-el { margin: -10px auto; }
 }

@@ -137,8 +137,8 @@
   .page-product-bottom .comparison-photo--ziploc { left: calc((100% - 56px) * 28 / 31 + 50px); }
   /* The two small pictures above the table: 5% bigger and 2px higher. */
   .page-product-bottom .comparison-photo { bottom: calc(100% + 12.7px); }
-  .page-product-bottom .comparison-photo--organizer { width: 63.3px; }
-  .page-product-bottom .comparison-photo--ziploc { width: 50.6px; }
+  .page-product-bottom .comparison-photo--organizer { width: 66.5px; }   /* 5% bigger than the earlier 63.3px */
+  .page-product-bottom .comparison-photo--ziploc { width: 58.6px; }   /* 5% bigger than the earlier 55.8px */
   /* Compare / headline text block: 58px to the right.
      The table (with its two small pictures) is 5px to the right. */
   .page-product-bottom .comparison-intro { transform: translateX(58px); }
