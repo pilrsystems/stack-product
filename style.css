@@ -6320,3 +6320,147 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   }
   .catalog-main .shop-price { font-size: 14.5px; }
 }
+
+/* PHONE: Why pilr page hero: the photo (a little zoomed out) sits behind the text and buttons, which sit
+   near its bottom on a soft dark gradient. The hero is exactly as tall as the photo. */
+@media (max-width: 600px) {
+  .wp-hero {
+    position: relative;
+    height: calc(86svh - 5px);                 /* as tall as the photo, which has its top 5px cropped off */
+    min-height: 475px;
+    max-height: 769px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .wp-hero-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    padding: 0 1.5rem 1.75rem;
+    gap: 0;
+  }
+  .wp-hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+    z-index: 0;
+  }
+  .wp-hero-image img {
+    position: absolute;
+    bottom: 0;                                 /* pinned to the bottom, so the extra 5px of height is cut off the top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: none;
+    height: calc(100% + 5px);
+    border-radius: 0;
+    z-index: 1;
+  }
+  .wp-hero-image::after {                      /* soft dark gradient from the bottom so the white text stays readable */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(18, 24, 30, 0.85) 0%, rgba(18, 24, 30, 0.7) 38%, rgba(18, 24, 30, 0.35) 58%, rgba(18, 24, 30, 0) 78%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .wp-hero-copy { position: relative; z-index: 3; width: 100%; text-align: center; }
+  .wp-hero-eyebrow { color: #fff; font-size: 0.7rem; margin-bottom: 0.9rem; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35); }
+  .wp-hero-headline { color: #fff; font-size: clamp(30.4px, 8.93vw, 38px); line-height: 1.08; margin-bottom: 1rem; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35); }
+  .wp-hero-support { color: #fff; font-size: 14px; line-height: 1.45; margin: 0 auto 1.4rem; max-width: 22rem; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35); }
+  .wp-hero-actions { flex-direction: column; align-items: center; gap: 0.65rem; }
+  .wp-hero-actions .wp-btn { width: min(100%, 17rem); padding: 0.8rem 1.25rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .wp-btn--dark { background: #FFFFFF; color: #5e6e7a; }
+  .wp-btn--outline { border-color: rgba(255, 255, 255, 0.85); color: #FFFFFF; }
+  .wp-btn--outline:hover { background: rgba(255, 255, 255, 0.12); }
+}
+
+/* PHONE: Why pilr page, 60px between the hero photo and the first line of the stats section */
+@media (max-width: 600px) {
+  .wp-stats { padding-top: 60px; padding-bottom: 50px; }
+  .wp-science { padding-top: 50px; padding-bottom: 50px; }   /* 100px between the last stat and "The premise", and 100px between the research card and "Where routines break" */
+  .wp-break { padding-top: 50px; padding-bottom: 55px; }
+  .wp-system { padding-top: 55px; }   /* 110px between the end of "Where routines break" and "The system" */
+  .wp-science-inner { gap: 26px; }   /* with the paragraph's own bottom margin, about 50px between the paragraph and the research card */
+}
+
+/* PHONE: Why pilr page, all the text is centred (the labels, titles, body text, cards, tabs, FAQ and sources). */
+@media (max-width: 600px) {
+  .wp-stats, .wp-science, .wp-break, .wp-system, .wp-materials, .how-it-works, .wp-faq,
+  .wp-footnotes, .why-compare { text-align: center; }
+  .wp-stat, .wp-science-copy, .wp-science-card, .wp-break-panel-copy, .wp-system-card,
+  .wp-system-pairings, .wp-materials-card, .how-it-works-content, .wp-faq-copy { text-align: center; }
+
+  /* research list: number above its sentence */
+  .wp-science-list li { flex-direction: column; align-items: center; gap: 0.3rem; }
+  .wp-science-list-text { text-align: center; }
+
+  /* tabs, pairings and buttons */
+  .wp-break-tabs { justify-content: center; flex-wrap: nowrap; gap: clamp(8px, 3.4vw, 14px); margin-bottom: 26px; }   /* all four tabs on one line */
+  .wp-break-tab { font-size: clamp(10px, 3.3vw, 15.2px); white-space: nowrap; }   /* scales with the screen so the row always fits */
+  .wp-break-panel-friction { font-size: 13.5px; }   /* the description under each tab's title */
+  .wp-break-panel-answer { font-size: 14px; }     /* the "Pack. Stack. Go." line under "How pilr answers" */
+  /* each tab: the title, then the description, then its photo, then the "How pilr answers" line */
+  .wp-break-panel.is-active { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .wp-break-panel-copy { display: contents; }
+  .wp-break-panel-title { order: 1; margin-bottom: 14px; }
+  .wp-break-panel-friction { order: 2; margin-bottom: 30px; }
+  .wp-break-panel-img { order: 3; width: 100%; margin: 0 auto 40px; }
+  .wp-break-panel-label { order: 4; }
+  .wp-break-panel-answer { order: 5; }
+  .wp-system-pairings-row { justify-items: center; }
+  .wp-system-pairing { text-align: center; }
+  .wp-faq-question { text-align: center; }
+  .wp-footnotes-toggle { justify-content: center; margin-left: auto; margin-right: auto; }
+  .wp-footnotes-list-inner li { text-align: center; }
+}
+
+/* PHONE: Where routines break. The panels swipe: the next one slides in from the side you swiped toward. */
+@keyframes wpPanelNext { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@keyframes wpPanelPrev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@media (max-width: 600px) {
+  .wp-break-content[data-dir="next"] .wp-break-panel.is-active { animation: wpPanelNext .3s ease; }
+  .wp-break-content[data-dir="prev"] .wp-break-panel.is-active { animation: wpPanelPrev .3s ease; }
+}
+
+/* PHONE: "The system" pod cards sit in one row you swipe sideways (inside the page margins, the next card
+   peeking in), with a thin position bar under them. */
+.wp-system-progress { display: none; }
+@media (max-width: 600px) {
+  .wp-system-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    margin-bottom: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .wp-system-grid::-webkit-scrollbar { display: none; }
+  .wp-system-card { flex: 0 0 74%; scroll-snap-align: start; }
+  .wp-system-progress { display: block; height: 3px; margin: 24px 0 40px; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
+  .wp-system-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
+}
+
+/* WEB / TABLET (above phone width): Why pilr page, 130px between the end of "Where routines break" and "The system" */
+@media (min-width: 601px) {
+  .wp-break { padding-bottom: 65px; }
+  .wp-system { padding-top: 65px; }
+}
+
+/* WEB / TABLET: Why pilr page, 160px between the pod cards and "Materials" */
+@media (min-width: 601px) {
+  .wp-system-grid { margin-bottom: 0; }
+  .wp-system { padding-bottom: 80px; }
+  .wp-materials { padding-top: 80px; }
+}

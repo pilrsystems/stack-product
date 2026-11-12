@@ -249,13 +249,7 @@
           <p class="wp-system-card-built">Built for sealing pods</p>
         </a>
       </div>
-      <div class="wp-system-pairings">
-        <p class="wp-system-pairings-label">How to start</p>
-        <div class="wp-system-pairings-row">
-          <p class="wp-system-pairing"><strong>Small Pill Pod + Big Pill Pod + Powder Pod</strong> <span class="wp-system-pairing-arrow">→</span> <a href="./classic-stack.html" class="wp-system-pairing-link">Classic Stack</a></p>
-          <p class="wp-system-pairing"><strong>Any pods, any order</strong> <span class="wp-system-pairing-arrow">→</span> <a href="./build-your-system.html" class="wp-system-pairing-link">Build your own</a></p>
-        </div>
-      </div>
+      <div class="wp-system-progress" aria-hidden="true"><span class="wp-system-progress-fill"></span></div>
     </div>
   </section>
 
@@ -569,6 +563,49 @@
           panels.forEach(function(p) { p.classList.toggle('is-active', p.getAttribute('data-panel') === target) })
         })
       })
+
+      // Phone: swipe left / right on the content to go to the next / previous weak point.
+      var content = document.querySelector('.wp-break-content')
+      var phone = window.matchMedia('(max-width: 600px)')
+      var x0 = 0, y0 = 0, tracking = false
+      function go(step) {
+        var list = Array.prototype.slice.call(tabs)
+        var i = list.findIndex(function(t) { return t.classList.contains('is-active') })
+        var next = list[i + step]
+        if (!next) return
+        content.setAttribute('data-dir', step > 0 ? 'next' : 'prev')
+        next.click()
+      }
+      if (content) {
+        content.addEventListener('touchstart', function(e) {
+          if (!phone.matches || e.touches.length !== 1) { tracking = false; return }
+          tracking = true; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY
+        }, { passive: true })
+        content.addEventListener('touchend', function(e) {
+          if (!tracking) return
+          tracking = false
+          var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0
+          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1)
+        }, { passive: true })
+      }
+    })()
+  </script>
+  <script>
+    // Phone: "The system" pod cards swipe sideways; the thin bar under them shows where you are.
+    (function () {
+      var track = document.querySelector('.wp-system-grid')
+      var fill = document.querySelector('.wp-system-progress-fill')
+      if (!track || !fill) return
+      function update() {
+        var max = track.scrollWidth - track.clientWidth
+        var share = max > 0 ? track.clientWidth / track.scrollWidth : 1
+        var pos = max > 0 ? track.scrollLeft / max : 0
+        fill.style.width = (share * 100) + '%'
+        fill.style.transform = 'translateX(' + (pos * (1 - share) / share * 100) + '%)'
+      }
+      track.addEventListener('scroll', update, { passive: true })
+      window.addEventListener('resize', update)
+      update()
     })()
   </script>
   <script>
