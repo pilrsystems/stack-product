@@ -161,9 +161,9 @@ body {
   top: 100%;
   left: 50%;
   width: 100vw;
-  background: rgba(255, 255, 255, 0.5);
-  -webkit-backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
-  backdrop-filter: blur(22px) saturate(1.3) brightness(1.35);
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  backdrop-filter: blur(22px) saturate(1.3);   /* no brightness boost here: on a light page it would wash the see-through look out to plain white */
   border-top: 1px solid #e8e3dc;
   box-shadow: 0 12px 40px rgba(0,0,0,0.07);
   opacity: 0;
@@ -3810,7 +3810,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  margin-top: 0.75rem;
+  margin-top: calc(0.75rem + 2px);      /* 2px more room between the answer text and the button */
+  margin-bottom: 2px;                   /* and 2px more between the button and the line below */
   padding: 0.35rem 0.7rem;
   border: 1.5px solid rgba(66,85,99,0.2);
   border-radius: var(--radius);
@@ -6585,4 +6586,26 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 @media (max-width: 600px) {
   .how-it-works .how-it-works-media { overflow: hidden; }
   .how-it-works .how-video-el { margin: -10px auto; }
+}
+
+/* PHONE: FAQ page. The grey panel is wider (24px from the screen edges instead of 48px, with less padding
+   inside it), and each question and its answer are centred. The + / x stays at the right end of the question row. */
+@media (max-width: 600px) {
+  .faq-groups { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .faq-card { padding: 0.5rem 1.25rem; }
+  .faq-card .wp-faq-question { position: relative; justify-content: center; text-align: center; padding-left: 26px; padding-right: 26px; }
+  .faq-card .wp-faq-icon { position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+  .faq-card .wp-faq-item.is-active .wp-faq-icon { transform: translateY(-50%) rotate(45deg); }
+  .faq-card .wp-faq-answer p { text-align: center; }
+  .faq-hero .wp-faq-eyebrow { margin-bottom: 7px; }   /* 18px from the "FAQ" letters to the "Questions" letters */
+  .faq-hero { padding-bottom: 35px; }   /* 58px from "Questions" to the grey panel */
+}
+
+/* PHONE: no blue tap flash on the FAQ questions (the FAQ page and the Why pilr page's FAQ) */
+@media (max-width: 600px) {
+  .wp-faq-question {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  .wp-faq-question:focus { outline: none; }
 }
