@@ -6561,6 +6561,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .how-it-works .how-headline { order: 2; font-size: 28.8px; font-weight: 500; line-height: 1.2; letter-spacing: normal; color: #5e6e7a; text-align: center; margin: 0 0 33.3px; }
   .how-it-works .how-it-works-media { order: 3; margin: 0 auto 36px; }
   .how-it-works .how-steps { order: 4; }
+  .wp-faq { padding-top: 70px; padding-bottom: 76px; }   /* 110px between the last "How it works" step and the FAQ label; 20px less above "Sources" */
+  .wp-faq-question { font-size: 15px; }
+  .wp-faq-answer p { font-size: 13.5px; }
   .page-product-bottom.why-compare { padding-bottom: 65px; }   /* 105px between the "Build your system" button and "How it works" */
 }
 
