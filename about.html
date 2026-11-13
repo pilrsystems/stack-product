@@ -29,6 +29,8 @@
       opacity: 0.7;
     }
 
+    .about-tagline-br { display: none; }
+
     .about-story-label {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 1.45rem;
@@ -42,10 +44,15 @@
 
     @media (max-width: 700px) {
       .about-story-tagline {
-        padding: 2rem 1.5rem 0;
+        padding: 12px 1.5rem 0;          /* 20px closer to "Our story" than before (32px) */
+        font-size: 14px;                 /* smaller than the 16px used on web */
       }
+      .about-story-label,
+      .about-story-tagline { display: none; }   /* phones: no "Our story" heading or tagline under the photo */
+      .about-tagline-br { display: inline; }   /* the tagline breaks after "system" on phones */
       .about-story-label {
-        padding: 0.5rem 1.5rem 0;
+        padding: 35.2px 1.5rem 0;        /* about 40px of space between the photo above and the "Our story" letters */
+        font-size: 1.3rem;               /* slightly smaller than 1.45rem */
       }
     }
 
@@ -83,10 +90,10 @@
 
     .about-section-heading {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: clamp(1.6rem, 2.6vw, 2.25rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);   /* the same size, weight and colour as the other pages' section titles */
+      font-weight: 500;
+      letter-spacing: normal;
+      line-height: 1.2;
       color: #5e6e7a;
       margin-bottom: 1.5rem;
     }
@@ -143,16 +150,22 @@
         min-height: auto;
       }
 
-      .about-section-text {
-        padding: 3rem 1.5rem;
-        order: 2;
-      }
-
+      /* Each story: small heading and title first, then the photo, then the paragraphs. All the text is centred. */
+      .about-section { display: flex; flex-direction: column; }
+      .about-section-text { display: contents; }
+      .about-section-eyebrow,
+      .about-section-heading,
+      .about-section-body,
+      .about-section-body p,
+      .about-signature { text-align: center; }
+      .about-section-eyebrow { order: 1; padding: 3rem 1.5rem 0; margin-bottom: 0; }
+      .about-section-heading { order: 2; padding: 10.7px 1.5rem 0; margin-bottom: 0; font-size: 28.8px; }   /* 20px from the small heading's letters to the title's letters */
       .about-section-img {
-        order: 1;
-        height: 60vw;
-        padding: 1.5rem 1.5rem 0 !important;
+        order: 3;
+        height: auto;                          /* the photo sets the height, so the padding below is exactly the gap to the title */
+        padding: 19.1px 1.5rem 0 !important;   /* about 25px from the title's letters to the photo */
       }
+      .about-section-body { order: 4; padding: 15.6px 1.5rem 3rem; max-width: none; }   /* the same space under the photo as before */
     }
 
     /* Hero image — full bleed, sits behind the nav */
@@ -275,13 +288,13 @@
 
     <!-- OUR STORY LABEL -->
     <div class="about-story-label">Our story</div>
-    <div class="about-story-tagline">Two friends, one shared problem — and a system built to solve it</div>
+    <div class="about-story-tagline">Two friends, one shared problem — and a system<br class="about-tagline-br"> built to solve it</div>
 
     <!-- SECTION 01 — The Starting Point -->
     <section class="about-section">
       <div class="about-section-text">
         <div class="about-section-eyebrow">The Starting Point</div>
-        <h2 class="about-section-heading">Built on routine.</h2>
+        <h2 class="about-section-heading">Built on routine</h2>
         <div class="about-section-body">
           <p>Two friends who met in college and ended up living together. Our days were built around routine: training, studying, eating right, and showing up consistently.</p>
           <p>Every morning started the same way, with coffee and our daily supplements. That was the anchor of our system.</p>
@@ -297,7 +310,7 @@
     <section class="about-section">
       <div class="about-section-text">
         <div class="about-section-eyebrow">The Problem</div>
-        <h2 class="about-section-heading">Travel kills consistency.</h2>
+        <h2 class="about-section-heading">Travel kills consistency</h2>
         <div class="about-section-body">
           <p>After graduating and starting work, that system was tested. Work meant lots of travel, and travel broke the routine. Without it, momentum slipped.</p>
           <p>The problem was clear. Powders didn't fit in pill containers. Ziploc bags spilled. Cheap containers broke.</p>
@@ -313,7 +326,7 @@
     <section class="about-section about-section--fit">
       <div class="about-section-text">
         <div class="about-section-eyebrow">The Solution</div>
-        <h2 class="about-section-heading">How we built it.</h2>
+        <h2 class="about-section-heading">How we built it</h2>
         <div class="about-section-body">
           <p>We designed a system that could handle the way we actually live, structured, adaptable, and built to travel.</p>
           <p>Not a container. A system. Built to adapt.</p>
@@ -329,7 +342,7 @@
     <section class="about-section">
       <div class="about-section-text">
         <div class="about-section-eyebrow">The Standard</div>
-        <h2 class="about-section-heading">Why it matters.</h2>
+        <h2 class="about-section-heading">Why it matters</h2>
         <div class="about-section-body">
           <p>Consistency is what drives results. Every day builds on the one before.</p>
           <p>We built pilr so nothing gets in the way of that, no matter where you are.</p>
