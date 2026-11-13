@@ -5250,7 +5250,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 .pilr-system-pods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 4rem; max-width: 980px; margin: 0 auto; }
 .pilr-system-pod-img-wrap { height: 270px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 1rem; }
 .pilr-system-pod-img { width: auto; max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
-.pilr-system-pod-img--lower { transform: translateY(9px) scale(0.99); transform-origin: center bottom; max-width: 87%; } /* Big Pill Pod: 1% smaller, bottom edge stays put */
+.pilr-system-pod-img--lower { transform: translateY(9px) scale(0.99); transform-origin: center bottom; max-width: 87%; } /* Large Pill Pod: 1% smaller, bottom edge stays put */
 .pilr-system-pod-img--lower-pill { transform: translateY(16px); max-width: 87%; }
 .pilr-system-pod-name { font-size: 1.2rem; font-weight: 500; color: #5e6e7a; margin-bottom: 0.25rem; text-transform: capitalize; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .pilr-system-pod-desc { font-size: 0.9rem; color: #7a8a94; line-height: 1.4; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -6715,11 +6715,16 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
+  object-position: 50% 66%;   /* tuned by eye so the product sits slightly below centre in the box (the lid photo has empty space above it) */
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
 @media (hover: hover) {
   .shop-card:hover .shop-card-img .shop-card-img-hover { opacity: 1; }
+}
+
+/* WEB (above phone width): the "most popular" tag is 5% bigger (text and padding; position unchanged) */
+@media (min-width: 601px) {
+  .shop-card-badge { font-size: 0.721875rem; padding: 0.2625rem 0.6825rem; }
 }

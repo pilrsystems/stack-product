@@ -190,7 +190,7 @@
     'pill-pod': 'Keeps your pills organized.',
     'hybrid-pod': 'Fits medium and large capsules.',
     'powder-pod': 'Keeps your powder fresh.',
-    'classic-stack': 'Powder Pod, Big Pill Pod, Little Pill Pod',
+    'classic-stack': 'Powder Pod, Large Pill Pod, Little Pill Pod',
     'travel-scooper': 'Scoop and go, anywhere.',
     'travel-scooper-free': 'Scoop and go, anywhere.',
     'single-lid': 'Locks every pod shut tight.',
@@ -522,7 +522,7 @@
   // reflects whatever's actually in the cart right now.
   const OFFER_PRODUCTS = [
     { id: 'pill-pod',       title: 'Small Pill Pod', image: 'images/lifestyle_section/Pill Pod Hero.png' },
-    { id: 'hybrid-pod',     title: 'Big Pill Pod',    image: 'images/lifestyle_section/Hybrid Pod.png' },
+    { id: 'hybrid-pod',     title: 'Large Pill Pod',    image: 'images/lifestyle_section/Hybrid Pod.png' },
     { id: 'powder-pod',     title: 'Powder Pod',      image: 'images/lifestyle_section/Powder Pod Render.png' },
     { id: 'travel-scooper', title: 'Travel Scooper',  image: 'images/lifestyle_section/Scooper.png' },
     { id: 'single-lid',     title: 'Single Lid',      image: 'images/lifestyle_section/Full Render.png' },
