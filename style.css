@@ -6611,24 +6611,98 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   .wp-faq-question:focus { outline: none; }
 }
 
-/* PHONE (Build your system page only): "The pilr system" pods sit in one row you swipe sideways
-   (inside the page margins, the next card peeking in), with a thin position bar under them. */
-.pilr-system-progress { display: none; }
+/* PHONE (Build your system page only): "The pilr system" section is hidden. */
 @media (max-width: 600px) {
-  body.system-page .pilr-system-pods {
-    display: flex;
-    grid-template-columns: none;
-    gap: 14px;
-    max-width: none;
-    margin: 0;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-  }
-  body.system-page .pilr-system-pods::-webkit-scrollbar { display: none; }
-  body.system-page .pilr-system-pods > div { flex: 0 0 74%; scroll-snap-align: start; }
-  body.system-page .pilr-system-progress { display: block; height: 3px; margin: 24px 0 0; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
-  body.system-page .pilr-system-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
+  body.system-page .pilr-system-section { display: none; }
 }
+
+/* PHONE: tapping "View the full test" shows a subtle grey press shade instead of the browser's blue flash */
+@media (max-width: 600px) {
+  .built-routine-btn {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    transition: background-color .15s ease;
+  }
+  .built-routine-btn:hover { background: transparent; color: #5e6e7a; }   /* no sticky dark fill after a tap */
+  .built-routine-btn:active { background-color: rgba(0, 0, 0, 0.06); }
+  .built-routine-btn:focus { outline: none; }
+  .built-routine-btn:focus-visible { outline: none; }
+}
+
+/* "Build your system" under the comparison table: same outlined button as "View the full test"
+   (product pages, the Build your system page and the Why pilr page). */
+.comparison-intro-link-icon { display: none; }
+.page-product-bottom .comparison-intro-link,
+body.system-page .comparison-intro-link {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: min(100%, 260px);
+  padding: 0.7rem 3.5rem;
+  border: 1.5px solid #5e6e7a;
+  border-radius: 0;
+  background: transparent;
+  color: #5e6e7a;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  transition: background-color .15s ease, color .15s ease;
+}
+.page-product-bottom .comparison-intro-link span,
+body.system-page .comparison-intro-link span { display: none; }
+.page-product-bottom .comparison-intro-link .comparison-intro-link-icon,
+body.system-page .comparison-intro-link .comparison-intro-link-icon { display: block; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); }
+.page-product-bottom .comparison-intro-link:hover,
+body.system-page .comparison-intro-link:hover { background: #5e6e7a; color: #fff; }
+.page-product-bottom .comparison-intro-link:focus,
+body.system-page .comparison-intro-link:focus { outline: none; }
+@media (max-width: 600px) {
+  .page-product-bottom .comparison-intro-link,
+  body.system-page .comparison-intro-link { width: min(100%, 260px); padding: 0.7rem 3.5rem; font-size: 0.6875rem; background: transparent; color: #5e6e7a; border-radius: 0; }
+  .page-product-bottom .comparison-intro-link:hover,
+  body.system-page .comparison-intro-link:hover { background: transparent; color: #5e6e7a; }   /* no sticky dark fill after a tap */
+  .page-product-bottom .comparison-intro-link:active,
+  body.system-page .comparison-intro-link:active { background-color: rgba(0, 0, 0, 0.06); }
+}
+
+/* PHONE: FAQ page titles ("Questions" and the group titles) match the home page section titles (25px, 500, -0.03em) */
+@media (max-width: 600px) {
+  .faq-hero-headline,
+  .faq-group-title { font-size: 25px; font-weight: 500; letter-spacing: -0.75px; line-height: 30px; }
+}
+
+/* PHONE (Build your system page only): 100px from the "Build your system" button to the "FAQ" label */
+@media (max-width: 600px) {
+  body.system-page .page-product-bottom.why-compare { padding-bottom: 27px; }
+}
+
+/* PHONE (Build your system page only): 15px from the "FAQ" letters to the "Questions" letters */
+@media (max-width: 600px) {
+  body.system-page .wp-faq-eyebrow { margin-bottom: 6px; }
+}
+
+/* PHONE (Build your system page only): 15px from the "COMPARE" letters to the "A better way to carry..." letters */
+@media (max-width: 600px) {
+  body.system-page .comparison-intro .why-label { margin-bottom: -10.75px; }
+}
+
+/* PHONE: no blue tap flash on the FAQ answer buttons; a soft grey press shade instead */
+@media (max-width: 600px) {
+  .faq-answer-link { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; transition: border-color .15s, background-color .15s; }
+  .faq-answer-link:active { background-color: rgba(0, 0, 0, 0.06); }
+  .faq-answer-link:focus { outline: none; }
+}
+
+/* SITE-WIDE: no blue/grey tap flash on any button, link or card when tapped on a phone, and no leftover
+   focus ring after a mouse click (keyboard focus still shows its ring). */
+html, body, * { -webkit-tap-highlight-color: transparent; }
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible),
+[tabindex]:focus:not(:focus-visible),
+input[type="submit"]:focus:not(:focus-visible) { outline: none; }
