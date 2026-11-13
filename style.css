@@ -6733,3 +6733,6 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
    Done through the picture's position (not a shift) so the photo still covers the whole box. */
 .shop-card--featured .shop-card-img .shop-card-img-hover { object-position: 50% 67.2%; }
 #section-classic-stack .shop-card-img .shop-card-img-hover { object-position: 50% 67.8%; }
+
+/* Shop dropdown: the Single Pods picture sits 4px higher in its tile and is 5% bigger */
+.nav-drop-card[href*="single-pods"] .nav-drop-img img { transform: translateX(1.5%) translateY(-4px) scale(1.05); }
