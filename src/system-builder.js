@@ -12,12 +12,14 @@ const SUPPLEMENTS = {
     { id: 'collagen',     label: 'Collagen' },
     { id: 'greens',       label: 'Greens / AG1' },
     { id: 'bcaas',        label: 'BCAAs' },
+    { id: 'other-powders', label: 'Other' },
   ],
   hybrid: [
     { id: 'fishoil',      label: 'Fish Oil / Omega-3' },
     { id: 'magnesium',    label: 'Magnesium' },
     { id: 'multivitamin', label: 'Multivitamin' },
     { id: 'ltheanine',    label: 'L-Theanine' },
+    { id: 'other-hybrid', label: 'Other' },
   ],
   pills: [
     { id: 'vitamind',     label: 'Vitamin D3' },
@@ -28,6 +30,7 @@ const SUPPLEMENTS = {
     { id: 'b12',          label: 'B12' },
     { id: 'vitaminc',     label: 'Vitamin C' },
     { id: 'turmeric',     label: 'Turmeric' },
+    { id: 'other-pills',  label: 'Other' },
   ],
   // Not actual supplements — real, individually-purchasable products.
   // Reuses the same chip rendering/selection machinery as the categories
@@ -173,7 +176,11 @@ const CAMERA_REST_TARGET = new THREE.Vector3(0, 0, 0)
 // Eased back from 0.88 toward 1 (further from the pods = smaller on
 // screen) after the three-column layout narrowed the canvas and made
 // that same zoom level read as too large.
-const ZOOM = 1.06
+// On phones the canvas is 46vh tall (CSS, builder.css). The camera's vertical
+// field of view is fixed, so a taller canvas would enlarge the pods; backing
+// the camera off by the same ratio keeps them the size they were at 38vh.
+const CANVAS_SCALE = isMobile ? 46 / 38 : 1
+const ZOOM = 1.06 * CANVAS_SCALE
 function idealCameraZ(podCount) {
   if (podCount <= 1) return 4.7 * ZOOM
   if (podCount === 2) return 5.0 * ZOOM
@@ -232,7 +239,7 @@ scene.add(floor)
 // ── Outer group ──────────────────────────────────────────────
 const OUTER_REST_ROT_Z = THREE.MathUtils.degToRad(15)
 const OUTER_REST_ROT_X = THREE.MathUtils.degToRad(-8)
-const OUTER_REST_POS_Y = isMobile ? 0.05 : -0.15
+const OUTER_REST_POS_Y = isMobile ? -0.2 : -0.15
 
 // Where the stack rests vertically. Normally OUTER_REST_POS_Y; shifts up a
 // little when the extra lid is lying below the stack (see applyFraming).
@@ -298,7 +305,7 @@ const LID_BACK_TILT     = THREE.MathUtils.degToRad(0)    // 0 = lying flat; 90 =
 // of the canvas height; the main pods back off a little to leave it room.
 const LID_CORNER_NX     = -0.64                       // horizontal screen spot (-1 = left edge, 1 = right edge)
 const LID_CORNER_NY     = -0.58                       // vertical screen spot (-1 = bottom edge)
-const LID_CORNER_SIZE   = 0.28                        // lid diameter on screen (fraction of canvas height)
+const LID_CORNER_SIZE   = isMobile ? 0.24 : 0.28                        // lid diameter on screen (fraction of canvas height)
 const LID_ALONE_SIZE    = 0.30                        // ...when it's the only thing on screen
 const LID_CORNER_PULLBACK = 1.10                      // camera distance multiplier with the lid out (1 = pods at full size; 1.10 = about 9% smaller)
 const LID_DIAMETER_UNITS = 1.45                       // the lid's width in scene units at scale 1
@@ -1179,7 +1186,7 @@ function applyFraming() {
       // frame: the camera sees 2 * z * tan(fov / 2) of height at distance z,
       // and the pair should use at most ~87% of that.
       const needed = allH * 1.15 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)))
-      camZ = Math.max(base, needed)
+      camZ = Math.max(base, needed * CANVAS_SCALE)
       // Nudge everything down a few screen pixels (world units = px / px-per-unit
       // at the camera distance). The camera distance and the spacing between
       // the pods and the lid are untouched, so only the position changes.
@@ -1223,7 +1230,7 @@ function updateExtraLidLabel() {
     const radiusPx = lidPose.d * rect.height * 0.5 * lidPose.g
     const halfH    = radiusPx * (0.42 + 0.28 * lidAloneBlend.v)
     el.style.left = ((lidPose.nx * 0.5 + 0.5) * rect.width) + 'px'
-    el.style.top  = (((-lidPose.ny * 0.5 + 0.5) * rect.height) + halfH + 10) + 'px'
+    el.style.top  = (((-lidPose.ny * 0.5 + 0.5) * rect.height) + halfH + (isMobile ? -2 : 10)) + 'px'
     el.classList.add('visible')
     return
   }

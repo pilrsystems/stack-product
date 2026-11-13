@@ -815,34 +815,6 @@ body.system-page {
   min-height: 1.2em;
 }
 
-.bas-cta-btn {
-  display: block;
-  width: 100%;
-  padding: 1.05rem 2rem;
-  background: #818E99;
-  color: #FAFAF8;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  transition: background 0.2s;
-  text-align: center;
-}
-
-.bas-cta-btn:hover {
-  background: #344554;
-}
-
-/* The system builds live as chips are picked, and on desktop the summary is
-   already beside the stack, so this button is only for the stacked layout
-   (phones), where it scrolls down to the summary. */
-@media (min-width: 701px) {
-  .bas-cta-btn { display: none; }
-}
 /* Leave room for the fixed header when the button scrolls the summary into view. */
 #sys-panel-edit { scroll-margin-top: 78px; }
 
@@ -902,14 +874,14 @@ body.system-page {
 @media (max-width: 700px) {
   .system-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh auto auto;
+    grid-template-rows: 46vh auto auto;
     height: auto;
     overflow: visible;
   }
 
   .system-canvas-wrap {
     order: 1;
-    height: 50vh;
+    height: 46vh;
   }
 
   .system-sidebar--left {

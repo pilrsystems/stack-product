@@ -144,7 +144,6 @@
 
           <div class="bas-footer-row">
             <div class="supp-selected-count" id="selected-count"></div>
-            <button class="bas-cta-btn" id="bas-build-btn">View my system &darr;</button>
           </div>
         </div>
       </div>
@@ -431,12 +430,6 @@
     const buildPanel = document.getElementById('system-selector')
     const editPanel  = document.getElementById('sys-panel-edit')
 
-    document.getElementById('bas-build-btn').addEventListener('click', function() {
-      const selectedChips = [...document.querySelectorAll('.supp-chip.selected')]
-      if (selectedChips.length === 0) return
-      editPanel.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    })
-
     // "Add another supplement +" inside the Edit panel (wired by
     // system-builder.js via window.showBysSelector).
     window.showBysSelector = function() {
@@ -498,6 +491,24 @@
           item.classList.toggle('is-active')
         })
       })
+    })()
+  </script>
+  <script>
+    // Phone: "The pilr system" pods swipe sideways; the thin bar under them shows where you are
+    ;(function () {
+      var track = document.querySelector('.pilr-system-pods')
+      var fill = document.querySelector('.pilr-system-progress-fill')
+      if (!track || !fill) return
+      function update() {
+        var max = track.scrollWidth - track.clientWidth
+        var share = max > 0 ? track.clientWidth / track.scrollWidth : 1
+        var pos = max > 0 ? track.scrollLeft / max : 0
+        fill.style.width = (share * 100) + '%'
+        fill.style.transform = 'translateX(' + (pos * (1 - share) / share * 100) + '%)'
+      }
+      track.addEventListener('scroll', update, { passive: true })
+      window.addEventListener('resize', update)
+      update()
     })()
   </script>
   <script type="module" src="./nav-outside.js"></script>
