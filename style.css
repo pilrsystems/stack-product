@@ -6728,3 +6728,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (min-width: 601px) {
   .shop-card-badge { font-size: 0.721875rem; padding: 0.2625rem 0.6825rem; }
 }
+
+/* Classic Stack cards (home page and Shop all): the hover photo sits 2px higher in its box.
+   Done through the picture's position (not a shift) so the photo still covers the whole box. */
+.shop-card--featured .shop-card-img .shop-card-img-hover { object-position: 50% 67.2%; }
+#section-classic-stack .shop-card-img .shop-card-img-hover { object-position: 50% 67.8%; }
