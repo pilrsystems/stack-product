@@ -6706,3 +6706,20 @@ button:focus:not(:focus-visible),
 [role="button"]:focus:not(:focus-visible),
 [tabindex]:focus:not(:focus-visible),
 input[type="submit"]:focus:not(:focus-visible) { outline: none; }
+
+/* Classic Stack product cards (home page and Shop all): on hover the photo fades to the second Classic Stack
+   gallery picture. Hover-capable screens only, so touch phones never swap it. */
+.shop-card-img .shop-card-img-hover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .shop-card:hover .shop-card-img .shop-card-img-hover { opacity: 1; }
+}
