@@ -333,23 +333,23 @@
     <div class="product-images-col">
       <div class="pg-gallery">
         <div class="pg-thumbs" id="pg-thumbs">
-          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Large Pill Pod Prod Image 1.jpg" aria-label="Photo 1">
-            <img src="images/lifestyle_section/Large Pill Pod Prod Image 1.jpg" alt="" />
+          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Large Pill Pod Prod Image 1 Wide.jpg" data-imgstyle="object-position: 50% 67.9%" aria-label="Photo 1">
+            <img src="images/lifestyle_section/Large Pill Pod Prod Image 1 Wide.jpg" alt="" />
           </button>
-          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod Image 2.jpg" aria-label="Photo 2">
-            <img src="images/lifestyle_section/Large Pill Pod Prod Image 2.jpg" alt="" />
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod Image 2 Wide.jpg" data-imgstyle="object-position: 50% 52.7%" aria-label="Photo 2">
+            <img src="images/lifestyle_section/Large Pill Pod Prod Image 2 Wide.jpg" alt="" />
           </button>
-          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod Image 3.jpg" aria-label="Photo 3">
-            <img src="images/lifestyle_section/Large Pill Pod Prod Image 3.jpg" alt="" />
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod Image 3 Wide.jpg" data-imgstyle="object-position: 50% 67.3%" aria-label="Photo 3">
+            <img src="images/lifestyle_section/Large Pill Pod Prod Image 3 Wide.jpg" alt="" />
           </button>
-          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod Image 4.jpg" aria-label="Photo 4">
+          <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod Image 4.jpg" data-imgstyle="flex: none; width: 105%; max-width: none; position: relative; left: -6px; object-position: 50% 45.2%" aria-label="Photo 4">
             <img src="images/lifestyle_section/Large Pill Pod Prod Image 4.jpg" alt="" />
           </button>
         </div>
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img" id="pg-main-img" src="images/lifestyle_section/Large Pill Pod Prod Image 1.jpg" alt="Large Pill Pod" />
+            <img class="pg-main-img" id="pg-main-img" style="object-position: 50% 67.9%" src="images/lifestyle_section/Large Pill Pod Prod Image 1 Wide.jpg" alt="Large Pill Pod" />
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -566,7 +566,7 @@
         var thumb = thumbs[index];
         var src = thumb.dataset.src;
         mainFrame.innerHTML = src
-          ? '<img class="pg-main-img" id="pg-main-img" src="' + src + '" alt="Large Pill Pod" />'
+          ? '<img class="pg-main-img" id="pg-main-img"' + (thumb.dataset.imgstyle ? ' style="' + thumb.dataset.imgstyle + '"' : '') + ' src="' + src + '" alt="Large Pill Pod" />'
           : '<div class="pg-main-placeholder">Product photo</div>';
         thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
         current = index;
