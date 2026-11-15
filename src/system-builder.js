@@ -93,7 +93,7 @@ function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) 
 // missing), this stops applying and the normal per-pod pricing takes
 // over again.
 const CLASSIC_STACK = {
-  id: 'classic-stack', title: 'Classic Stack', price: 68,
+  id: 'classic-stack', title: 'Full Stack', price: 68,
   image: 'images/lifestyle_section/Hand Render.png',
 }
 const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Small Pill Pod'] + POD_BASE_PRICE['Large Pill Pod'] + POD_BASE_PRICE['Powder Pod']
@@ -533,7 +533,7 @@ async function buildStack(podTypes, onReady) {
     // HEIGHT_CACHE remembers every pod type's height across the whole
     // session (not just the current selection) so this stays a session
     // constant regardless of what's currently selected — matching the
-    // nesting depth the default Classic Stack shows on first load.
+    // nesting depth the default Full Stack shows on first load.
     const OVERLAP = Math.min(...Object.values(HEIGHT_CACHE)) * 0.63
 
     // Sum of the fixed half-extents at every boundary — the total stack
@@ -1421,14 +1421,14 @@ function updateSummary(pillPods, hybridPods, powderPods) {
       <div class="sys-acc-row">
         <button class="sys-acc-header">
           <span class="sys-acc-dot"></span>
-          <span class="sys-acc-name"><span class="sys-acc-bundle-badge">Best Value</span>The Classic Stack</span>
+          <span class="sys-acc-name"><span class="sys-acc-bundle-badge">Best Value</span>The Full Stack</span>
           <span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(CLASSIC_STACK_LIST_PRICE)}</span>${formatPrice(CLASSIC_STACK.price)}</span>
           ${chevron}
         </button>
         <div class="sys-acc-body">
           <div class="sys-acc-expanded">
             <div class="sys-acc-pod-img-wrap">
-              <img src="${CLASSIC_STACK.image}" alt="The Classic Stack" class="sys-acc-pod-img" />
+              <img src="${CLASSIC_STACK.image}" alt="The Full Stack" class="sys-acc-pod-img" />
             </div>
             <div class="sys-acc-pod-info">
               <div class="sys-acc-info-field">

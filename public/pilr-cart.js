@@ -6,7 +6,7 @@
 ;(function(global) {
   const STORAGE_KEY = 'pilr_cart'
 
-  // Classic Stack always comes with a free travel scooper. Kept as its own
+  // Full Stack always comes with a free travel scooper. Kept as its own
   // id (not 'travel-scooper') so it never merges with a scooper someone
   // bought on its own at full price — the cart would have no way to tell
   // a free unit and a paid one apart once merged into a single line's
@@ -22,7 +22,7 @@
   }
 
   // Every order comes with one lid free, whichever pod(s) it's for — unlike
-  // the scooper above (Classic Stack only), this triggers off any pod
+  // the scooper above (Full Stack only), this triggers off any pod
   // product being in the cart at all. Kept as its own id (not 'single-lid')
   // for the same reason as the scooper: so it never merges with lids bought
   // on their own at full price (someone wanting a spare), which still use
@@ -124,7 +124,7 @@
     const cart = getCart()
     if (quantity <= 0) {
       cart.items = cart.items.filter(i => i.id !== id)
-      // The free scooper perk goes away with the Classic Stack it came with.
+      // The free scooper perk goes away with the Full Stack it came with.
       if (id === 'classic-stack') {
         cart.items = cart.items.filter(i => i.id !== FREE_SCOOPER_PRODUCT.id)
       }
