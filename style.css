@@ -6780,10 +6780,12 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (hover: hover) {
   #section-single-pods:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-6px, -12px) scale(1.695); }
 }
-/* Large Pill Pod card only: its hover image is 5% smaller than the default (1.568 -> 1.49, hover 1.647 -> 1.565) */
-.shop-card[href*="hybrid-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-6px) scale(1.49); }
+/* Large Pill Pod card (and the home page Single Pods card, which shows the same picture): its hover image is 5% smaller than the default (1.568 -> 1.49, hover 1.647 -> 1.565) */
+.shop-card[href*="hybrid-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
+.shop-card[href*="section-single-pods"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-6px) scale(1.49); }
 @media (hover: hover) {
-  .shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-6px) scale(1.565); }
+  .shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
+  .shop-card[href*="section-single-pods"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-6px) scale(1.565); }
 }
 
 /* Build Your System cards (home page and Shop all): the hover picture is a full composition, so it starts at its natural
@@ -6791,4 +6793,14 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 .shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: scale(1); }
 @media (hover: hover) {
   .shop-card[href*="build-your-system"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: scale(1.05); }
+}
+/* Home page Classic Stack card only: its hover image is 10% bigger than on Shop all (1.568 -> 1.728, hover 1.647 -> 1.815) */
+.shop-card--featured .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-12px) scale(1.728); }
+@media (hover: hover) {
+  .shop-card--featured:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-12px) scale(1.815); }
+}
+/* Home page Single Pods card only: its hover image is 3% smaller than the Large Pill Pod card's (1.49 -> 1.445, hover 1.565 -> 1.518) */
+.shop-card[href*="section-single-pods"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(10px, 0px) scale(1.445); }
+@media (hover: hover) {
+  .shop-card[href*="section-single-pods"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(10px, 0px) scale(1.518); }
 }
