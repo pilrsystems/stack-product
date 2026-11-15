@@ -6776,16 +6776,16 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   #section-classic-stack:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-10px) scale(1.764); }
 }
 /* Powder Pod card only: its hover image is 5% bigger than the Classic Stack's */
-#section-single-pods .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-9px, -19px) scale(1.693); }
+#section-single-pods .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-11px, -21px) scale(1.727); }
 @media (hover: hover) {
-  #section-single-pods:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-9px, -19px) scale(1.779); }
+  #section-single-pods:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-11px, -21px) scale(1.815); }
 }
 /* Large Pill Pod card (and the home page Single Pods card, which shows the same picture): its hover image is 5% smaller than the default (1.568 -> 1.49, hover 1.647 -> 1.565) */
 .shop-card[href*="hybrid-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
-.shop-card[href*="section-single-pods"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-6px) scale(1.49); }
+.shop-card[href*="section-single-pods"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.460); }
 @media (hover: hover) {
   .shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
-  .shop-card[href*="section-single-pods"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-6px) scale(1.565); }
+  .shop-card[href*="section-single-pods"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.534); }
 }
 
 /* Build Your System cards (home page and Shop all): the hover picture is a full composition, so it starts at its natural
