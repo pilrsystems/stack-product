@@ -6807,8 +6807,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Web, home page "Many problems" cards: the 7-day organizer and Ziploc photos get a slight blur and are 5% smaller */
 @media (min-width: 601px) {
-  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 157.54px; height: 84.71px; filter: blur(1px); position: relative; top: 3px; }
-  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 94.46px; filter: blur(1px); }
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 149.66px; height: 80.47px; filter: blur(1px); position: relative; top: 3px; }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 91.63px; filter: blur(1px); }
+  .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 97.85px; filter: blur(1.1px); }   /* Full-size tubs photo, same blur as the other two */
 }
 
 /* Web, home page pilr card: the pods picture is 5% smaller (60.2% -> 57.19% of the card width) and 8px lower (47px -> 55px from the top) */
@@ -6827,9 +6828,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 55.26px; }
 }
 
-/* Phone, home page pilr card: the pods picture is 5%, then another 10%, smaller (45.5% -> 38.91% of the card width) */
+/* Phone, home page pilr card: the pods picture is 5%, 10% smaller, then 5% bigger and 5px lower (45.5% -> 40.86% of the card width; 24px -> 29px from the top) */
 @media (max-width: 600px) {
-  .problem--v2 .problem-card-art { width: 38.91%; }
+  .problem--v2 .problem-card-art { width: 42.9%; top: 32px; }
 }
 /* Home page Build Your System card only: its hover image sits 5px lower than on Shop all */
 .shop-inner .shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 25px) scale(1.3515); }
@@ -6852,3 +6853,10 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Shop dropdown, All Products tile: the picture is 20%, 20%, then 10% bigger inside its tile */
 .nav-drop-card.nav-drop-desktop[href="./catalog.html"] .nav-drop-img img { transform: translate(8px, 8px) translateX(1.5%) scale(1.536); }
+
+/* Phone, home page "Many problems" cards: the same slight blur as on web on the three photos */
+@media (max-width: 600px) {
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide,
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { filter: blur(1px); }
+  .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { filter: blur(1.1px); }
+}
