@@ -6858,5 +6858,6 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (max-width: 600px) {
   .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide,
   .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { filter: blur(1px); }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { position: relative; top: 2px; }   /* Ziplocs photo 2px lower */
   .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { filter: blur(1.1px); }
 }
