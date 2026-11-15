@@ -6770,10 +6770,10 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 }
 /* Classic Stack cards only: the hover image sits 2px higher than the Powder Pod's (8px up instead of 6px) */
 .shop-card--featured .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
-#section-classic-stack .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-8px) scale(1.568); }
+#section-classic-stack .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-10px) scale(1.679); }
 @media (hover: hover) {
   .shop-card--featured:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
-  #section-classic-stack:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-8px) scale(1.647); }
+  #section-classic-stack:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-10px) scale(1.764); }
 }
 /* Powder Pod card only: its hover image is 5% bigger than the Classic Stack's */
 #section-single-pods .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-6px, -12px) scale(1.613); }
@@ -6790,17 +6790,28 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Build Your System cards (home page and Shop all): the hover picture is a full composition, so it starts at its natural
    size (not zoomed like the single-product cutouts) and grows 5% on hover. */
-.shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: scale(1); }
+.shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 21px) scale(1.3515); }
 @media (hover: hover) {
-  .shop-card[href*="build-your-system"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: scale(1.05); }
+  .shop-card[href*="build-your-system"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 21px) scale(1.418); }
 }
 /* Home page Classic Stack card only: its hover image is 10% bigger than on Shop all (1.568 -> 1.728, hover 1.647 -> 1.815) */
-.shop-card--featured .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-12px) scale(1.728); }
+.shop-card--featured .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-14px) scale(1.763); }
 @media (hover: hover) {
-  .shop-card--featured:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-12px) scale(1.815); }
+  .shop-card--featured:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-14px) scale(1.851); }
 }
 /* Home page Single Pods card only: its hover image is 3% smaller than the Large Pill Pod card's (1.49 -> 1.445, hover 1.565 -> 1.518) */
 .shop-card[href*="section-single-pods"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(10px, 0px) scale(1.445); }
 @media (hover: hover) {
   .shop-card[href*="section-single-pods"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(10px, 0px) scale(1.518); }
+}
+
+/* Web, home page "Many problems" cards: the 7-day organizer and Ziploc photos get a slight blur and are 5% smaller */
+@media (min-width: 601px) {
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 165.83px; height: 89.17px; filter: blur(1px); position: relative; top: 3px; }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 99.43px; filter: blur(1px); }
+}
+
+/* Web, home page pilr card: the pods picture is 5% smaller (60.2% -> 57.19% of the card width) and 8px lower (47px -> 55px from the top) */
+@media (min-width: 601px) {
+  .problem--v2 .problem-card-art { width: 57.19%; top: 55px; }
 }
