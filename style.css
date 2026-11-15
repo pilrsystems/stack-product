@@ -318,8 +318,8 @@ body {
 .nav-drop-card:hover { opacity: 0.7; }
 
 .nav-drop-img {
-  width: clamp(96px, 7.43vw, 107px);
-  height: clamp(96px, 7.43vw, 107px);
+  width: clamp(100.8px, 7.8vw, 112.35px);    /* 5% bigger tile (the picture inside is sized in % of it, so it grows too) */
+  height: clamp(100.8px, 7.8vw, 112.35px);
   flex-shrink: 0;
   border-radius: var(--radius);                 /* same corner roundness as the home page cards */
   background: #F5F5F5;   /* web: the same light grey as the shop cards (phone menu overrides below) */
@@ -372,7 +372,7 @@ body {
 .nav-drop-img--large img {
   width: 84%;
   height: 84%;
-  transform: none;
+  transform: scale(1.02);   /* Shop dropdown: Build Your System picture 2% bigger (tile unchanged) */
 }
 
 .nav-drop-text {
@@ -6851,4 +6851,4 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 }
 
 /* Shop dropdown, All Products tile: the picture is 20%, 20%, then 10% bigger inside its tile */
-.nav-drop-card.nav-drop-desktop[href="./catalog.html"] .nav-drop-img img { transform: translate(8px, 8px) translateX(1.5%) scale(1.584); }
+.nav-drop-card.nav-drop-desktop[href="./catalog.html"] .nav-drop-img img { transform: translate(8px, 8px) translateX(1.5%) scale(1.536); }
