@@ -6815,3 +6815,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (min-width: 601px) {
   .problem--v2 .problem-card-art { width: 57.19%; top: 55px; }
 }
+/* Small Pill Pod card only: its hover image is 20%, 30%, 15%, then another 15% bigger than the default (1.568 -> 3.236, hover 1.647 -> 3.397) */
+.shop-card[href*="pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.333); }
+@media (hover: hover) {
+  .shop-card[href*="pill-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.499); }
+}
