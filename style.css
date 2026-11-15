@@ -6790,9 +6790,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Build Your System cards (home page and Shop all): the hover picture is a full composition, so it starts at its natural
    size (not zoomed like the single-product cutouts) and grows 5% on hover. */
-.shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 21px) scale(1.3515); }
+.shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 20px) scale(1.3515); }
 @media (hover: hover) {
-  .shop-card[href*="build-your-system"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 21px) scale(1.418); }
+  .shop-card[href*="build-your-system"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 20px) scale(1.418); }
 }
 /* Home page Classic Stack card only: its hover image is 10% bigger than on Shop all (1.568 -> 1.728, hover 1.647 -> 1.815) */
 .shop-card--featured .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translateY(-14px) scale(1.763); }
