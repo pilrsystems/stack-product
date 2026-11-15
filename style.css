@@ -161,9 +161,7 @@ body {
   top: 100%;
   left: 50%;
   width: 100vw;
-  background: rgba(255, 255, 255, 0.7);
-  -webkit-backdrop-filter: blur(22px) saturate(1.3);
-  backdrop-filter: blur(22px) saturate(1.3);   /* no brightness boost here: on a light page it would wash the see-through look out to plain white */
+  background: #ffffff;   /* web: fully opaque (phone menu restyles this below) */
   border-top: 1px solid #e8e3dc;
   box-shadow: 0 12px 40px rgba(0,0,0,0.07);
   opacity: 0;
@@ -323,9 +321,8 @@ body {
   width: clamp(96px, 7.43vw, 107px);
   height: clamp(96px, 7.43vw, 107px);
   flex-shrink: 0;
-  border-radius: 8px;                           /* soft corners and a lighter frosted tile, like Seed's menu */
-  background: rgba(255, 255, 255, 0.38);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius);                 /* same corner roundness as the home page cards */
+  background: #F5F5F5;   /* web: the same light grey as the shop cards (phone menu overrides below) */
   overflow: hidden;
   display: flex;
   align-items: center;
