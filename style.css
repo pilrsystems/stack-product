@@ -6727,7 +6727,7 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 #section-classic-stack .shop-card-img .shop-card-img-hover { object-position: 50% 67.8%; }
 
 /* Shop dropdown: the Single Pods picture sits 4px higher in its tile and is 5% bigger */
-.nav-drop-card[href*="single-pods"] .nav-drop-img img { transform: translateX(1.5%) translateY(-4px) scale(1.05); }
+.nav-drop-card[href*="single-pods"] .nav-drop-img img { transform: translateX(1.5%) translateY(-6px) scale(1.26); }
 
 /* Web: 10px between the small label and the title in the pilr system, Compare and TSA sections */
 @media (min-width: 601px) {
@@ -6849,3 +6849,6 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (hover: hover) {
   #section-accessories:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(11px, -3px) scale(1.05); }
 }
+
+/* Shop dropdown, All Products tile: the picture is 20%, 20%, then 10% bigger inside its tile */
+.nav-drop-card.nav-drop-desktop[href="./catalog.html"] .nav-drop-img img { transform: translate(8px, 8px) translateX(1.5%) scale(1.584); }
