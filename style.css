@@ -6807,16 +6807,32 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Web, home page "Many problems" cards: the 7-day organizer and Ziploc photos get a slight blur and are 5% smaller */
 @media (min-width: 601px) {
-  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 165.83px; height: 89.17px; filter: blur(1px); position: relative; top: 3px; }
-  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 99.43px; filter: blur(1px); }
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 157.54px; height: 84.71px; filter: blur(1px); position: relative; top: 3px; }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 94.46px; filter: blur(1px); }
 }
 
 /* Web, home page pilr card: the pods picture is 5% smaller (60.2% -> 57.19% of the card width) and 8px lower (47px -> 55px from the top) */
 @media (min-width: 601px) {
-  .problem--v2 .problem-card-art { width: 57.19%; top: 55px; }
+  .problem--v2 .problem-card-art { width: 51.47%; top: 72px; }
 }
 /* Small Pill Pod card only: its hover image is 20%, 30%, 15%, then another 15% bigger than the default (1.568 -> 3.236, hover 1.647 -> 3.397) */
 .shop-card[href*="pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.333); }
 @media (hover: hover) {
   .shop-card[href*="pill-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.499); }
+}
+
+/* Phone, home page "Many problems" cards: the 7-day organizer and Ziploc photos are 15%, then another 5%, smaller */
+@media (max-width: 600px) {
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 95.12px; height: 51.12px; }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 55.26px; }
+}
+
+/* Phone, home page pilr card: the pods picture is 5%, then another 10%, smaller (45.5% -> 38.91% of the card width) */
+@media (max-width: 600px) {
+  .problem--v2 .problem-card-art { width: 38.91%; }
+}
+/* Home page Build Your System card only: its hover image sits 5px lower than on Shop all */
+.shop-inner .shop-card[href*="build-your-system"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 25px) scale(1.3515); }
+@media (hover: hover) {
+  .shop-inner .shop-card[href*="build-your-system"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(26px, 25px) scale(1.418); }
 }
