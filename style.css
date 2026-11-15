@@ -6861,3 +6861,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { position: relative; top: 2px; }   /* Ziplocs photo 2px lower */
   .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { filter: blur(1.1px); }
 }
+
+/* Phone menu, Shop tiles: the Small Pill Pod picture is 5% smaller and the Large Pill Pod picture 1px further left inside their tiles */
+@media (max-width: 600px) {
+  .nav-links .nav-drop-card.nav-drop-phone[href="./pill-pod.html"] .nav-drop-img img { transform: translateX(1.5%) scale(0.95); }
+  .nav-links .nav-drop-card.nav-drop-phone[href="./hybrid-pod.html"] .nav-drop-img img { transform: translateX(calc(1.5% - 1px)); }
+}
