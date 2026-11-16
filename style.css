@@ -6975,3 +6975,5 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 /* Build Your System: room above the pre-order box (it sits right under the pod list) */
 .sys-panel-body .preorder-card { margin-top: 18px; margin-bottom: 0; }
 .sys-panel-body .preorder-note { margin: 0.75rem 0 0; }
+/* Product pages: 18px between the feature list and the next item (pre-order box, or quantity + button) */
+#product-info-inner ul.product-feature-list { margin-bottom: 2px; }
