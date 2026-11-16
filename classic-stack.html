@@ -570,7 +570,7 @@
   <script>
     const stickyBar=document.getElementById('product-sticky-bar');
     var _addBtn=document.querySelector('.product-btn-add');
-    if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
+    if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting&&(!window.matchMedia('(max-width: 600px)').matches||e[0].boundingClientRect.top<0));},{threshold:0}).observe(_addBtn);}
 
     // Product accordions
     document.querySelectorAll('.product-acc-trigger').forEach(btn => {
@@ -647,5 +647,6 @@
   <script type="module" src="./nav-outside.js"></script>
   <script type="module" src="./nav-scroll.js"></script>
   <script type="module" src="./src/preorder.js"></script>
+  <script type="module" src="./src/gallery-swipe.js"></script>
 </body>
 </html>

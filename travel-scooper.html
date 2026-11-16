@@ -430,7 +430,7 @@
     const navEl=document.querySelector('nav.nav'),shopAllLi=document.querySelector('.nav-has-dropdown'),shopDropdown=document.querySelector('.nav-dropdown'),dimOverlay=document.getElementById('nav-dim-overlay');let dropOpen=false,dropCloseTimer=null;function openDrop(){clearTimeout(dropCloseTimer);dropCloseTimer=null;shopAllLi.classList.add('dropdown-active');dimOverlay.classList.add('active');dropOpen=true}function closeDrop(){clearTimeout(dropCloseTimer);dropCloseTimer=null;shopAllLi.classList.remove('dropdown-active');dimOverlay.classList.remove('active');dropOpen=false}dimOverlay.addEventListener('click',closeDrop);function inZone(x,y){const li=shopAllLi.getBoundingClientRect(),dd=shopDropdown.getBoundingClientRect();if(x>=li.left&&x<=li.right&&y>=li.top&&y<=li.bottom)return true;if(y>=dd.top&&y<=dd.bottom)return true;if(y>li.bottom&&y<dd.top)return true;return false}shopAllLi.addEventListener('mouseenter',openDrop);document.addEventListener('mousemove',(e)=>{if(!dropOpen)return;if(inZone(e.clientX,e.clientY)){clearTimeout(dropCloseTimer);dropCloseTimer=null}else if(!dropCloseTimer){dropCloseTimer=setTimeout(closeDrop,150)}});
     const stickyBar=document.getElementById('product-sticky-bar');
     var _addBtn=document.querySelector('.product-btn-add');
-    if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting);},{threshold:0}).observe(_addBtn);}
+    if(_addBtn){new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting&&(!window.matchMedia('(max-width: 600px)').matches||e[0].boundingClientRect.top<0));},{threshold:0}).observe(_addBtn);}
     let qty=1;document.getElementById('qty-minus').addEventListener('click',()=>{if(qty>1){qty--;document.getElementById('qty-val').textContent=qty}});document.getElementById('qty-plus').addEventListener('click',()=>{qty++;document.getElementById('qty-val').textContent=qty});
     document.querySelectorAll('.product-acc-trigger').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.product-acc-item').classList.toggle('open')));
   </script>
@@ -490,5 +490,6 @@
   <script type="module" src="./nav-outside.js"></script>
   <script type="module" src="./nav-scroll.js"></script>
   <script type="module" src="./src/preorder.js"></script>
+  <script type="module" src="./src/gallery-swipe.js"></script>
 </body>
 </html>

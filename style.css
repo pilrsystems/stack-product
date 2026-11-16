@@ -5091,10 +5091,10 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex; align-items: center; gap: 0.1rem;
 }
 .product-reviews-star {
-  width: 10px; height: 10px; fill: #5e6e7a;
+  width: 12.65px; height: 12.65px; fill: #5e6e7a;
 }
 .product-reviews-count {
-  font-size: 0.57rem; color: #7a8a94;
+  font-size: 0.72105rem; color: #7a8a94;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-feature-list {
@@ -5111,7 +5111,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex; align-items: baseline; gap: 0.75rem;
 }
 .product-title-price {
-  font-size: 1.5rem; font-weight: 400; color: #5e6e7a;   /* same colour as the product title */
+  font-size: 1.65rem; font-weight: 400; color: #5e6e7a;   /* same colour as the product title */
   letter-spacing: -0.025em;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -7009,3 +7009,77 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 
 /* Footer email box: confirmation after signing up */
 .footer-email-thanks { margin: 0; font-size: 0.95rem; line-height: 1.5; color: #fff; }
+
+/* Phone, Shop all: the Travel Scooper picture sits 2px further left (translate 8px -> 6px). !important because its position is set inline in catalog.html. */
+@media (max-width: 600px) {
+  #section-accessories .shop-card-img > img:not(.shop-card-img-hover) { transform: translate(6px, 5px) !important; }
+}
+
+/* ── PHONE: product pages — big photo on top, swipeable photo strip underneath, info below (like the Hears layout) ── */
+@media (max-width: 600px) {
+  body .product-hero { display: block; padding-top: 66px; }
+  body .product-images-col { position: static; margin: 0; display: block; }
+  body .pg-gallery { flex-direction: column; gap: 0; align-items: stretch; }
+  body .pg-main { order: 1; flex: none; width: 100%; max-width: none; }
+  body .pg-main-frame { border-radius: 0; width: 100%; }
+  body .pg-arrow { display: none; }   /* swipe instead */
+  body .pg-thumbs {
+    order: 2; width: auto; max-height: none; flex-direction: row; gap: 0.6rem;
+    overflow-x: auto; overflow-y: hidden; padding: 0.85rem 1.5rem 0.25rem;
+    scroll-snap-type: x proximity; scroll-padding-left: 1.5rem; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  body .pg-thumbs::-webkit-scrollbar { display: none; }
+  body .pg-thumb { flex: 0 0 57px; width: 57px; scroll-snap-align: start; position: relative; overflow: visible; border-color: transparent !important; }
+  body .pg-thumb img { border-radius: var(--radius); }
+  body .pg-thumb::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 0; background: #5e6e7a; opacity: 0; transition: opacity .2s; }
+  body .pg-thumb.is-active::after { opacity: 1; }
+  body .pg-thumbs { padding-bottom: 16px; }
+  body #product-info-inner, body .product-info-inner { padding: 11px 1.5rem 0 !important; }
+  body .product-hero { margin: 0 !important; width: 100% !important; max-width: none !important; }
+  /* The per-photo nudges and zooms on the product pages were set in pixels for the wide web frame, so on a phone
+     they would leave gaps; the photos are simply centred (their vertical crop position still applies). */
+  body .pg-main-frame .pg-main-img { transform: none !important; left: 0 !important; margin: 0 !important; width: 100% !important; max-width: 100% !important; }
+}
+
+/* ── PHONE: the product photo swipe carousel (built by src/gallery-swipe.js) ── */
+.pg-swipe { display: none; }
+@media (max-width: 600px) {
+  body .pg-main.has-swipe .pg-main-frame { display: none; }
+  body .pg-swipe {
+    display: flex; width: 100%; aspect-ratio: 1 / 1; background: #EFEDE9;
+    overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  body .pg-swipe::-webkit-scrollbar { display: none; }
+  body .pg-swipe-slide { flex: 0 0 100%; width: 100%; height: 100%; scroll-snap-align: center; scroll-snap-stop: always; position: relative; }
+  body .pg-swipe-slide img, body .pg-swipe-slide video { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; }
+  body .pg-swipe-slide--empty {
+    display: flex; align-items: center; justify-content: center; color: #9aa7ae; font-size: 0.8rem;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 1px dashed rgba(94,110,122,0.35);
+  }
+}
+
+/* Product page title (phone): 26px */
+@media (max-width: 600px) {
+  body .product-page-title { font-size: 27px !important; }
+  body .product-title-price { font-size: 24px !important; }
+}
+
+/* Sticky pre-order bar (phone): fully off-screen until the main button is scrolled past, then slides up */
+@media (max-width: 600px) {
+  body .product-sticky-bar {
+    transform: translateY(calc(100% + 4rem)); visibility: hidden; box-shadow: none;
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), visibility 0s linear 0.35s, box-shadow 0s linear 0.35s;
+  }
+  body .product-sticky-bar.is-visible {
+    transform: translateY(0); visibility: visible; box-shadow: 0 8px 32px rgba(40,55,65,0.14), 0 2px 8px rgba(40,55,65,0.07);
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), visibility 0s, box-shadow 0s;
+  }
+}
+
+/* Product pages (phone): pod pages use the Classic Stack text sizes for stars, review count and tagline */
+@media (max-width: 600px) {
+  body #product-info-inner .product-reviews-star { width: 12.65px !important; height: 12.65px !important; }
+  body #product-info-inner .product-reviews-count { font-size: 0.72105rem !important; }
+  body #product-info-inner .product-page-tagline { font-size: 0.98rem !important; }
+}
