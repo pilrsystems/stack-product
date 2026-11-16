@@ -197,6 +197,19 @@
     'single-lid-free': 'Locks every pod shut tight.',
   }
 
+  // The descriptions shown on the Shop all page, used for the rows in "Your Items".
+  // Also used for the Free Gifts rows.
+  const CATALOG_BLURB_BY_ID = {
+    'pill-pod': 'Built for your smaller pills and tablets.',
+    'hybrid-pod': 'Built for your larger pills, capsules, and gummies.',
+    'powder-pod': 'Built for any powder.',
+    'classic-stack': 'Our three-pod starter set',
+    'travel-scooper': '5 mL stainless steel scooper. Designed to fit inside the Powder Pod.',
+    'travel-scooper-free': '5 mL stainless steel scooper. Designed to fit inside the Powder Pod.',
+    'single-lid': 'Compatible with all three pods across your stack. For extra stacks or replacements.',
+    'single-lid-free': 'Compatible with all three pods across your stack. For extra stacks or replacements.',
+  }
+
   // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
   // backfilling cart items that were added to localStorage before a given
   // product started carrying its own listPrice field - so an older cart
@@ -408,6 +421,22 @@
     )
   }
 
+  // The same product-card pictures used on the Shop all page, so the cart and the
+  // "Exclusive offers" carousel look like the rest of the site. Looked up by product
+  // id at render time (so carts saved earlier with older pictures pick them up too);
+  // anything not listed keeps the picture it was added with.
+  const CARD_IMAGE_BY_ID = {
+    'classic-stack':        'images/lifestyle_section/Hand Render.png',
+    'powder-pod':           'images/lifestyle_section/Powder Pod Card.png',
+    'hybrid-pod':           'images/lifestyle_section/Large Pill Pod Card 2.png',
+    'pill-pod':             'images/lifestyle_section/Small Pill Pod Card 2.png',
+    'travel-scooper':       'images/lifestyle_section/Travel Scooper Card.png',
+    'travel-scooper-free':  'images/lifestyle_section/Travel Scooper Card.png',
+    'single-lid':           'images/lifestyle_section/Full Render.png',
+    'single-lid-free':      'images/lifestyle_section/Full Render.png',
+  }
+  function cardImageFor(id, fallback) { return CARD_IMAGE_BY_ID[id] || fallback }
+
   // Shared row shell — image, name, price, blurb, and whatever qty-control
   // markup is passed in. Used for ordinary rows and both halves of a split
   // free-perk line (see perkDrawerRowsHtml) so all three stay visually
@@ -417,7 +446,7 @@
     return (
       '<div class="cart-drawer-item" data-key="' + opts.key + '">' +
         (href ? '<a class="cart-drawer-item-img" href="' + href + '">' : '<div class="cart-drawer-item-img">') +
-          '<img src="' + opts.image + '" alt="' + opts.title + '" />' +
+          '<img src="' + cardImageFor(opts.key, opts.image) + '" alt="' + opts.title + '" />' +
         (href ? '</a>' : '</div>') +
         '<div class="cart-drawer-item-info">' +
           '<p class="cart-drawer-item-name">' + (href ? '<a href="' + href + '">' + opts.title + '</a>' : opts.title) + '</p>' +
@@ -470,7 +499,7 @@
       image: item.image,
       href: d.href,
       priceInner: priceInner,
-      desc: PRODUCT_BLURB_BY_ID[item.id],
+      desc: CATALOG_BLURB_BY_ID[item.id] || PRODUCT_BLURB_BY_ID[item.id],
       qtyHtml: qtyCtrlHtml(item.id, item.quantity),
     })
   }
@@ -486,7 +515,7 @@
     const paidQty = item.quantity - 1
     const split = paidQty > 0
     const href = PRODUCT_PAGE_BY_ID[item.id] || null
-    const desc = PRODUCT_BLURB_BY_ID[item.id]
+    const desc = CATALOG_BLURB_BY_ID[item.id] || PRODUCT_BLURB_BY_ID[item.id]
 
     const freeHtml = drawerRowHtml({
       key: item.id,
@@ -551,7 +580,7 @@
       return (
         '<div class="cart-drawer-offer-card">' +
           (href ? '<a class="cart-drawer-offer-img" href="' + href + '">' : '<div class="cart-drawer-offer-img">') +
-            '<img src="' + p.image + '" alt="' + p.title + '" />' +
+            '<img src="' + cardImageFor(p.id, p.image) + '" alt="' + p.title + '" />' +
           (href ? '</a>' : '</div>') +
           '<div class="cart-drawer-offer-info">' +
             '<p class="cart-drawer-offer-name">' + (href ? '<a href="' + href + '">' + p.title + '</a>' : p.title) + '</p>' +

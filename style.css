@@ -5192,7 +5192,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
    above it, matching the accordion dividers. */
 .bys-block {
   display: flex; flex-direction: row; align-items: center; gap: 1.25rem;
-  padding: 1.75rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+  padding: 1.75rem 0; border-top: none;   /* one line only above it: the Size guide section's own bottom line */
   text-decoration: none; cursor: pointer;
 }
 .bys-photo {
@@ -6867,3 +6867,19 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   .nav-links .nav-drop-card.nav-drop-phone[href="./pill-pod.html"] .nav-drop-img img { transform: translateX(1.5%) scale(0.95); }
   .nav-links .nav-drop-card.nav-drop-phone[href="./hybrid-pod.html"] .nav-drop-img img { transform: translateX(calc(1.5% - 1px)); }
 }
+
+/* Cart: item and offer pictures sit on the same light grey as the product cards;
+   the "Exclusive offers" boxes are plain rectangles and their "+ Add" buttons have very small corners. */
+.cart-drawer-item-img { background: #F5F5F5; }
+.cart-drawer-offer-card { border-radius: 0; }
+.cart-drawer-offer-img { background: #F5F5F5; border-radius: 0; }
+.cart-drawer-offer-add { border-radius: 2px; }
+/* Cart: the card pictures are a little smaller inside their squares (about 84% of the square) */
+.cart-drawer-item-img img, .cart-drawer-offer-img img { padding: 8%; box-sizing: border-box; }
+/* Cart: the "Exclusive offers" boxes are the same light grey as the product cards */
+.cart-drawer-offer-card { background: #F5F5F5; }
+/* Cart: the "Free" badge and the quantity box are less rounded */
+.cart-drawer-free-badge { border-radius: 8px; }
+.cart-drawer-qty-val { border-radius: 4px; }
+/* Cart: the Small Pill Pod picture is 5% smaller inside its square (rows and offers) */
+.cart-drawer-item-img img[alt="Small Pill Pod"], .cart-drawer-offer-img img[alt="Small Pill Pod"] { transform: scale(0.95); }
