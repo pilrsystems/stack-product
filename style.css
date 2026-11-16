@@ -6970,3 +6970,5 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 .footer-email-btn svg path { stroke-width: 3; transform: translateX(0.65px) scale(0.81); transform-origin: 16px 16px; }   /* arrow 10% smaller again, nudged left to centre it in the circle */
 .footer-email-btn:hover svg circle { fill: rgba(255, 255, 255, 0.38); }
 .footer-email-btn:hover { opacity: 1; }
+/* Pre-order card: 18px (not 16px) between the box and the next item */
+.preorder-card { margin-bottom: 2px; }
