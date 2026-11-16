@@ -4019,12 +4019,13 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transform: translateX(100%);
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(calc(100% + 4rem));   /* fully off screen: it sits 1rem in from the edge, so a plain 100% left a sliver (and its shadow) showing */
+  visibility: hidden;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.55s;
   box-shadow: -8px 0 32px rgba(0,0,0,0.08);
 }
 
-.cart-drawer.open { transform: translateX(0); }
+.cart-drawer.open { transform: translateX(0); visibility: visible; transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s; }
 
 .cart-drawer-header {
   display: flex;
@@ -6933,7 +6934,7 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 .preorder-perks .product-accordion-panel.is-open { max-height: 240px; padding-bottom: 1rem; }
 .preorder-perk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.2rem; padding: 0.1rem 1.1rem 0; }
 .preorder-perk { display: flex; align-items: flex-start; gap: 0.6rem; }
-.preorder-perk svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: #7a8a94; }
+.preorder-perk svg { width: 18.48px; height: 18.48px; flex-shrink: 0; margin-top: 2px; color: #7a8a94; }
 .preorder-perk-name { font-size: 0.74rem; font-weight: 600; color: #3d4f5c; margin: 0; }
 .preorder-perk-sub { font-size: 0.66rem; color: #7a8a94; margin: 0.1rem 0 0; }
 .preorder-note { font-size: 0.64rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: -0.2rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -6956,3 +6957,9 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 @media (hover: hover) {
   .wp-system-card.shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.58); }
 }
+/* Pre-order card: all four icons 10% then 5% bigger (16px -> 18.48px; the scooper icon keeps its extra 5%: 19.4px) */
+.preorder-perk:first-child svg { width: 21.34px; height: 21.34px; }
+.preorder-perk:nth-child(2) svg { width: 20.33px; height: 20.33px; }   /* the Single Lid icon, also 10% bigger */
+/* Pre-order card perks: the four icons sit centred in the same 21.34px column, so all the text lines up */
+.preorder-perk:nth-child(2) svg { margin-left: 0.5px; margin-right: 0.5px; }
+.preorder-perk:nth-child(3) svg, .preorder-perk:nth-child(4) svg { margin-left: 1.43px; margin-right: 1.43px; }
