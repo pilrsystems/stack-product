@@ -6902,7 +6902,7 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 .preorder-bar {
   position: fixed; top: 0; left: 0; right: 0; height: 34px; z-index: 101;
   display: flex; align-items: center; justify-content: center; gap: clamp(1.25rem, 5vw, 4.5rem);
-  padding: 0 1rem; background: #5e6e7a; color: #fff;
+  padding: 0 1rem; background: #818E99; color: #fff;   /* same slate as the footer */
   font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; white-space: nowrap;
   transition: transform 0.35s ease;
@@ -6963,3 +6963,10 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 /* Pre-order card perks: the four icons sit centred in the same 21.34px column, so all the text lines up */
 .preorder-perk:nth-child(2) svg { margin-left: 0.5px; margin-right: 0.5px; }
 .preorder-perk:nth-child(3) svg, .preorder-perk:nth-child(4) svg { margin-left: 1.43px; margin-right: 1.43px; }
+
+/* Footer email box: a whiter, softly translucent circle with a bolder white arrow */
+.footer-email-btn svg { width: 24px; height: 24px; }
+.footer-email-btn svg circle { fill: rgba(255, 255, 255, 0.38); }
+.footer-email-btn svg path { stroke-width: 3; }
+.footer-email-btn:hover svg circle { fill: rgba(255, 255, 255, 0.55); }
+.footer-email-btn:hover { opacity: 1; }
