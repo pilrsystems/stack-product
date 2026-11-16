@@ -6909,7 +6909,7 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 .preorder-bar-progress { display: inline-flex; align-items: center; gap: 0.75rem; }
 .preorder-bar-track { width: 84px; height: 3px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; }
 .preorder-bar-fill { display: block; height: 100%; width: 0; background: #fff; }
-.nav.nav--hidden + .preorder-bar { transform: translateY(-100%); }   /* leaves with the header on scroll down */
+/* the bar stays in place when the header hides on scroll down */
 body.has-preorder-bar { padding-top: 34px; }
 body.has-preorder-bar .nav { top: 34px; }
 body.has-preorder-bar .product-images-col { top: 130px; }
@@ -6938,3 +6938,21 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 .preorder-perk-sub { font-size: 0.66rem; color: #7a8a94; margin: 0.1rem 0 0; }
 .preorder-note { font-size: 0.64rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: -0.2rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .preorder-foot { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94; text-align: center; margin: 0.4rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+/* Why pilr "Built to fit together" cards: the same pictures and hover effect as the Shop all product cards.
+   (They carry the .shop-card classes so the Shop all picture/hover rules apply; this resets the parts of
+   .shop-card that would change the layout here, and drops this section's older hover styles.) */
+.wp-system-card.shop-card { display: block; aspect-ratio: auto; overflow: visible; position: static; }
+.wp-system-card .wp-system-card-img.shop-card-img {
+  display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+  aspect-ratio: 1 / 1.1; margin: 0 0 1.25rem; padding: 2rem; flex: none; min-height: 0;
+  background: #F5F5F5; transition: none;
+}
+.wp-system-card:hover .wp-system-card-img.shop-card-img { background: #F5F5F5; }
+.wp-system-card .wp-system-card-img.shop-card-img > img:first-child { transition: none; }
+.wp-system-card:hover .wp-system-card-img.shop-card-img > img:first-child { transform: none; }   /* (the pictures with their own inline size keep it) */
+/* Why pilr page only: the Large Pill Pod hover picture is 3% bigger than on Shop all (1.46 -> 1.504, hover 1.534 -> 1.58) */
+.wp-system-card.shop-card[href*="hybrid-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.504); }
+@media (hover: hover) {
+  .wp-system-card.shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.58); }
+}

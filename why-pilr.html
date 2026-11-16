@@ -99,6 +99,7 @@
     </div>
     </div>
   </nav>
+<!--@include partials/preorder-bar.html-->
 
   <!-- Page content cleared — being redesigned. Nav and footer kept intact. -->
 
@@ -224,26 +225,37 @@
       <p class="wp-system-eyebrow">The system</p>
       <h2 class="wp-system-headline">Built to fit together</h2>
       <div class="wp-system-grid">
-        <a href="./pill-pod.html" class="wp-system-card">
-          <div class="wp-system-card-img"><img src="images/lifestyle_section/Pill Pod.png" alt="Small Pill Pod" /></div>
+        <a href="./pill-pod.html" class="wp-system-card shop-card">
+          <div class="wp-system-card-img shop-card-img shop-card-img--sm">
+            <img src="images/lifestyle_section/Small Pill Pod Card 2.png" alt="Small Pill Pod" style="transform: translateY(10px) scale(0.74);" />
+            <img class="shop-card-img-hover shop-card-img-hover--cutout" src="images/lifestyle_section/Small Pill Pod Hover Cutout.png" alt="" loading="lazy" decoding="async" />
+          </div>
           <h3 class="wp-system-card-title">Small Pill Pod</h3>
           <p class="wp-system-card-spec">~[pending] mL</p>
           <p class="wp-system-card-built">Built for small capsules and tablets</p>
         </a>
-        <a href="./hybrid-pod.html" class="wp-system-card">
-          <div class="wp-system-card-img"><img src="images/lifestyle_section/Hybrid Pod.png" alt="Large Pill Pod" /></div>
+        <a href="./hybrid-pod.html" class="wp-system-card shop-card">
+          <div class="wp-system-card-img shop-card-img shop-card-img--sm">
+            <img src="images/lifestyle_section/Large Pill Pod Card 2.png" alt="Large Pill Pod" style="transform: translate(2px, 8px) scale(0.819);" />
+            <img class="shop-card-img-hover shop-card-img-hover--cutout" src="images/lifestyle_section/Large Pill Pod Hover Cutout.png" alt="" loading="lazy" decoding="async" />
+          </div>
           <h3 class="wp-system-card-title">Large Pill Pod</h3>
           <p class="wp-system-card-spec">~[pending] mL</p>
           <p class="wp-system-card-built">Built for medium and large capsules</p>
         </a>
-        <a href="./powder-pod.html" class="wp-system-card">
-          <div class="wp-system-card-img"><img src="images/lifestyle_section/Powder Pod Render.png" alt="Powder Pod" /></div>
+        <a href="./powder-pod.html" class="wp-system-card shop-card" id="section-single-pods">
+          <div class="wp-system-card-img shop-card-img">
+            <img src="images/lifestyle_section/Powder Pod Card.png" alt="Powder Pod" style="transform: translate(3px, 5px) scale(0.811);" />
+            <img class="shop-card-img-hover shop-card-img-hover--cutout" src="images/lifestyle_section/Powder Pod Hover Cutout.png" alt="" loading="lazy" decoding="async" />
+          </div>
           <h3 class="wp-system-card-title">Powder Pod</h3>
           <p class="wp-system-card-spec">~[pending] mL</p>
           <p class="wp-system-card-built">Built for your daily powders</p>
         </a>
-        <a href="./single-lid.html" class="wp-system-card">
-          <div class="wp-system-card-img"><img src="images/lifestyle_section/Full Render.png" alt="Universal Lid" /></div>
+        <a href="./single-lid.html" class="wp-system-card shop-card">
+          <div class="wp-system-card-img shop-card-img">
+            <img src="images/lifestyle_section/Full Render.png" alt="Universal Lid" />
+          </div>
           <h3 class="wp-system-card-title">Universal Lid</h3>
           <p class="wp-system-card-spec">Fits every pod</p>
           <p class="wp-system-card-built">Built for sealing pods</p>
@@ -730,5 +742,6 @@
     })();
   </script>
   <script type="module" src="./nav-outside.js"></script>
+  <script type="module" src="./src/preorder.js"></script>
 </body>
 </html>
