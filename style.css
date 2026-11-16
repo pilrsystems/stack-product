@@ -6985,3 +6985,24 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 @media (min-width: 601px) {
   .how-video-el { width: 100%; height: auto; aspect-ratio: 57 / 100; object-fit: cover; object-position: 50% 45%; max-height: 74vh; }
 }
+
+/* Phone, home page Full Stack card: the picture is 5% smaller inside the card (scale 1.05 -> 0.9975). !important because the size is set inline in index.html. */
+@media (max-width: 600px) {
+  .shop-inner .shop-card--featured .shop-card-img > img:not(.shop-card-img-hover) { transform: translateY(6%) scale(0.9975) !important; }
+}
+
+/* Phone, home page product cards: Build Your System picture 5% bigger (0.892 -> 0.9366); Single Pods picture 10% bigger and 2px higher */
+@media (max-width: 600px) {
+  .shop-inner .shop-card-img-inset { transform: translateY(2px) scale(0.9366); }
+  .shop-inner .shop-card-img-pod { transform: translateY(-6px) scale(1.1); }
+}
+
+/* Phone, home page: 70px (was 84px) between the "Nothing to hide" video and "The way we pack today" */
+@media (max-width: 600px) {
+  .fly-video { padding-bottom: 28px; }
+}
+
+/* Phone, home page: 80px (was 104px) between the lifestyle photo cards and "Designed with intention" */
+@media (max-width: 600px) {
+  .home-lifestyle { padding-bottom: 16px; }
+}

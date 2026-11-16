@@ -143,10 +143,11 @@
     }
     .sg-bucket-row:last-of-type { border-bottom: 1px solid rgba(66,85,99,0.15); }
     .sg-bucket-pill {
-      flex-shrink: 0; width: 48px; height: 18px; border: 1.5px solid #9aa7ae; border-radius: 9px;
+      flex-shrink: 0; width: 32px; height: 24px; border: 1.5px solid #9aa7ae; border-radius: 12px;   /* small: nearly round */
     }
-    .sg-bucket-pill--2 { width: 72px; }
-    .sg-bucket-pill--3 { width: 96px; }
+    .sg-bucket-pill--2 { width: 66px; }
+    .sg-bucket-pill--3 { width: 88px; }
+    .sg-buckets .sg-tabs-row { margin-top: 1.5rem; margin-bottom: 0.75rem; }
     .sg-bucket-label {
       flex: 1; font-size: 0.9rem; color: #5e6e7a;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -181,6 +182,19 @@
       .sg-table-head span:nth-child(3), .sg-row .sg-row-size { display: none; }
       .sg-search { width: 100%; }
       .sg-tabs-row { flex-direction: column; align-items: stretch; }
+    }
+    /* Phone: the three pod cards swipe sideways instead of stacking */
+    @media (max-width: 600px) {
+      .sg-specs {
+        display: flex; gap: 1.25rem; overflow-x: auto; overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; padding-bottom: 0.25rem;
+        margin-bottom: 76px;   /* 80px in total from the cards to "What we tested" (was 132px) */
+      }
+      .sg-specs::-webkit-scrollbar { display: none; }
+      .sg-spec-col { flex: 0 0 78%; scroll-snap-align: start; min-width: 0; }
+      .sg-spec-name { text-align: center; }
+      .sg-tested { margin-bottom: 80px; }   /* gap from the table footnote to "Not on the list?" (was 128px) */
     }
   </style>
 </head>
@@ -307,8 +321,13 @@
       <p class="sg-eyebrow">Not on the list?</p>
       <h2 class="sg-h2" id="sg-bucket-title"></h2>
       <p class="sg-subtitle" id="sg-bucket-sub"></p>
-      <div id="sg-bucket-rows" style="margin-top: 1.5rem;"></div>
-      <p class="sg-footnote" id="sg-bucket-footnote"></p>
+      <div class="sg-tabs-row">
+        <div class="sg-tabs sg-tabs--bucket" role="tablist" aria-label="Pod type for the size buckets">
+          <button type="button" class="sg-tab sg-tab--bucket" role="tab" aria-selected="true" data-pod="small">Small Pill Pod</button>
+          <button type="button" class="sg-tab sg-tab--bucket" role="tab" aria-selected="false" tabindex="-1" data-pod="big">Large Pill Pod</button>
+        </div>
+      </div>
+      <div id="sg-bucket-rows"></div>
     </section>
 
     <div class="sg-link-row">
@@ -378,9 +397,9 @@
         "bucketSub": "Measure the longest side of your pill, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "Under — mm", "count": "— pills" },
-          { "label": "— – — mm", "count": "— pills" },
-          { "label": "Over — mm", "count": "— pills" }
+          { "label": "~ [size] mm", "count": "— pills" },
+          { "label": "~ [size] mm", "count": "— pills" },
+          { "label": "~ [size] mm", "count": "— pills" }
         ]
       },
       "big": {
@@ -403,9 +422,9 @@
         "bucketSub": "Measure the longest side of your pill, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "Under — mm", "count": "— pills" },
-          { "label": "— – — mm", "count": "— pills" },
-          { "label": "Over — mm", "count": "— pills" }
+          { "label": "~ [size] mm", "count": "— pills" },
+          { "label": "~ [size] mm", "count": "— pills" },
+          { "label": "~ [size] mm", "count": "— pills" }
         ]
       },
       "powder": {
@@ -428,9 +447,9 @@
         "bucketSub": "Measure your scoop size, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "Under — mL", "count": "— servings" },
-          { "label": "— – — mL", "count": "— servings" },
-          { "label": "Over — mL", "count": "— servings" }
+          { "label": "~ [size] mL", "count": "— servings" },
+          { "label": "~ [size] mL", "count": "— servings" },
+          { "label": "~ [size] mL", "count": "— servings" }
         ]
       }
     }
@@ -449,7 +468,9 @@
       var activePod = 'small'
       var searchTerm = ''
 
-      var tabs = Array.prototype.slice.call(document.querySelectorAll('.sg-tab'))
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.sg-tab:not(.sg-tab--bucket)'))
+      var bucketTabs = Array.prototype.slice.call(document.querySelectorAll('.sg-tab--bucket'))
+      var bucketPod = 'small'
       var panel = document.getElementById('sg-panel')
       var tableHead = document.getElementById('sg-table-head')
       var tableRows = document.getElementById('sg-table-rows')
@@ -458,7 +479,6 @@
       var bucketTitle = document.getElementById('sg-bucket-title')
       var bucketSub = document.getElementById('sg-bucket-sub')
       var bucketRows = document.getElementById('sg-bucket-rows')
-      var bucketFootnote = document.getElementById('sg-bucket-footnote')
       var specsEl = document.getElementById('sg-specs')
       var searchInput = document.getElementById('sg-search-input')
 
@@ -507,7 +527,6 @@
       function renderBuckets(d) {
         bucketTitle.textContent = d.bucketHeading
         bucketSub.textContent = d.bucketSub
-        bucketFootnote.textContent = d.bucketFootnote
         bucketRows.innerHTML = d.buckets.map(function (b, i) {
           return (
             '<div class="sg-bucket-row">' +
@@ -537,8 +556,18 @@
         renderTableHead(d)
         renderRows(d)
         footnote.textContent = d.footnote
-        renderBuckets(d)
         applySearch()
+      }
+
+      // The "Not on the list?" section has its own pod tabs, separate from "What we tested".
+      function setBucketTab(pod) {
+        bucketPod = pod
+        bucketTabs.forEach(function (tab) {
+          var selected = tab.dataset.pod === pod
+          tab.setAttribute('aria-selected', selected ? 'true' : 'false')
+          tab.tabIndex = selected ? 0 : -1
+        })
+        renderBuckets(data[pod])
       }
 
       function setActiveTab(pod, opts) {
@@ -570,6 +599,19 @@
         })
       })
 
+      bucketTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () { setBucketTab(tab.dataset.pod) })
+        tab.addEventListener('keydown', function (e) {
+          var idx = bucketTabs.indexOf(tab)
+          var next = null
+          if (e.key === 'ArrowRight') next = bucketTabs[(idx + 1) % bucketTabs.length]
+          else if (e.key === 'ArrowLeft') next = bucketTabs[(idx - 1 + bucketTabs.length) % bucketTabs.length]
+          else if (e.key === 'Home') next = bucketTabs[0]
+          else if (e.key === 'End') next = bucketTabs[bucketTabs.length - 1]
+          if (next) { e.preventDefault(); next.focus(); setBucketTab(next.dataset.pod) }
+        })
+      })
+
       searchInput.addEventListener('input', function () {
         searchTerm = searchInput.value
         applySearch()
@@ -581,6 +623,7 @@
       var requested = params.get('pod')
       var initial = PODS.indexOf(requested) !== -1 ? requested : 'small'
       setActiveTab(initial, { skipHistory: true })
+      setBucketTab(initial === 'powder' ? 'small' : initial)   // this section only has the two pill pods
     })()
   </script>
   <script type="module" src="./nav-outside.js"></script>
