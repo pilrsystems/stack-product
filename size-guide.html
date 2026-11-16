@@ -48,6 +48,13 @@
       margin-bottom: 1.1rem; overflow: hidden;
     }
     .sg-spec-photo img { width: 70%; height: 70%; object-fit: contain; }
+    /* the pod pictures are now the Shop all product cards (same pictures, hover effect and link to the product page) */
+    .sg-spec-link.shop-card { display: block; aspect-ratio: auto; overflow: visible; position: static; text-decoration: none; }
+    .sg-spec-photo.shop-card-img {
+      position: relative; flex: none; min-height: 0; margin: 0 0 1.1rem; padding: 2rem; background: #F5F5F5;
+    }
+    .sg-spec-photo.shop-card-img > img:first-child { width: 100%; height: 100%; }
+    .sg-spec-photo.shop-card-img--sm > img:first-child { width: 88%; height: 88%; }
     .sg-spec-photo-placeholder {
       font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: #9aa7ae;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -432,6 +439,12 @@
   <script>
     ;(function () {
       var PODS = ['small', 'big', 'powder']
+      // The same pictures and hover effect as the Shop all product cards; each links to its product page.
+      var CARDS = {
+        small:  { href: './pill-pod.html',   sm: true,  img: 'images/lifestyle_section/Small Pill Pod Card 2.png', transform: 'translateY(10px) scale(0.74)',          hover: 'images/lifestyle_section/Small Pill Pod Hover Cutout.png' },
+        big:    { href: './hybrid-pod.html', sm: true,  img: 'images/lifestyle_section/Large Pill Pod Card 2.png', transform: 'translate(2px, 8px) scale(0.844)',      hover: 'images/lifestyle_section/Large Pill Pod Hover Cutout.png' },
+        powder: { href: './powder-pod.html', sm: false, id: 'section-single-pods', img: 'images/lifestyle_section/Powder Pod Card.png', transform: 'translate(3px, 5px) scale(0.795)', hover: 'images/lifestyle_section/Powder Pod Hover Cutout.png' }
+      }
       var data = null
       var activePod = 'small'
       var searchTerm = ''
@@ -456,10 +469,16 @@
       function renderSpecs() {
         specsEl.innerHTML = PODS.map(function (pod) {
           var d = data[pod]
+          var c = CARDS[pod]
           return (
             '<div class="sg-spec-col">' +
-              '<div class="sg-spec-photo"><img src="' + d.image + '" alt="' + d.name + '"></div>' +
-              '<p class="sg-spec-name">' + d.name + '</p>' +
+              '<a class="sg-spec-link shop-card"' + (c.id ? ' id="' + c.id + '"' : '') + ' href="' + c.href + '">' +
+                '<div class="sg-spec-photo shop-card-img' + (c.sm ? ' shop-card-img--sm' : '') + '">' +
+                  '<img src="' + c.img + '" alt="' + d.name + '" style="transform: ' + c.transform + ';">' +
+                  '<img class="shop-card-img-hover shop-card-img-hover--cutout" src="' + c.hover + '" alt="" loading="lazy" decoding="async">' +
+                '</div>' +
+                '<p class="sg-spec-name">' + d.name + '</p>' +
+              '</a>' +
               specRow('Compartments', d.specs.compartments) +
               specRow('Internal volume', d.specs.internalVolume) +
               specRow('Opening width', d.specs.openingWidth) +
