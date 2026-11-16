@@ -106,7 +106,7 @@
        rows + note + link) is taller than the shared accordion's
        default 220px open height, which was clipping the note and
        Full Size Guide link off the bottom. */
-    #product-info-inner .product-info-sections .product-accordion:nth-child(2) .product-accordion-panel.is-open {
+    #product-info-inner .product-info-sections .product-accordion:last-child .product-accordion-panel.is-open {
       max-height: 560px; margin-top: -0.4rem;
     }
     #product-info-inner .bc-capacity-note {
@@ -415,6 +415,7 @@
     </div>
     </div>
   </nav>
+<!--@include partials/preorder-bar.html-->
 
   <div class="product-hero">
     <div class="product-images-col">
@@ -460,6 +461,7 @@
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
+<!--@include partials/preorder-card.html-->
 
       <div class="pod-add" id="pod-add">
         <button type="button" class="pod-add-trigger" id="pod-add-trigger" aria-expanded="false" aria-controls="pod-add-panel">
@@ -511,11 +513,9 @@
       </div>
 
       <button class="product-btn-add" id="product-btn-add-main">ADD TO CART</button>
-      <div class="bc-guarantees">
-        <span class="bc-guarantee-item bc-guarantee-item--left">Free shipping $75+</span>
-        <span class="bc-guarantee-item bc-guarantee-item--right">30-day returns</span>
-      </div>
+<!--@include partials/preorder-note.html-->
       <div class="product-info-sections">
+<!--@include partials/preorder-how.html-->
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
             <span>Details</span>
@@ -543,6 +543,7 @@
           </div>
         </div>
       </div>
+<!--@include partials/preorder-foot.html-->
       <a href="./build-your-system.html" class="bys-block" aria-label="Build your system">
         <img class="bys-photo" src="images/lifestyle_section/Build Your System Photo.png" alt="pilr pods stacked together" width="450" height="300" loading="lazy" />
         <div class="bys-text">
@@ -800,5 +801,6 @@
   <script type="module" src="./nav-menu.js"></script>
   <script type="module" src="./nav-outside.js"></script>
   <script type="module" src="./nav-scroll.js"></script>
+  <script type="module" src="./src/preorder.js"></script>
 </body>
 </html>

@@ -6896,3 +6896,45 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   .problem--v2 .problem-card--pilr .problem-card-desc { position: relative; top: 5.3px; }   /* lines up with the other cards' descriptions */
   .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: 1px; }   /* pilr logo 1px lower */
 }
+
+/* ── PRE-ORDER: status bar above the header, progress card and notes on every product page ── */
+.preorder-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 34px; z-index: 101;
+  display: flex; align-items: center; justify-content: center; gap: clamp(1.25rem, 5vw, 4.5rem);
+  padding: 0 1rem; background: #5e6e7a; color: #fff;
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; white-space: nowrap;
+  transition: transform 0.35s ease;
+}
+.preorder-bar-progress { display: inline-flex; align-items: center; gap: 0.75rem; }
+.preorder-bar-track { width: 84px; height: 3px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; }
+.preorder-bar-fill { display: block; height: 100%; width: 0; background: #fff; }
+.nav.nav--hidden + .preorder-bar { transform: translateY(-100%); }   /* leaves with the header on scroll down */
+body.has-preorder-bar { padding-top: 34px; }
+body.has-preorder-bar .nav { top: 34px; }
+body.has-preorder-bar .product-images-col { top: 130px; }
+@media (max-width: 600px) {
+  .preorder-bar { height: 30px; gap: 0.9rem; font-size: 0.5625rem; letter-spacing: 0.1em; }
+  .preorder-bar-perks { display: none; }
+  .preorder-bar-track { width: 56px; }
+  body.has-preorder-bar { padding-top: 30px; }
+  body.has-preorder-bar .nav { top: 30px; }
+}
+
+.preorder-card { border: 1px solid rgba(66,85,99,0.15); background: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.preorder-card-top { padding: 0.95rem 1.1rem 0.9rem; }
+.preorder-card-claimed { font-size: 0.78rem; color: #5e6e7a; margin: 0; }
+.preorder-card-claimed strong { font-weight: 700; }
+.preorder-card-track { height: 4px; background: rgba(66,85,99,0.14); border-radius: 2px; overflow: hidden; margin: 0.6rem 0 0.55rem; }
+.preorder-card-fill { display: block; height: 100%; width: 0; background: #3d4f5c; border-radius: 2px; }
+.preorder-card-left { font-size: 0.68rem; color: #7a8a94; margin: 0; }
+.preorder-perks.product-accordion { border-top: 1px solid rgba(66,85,99,0.15); border-bottom: none; }
+.preorder-perks .product-accordion-trigger { padding: 0.8rem 1.1rem; font-size: 0.6875rem; }
+.preorder-perks .product-accordion-panel.is-open { max-height: 240px; padding-bottom: 1rem; }
+.preorder-perk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.2rem; padding: 0.1rem 1.1rem 0; }
+.preorder-perk { display: flex; align-items: flex-start; gap: 0.6rem; }
+.preorder-perk svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: #7a8a94; }
+.preorder-perk-name { font-size: 0.74rem; font-weight: 600; color: #3d4f5c; margin: 0; }
+.preorder-perk-sub { font-size: 0.66rem; color: #7a8a94; margin: 0.1rem 0 0; }
+.preorder-note { font-size: 0.64rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: -0.2rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.preorder-foot { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94; text-align: center; margin: 0.4rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }

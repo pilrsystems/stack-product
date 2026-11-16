@@ -10,3 +10,10 @@
   to = "/.netlify/functions/claim-review"
   status = 200
   force = true
+
+# Pre-order count shown on the product pages (GET /api/preorder-count).
+[[redirects]]
+  from = "/api/preorder-count"
+  to = "/.netlify/functions/preorder-count"
+  status = 200
+  force = true
