@@ -7006,3 +7006,6 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 @media (max-width: 600px) {
   .home-lifestyle { padding-bottom: 16px; }
 }
+
+/* Footer email box: confirmation after signing up */
+.footer-email-thanks { margin: 0; font-size: 0.95rem; line-height: 1.5; color: #fff; }
