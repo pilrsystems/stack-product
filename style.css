@@ -5110,7 +5110,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   display: flex; align-items: baseline; gap: 0.75rem;
 }
 .product-title-price {
-  font-size: 1.5rem; font-weight: 400; color: #7a8a94;
+  font-size: 1.5rem; font-weight: 400; color: #5e6e7a;   /* same colour as the product title */
   letter-spacing: -0.025em;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
