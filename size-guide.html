@@ -196,6 +196,13 @@
       .sg-spec-name { text-align: center; }
       .sg-tested { margin-bottom: 80px; }   /* gap from the table footnote to "Not on the list?" (was 128px) */
     }
+    /* Web: 50px below the "Not on the list?" section (was 128px); 90px (was 128px) from the pod cards to "What we tested" */
+    @media (min-width: 601px) {
+      .sg-buckets { margin-bottom: 50px; }
+      .sg-specs { margin-bottom: 90px; }
+      .sg-tested { margin-bottom: 90px; }   /* footnote to "Not on the list?" (was 128px) */
+      .sg-main { padding-bottom: 60px; }   /* bottom line of the last row to the footer (was 128px) */
+    }
   </style>
 </head>
 <body>
