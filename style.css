@@ -6807,9 +6807,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Web, home page "Many problems" cards: the 7-day organizer and Ziploc photos get a slight blur and are 5% smaller */
 @media (min-width: 601px) {
-  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 149.66px; height: 80.47px; filter: blur(1px); position: relative; top: 3px; }
-  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 91.63px; filter: blur(1px); }
-  .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 97.85px; filter: blur(1.1px); }   /* Full-size tubs photo, same blur as the other two */
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 145.17px; height: 78.06px; filter: blur(1px); position: relative; top: 3px; }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 88.88px; filter: blur(1px); }
+  .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 94.91px; filter: blur(1.1px); }   /* Full-size tubs photo, same blur as the other two */
 }
 
 /* Web, home page pilr card: the pods picture is 5% smaller (60.2% -> 57.19% of the card width) and 8px lower (47px -> 55px from the top) */
@@ -6824,8 +6824,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Phone, home page "Many problems" cards: the 7-day organizer and Ziploc photos are 15%, then another 5%, smaller */
 @media (max-width: 600px) {
-  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 95.12px; height: 51.12px; }
-  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 55.26px; }
+  .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 92.27px; height: 49.59px; }
+  .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 53.6px; }
 }
 
 /* Phone, home page pilr card: the pods picture is 5%, 10% smaller, then 5% bigger and 5px lower (45.5% -> 40.86% of the card width; 24px -> 29px from the top) */
@@ -6883,3 +6883,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 .cart-drawer-qty-val { border-radius: 4px; }
 /* Cart: the Small Pill Pod picture is 5% smaller inside its square (rows and offers) */
 .cart-drawer-item-img img[alt="Small Pill Pod"], .cart-drawer-offer-img img[alt="Small Pill Pod"] { transform: scale(0.95); }
+
+/* Phone: Full-size tubs photo 3% smaller too (58.39px -> 56.64px) */
+@media (max-width: 600px) {
+  .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 56.64px; }
+}
