@@ -6977,3 +6977,5 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 .sys-panel-body .preorder-note { margin: 0.75rem 0 0; }
 /* Product pages: 18px between the feature list and the next item (pre-order box, or quantity + button) */
 #product-info-inner ul.product-feature-list { margin-bottom: 2px; }
+/* Pod pages: 5px between the "Add a Pod" box and the Pre-order button */
+#product-info-inner #product-btn-add-main { margin-top: -11px; }
