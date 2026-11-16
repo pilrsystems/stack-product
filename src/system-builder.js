@@ -1581,14 +1581,14 @@ function updateCartButton() {
   const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + addonQtyTotal()
   btn.disabled = totalQty === 0
   if (totalQty === 0) {
-    btn.textContent = 'Add to Cart'
+    btn.textContent = 'Pre-order'
     return
   }
   const hasDiscount = currentCartListTotal - currentCartTotal > 0.001
   const priceHtml   = hasDiscount
     ? `<span class="cart-btn-price-strike">${formatPrice(currentCartListTotal)}</span> ${formatPrice(currentCartTotal)}`
     : formatPrice(currentCartTotal)
-  btn.innerHTML = 'Add to Cart — ' + priceHtml
+  btn.innerHTML = 'Pre-order — ' + priceHtml
 }
 
 document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {

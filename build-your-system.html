@@ -188,7 +188,9 @@
           <div id="system-summary-content" class="system-summary-content">
             <p class="system-empty-state">Select your supplements<br>to build your system.</p>
           </div>
-          <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Add to Cart</button>
+<!--@include partials/preorder-card.html-->
+          <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Pre-order</button>
+<!--@include partials/preorder-note.html-->
         </div>
       </div>
     </aside>
@@ -440,5 +442,14 @@
   <script type="module" src="./nav-outside.js"></script>
   <script type="module" src="./nav-scroll.js"></script>
   <script type="module" src="./src/preorder.js"></script>
+  <script>
+    document.querySelectorAll('.preorder-perks .product-accordion-trigger').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        btn.nextElementSibling.classList.toggle('is-open', !open);
+      });
+    });
+  </script>
 </body>
 </html>
