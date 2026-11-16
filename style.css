@@ -6852,7 +6852,7 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 }
 
 /* Shop dropdown, All Products tile: the picture is 20%, 20%, then 10% bigger inside its tile */
-.nav-drop-card.nav-drop-desktop[href="./catalog.html"] .nav-drop-img img { transform: translate(8px, 8px) translateX(1.5%) scale(1.536); }
+.nav-drop-card.nav-drop-desktop[href="./catalog.html"] .nav-drop-img img { transform: translate(9px, 8px) translateX(1.5%) scale(1.438); }
 
 /* Phone, home page "Many problems" cards: the same slight blur as on web on the three photos */
 @media (max-width: 600px) {
