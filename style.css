@@ -6815,7 +6815,7 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Web, home page pilr card: the pods picture is 5% smaller (60.2% -> 57.19% of the card width) and 8px lower (47px -> 55px from the top) */
 @media (min-width: 601px) {
-  .problem--v2 .problem-card-art { width: 51.47%; top: 72px; }
+  .problem--v2 .problem-card-art { width: 50.44%; top: 71px; }
 }
 /* Small Pill Pod card only: its hover image is 20%, 30%, 15%, then another 15% bigger than the default (1.568 -> 3.236, hover 1.647 -> 3.397) */
 .shop-card[href*="pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.333); }
