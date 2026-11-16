@@ -6840,8 +6840,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Web, home page "Many problems" cards: titles, descriptions, link and pilr logo are 5% bigger */
 @media (min-width: 601px) {
-  .problem--v2 .problem-card-label { font-size: 11.97px; }
-  .problem--v2 .problem-card-desc { font-size: 14.045px; line-height: 21.77px; }
+  .problem--v2 .problem-card-label { font-size: 13.5px; }
+  .problem--v2 .problem-card-desc { font-size: 14px; line-height: 21.7px; }
   .problem--v2 .problem-card-link { font-size: 11.491px; }
   .problem--v2 .problem-card-brand img { height: 23.94px; }
 }
@@ -6887,4 +6887,12 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 /* Phone: Full-size tubs photo 3% smaller too (58.39px -> 56.64px) */
 @media (max-width: 600px) {
   .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 56.64px; }
+}
+
+/* Web, home page "Many problems" cards: the title and description sit 6px lower */
+@media (min-width: 601px) {
+  .problem--v2 .problem-card:not(.problem-card--pilr) .problem-card-label,
+  .problem--v2 .problem-card:not(.problem-card--pilr) .problem-card-desc { position: relative; top: 6px; }
+  .problem--v2 .problem-card--pilr .problem-card-desc { position: relative; top: 5.3px; }   /* lines up with the other cards' descriptions */
+  .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: 1px; }   /* pilr logo 1px lower */
 }
