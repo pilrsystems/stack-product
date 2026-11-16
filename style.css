@@ -1450,14 +1450,14 @@ body {
   max-width: 1160px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 28%;
+  grid-template-columns: 1fr 31.5%;   /* video column wider (was 28%), so the steps column ends sooner */
   column-gap: 8%;
   align-items: center;
 }
 
 .how-it-works-media {
   position: relative;
-  max-height: 62vh;
+  max-height: 69vh;
   order: 2;
 }
 
@@ -1472,7 +1472,7 @@ body {
   height: auto;
   width: auto;
   max-width: 100%;
-  max-height: 62vh;
+  max-height: 69vh;
   margin: 0 0 0 auto;
   background: #33414a;
 }
@@ -6979,3 +6979,9 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 #product-info-inner ul.product-feature-list { margin-bottom: 2px; }
 /* Pod pages: 5px between the "Add a Pod" box and the Pre-order button */
 #product-info-inner #product-btn-add-main { margin-top: -11px; }
+
+/* Why pilr "How it works" video: the file itself is tall and thin (9:16, shot on a phone), so on web it is
+   shown in a wider 3:4 frame (cropped a little top and bottom) */
+@media (min-width: 601px) {
+  .how-video-el { width: 100%; height: auto; aspect-ratio: 57 / 100; object-fit: cover; object-position: 50% 45%; max-height: 74vh; }
+}
