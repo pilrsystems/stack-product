@@ -7200,3 +7200,26 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 @media (max-width: 600px) {
   body .preorder-note { font-size: 0.672rem; }
 }
+
+/* "(with Powder Pod)" after Free Travel Scooper in the pre-order perks: lighter, and wraps as one unit */
+.preorder-perk-with { font-weight: 400; white-space: nowrap; }
+
+/* Pre-order perks: "Free Travel Scooper (with Powder Pod)" on one line */
+.preorder-perk:first-child .preorder-perk-name { white-space: nowrap; }
+@media (min-width: 601px) {
+  .preorder-perk-grid { grid-template-columns: max-content 1fr; column-gap: 2.6rem; }   /* first column as wide as the scooper line; the rest shift right */
+}
+@media (max-width: 600px) {
+  /* Two columns: Scooper + Free shipping on the left, Single Lid + Cancel anytime on the right */
+  .preorder-perk-grid { grid-template-columns: max-content 1fr; column-gap: 1rem; }
+  .preorder-perk:first-child .preorder-perk-name { white-space: normal; }
+  .preorder-perk-with { display: block; }   /* "(with Powder Pod)" on the second line */
+}
+
+/* Exclusive offers: struck-through full price beside the discounted pod price */
+.cart-drawer-offer-price .cart-item-price-strike {
+  font-weight: 400;
+  color: #9aa7ae;
+  text-decoration: line-through;
+  margin-right: 0.35em;
+}

@@ -574,6 +574,17 @@
     return Math.round(basePrice * (1 - discount) * 100) / 100
   }
 
+  // The offer price, with the full price struck through next to it when a
+  // bundle discount applies (i.e. the cart already has pods in it).
+  function offerPriceHtml(id) {
+    const price = offerPrice(id)
+    const base = STACKING_POD_BASE_PRICE[id]
+    if (base != null && price < base) {
+      return '<span class="cart-item-price-strike">' + formatMoney(base) + '</span>' + formatMoney(price)
+    }
+    return formatMoney(price)
+  }
+
   function offersHtml() {
     const cards = OFFER_PRODUCTS.map(p => {
       const href = PRODUCT_PAGE_BY_ID[p.id] || null
@@ -584,7 +595,7 @@
           (href ? '</a>' : '</div>') +
           '<div class="cart-drawer-offer-info">' +
             '<p class="cart-drawer-offer-name">' + (href ? '<a href="' + href + '">' + p.title + '</a>' : p.title) + '</p>' +
-            '<p class="cart-drawer-offer-price">' + formatMoney(offerPrice(p.id)) + '</p>' +
+            '<p class="cart-drawer-offer-price">' + offerPriceHtml(p.id) + '</p>' +
           '</div>' +
           '<button type="button" class="cart-drawer-offer-add" data-offer-id="' + p.id + '">+ Add</button>' +
         '</div>'
