@@ -136,6 +136,18 @@ function mount(root, data) {
   drawTopics(); drawList()
 }
 
+// The stars and "N Reviews" under the product title mirror the same numbers
+function updateTitleRating(data) {
+  const count = Number(data.count) || 0
+  const lit = count ? Math.round(Number(data.average) || 0) : 0
+  document.querySelectorAll('.product-reviews-stars').forEach((wrap) => {
+    wrap.querySelectorAll('.product-reviews-star').forEach((star, i) => star.classList.toggle('product-reviews-star--off', i >= lit))
+  })
+  document.querySelectorAll('.product-reviews-count').forEach((el) => {
+    el.textContent = count.toLocaleString('en-US') + (count === 1 ? ' Review' : ' Reviews')
+  })
+}
+
 async function init() {
   const root = document.getElementById('reviews')
   if (!root) return
@@ -151,6 +163,7 @@ async function init() {
     }
   }
   mount(root, data)
+  updateTitleRating(data)
 }
 
 init()

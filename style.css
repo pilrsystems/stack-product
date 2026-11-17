@@ -7192,3 +7192,6 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 @media (max-width: 600px) {
   body #product-info-inner .product-feature-list { padding-top: 2px; }
 }
+
+/* Stars under the product title: grey until there are real reviews (set by src/reviews.js) */
+body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }

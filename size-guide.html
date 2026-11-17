@@ -205,6 +205,10 @@
     @media (min-width: 601px) {
       .sg-buckets { margin-bottom: 50px; }
       .sg-specs { margin-bottom: 90px; }
+      /* Spec-card pod pictures (web): +7% inside their cards. Mobile keeps the sizes set in the script. */
+      .sg-spec-col:nth-child(1) .sg-spec-photo > img:first-child { transform: translateY(10px) scale(0.7918) !important; }
+      .sg-spec-col:nth-child(2) .sg-spec-photo > img:first-child { transform: translate(2px, 8px) scale(0.9031) !important; }
+      .sg-spec-col:nth-child(3) .sg-spec-photo > img:first-child { transform: translate(3px, 5px) scale(0.8507) !important; }
       .sg-tested { margin-bottom: 90px; }   /* footnote to "Not on the list?" (was 128px) */
       .sg-main { padding-bottom: 60px; }   /* bottom line of the last row to the footer (was 128px) */
     }
