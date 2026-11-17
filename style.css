@@ -1930,10 +1930,10 @@ body {
 /* Full Stack photo needed its own zoom/crop to frame the suitcase
    and pod — tuned for that image specifically, not a general rule for
    every card's photo. */
-a[href="./classic-stack.html"] .explore-routine-img img {
+a[href="./full-stack.html"] .explore-routine-img img {
   transform: scale(1.85) translateY(-35px) translateX(44px);
 }
-a[href="./classic-stack.html"]:hover .explore-routine-img img {
+a[href="./full-stack.html"]:hover .explore-routine-img img {
   transform: scale(1.89) translateY(-35px) translateX(44px);
 }
 
@@ -5695,7 +5695,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 /* ── PRODUCT PAGE COMPARISON TABLE ───────────────────────────
-   Shared version of classic-stack.html's comparison table, reused
+   Shared version of full-stack.html's comparison table, reused
    across the individual product pages in place of the old "Stay
    consistent, anywhere." benefits section. */
 .comparison-section { background: var(--bg); padding: 5rem 3rem; }
@@ -6229,7 +6229,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 @media (max-width: 600px) {
   /* the photo crops were tuned for the wider desktop cards; shift them less in the narrower phone cards so no blank strip shows */
   a[href="./build-your-system.html"] .explore-routine-img img { transform: scale(1.55) translateY(-29px); }
-  a[href="./classic-stack.html"] .explore-routine-img img { transform: scale(1.85) translateY(-24px) translateX(30px); }
+  a[href="./full-stack.html"] .explore-routine-img img { transform: scale(1.85) translateY(-24px) translateX(30px); }
   a[href="./catalog.html#section-single-pods"] .explore-routine-img img { transform: scale(1.35) translateX(20px); }
 }
 
@@ -6938,7 +6938,7 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 .preorder-perk svg { width: 18.48px; height: 18.48px; flex-shrink: 0; margin-top: 2px; color: #7a8a94; }
 .preorder-perk-name { font-size: 0.74rem; font-weight: 600; color: #3d4f5c; margin: 0; }
 .preorder-perk-sub { font-size: 0.66rem; color: #7a8a94; margin: 0.1rem 0 0; }
-.preorder-note { font-size: 0.64rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: -0.2rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.preorder-note { font-size: 0.672rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: -0.2rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .preorder-foot { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94; text-align: center; margin: 0.4rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 /* Why pilr "Built to fit together" cards: the same pictures and hover effect as the Shop all product cards.
@@ -7195,3 +7195,8 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 
 /* Stars under the product title: grey until there are real reviews (set by src/reviews.js) */
 body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
+
+/* Pre-order note under the button (phone): +5% */
+@media (max-width: 600px) {
+  body .preorder-note { font-size: 0.672rem; }
+}

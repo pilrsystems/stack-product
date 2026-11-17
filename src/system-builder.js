@@ -87,7 +87,7 @@ function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)] }
 function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) }
 
 // Exactly one Small Pill + one Large Pill + one Powder Pod is its own bundle (the
-// same product classic-stack.html sells), priced below the generic
+// same product full-stack.html sells), priced below the generic
 // tiered discount — not derived from DISCOUNT_BY_QTY. The instant the
 // selection becomes anything else (a 4th pod, a duplicate, one type
 // missing), this stops applying and the normal per-pod pricing takes

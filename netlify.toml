@@ -17,3 +17,16 @@
   to = "/.netlify/functions/preorder-count"
   status = 200
   force = true
+
+# The Full Stack page used to live at /classic-stack. Keep old links and search results working.
+[[redirects]]
+  from = "/classic-stack.html"
+  to = "/full-stack.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/classic-stack"
+  to = "/full-stack.html"
+  status = 301
+  force = true

@@ -176,7 +176,7 @@
     'pill-pod': 'pill-pod.html',
     'hybrid-pod': 'hybrid-pod.html',
     'powder-pod': 'powder-pod.html',
-    'classic-stack': 'classic-stack.html',
+    'classic-stack': 'full-stack.html',
     'travel-scooper': 'travel-scooper.html',
     'travel-scooper-free': 'travel-scooper.html',
     'single-lid': 'single-lid.html',
