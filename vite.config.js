@@ -66,6 +66,7 @@ export default defineConfig({
         shippingInfo: resolve(__dirname, 'shipping-information.html'),
         returnsExchanges: resolve(__dirname, 'returns-exchanges.html'),
         contactUs: resolve(__dirname, 'contact-us.html'),
+        tellUs: resolve(__dirname, 'tell-us.html'),
       },
     },
   },
