@@ -7174,3 +7174,21 @@ body.has-preorder-bar .product-images-col { top: 130px; }
   .rv-bar-track { height: 5px; }
   .rv-write { font-size: 0.7rem; padding: 0.8rem 1.35rem; }
 }
+
+/* Full Stack tagline: shorter copy on phone only */
+.tagline-mobile { display: none; }
+@media (max-width: 600px) {
+  .tagline-web { display: none; }
+  .tagline-mobile { display: inline; }
+}
+
+/* Feature list (phone): checkmark lines up with the first line of text when an item wraps */
+@media (max-width: 600px) {
+  body .product-feature-list li { align-items: flex-start; }
+  body .product-feature-list .product-feature-check { margin-top: calc((1.5em - 16px) / 2); }
+}
+
+/* Gap between the description and the feature list (phone): +2px */
+@media (max-width: 600px) {
+  body #product-info-inner .product-feature-list { padding-top: 2px; }
+}
