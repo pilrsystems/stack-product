@@ -4138,6 +4138,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .cart-drawer-shipping-icon svg { display: block; }
+.cart-drawer-shipping-icon:not(.cart-drawer-shipping-icon--done) svg { width: 12.18px; height: 12.18px; transform: translate(0.75px, 0.5px); }
 
 .cart-drawer-shipping-icon--done {
   background: #818E99;
@@ -7082,4 +7083,9 @@ body.has-preorder-bar .product-images-col { top: 130px; }
   body #product-info-inner .product-reviews-star { width: 12.65px !important; height: 12.65px !important; }
   body #product-info-inner .product-reviews-count { font-size: 0.72105rem !important; }
   body #product-info-inner .product-page-tagline { font-size: 0.98rem !important; }
+}
+
+/* Cart drawer free-shipping truck icon (phone): +1% */
+@media (max-width: 600px) {
+  .cart-drawer-shipping-icon:not(.cart-drawer-shipping-icon--done) svg { width: 12.3px; height: 12.3px; }
 }
