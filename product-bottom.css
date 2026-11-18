@@ -1,9 +1,9 @@
-/* Shared by classic-stack.html, powder-pod.html, hybrid-pod.html and
+/* Shared by full-stack.html, powder-pod.html, hybrid-pod.html and
    pill-pod.html: styles for the sections under the buy box (Built to
    travel, Compare, FAQ). Edit here and every one of those pages changes.
    Scoped to body.page-product-bottom. */
 /* ══════════════════════════════════════════════════════════════
-   LAYOUT GRID SYSTEM — page-scoped test (classic-stack.html
+   LAYOUT GRID SYSTEM — page-scoped test (full-stack.html
    only). One container + one 12-column grid, reused by every
    section below the buy box (Built to travel, Compare, FAQ) and
    by the hero's own outer edges, so every section's left/right

@@ -1,4 +1,4 @@
-// Built to travel photo stack. Shared by classic-stack.html and the pod pages;
+// Built to travel photo stack. Shared by full-stack.html and the pod pages;
 // loaded with <script type="module" src="./tsa-stack.js"> so it runs after the page is parsed.
 // BUILT TO TRAVEL — 3-photo layered stack. `order` holds the
 // three card elements in current front->back visual order; each

@@ -107,12 +107,16 @@
     #product-info-inner .bc-capacity-row + .product-info-link { margin-top: 10px; }
     /* one line only under the Size guide section: no second line above Build Your System */
     .bys-block { border-top: none; }
-    /* Hero edges — matches classic-stack.html's gallery/buy-box width so
+    /* Hero edges — matches full-stack.html's gallery/buy-box width so
        the product photo doesn't run wider (and taller, since the frame
        is a 1:1 square) than it does there. */
     .page-travel-scooper .product-hero { width: calc(100% - 10vw); max-width: 1296px; }
     .page-travel-scooper .product-images-col { margin-left: 0; }
     .page-travel-scooper #product-info-inner { padding-right: 0; }
+    @media (min-width: 601px) {
+      #product-info-inner .product-reviews-star { width: 13.28px; height: 13.28px; }
+      #product-info-inner .product-reviews-count { font-size: 0.7571rem; }
+    }
   </style>
 </head>
 <body class="page-travel-scooper">
@@ -147,7 +151,7 @@
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
                   </div>
                 </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
+                <a href="./full-stack.html" class="nav-drop-card">
                   <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
@@ -250,13 +254,13 @@
       </div>
       <div class="product-reviews-bar">
         <div class="product-reviews-stars">
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
         </div>
-        <span class="product-reviews-count">4,728 Reviews</span>
+        <span class="product-reviews-count">0 Reviews</span>
       </div>
       <p class="product-page-tagline">5 mL stainless steel scooper.</p>
       <ul class="product-feature-list">
@@ -430,6 +434,8 @@
     </div>
   </section>
 
+  <!--@include partials/reviews.html handle="travel-scooper" name="Travel Scooper"-->
+
   <!--@include partials/footer.html-->
 
   <script>
@@ -497,5 +503,6 @@
   <script type="module" src="./nav-scroll.js"></script>
   <script type="module" src="./src/preorder.js"></script>
   <script type="module" src="./src/gallery-swipe.js"></script>
+<script type="module" src="./src/reviews.js"></script>
 </body>
 </html>

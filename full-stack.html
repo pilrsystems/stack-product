@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="./product-bottom.css" />
   <!-- ─────────────────────────────────────────────────────────────
-       BUY COLUMN — page-scoped, classic-stack.html only. Every rule
+       BUY COLUMN — page-scoped, full-stack.html only. Every rule
        below is scoped under #product-info-inner so it can't affect
        the other five product pages that share style.css. No new
        colors or fonts: every value here is copied from an existing
@@ -242,6 +242,10 @@
       .btl-specs { grid-template-columns: 1fr; }
     }
 
+      @media (min-width: 601px) {
+      #product-info-inner .product-reviews-star { width: 13.28px; height: 13.28px; }
+      #product-info-inner .product-reviews-count { font-size: 0.7571rem; }
+    }
   </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-85BFGXZB1R"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-85BFGXZB1R');</script>
@@ -281,7 +285,7 @@
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
                   </div>
                 </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
+                <a href="./full-stack.html" class="nav-drop-card">
                   <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
@@ -391,13 +395,13 @@
 
       <div class="product-reviews-bar">
         <div class="product-reviews-stars">
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <svg class="product-reviews-star" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg class="product-reviews-star product-reviews-star--off" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
         </div>
-        <span class="product-reviews-count">4,728 Reviews</span>
+        <span class="product-reviews-count">0 Reviews</span>
       </div>
 
       <!-- 4. Description -->
@@ -405,7 +409,7 @@
 
       <!-- Same three checkmarks used on the individual pod pages -->
       <ul class="product-feature-list">
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, temperature resistant.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, food-safe.</li>
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods to adapt to your routine.</li>
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
@@ -541,6 +545,8 @@
   </section>
 
   <!-- FOOTER -->
+  <!--@include partials/reviews.html handle="full-stack" name="Full Stack"-->
+
   <!--@include partials/footer.html-->
 
   <script>
@@ -648,5 +654,6 @@
   <script type="module" src="./nav-scroll.js"></script>
   <script type="module" src="./src/preorder.js"></script>
   <script type="module" src="./src/gallery-swipe.js"></script>
+<script type="module" src="./src/reviews.js"></script>
 </body>
 </html>

@@ -159,7 +159,7 @@
 
     /* ── Inert text links (no destination yet) ─────────────── */
     .sg-inert-link {
-      background: none; border: none; padding: 0; cursor: default;
+      background: none; border: none; padding: 0; cursor: pointer;
       font: inherit; color: #5e6e7a; text-decoration: underline;
     }
     .sg-link-row {
@@ -170,7 +170,7 @@
     }
     .sg-link-row:last-child { border-bottom: 1px solid rgba(66,85,99,0.15); }
     .sg-link-cta {
-      background: none; border: none; cursor: default; flex-shrink: 0;
+      background: none; border: none; cursor: pointer; flex-shrink: 0; text-decoration: none;
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
       color: #5e6e7a; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
@@ -205,6 +205,10 @@
     @media (min-width: 601px) {
       .sg-buckets { margin-bottom: 50px; }
       .sg-specs { margin-bottom: 90px; }
+      /* Spec-card pod pictures (web): +7% inside their cards. Mobile keeps the sizes set in the script. */
+      .sg-spec-col:nth-child(1) .sg-spec-photo > img:first-child { transform: translateY(10px) scale(0.7918) !important; }
+      .sg-spec-col:nth-child(2) .sg-spec-photo > img:first-child { transform: translate(2px, 8px) scale(0.9031) !important; }
+      .sg-spec-col:nth-child(3) .sg-spec-photo > img:first-child { transform: translate(3px, 5px) scale(0.8507) !important; }
       .sg-tested { margin-bottom: 90px; }   /* footnote to "Not on the list?" (was 128px) */
       .sg-main { padding-bottom: 60px; }   /* bottom line of the last row to the footer (was 128px) */
     }
@@ -234,7 +238,7 @@
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
                   </div>
                 </a>
-                <a href="./classic-stack.html" class="nav-drop-card">
+                <a href="./full-stack.html" class="nav-drop-card">
                   <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
@@ -324,7 +328,7 @@
       <div id="sg-panel" role="tabpanel" aria-labelledby="sg-tab-small" tabindex="0">
         <div class="sg-table-head" id="sg-table-head"></div>
         <div id="sg-table-rows"></div>
-        <p class="sg-no-match" id="sg-no-match">Not here? <button type="button" class="sg-inert-link">Tell us and we'll test it.</button></p>
+        <p class="sg-no-match" id="sg-no-match">Not here? <a class="sg-inert-link" href="./tell-us.html">Tell us and we'll test it.</a></p>
       </div>
       <p class="sg-footnote" id="sg-footnote"></p>
     </section>
@@ -343,8 +347,8 @@
     </section>
 
     <div class="sg-link-row">
-      <span>Don't see your supplement? <button type="button" class="sg-inert-link">Tell us and we'll test it.</button></span>
-      <button type="button" class="sg-link-cta">TELL US &rarr;</button>
+      <span>Don't see your supplement? <a class="sg-inert-link" href="./tell-us.html">Tell us and we'll test it.</a></span>
+      <a class="sg-link-cta" href="./tell-us.html">TELL US &rarr;</a>
     </div>
   </main>
 

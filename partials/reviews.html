@@ -1,0 +1,40 @@
+  <!-- Reviews (layout ready for Judge.me: content is rendered by src/reviews.js) -->
+  <section class="rv-section" id="reviews" data-product-handle="{{handle}}" data-product-name="{{name}}" data-reviews-source="placeholder">
+    <div class="rv-inner layout-container">
+      <h2 class="rv-headline">Customer reviews</h2>
+
+      <div class="rv-overview">
+        <div class="rv-score">
+          <span class="rv-score-num" data-rv="average">0.0</span>
+          <div class="rv-score-side">
+            <span data-rv="stars"></span>
+            <p class="rv-score-count">Based on <span data-rv="count">0</span> reviews</p>
+          </div>
+        </div>
+        <div class="rv-bars" data-rv="bars"></div>
+      </div>
+
+      <div class="rv-tools">
+        <label class="rv-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input type="search" placeholder="Search reviews" aria-label="Search reviews" data-rv="search" autocomplete="off">
+        </label>
+        <button type="button" class="rv-write" data-rv="write">Write a review</button>
+      </div>
+
+      <p class="rv-topics-label">Popular topics</p>
+      <div class="rv-controls">
+        <div class="rv-topics" data-rv="topics"></div>
+        <label class="rv-sort">Sort by:
+          <select data-rv="sort" aria-label="Sort reviews">
+            <option value="highest">Highest rating</option>
+            <option value="lowest">Lowest rating</option>
+            <option value="newest">Newest</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="rv-list" data-rv="list"></div>
+      <button type="button" class="rv-more" data-rv="more" hidden>Load more reviews</button>
+    </div>
+  </section>
