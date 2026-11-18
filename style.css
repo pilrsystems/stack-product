@@ -7297,3 +7297,25 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 @media (max-width: 600px) {
   body .rv-section + .footer-top { margin-top: 16px !important; }
 }
+
+/* The pilr system pods (phone): fit the screen, smaller text */
+@media (max-width: 600px) {
+  body .pilr-system-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+  body .pilr-system-title { margin-bottom: 28px; }
+  body .pilr-system-pods { gap: 1.25rem 0.75rem; max-width: none; }
+  body .pilr-system-pod-img-wrap { height: 118px; margin-bottom: 0.7rem; }
+  body .pilr-system-pod-img--lower { transform: translateY(4px) scale(0.99); max-width: 73%; }   /* keeps the pods' relative sizes */
+  body .pilr-system-pod-img--lower-pill { transform: translateY(7px); max-width: 74%; }
+  body .pilr-system-pod-name { font-size: 0.82rem; margin-bottom: 0.2rem; }
+  body .pilr-system-pod-desc { font-size: 0.7rem; line-height: 1.35; }
+}
+
+/* Product page section headings (phone): 7px between the small heading and the title */
+@media (max-width: 600px) {
+  body:has(.product-hero) :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { margin-bottom: 7px !important; }
+  body:has(.product-hero) :is(.pilr-system-title, .tsa-title, .comparison-intro-title, .wp-faq-headline) { margin-top: 0 !important; }
+}
+@media (max-width: 600px) {
+  body:has(.product-hero) .comparison-intro .why-label { margin-bottom: -9px !important; }   /* its container already adds a 16px row gap */
+  body:has(.product-hero) .wp-faq-headline { top: 0 !important; }   /* product-bottom.css nudged it up 11px */
+}
