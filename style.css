@@ -7462,3 +7462,10 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
   body:has(.problem--v2) .built-routine-section--home { padding-top: 79px !important; }
   body:has(.problem--v2) .explore-routine { padding-top: 55px !important; }
 }
+
+/* Shop all (catalog) cards, phone: name 16px, description 12.5px, price 16px */
+@media (max-width: 600px) {
+  body:has(.catalog-hero-title) .shop-card-info h3 { font-size: 16px !important; }
+  body:has(.catalog-hero-title) .shop-card-info p { font-size: 12.5px !important; }
+  body:has(.catalog-hero-title) .shop-card-info .shop-price { font-size: 16px !important; }
+}
