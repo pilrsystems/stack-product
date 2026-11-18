@@ -7302,12 +7302,12 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 @media (max-width: 600px) {
   body .pilr-system-section { padding-left: 1.25rem; padding-right: 1.25rem; }
   body .pilr-system-title { margin-bottom: 28px; }
-  body .pilr-system-pods { gap: 1.25rem 0.75rem; max-width: none; }
+  body .pilr-system-pods { grid-template-columns: repeat(3, 104px); justify-content: center; gap: 1.25rem 0.5rem; max-width: none; }   /* pods closer together */
   body .pilr-system-pod-img-wrap { height: 118px; margin-bottom: 0.7rem; }
-  body .pilr-system-pod-img--lower { transform: translateY(4px) scale(0.99); max-width: 73%; }   /* keeps the pods' relative sizes */
-  body .pilr-system-pod-img--lower-pill { transform: translateY(7px); max-width: 74%; }
-  body .pilr-system-pod-name { font-size: 0.82rem; margin-bottom: 0.2rem; }
-  body .pilr-system-pod-desc { font-size: 0.7rem; line-height: 1.35; }
+  body .pilr-system-pod-img--lower { transform: translateY(4px) scale(0.99); max-width: 86%; }   /* keeps the pods' relative sizes */
+  body .pilr-system-pod-img--lower-pill { transform: translateY(7px); max-width: 87%; }
+  body .pilr-system-pod-name { font-size: 0.75rem; margin-bottom: 0.2rem; }
+  body .pilr-system-pod-desc { font-size: 0.64rem; line-height: 1.35; }
 }
 
 /* Product page section headings (phone): 7px between the small heading and the title */
@@ -7323,5 +7323,29 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 /* TSA section text (phone): centred */
 @media (max-width: 600px) {
   body .tsa-content { text-align: center; transform: none; }
-  body .tsa-row { flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; }
+}
+
+/* TSA section (phone): 22px from the table's last line to the photos */
+@media (max-width: 600px) {
+  body .tsa-photo { margin-top: 6px; }
+}
+
+/* TSA photos to the Compare section (phone): 70px */
+@media (max-width: 600px) {
+  body:has(.product-hero) .comparison-section { margin-top: 70px !important; }
+}
+
+/* Compare section (phone): table -> description 33px, description -> button 24px */
+@media (max-width: 600px) {
+  body:has(.product-hero) .comparison-intro .comparison-intro-desc { margin-top: -8px !important; margin-bottom: 4.8px !important; }
+}
+
+/* Pre-order button text (phone): slightly larger, button size unchanged */
+@media (max-width: 600px) {
+  body .product-btn-add { font-size: 12px; padding-top: 10.2px; padding-bottom: 10.2px; }
+}
+
+/* FAQ answers on product pages (phone): left-aligned text and buttons */
+@media (max-width: 600px) {
+  body:has(.product-hero) .wp-faq-answer, body:has(.product-hero) .wp-faq-answer p { text-align: left !important; }
 }
