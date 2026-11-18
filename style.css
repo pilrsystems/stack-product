@@ -7349,3 +7349,116 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 @media (max-width: 600px) {
   body:has(.product-hero) .wp-faq-answer, body:has(.product-hero) .wp-faq-answer p { text-align: left !important; }
 }
+
+/* Section headings on every page (phone): small labels 13px, titles 28px.
+   `body:not(#_)` raises specificity so this wins over the earlier per-page phone sizes. */
+@media (max-width: 600px) {
+  html body:not(#_) :is(
+    .why-label, .about-section-eyebrow, .wp-science-eyebrow, .wp-break-eyebrow, .wp-system-eyebrow,
+    .wp-materials-eyebrow, .wp-faq-eyebrow, .pilr-system-eyebrow, .sg-eyebrow, .rp-eyebrow, .ea-why-eyebrow,
+    .shop-header-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .sg-tested > .sg-eyebrow
+  ) { font-size: 13px !important; }
+
+  html body:not(#_) :is(
+    .why-label + h2, .problem-headline, .home-lifestyle-title, .built-routine-title, .explore-routine-title,
+    .about-section-heading, .wp-science-headline, .wp-break-headline, .wp-system-headline, .wp-materials-headline,
+    .comparison-intro-title, .how-headline, .wp-faq-headline, .faq-group-title, .sg-h2,
+    .pilr-system-title, .tsa-title, .rv-headline, .rp-h2, .ea-why-heading, .ea-built-heading, .ea-cta-heading
+  ) { font-size: 28px !important; line-height: 1.2 !important; }
+}
+
+/* Cart drawer (phone): centred on the screen with an even gap on both sides */
+@media (max-width: 600px) {
+  body .cart-drawer { left: 0.75rem; right: 0.75rem; width: auto; max-width: none; }
+}
+
+/* Home hero banner (phone): label 14px, title 47px, tagline 17px, button 13px and a bit bigger; copy and button 9px higher */
+@media (max-width: 600px) {
+  body .hero-copy { top: -15px; }
+  body .hero-eyebrow { font-size: 14px; }
+  body .hero-title { font-size: 47px; }
+  body .hero-tagline { font-size: 17px; max-width: none; text-wrap: balance; }
+  body .hero-tagline-br { display: none; }   /* at 17px the forced break left "powders," on a line of its own */
+  body .hero-cta.btn { font-size: 13px; padding: 0.95rem 1.5rem; max-width: 17.5rem; }
+}
+
+/* "The way we pack today" cards (phone): 264.5px squares (15% bigger again, 230px before); icons, logo and spacing scaled with them; text +20% */
+@media (max-width: 600px) {
+  body .problem--v2 .problem-card { width: min(100%, 264.5px); flex: 0 0 min(100%, 264.5px); padding: 16.01px 16.01px 17.99px; }
+  body .problem-card-icon img { height: 83.73px; }
+  body .problem-card:nth-child(2) .problem-card-icon img { height: 90.5px; }
+  body .problem-card:nth-child(3) .problem-card-icon img { height: 77.23px; }
+  body .problem-card-icon img.problem-card-icon--wide { width: 155.8px; height: 83.73px; top: 3.97px; }
+  body .problem--v2 .problem-card-icon { padding-bottom: 2.65px; }
+  body .problem--v2 .problem-card-label { margin-bottom: 10.32px; font-size: 12.84px; }
+  body .problem--v2 .problem-card-desc { font-size: 13.2px; }
+  body .problem--v2 .problem-card--pilr { padding: 0; }
+  body .problem--v2 .problem-card-body { padding: 0 13.82px 8.46px; }
+  body .problem--v2 .problem-card-brand { margin-bottom: 11.5px; height: 15.08px; }
+  body .problem--v2 .problem-card-brand img { height: 21.3px; }
+  body .problem--v2 .problem-card-link { font-size: 11px; margin-top: 4px; margin-bottom: 1.15px; padding-bottom: 2.5px; }
+  body .problem--v2 .problem-card-art { top: 31.74px; }
+  /* pilr card: logo lines up with the other cards' titles and the description with theirs; the link stays where it is */
+  body .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: -6.3px; }
+  body .problem--v2 .problem-card--pilr .problem-card-desc { position: relative; top: -7px; }
+  body .problem--v2 .problem-card--pilr .problem-card-link { position: relative; top: -2.1px; }   /* 11px from the description to the link */
+  /* the icons' actual sizes are set per card further up; scaled here */
+  body .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 122.03px; height: 65.58px; }
+  body .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 70.89px; }
+  body .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 74.91px; }
+}
+
+
+/* HOME PAGE, phone: all text +10% (section titles, small labels, the hero and the "way we pack today" cards are left alone) */
+@media (max-width: 600px) {
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) span.nav-drop-title { font-size: 17.3px !important; }
+  body:has(.problem--v2) span.nav-drop-desc { font-size: 13.05px !important; line-height: 16.96px !important; }
+  body:has(.problem--v2) span.nav-shop-all-text { font-size: 15.29px !important; }
+  body:has(.problem--v2) a.nav-shop-all span { font-size: 15.29px !important; }
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(3) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(4) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) span.preorder-bar-open { font-size: 9.9px !important; }
+  body:has(.problem--v2) span.preorder-bar-count { font-size: 9.9px !important; }
+  body:has(.problem--v2) span.preorder-bar-count span { font-size: 9.9px !important; }
+  body:has(.problem--v2) span.preorder-bar-perks { font-size: 9.9px !important; }
+  body:has(.problem--v2) a.shop-header-viewall { font-size: 10.67px !important; }
+  body:has(.problem--v2) span.shop-header-viewall-arrow { font-size: 10.67px !important; }
+  body:has(.problem--v2) div.shop-card-info h3 { font-size: 17.25px !important; }
+  body:has(.problem--v2) div.shop-card-info p { font-size: 13.73px !important; line-height: 20.59px !important; }
+  body:has(.problem--v2) span.shop-price { font-size: 17.25px !important; }
+  body:has(.problem--v2) span.shop-price-lead { font-size: 14.26px !important; }
+  body:has(.problem--v2) div.shop-card-badge { font-size: 9.26px !important; }
+  body:has(.problem--v2) span.shop-price-strike { font-size: 12.5px !important; }
+  body:has(.problem--v2) span.why-accordion-label { font-size: 11.97px !important; }
+  body:has(.problem--v2) span.why-accordion-num { font-size: 11.26px !important; }
+  body:has(.problem--v2) span.why-accordion-icon { font-size: 22px !important; line-height: 22px !important; }
+  body:has(.problem--v2) div.why-accordion-panel p { font-size: 14.3px !important; line-height: 23.6px !important; }
+  body:has(.problem--v2) p.home-lifestyle-sub { font-size: 17.6px !important; line-height: 26.4px !important; }
+  body:has(.problem--v2) span.home-lifestyle-label { font-size: 12.1px !important; }
+  body:has(.problem--v2) span.home-lifestyle-desc { font-size: 13.75px !important; line-height: 19.25px !important; }
+  body:has(.problem--v2) p.built-routine-desc { font-size: 14.85px !important; line-height: 24.5px !important; }
+  body:has(.problem--v2) span.built-routine-item { font-size: 13.2px !important; }
+  body:has(.problem--v2) span.built-routine-val { font-size: 13.2px !important; }
+  body:has(.problem--v2) a.built-routine-btn { font-size: 12.1px !important; }
+  body:has(.problem--v2) div.explore-routine-caption span { font-size: 18.48px !important; }
+  body:has(.problem--v2) span.explore-routine-arrow { font-size: 18.48px !important; }
+  body:has(.problem--v2) div.footer-newsletter h3 { font-size: 20.24px !important; }
+  body:has(.problem--v2) div:nth-child(13) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2) { font-size: 14.43px !important; line-height: 23.09px !important; }
+  body:has(.problem--v2) p.footer-legal { font-size: 10.91px !important; line-height: 16.37px !important; }
+  body:has(.problem--v2) h4 { font-size: 14.43px !important; }
+  body:has(.problem--v2) div.footer-col ul li a { font-size: 14.08px !important; line-height: 19.71px !important; }
+  body:has(.problem--v2) span.site-footer-copy { font-size: 12.67px !important; }
+}
+
+/* HOME PAGE, phone: 15px more space between each section (added to each section's top padding) */
+@media (max-width: 600px) {
+  body:has(.problem--v2) .shop { padding-top: 57.5px !important; }
+  body:has(.problem--v2) .why { padding-top: 49px !important; }
+  body:has(.problem--v2) .fly-video { padding-top: 53px !important; }
+  body:has(.problem--v2) .problem--v2 { padding-top: 57px !important; }
+  body:has(.problem--v2) .home-lifestyle { padding-top: 15px !important; }
+  body:has(.problem--v2) .built-routine-section--home { padding-top: 79px !important; }
+  body:has(.problem--v2) .explore-routine { padding-top: 55px !important; }
+}
