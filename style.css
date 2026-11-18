@@ -7302,7 +7302,7 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 @media (max-width: 600px) {
   body .pilr-system-section { padding-left: 1.25rem; padding-right: 1.25rem; }
   body .pilr-system-title { margin-bottom: 28px; }
-  body .pilr-system-pods { grid-template-columns: repeat(3, 104px); justify-content: center; gap: 1.25rem 0.5rem; max-width: none; }   /* pods closer together */
+  body .pilr-system-pods { grid-template-columns: repeat(3, 104px); justify-content: center; gap: 1.25rem 1rem; max-width: none; }
   body .pilr-system-pod-img-wrap { height: 118px; margin-bottom: 0.7rem; }
   body .pilr-system-pod-img--lower { transform: translateY(4px) scale(0.99); max-width: 86%; }   /* keeps the pods' relative sizes */
   body .pilr-system-pod-img--lower-pill { transform: translateY(7px); max-width: 87%; }
