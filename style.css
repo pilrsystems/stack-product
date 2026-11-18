@@ -7319,3 +7319,9 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
   body:has(.product-hero) .comparison-intro .why-label { margin-bottom: -9px !important; }   /* its container already adds a 16px row gap */
   body:has(.product-hero) .wp-faq-headline { top: 0 !important; }   /* product-bottom.css nudged it up 11px */
 }
+
+/* TSA section text (phone): centred */
+@media (max-width: 600px) {
+  body .tsa-content { text-align: center; transform: none; }
+  body .tsa-row { flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; }
+}
