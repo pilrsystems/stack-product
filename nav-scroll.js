@@ -19,7 +19,6 @@
   }
   window.addEventListener('scroll', function () {
     var y = window.scrollY;
-    if (document.querySelector('.product-hero')) { nav.classList.remove('nav--hidden'); lastY = y; return; }   // product pages: the header stays (with the pre-order bar)
     if (y > lastY && y > 80) {
       nav.classList.add('nav--hidden');
       closeMenus();

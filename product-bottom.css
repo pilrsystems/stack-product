@@ -37,6 +37,17 @@
   --grid-gap: clamp(16px, 1.7vw, 24px);
   --layout-gap: clamp(72px, 9vw, 128px);
 }
+/* Hero edges — matches classic-stack.html's own .page-classic-stack
+   override, so the gallery/buy box land on the same width on every
+   page that shares this file (classic-stack, powder-pod, hybrid-pod,
+   pill-pod) instead of classic-stack's hero alone being capped to
+   --page-max while the others fall back to style.css's wider,
+   uncapped-by-10vw .product-hero rule. */
+.page-product-bottom .product-hero {
+  width: calc(100% - 10vw); max-width: var(--page-max);
+}
+.page-product-bottom .product-images-col { margin-left: 0; }
+.page-product-bottom #product-info-inner { padding-right: 0; }
 .layout-container {
   width: calc(100% - 10vw); max-width: var(--page-max);
   margin-inline: auto; box-sizing: border-box;

@@ -107,9 +107,15 @@
     #product-info-inner .bc-capacity-row + .product-info-link { margin-top: 10px; }
     /* one line only under the Size guide section: no second line above Build Your System */
     .bys-block { border-top: none; }
+    /* Hero edges — matches classic-stack.html's gallery/buy-box width so
+       the product photo doesn't run wider (and taller, since the frame
+       is a 1:1 square) than it does there. */
+    .page-travel-scooper .product-hero { width: calc(100% - 10vw); max-width: 1296px; }
+    .page-travel-scooper .product-images-col { margin-left: 0; }
+    .page-travel-scooper #product-info-inner { padding-right: 0; }
   </style>
 </head>
-<body>
+<body class="page-travel-scooper">
 
   <div class="product-sticky-bar" id="product-sticky-bar">
     <div class="product-sticky-img"><img src="images/lifestyle_section/Scooper.png" alt="Travel Scooper" /></div>
@@ -227,7 +233,7 @@
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img is-active" style="transform: translate(-10px, -25px) scale(1.075)" src="images/lifestyle_section/Travel Scooper Prod 1.jpg" alt="Travel Scooper" />
+            <img class="pg-main-img is-active" style="transform: translate(-25px, -60px) scale(2.3)" src="images/lifestyle_section/Travel Scooper Prod 1.jpg" alt="Travel Scooper" />
             <img class="pg-main-img" style="transform: translate(17px, -25px) scale(1.075)" src="images/lifestyle_section/Travel Scooper Prod 2.jpg" alt="Travel Scooper" />
             <img class="pg-main-img" src="images/lifestyle_section/Travel Scooper Prod 3 Wide.jpg" alt="Travel Scooper" />
             <img class="pg-main-img" style="left: -30px; width: calc(100% + 30px); object-position: 50% 85.4%" src="images/lifestyle_section/Powder Pod Prod Image 5.jpg" alt="Travel Scooper" />
