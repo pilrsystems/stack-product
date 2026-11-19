@@ -7521,12 +7521,12 @@ body:not(.page-hybrid-old) :is(
 
 /* Product page section headings (phone): 7px between the small heading and the title */
 @media (max-width: 600px) {
-  body:has(.product-hero) :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { margin-bottom: 7px !important; }
-  body:has(.product-hero) :is(.pilr-system-title, .tsa-title, .comparison-intro-title, .wp-faq-headline) { margin-top: 0 !important; }
+  :is(body:has(.product-hero), body.system-page) :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { margin-bottom: 7px !important; }
+  :is(body:has(.product-hero), body.system-page) :is(.pilr-system-title, .tsa-title, .comparison-intro-title, .wp-faq-headline) { margin-top: 0 !important; }
 }
 @media (max-width: 600px) {
-  body:has(.product-hero) .comparison-intro .why-label { margin-bottom: -9px !important; }   /* its container already adds a 16px row gap */
-  body:has(.product-hero) .wp-faq-headline { top: 0 !important; }   /* product-bottom.css nudged it up 11px */
+  :is(body:has(.product-hero), body.system-page) .comparison-intro .why-label { margin-bottom: -9px !important; }   /* its container already adds a 16px row gap */
+  :is(body:has(.product-hero), body.system-page) .wp-faq-headline { top: 0 !important; }   /* product-bottom.css nudged it up 11px */
 }
 
 /* TSA section text (phone): centred */
@@ -7546,7 +7546,7 @@ body:not(.page-hybrid-old) :is(
 
 /* Compare section (phone): table -> description 33px, description -> button 24px */
 @media (max-width: 600px) {
-  body:has(.product-hero) .comparison-intro .comparison-intro-desc { margin-top: -8px !important; margin-bottom: 4.8px !important; }
+  :is(body:has(.product-hero), body.system-page) .comparison-intro .comparison-intro-desc { margin-top: -8px !important; margin-bottom: 4.8px !important; }
 }
 
 /* Pre-order button text (phone): slightly larger, button size unchanged */
@@ -7792,4 +7792,27 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
 /* "Built to travel" photos (phone): the whole group (front photo plus the two peeking out behind it) is centred on the screen */
 @media (max-width: 600px) {
   .tsa-stack { position: relative; left: 1.57%; }   /* about 5.5px: the group sat that much left of centre */
+}
+
+/* Build Your System: on phones the page shows the Full Stack page's "The system" and "TSA Compliant" sections; web keeps its current page */
+@media (max-width: 600px) {
+  body.system-page .pilr-system-section { display: block; }
+}
+@media (min-width: 601px) {
+  body.system-page .tsa-section { display: none; }
+}
+
+/* Build Your System (phone): the Compare / TSA / FAQ sections follow the Full Stack page */
+@media (max-width: 600px) {
+  body.system-page .tsa-stack-card { border-radius: 2px; overflow: hidden; }   /* 2px photo corners */
+  body.system-page .comparison-section, body.system-page .comparison-section :is(.comparison-intro, .comparison-table-wrap, .comparison-table) { text-align: start; }   /* the title and description centre themselves, as on Full Stack */
+  body.system-page .page-product-bottom.why-compare { padding-top: 70px; padding-bottom: 0; }   /* 70px from TSA to Compare and 82px from Compare to the FAQ, the same as the Full Stack page */
+}
+
+/* Product pages (phone): 100px between The System and TSA, TSA and Compare, and Compare and the FAQ */
+@media (max-width: 600px) {
+  :is(body:has(.product-hero), body.system-page) .tsa-section { margin-top: 100px !important; }
+  :is(body:has(.product-hero), body.system-page) .comparison-section { margin-top: 100px !important; }
+  :is(body:has(.product-hero), body.system-page) .wp-faq { margin-top: 100px !important; }
+  body.system-page .page-product-bottom.why-compare { padding-top: 0; }   /* this page spaces Compare with the same 100px margin */
 }
