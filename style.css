@@ -7695,3 +7695,16 @@ body:not(.page-hybrid-old) :is(
   body:has(.catalog-hero-title) .shop-card-info p { font-size: 12.5px !important; }
   body:has(.catalog-hero-title) .shop-card-info .shop-price { font-size: 16px !important; }
 }
+
+/* Home "Shop" row (web): label 14px, "View all" 13.5px */
+@media (min-width: 601px) {
+  html body:not(#_):not(.page-hybrid-old) .shop-header-eyebrow { font-size: 14px !important; }   /* beats the site-wide 13px section-label rule, for this one label */
+  body .shop-header-viewall, body .shop-header-viewall-arrow { font-size: 13.5px; }
+}
+
+/* Home "Shop" row (phone): label 12px, "View all" 11.5px */
+@media (max-width: 600px) {
+  html body:not(#_):not(.page-hybrid-old) .shop-header-eyebrow { font-size: 12px !important; }
+  html body:not(#_):has(.problem--v2) :is(a.shop-header-viewall, span.shop-header-viewall-arrow) { font-size: 11.5px !important; }
+  body .shop-header-viewall { position: relative; left: 4px; }   /* nudged 4px to the right */
+}
