@@ -7708,3 +7708,7 @@ body:not(.page-hybrid-old) :is(
   html body:not(#_):has(.problem--v2) :is(a.shop-header-viewall, span.shop-header-viewall-arrow) { font-size: 11.5px !important; }
   body .shop-header-viewall { position: relative; left: 4px; }   /* nudged 4px to the right */
 }
+
+/* Reviews are switched off while the store is on pre-order (no reviews yet): the star row under the product title is hidden.
+   The bottom reviews section was taken off the product pages too (partials/reviews.html and src/reviews.js are kept for later). */
+.product-reviews-bar { display: none !important; }
