@@ -7724,3 +7724,9 @@ body:not(.page-hybrid-old) :is(
 @media (max-width: 600px) {
   body .built-routine-btn { white-space: nowrap; padding-left: 2.6rem; padding-right: 2.6rem; }
 }
+
+/* Full Stack page, phone: no "Build your system" button under the Compare title; the description stays above the chart */
+@media (max-width: 600px) {
+  body.page-classic-stack .comparison-intro-link { display: none; }
+  body.page-classic-stack .comparison-section .comparison-table-wrap { margin-top: 15.6px; }   /* 40px from the description to the table */
+}
