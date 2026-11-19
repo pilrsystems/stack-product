@@ -6766,15 +6766,15 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 /* Web: Compare / TSA descriptions 17px; "Build your system" button text 12.5px (button grown to fit); TSA table text 12px */
 @media (min-width: 601px) {
   body .comparison-intro-desc, body .tsa-desc { font-size: 17px; }
-  body.page-product-bottom .comparison-intro-link, body.system-page .comparison-intro-link { font-size: 12.5px; width: min(100%, 295px); padding: 0.8rem 3.5rem; }
+  body.page-product-bottom .comparison-intro-link, div.page-product-bottom .comparison-intro-link, body.system-page .comparison-intro-link { font-size: 12.5px; width: min(100%, 295px); padding: 0.8rem 3.5rem; }
   body .tsa-item, body .tsa-val { font-size: 12px; }
 }
 
 /* Web, product pages: FAQ questions 16px, answers 15.5px, "+" icon 16px */
 @media (min-width: 601px) {
-  body.page-product-bottom .wp-faq-question { font-size: 16px; }
-  body.page-product-bottom .wp-faq-answer p { font-size: 15.5px; }
-  body.page-product-bottom .wp-faq-icon { font-size: 16px; }
+  body.page-product-bottom .wp-faq-question, div.page-product-bottom .wp-faq-question { font-size: 16px; }
+  body.page-product-bottom .wp-faq-answer p, div.page-product-bottom .wp-faq-answer p { font-size: 15.5px; }
+  body.page-product-bottom .wp-faq-icon, div.page-product-bottom .wp-faq-icon { font-size: 16px; }
 }
 
 /* Web: pilr system pods spaced 15% then another 10% further apart (visible gaps ~156/152px -> ~197/193px); columns keep their width */
@@ -7749,17 +7749,26 @@ body:not(.page-hybrid-old) :is(
 
 /* The Compare / TSA / FAQ / system sections on the other product pages (and Build Your System) use the Full Stack page's layout */
 @media (min-width: 601px) {
-  :is(body.page-product-bottom, body.system-page) :is(.pilr-system-title, .tsa-content .why-label, .tsa-title, .tsa-desc, .comparison-intro .why-label, .comparison-intro-title, .comparison-intro-desc, .wp-faq-eyebrow, .wp-faq-headline) { text-align: center; }
-  :is(body.page-product-bottom, body.system-page) :is(.tsa-desc, .comparison-intro-desc) { margin-left: auto; margin-right: auto; }
-  :is(body.page-product-bottom, body.system-page) .comparison-intro { text-align: center; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) :is(.pilr-system-title, .tsa-content .why-label, .tsa-title, .tsa-desc, .comparison-intro .why-label, .comparison-intro-title, .comparison-intro-desc, .wp-faq-eyebrow, .wp-faq-headline) { text-align: center; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) :is(.tsa-desc, .comparison-intro-desc) { margin-left: auto; margin-right: auto; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-intro { text-align: center; }
 }
 @media (min-width: 761px) {
-  :is(body.page-product-bottom, body.system-page) .comparison-intro-title { margin-bottom: 1rem; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-intro-title { margin-bottom: 1rem; }
 }
 @media (max-width: 600px) {
-  :is(body.page-product-bottom, body.system-page) .comparison-intro .comparison-intro-desc { order: 3; margin: 12px auto 20px; }
-  :is(body.page-product-bottom, body.system-page) .comparison-intro-link { order: 4; display: none; }
-  :is(body.page-product-bottom, body.system-page) .comparison-section .comparison-table-wrap { order: 5; margin: 15.6px 0 23.2px; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-intro .comparison-intro-desc { order: 3; margin: 12px auto 20px; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-intro-link { order: 4; display: none; }
+  :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-section .comparison-table-wrap { order: 5; margin: 15.6px 0 23.2px; }
 }
 /* the Large Pill Pod page keeps its own label sizes elsewhere, but these section labels follow the Full Stack page */
 body.page-hybrid-old :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { font-size: 13px !important; text-transform: uppercase !important; }
+
+/* Home "Sized around real doses" button: a small white arrow after the text */
+.built-routine-section--home .built-routine-btn-arrow { display: inline-block; margin-left: 0.5em; color: #fff; transform: translateY(-1.3px); }   /* lifted to line up with the middle of the capital letters */
+@media (max-width: 600px) { .built-routine-section--home .built-routine-btn-arrow { transform: translateY(-1.25px); } }
+
+/* Home "Sized around real doses" table (phone): names and amounts 12px */
+@media (max-width: 600px) {
+  html body:not(#_):has(.problem--v2) :is(span.built-routine-item, span.built-routine-val) { font-size: 12px !important; }
+}

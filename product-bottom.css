@@ -354,3 +354,9 @@ body.page-classic-stack .tsa-stack-card { border-radius: 2px; overflow: hidden; 
 /* Full Stack page: slightly rounded corners on the pre-order perks box and the photo thumbnails */
 body.page-classic-stack .preorder-card { border-radius: 6px; overflow: hidden; }
 @media (min-width: 601px) { body.page-classic-stack .pg-thumb { border-radius: 6px; } }   /* web only; the phone strip has its own underline style */
+
+/* Travel Scooper and Single Lid: the "Built to travel" photos have the same 2px corners as on the Full Stack page */
+body.page-travel-scooper .tsa-stack-card, body.page-single-lid .tsa-stack-card { border-radius: 2px; overflow: hidden; }
+
+/* Travel Scooper and Single Lid: the same space between the FAQ and the footer as the other product pages (128px on web, 72px on phones) */
+body.page-travel-scooper .footer-top, body.page-single-lid .footer-top { margin-top: clamp(72px, 9vw, 128px); }
