@@ -7754,3 +7754,8 @@ body:not(.page-hybrid-old) :is(
 body.system-page .preorder-perk-with { display: none; }
 body.system-page .preorder-perk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 1rem; }
 body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: normal; }
+
+/* Build Your System (web): the same space between the Compare table and the FAQ as the product pages (no extra bottom padding) */
+@media (min-width: 601px) {
+  body.system-page .page-product-bottom.why-compare { padding-bottom: 0; }
+}

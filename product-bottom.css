@@ -360,3 +360,6 @@ body.page-travel-scooper .tsa-stack-card, body.page-single-lid .tsa-stack-card {
 
 /* Travel Scooper and Single Lid: the same space between the FAQ and the footer as the other product pages (128px on web, 72px on phones) */
 body.page-travel-scooper .footer-top, body.page-single-lid .footer-top { margin-top: clamp(72px, 9vw, 128px); }
+
+/* Build Your System: the same space between the FAQ and the footer as the product pages (128px on web, 72px on phones) */
+body.system-page .footer-top { margin-top: clamp(72px, 9vw, 128px); }
