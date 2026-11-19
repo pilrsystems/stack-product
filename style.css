@@ -7746,3 +7746,20 @@ body:not(.page-hybrid-old) :is(
 /* Hero button: the arrow sits lower than the letters, so lift it to the vertical centre of the box */
 .hero-cta-arrow { display: inline-block; transform: translateY(-2.25px); }
 @media (max-width: 600px) { .hero-cta-arrow { transform: translateY(-1.5px); } }
+
+/* The Compare / TSA / FAQ / system sections on the other product pages (and Build Your System) use the Full Stack page's layout */
+@media (min-width: 601px) {
+  :is(body.page-product-bottom, body.system-page) :is(.pilr-system-title, .tsa-content .why-label, .tsa-title, .tsa-desc, .comparison-intro .why-label, .comparison-intro-title, .comparison-intro-desc, .wp-faq-eyebrow, .wp-faq-headline) { text-align: center; }
+  :is(body.page-product-bottom, body.system-page) :is(.tsa-desc, .comparison-intro-desc) { margin-left: auto; margin-right: auto; }
+  :is(body.page-product-bottom, body.system-page) .comparison-intro { text-align: center; }
+}
+@media (min-width: 761px) {
+  :is(body.page-product-bottom, body.system-page) .comparison-intro-title { margin-bottom: 1rem; }
+}
+@media (max-width: 600px) {
+  :is(body.page-product-bottom, body.system-page) .comparison-intro .comparison-intro-desc { order: 3; margin: 12px auto 20px; }
+  :is(body.page-product-bottom, body.system-page) .comparison-intro-link { order: 4; display: none; }
+  :is(body.page-product-bottom, body.system-page) .comparison-section .comparison-table-wrap { order: 5; margin: 15.6px 0 23.2px; }
+}
+/* the Large Pill Pod page keeps its own label sizes elsewhere, but these section labels follow the Full Stack page */
+body.page-hybrid-old :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { font-size: 13px !important; text-transform: uppercase !important; }
