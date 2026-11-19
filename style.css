@@ -7816,3 +7816,8 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
   :is(body:has(.product-hero), body.system-page) .wp-faq { margin-top: 100px !important; }
   body.system-page .page-product-bottom.why-compare { padding-top: 0; }   /* this page spaces Compare with the same 100px margin */
 }
+
+/* Build Your System (phone): 100px from the Pre-order button to "The system" */
+@media (max-width: 600px) {
+  body.system-page .page-product-bottom .pilr-system-section { margin-top: 80px; }
+}
