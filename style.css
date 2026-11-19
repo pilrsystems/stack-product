@@ -7554,9 +7554,9 @@ body:not(.page-hybrid-old) :is(
   body .product-btn-add { font-size: 12px; padding-top: 10.2px; padding-bottom: 10.2px; }
 }
 
-/* FAQ answers on product pages (phone): left-aligned text and buttons (the questions are left-aligned too, as they were) */
+/* FAQ answers on every page (phone): left-aligned text and buttons */
 @media (max-width: 600px) {
-  body:has(.product-hero) .wp-faq-answer, body:has(.product-hero) .wp-faq-answer p { text-align: left !important; }
+  .wp-faq-answer, .wp-faq-answer p { text-align: left !important; }
 }
 
 /* Section headings on every page (phone): small labels 13px, titles 28px.
