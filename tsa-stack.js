@@ -74,7 +74,7 @@
     }, DURATION);
   }
 
-  stack.addEventListener('click', function () { next(); userTriggered(); });
+  stack.addEventListener('click', function () { if (dragged) { dragged = false; return; } next(); userTriggered(); });
 
   // Trackpad / magic-mouse swipe: a sideways two- or three-finger
   // scroll arrives as wheel events. A swipe flips one photo. The tail of
@@ -111,19 +111,65 @@
     else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); userTriggered(); }
   });
 
-  var touchStartX = null;
+  // TOUCH DRAG — the front photo follows your finger, then either flies off
+  // (next / previous) or springs back, depending on how far and how fast you
+  // swiped. Vertical movement is left to the page (touch-action: pan-y in CSS).
+  var drag = null;      // { x, y, t, dx, locked }
+  var dragged = false;  // swallow the click that can follow a drag
+
+  function endDrag(commit, dir) {
+    var front = order[0];
+    var fromSwipe = drag; drag = null;
+    front.style.transition = '';
+    front.style.transform = '';
+    front.style.opacity = '';
+    if (!commit) {
+      // spring back: animate from where the finger left it to the resting spot
+      front.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+      window.setTimeout(function () { front.style.transition = ''; }, 320);
+      return;
+    }
+    if (dir === 'next') next(); else prev();
+  }
+
   stack.addEventListener('touchstart', function (e) {
-    touchStartX = e.changedTouches[0].clientX;
-  }, { passive: true });
-  stack.addEventListener('touchend', function (e) {
-    if (touchStartX === null) return;
-    var dx = e.changedTouches[0].clientX - touchStartX;
-    touchStartX = null;
-    if (Math.abs(dx) < 30) return;
-    if (dx < 0) next(); else prev();
-    userTriggered();
+    if (animating || e.touches.length !== 1) { drag = null; return; }
+    var t = e.touches[0];
+    drag = { x: t.clientX, y: t.clientY, t: e.timeStamp, dx: 0, locked: false };
+    dragged = false;
+    stopAutoplay();
   }, { passive: true });
 
+  stack.addEventListener('touchmove', function (e) {
+    if (!drag) return;
+    var t = e.touches[0];
+    var dx = t.clientX - drag.x, dy = t.clientY - drag.y;
+    if (!drag.locked) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)) { drag = null; startAutoplay(); return; } // a vertical scroll, not a swipe
+      drag.locked = true;
+    }
+    drag.dx = dx;
+    dragged = true;
+    var front = order[0];
+    var w = stack.clientWidth || 1;
+    front.style.transition = 'none';
+    front.style.transform = 'translateX(' + dx + 'px)';
+    front.style.opacity = String(Math.max(0.35, 1 - Math.abs(dx) / (w * 1.1)));
+  }, { passive: true });
+
+  function finishTouch(e) {
+    if (!drag) return;
+    if (!drag.locked) { drag = null; userTriggered(); return; }
+    var dx = drag.dx, dt = Math.max(1, e.timeStamp - drag.t);
+    var w = stack.clientWidth || 1;
+    var fast = Math.abs(dx) / dt > 0.4 && Math.abs(dx) > 24;   // a flick (px per ms)
+    var far = Math.abs(dx) > w * 0.28;
+    endDrag(fast || far, dx < 0 ? 'next' : 'prev');
+    userTriggered();
+  }
+  stack.addEventListener('touchend', finishTouch, { passive: true });
+  stack.addEventListener('touchcancel', function () { if (drag) { endDrag(false); startAutoplay(); } }, { passive: true });
 
   var hint = document.getElementById('tsa-stack-hint');
   if (hint) {

@@ -7469,3 +7469,229 @@ body:not(.page-hybrid-old) :is(
   .built-routine-section--home .why-label, .explore-routine .why-label { margin-bottom: 10px; }
 }
 
+
+/* ---- Justin: phone/mobile rules (merged from origin/andrea-playground) ---- */
+/* Product page section titles (phone): 25px */
+@media (max-width: 600px) {
+  body:has(.product-hero) :is(.pilr-system-title, .tsa-title, .built-routine-title, .comparison-intro-title, .wp-faq-headline, .rv-headline) { font-size: 25px !important; }
+}
+
+/* Reviews summary (phone): slightly smaller */
+@media (max-width: 600px) {
+  .rv-score { gap: 0.8rem; }
+  .rv-score-num { font-size: 2.9rem; }
+  .rv-score .rv-star { width: 17px; height: 17px; }
+  .rv-score-count { font-size: 0.85rem; margin-top: 0.35rem; }
+  .rv-overview { margin-bottom: 2.25rem; }
+  .rv-bars { gap: 0.6rem; padding-top: 0.75rem; }
+  .rv-bar-row { font-size: 0.85rem; gap: 0.6rem; grid-template-columns: 0.9rem 13px 1fr 2.6rem; }
+  .rv-bar-row .rv-star { width: 13px; height: 13px; }
+  .rv-bar-track { height: 5px; }
+}
+
+/* Reviews search, button, topics and sort (phone): smaller */
+@media (max-width: 600px) {
+  .rv-tools { gap: 0.6rem; margin-bottom: 1.5rem; }
+  .rv-search { padding: 0.62rem 0.9rem; gap: 0.55rem; }
+  .rv-search svg { width: 16px; height: 16px; }
+  .rv-search input { font-size: 0.85rem; }
+  .rv-write { font-size: 0.7rem; padding: 0.8rem 1.2rem; }
+  .rv-topics-label { font-size: 0.85rem; margin-bottom: 0.75rem; }
+  .rv-controls { gap: 1rem; padding-bottom: 1.35rem; }
+  .rv-topics { gap: 0.5rem; }
+  .rv-topic { font-size: 0.8rem; padding: 0.5rem 0.95rem; }
+  .rv-topics-more { font-size: 0.82rem; padding: 0.5rem 0.3rem; }
+  .rv-sort, .rv-sort select { font-size: 0.82rem; }
+}
+
+/* Review list (phone): smaller */
+@media (max-width: 600px) {
+  .rv-item { padding: 1.6rem 0; gap: 0.7rem; }
+  .rv-name { font-size: 0.95rem; }
+  .rv-verified { font-size: 0.78rem; gap: 0.4rem; }
+  .rv-check { width: 15px; height: 15px; }
+  .rv-item-head { margin-bottom: 0.55rem; }
+  .rv-item-main .rv-star { width: 12.5px; height: 12.5px; }
+  .rv-date { font-size: 0.8rem; }
+  .rv-item-title { font-size: 0.92rem; margin-bottom: 0.35rem; }
+  .rv-item-body { font-size: 0.85rem; line-height: 1.55; }
+  .rv-readmore { font-size: 0.78rem; }
+  .rv-photo { width: 92px; height: 92px; margin-top: 0.8rem; }
+}
+
+/* Reviews to footer (phone): 80px from the last review's line to the footer (64px section padding + 16px) */
+@media (max-width: 600px) {
+  body .rv-section + .footer-top { margin-top: 16px !important; }
+}
+
+/* The pilr system pods (phone): fit the screen, smaller text */
+@media (max-width: 600px) {
+  body .pilr-system-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+  body .pilr-system-title { margin-bottom: 28px; }
+  body .pilr-system-pods { grid-template-columns: repeat(3, 104px); justify-content: center; gap: 1.25rem 1rem; max-width: none; }
+  body .pilr-system-pod-img-wrap { height: 118px; margin-bottom: 0.7rem; }
+  body .pilr-system-pod-img--lower { transform: translateY(4px) scale(0.99); max-width: 86%; }   /* keeps the pods' relative sizes */
+  body .pilr-system-pod-img--lower-pill { transform: translateY(7px); max-width: 87%; }
+  body .pilr-system-pod-name { font-size: 0.75rem; margin-bottom: 0.2rem; }
+  body .pilr-system-pod-desc { font-size: 0.64rem; line-height: 1.35; }
+}
+
+/* Product page section headings (phone): 7px between the small heading and the title */
+@media (max-width: 600px) {
+  body:has(.product-hero) :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { margin-bottom: 7px !important; }
+  body:has(.product-hero) :is(.pilr-system-title, .tsa-title, .comparison-intro-title, .wp-faq-headline) { margin-top: 0 !important; }
+}
+@media (max-width: 600px) {
+  body:has(.product-hero) .comparison-intro .why-label { margin-bottom: -9px !important; }   /* its container already adds a 16px row gap */
+  body:has(.product-hero) .wp-faq-headline { top: 0 !important; }   /* product-bottom.css nudged it up 11px */
+}
+
+/* TSA section text (phone): centred */
+@media (max-width: 600px) {
+  body .tsa-content { text-align: center; transform: none; }
+}
+
+/* TSA section (phone): 22px from the table's last line to the photos */
+@media (max-width: 600px) {
+  body .tsa-photo { margin-top: 6px; }
+}
+
+/* TSA photos to the Compare section (phone): 70px */
+@media (max-width: 600px) {
+  body:has(.product-hero) .comparison-section { margin-top: 70px !important; }
+}
+
+/* Compare section (phone): table -> description 33px, description -> button 24px */
+@media (max-width: 600px) {
+  body:has(.product-hero) .comparison-intro .comparison-intro-desc { margin-top: -8px !important; margin-bottom: 4.8px !important; }
+}
+
+/* Pre-order button text (phone): slightly larger, button size unchanged */
+@media (max-width: 600px) {
+  body .product-btn-add { font-size: 12px; padding-top: 10.2px; padding-bottom: 10.2px; }
+}
+
+/* FAQ answers on product pages (phone): left-aligned text and buttons */
+@media (max-width: 600px) {
+  body:has(.product-hero) .wp-faq-answer, body:has(.product-hero) .wp-faq-answer p { text-align: left !important; }
+}
+
+/* Section headings on every page (phone): small labels 13px, titles 28px.
+   `body:not(#_)` raises specificity so this wins over the earlier per-page phone sizes. */
+@media (max-width: 600px) {
+  html body:not(#_) :is(
+    .why-label, .about-section-eyebrow, .wp-science-eyebrow, .wp-break-eyebrow, .wp-system-eyebrow,
+    .wp-materials-eyebrow, .wp-faq-eyebrow, .pilr-system-eyebrow, .sg-eyebrow, .rp-eyebrow, .ea-why-eyebrow,
+    .shop-header-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .sg-tested > .sg-eyebrow
+  ) { font-size: 13px !important; }
+
+  html body:not(#_) :is(
+    .why-label + h2, .problem-headline, .home-lifestyle-title, .built-routine-title, .explore-routine-title,
+    .about-section-heading, .wp-science-headline, .wp-break-headline, .wp-system-headline, .wp-materials-headline,
+    .comparison-intro-title, .how-headline, .wp-faq-headline, .faq-group-title, .sg-h2,
+    .pilr-system-title, .tsa-title, .rv-headline, .rp-h2, .ea-why-heading, .ea-built-heading, .ea-cta-heading
+  ) { font-size: 28px !important; line-height: 1.2 !important; }
+}
+
+/* Cart drawer (phone): centred on the screen with an even gap on both sides */
+@media (max-width: 600px) {
+  body .cart-drawer { left: 0.75rem; right: 0.75rem; width: auto; max-width: none; }
+}
+
+/* Home hero banner (phone): label 14px, title 47px, tagline 17px, button 13px and a bit bigger; copy and button 9px higher */
+@media (max-width: 600px) {
+  body .hero-copy { top: -15px; }
+  body .hero-eyebrow { font-size: 14px; }
+  body .hero-title { font-size: 47px; }
+  body .hero-tagline { font-size: 17px; max-width: none; text-wrap: balance; }
+  body .hero-tagline-br { display: none; }   /* at 17px the forced break left "powders," on a line of its own */
+  body .hero-cta.btn { font-size: 13px; padding: 0.95rem 1.5rem; max-width: 17.5rem; }
+}
+
+/* "The way we pack today" cards (phone): 264.5px squares (15% bigger again, 230px before); icons, logo and spacing scaled with them; text +20% */
+@media (max-width: 600px) {
+  body .problem--v2 .problem-card { width: min(100%, 264.5px); flex: 0 0 min(100%, 264.5px); padding: 16.01px 16.01px 17.99px; }
+  body .problem-card-icon img { height: 83.73px; }
+  body .problem-card:nth-child(2) .problem-card-icon img { height: 90.5px; }
+  body .problem-card:nth-child(3) .problem-card-icon img { height: 77.23px; }
+  body .problem-card-icon img.problem-card-icon--wide { width: 155.8px; height: 83.73px; top: 3.97px; }
+  body .problem--v2 .problem-card-icon { padding-bottom: 2.65px; }
+  body .problem--v2 .problem-card-label { margin-bottom: 10.32px; font-size: 12.84px; }
+  body .problem--v2 .problem-card-desc { font-size: 13.2px; }
+  body .problem--v2 .problem-card--pilr { padding: 0; }
+  body .problem--v2 .problem-card-body { padding: 0 13.82px 8.46px; }
+  body .problem--v2 .problem-card-brand { margin-bottom: 11.5px; height: 15.08px; }
+  body .problem--v2 .problem-card-brand img { height: 21.3px; }
+  body .problem--v2 .problem-card-link { font-size: 11px; margin-top: 4px; margin-bottom: 1.15px; padding-bottom: 2.5px; }
+  body .problem--v2 .problem-card-art { top: 31.74px; }
+  /* pilr card: logo lines up with the other cards' titles and the description with theirs; the link stays where it is */
+  body .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: -6.3px; }
+  body .problem--v2 .problem-card--pilr .problem-card-desc { position: relative; top: -7px; }
+  body .problem--v2 .problem-card--pilr .problem-card-link { position: relative; top: -2.1px; }   /* 11px from the description to the link */
+  /* the icons' actual sizes are set per card further up; scaled here */
+  body .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 122.03px; height: 65.58px; }
+  body .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 70.89px; }
+  body .problem--v2 .problem-card:nth-child(3) .problem-card-icon img { height: 74.91px; }
+}
+
+
+/* HOME PAGE, phone: all text +10% (section titles, small labels, the hero and the "way we pack today" cards are left alone) */
+@media (max-width: 600px) {
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) span.nav-drop-title { font-size: 17.3px !important; }
+  body:has(.problem--v2) span.nav-drop-desc { font-size: 13.05px !important; line-height: 16.96px !important; }
+  body:has(.problem--v2) span.nav-shop-all-text { font-size: 15.29px !important; }
+  body:has(.problem--v2) a.nav-shop-all span { font-size: 15.29px !important; }
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(3) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) nav:nth-child(2) > div:nth-child(1) > ul:nth-child(2) > li:nth-child(4) > a:nth-child(1) { font-size: 13.79px !important; line-height: 16.55px !important; }
+  body:has(.problem--v2) span.preorder-bar-open { font-size: 9.9px !important; }
+  body:has(.problem--v2) span.preorder-bar-count { font-size: 9.9px !important; }
+  body:has(.problem--v2) span.preorder-bar-count span { font-size: 9.9px !important; }
+  body:has(.problem--v2) span.preorder-bar-perks { font-size: 9.9px !important; }
+  body:has(.problem--v2) a.shop-header-viewall { font-size: 10.67px !important; }
+  body:has(.problem--v2) span.shop-header-viewall-arrow { font-size: 10.67px !important; }
+  body:has(.problem--v2) div.shop-card-info h3 { font-size: 17.25px !important; }
+  body:has(.problem--v2) div.shop-card-info p { font-size: 13.73px !important; line-height: 20.59px !important; }
+  body:has(.problem--v2) span.shop-price { font-size: 17.25px !important; }
+  body:has(.problem--v2) span.shop-price-lead { font-size: 14.26px !important; }
+  body:has(.problem--v2) div.shop-card-badge { font-size: 9.26px !important; }
+  body:has(.problem--v2) span.shop-price-strike { font-size: 12.5px !important; }
+  body:has(.problem--v2) span.why-accordion-label { font-size: 11.97px !important; }
+  body:has(.problem--v2) span.why-accordion-num { font-size: 11.26px !important; }
+  body:has(.problem--v2) span.why-accordion-icon { font-size: 22px !important; line-height: 22px !important; }
+  body:has(.problem--v2) div.why-accordion-panel p { font-size: 14.3px !important; line-height: 23.6px !important; }
+  body:has(.problem--v2) p.home-lifestyle-sub { font-size: 17.6px !important; line-height: 26.4px !important; }
+  body:has(.problem--v2) span.home-lifestyle-label { font-size: 12.1px !important; }
+  body:has(.problem--v2) span.home-lifestyle-desc { font-size: 13.75px !important; line-height: 19.25px !important; }
+  body:has(.problem--v2) p.built-routine-desc { font-size: 14.85px !important; line-height: 24.5px !important; }
+  body:has(.problem--v2) span.built-routine-item { font-size: 13.2px !important; }
+  body:has(.problem--v2) span.built-routine-val { font-size: 13.2px !important; }
+  body:has(.problem--v2) a.built-routine-btn { font-size: 12.1px !important; }
+  body:has(.problem--v2) div.explore-routine-caption span { font-size: 18.48px !important; }
+  body:has(.problem--v2) span.explore-routine-arrow { font-size: 18.48px !important; }
+  body:has(.problem--v2) div.footer-newsletter h3 { font-size: 20.24px !important; }
+  body:has(.problem--v2) div:nth-child(13) > div:nth-child(1) > div:nth-child(1) > p:nth-child(2) { font-size: 14.43px !important; line-height: 23.09px !important; }
+  body:has(.problem--v2) p.footer-legal { font-size: 10.91px !important; line-height: 16.37px !important; }
+  body:has(.problem--v2) h4 { font-size: 14.43px !important; }
+  body:has(.problem--v2) div.footer-col ul li a { font-size: 14.08px !important; line-height: 19.71px !important; }
+  body:has(.problem--v2) span.site-footer-copy { font-size: 12.67px !important; }
+}
+
+/* HOME PAGE, phone: 15px more space between each section (added to each section's top padding) */
+@media (max-width: 600px) {
+  body:has(.problem--v2) .shop { padding-top: 57.5px !important; }
+  body:has(.problem--v2) .why { padding-top: 49px !important; }
+  body:has(.problem--v2) .fly-video { padding-top: 53px !important; }
+  body:has(.problem--v2) .problem--v2 { padding-top: 57px !important; }
+  body:has(.problem--v2) .home-lifestyle { padding-top: 15px !important; }
+  body:has(.problem--v2) .built-routine-section--home { padding-top: 79px !important; }
+  body:has(.problem--v2) .explore-routine { padding-top: 55px !important; }
+}
+
+/* Shop all (catalog) cards, phone: name 16px, description 12.5px, price 16px */
+@media (max-width: 600px) {
+  body:has(.catalog-hero-title) .shop-card-info h3 { font-size: 16px !important; }
+  body:has(.catalog-hero-title) .shop-card-info p { font-size: 12.5px !important; }
+  body:has(.catalog-hero-title) .shop-card-info .shop-price { font-size: 16px !important; }
+}
