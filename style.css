@@ -7554,7 +7554,7 @@ body:not(.page-hybrid-old) :is(
   body .product-btn-add { font-size: 12px; padding-top: 10.2px; padding-bottom: 10.2px; }
 }
 
-/* FAQ answers on product pages (phone): left-aligned text and buttons */
+/* FAQ answers on product pages (phone): left-aligned text and buttons (the questions are left-aligned too, as they were) */
 @media (max-width: 600px) {
   body:has(.product-hero) .wp-faq-answer, body:has(.product-hero) .wp-faq-answer p { text-align: left !important; }
 }
@@ -7787,4 +7787,9 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
 @media (max-width: 600px) {
   body:has(.wp-hero) .page-product-bottom .wp-faq { margin-top: 70px; }
   body:has(.wp-hero) .page-product-bottom:has(.wp-faq) { padding-bottom: 76px; }
+}
+
+/* "Built to travel" photos (phone): the whole group (front photo plus the two peeking out behind it) is centred on the screen */
+@media (max-width: 600px) {
+  .tsa-stack { position: relative; left: 1.57%; }   /* about 5.5px: the group sat that much left of centre */
 }
