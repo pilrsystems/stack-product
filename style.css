@@ -7268,28 +7268,11 @@ body #product-info-inner ul.product-feature-list { margin-bottom: 10px; }
 .preorder-perks .product-accordion-trigger { position: relative; justify-content: center; }
 .preorder-perks .product-accordion-icon { position: absolute; right: 1.1rem; top: 50%; margin-top: -0.7rem; }
 
-/* ---- Large Pill Pod page (hybrid-pod.html) kept exactly as it was before the pre-order tweaks, as a reference ----
-   It uses the copies in partials/legacy/ and these rules put the shared styles back to their old values. */
-body.page-hybrid-old .preorder-card-top { padding: 0.95rem 1.1rem 0.9rem; }
-body.page-hybrid-old .preorder-card-claimed { text-align: left; }
-body.page-hybrid-old .preorder-card-track { margin: 0.6rem 0 0.55rem; }
-body.page-hybrid-old .preorder-perks .product-accordion-panel.is-open { max-height: 240px; }
-body.page-hybrid-old .preorder-note { display: block; }
-body.page-hybrid-old .product-page-tagline { font-size: 1.13rem; }
-body.page-hybrid-old #product-info-inner ul.product-feature-list { margin-bottom: 2px; }
-@media (min-width: 601px) {
-  body.page-hybrid-old #product-info-inner .product-feature-list li { font-size: 0.98rem; }
-}
-body.page-hybrid-old .preorder-perks .product-accordion-trigger { position: static; justify-content: space-between; }
-body.page-hybrid-old .preorder-perks .product-accordion-icon { position: static; margin-top: 0; }
-body.page-hybrid-old .bys-photo { background: #EFEDE9; }
-
 /* ======================================================================
    COMPARE TABLE (shared: every product page, Why pilr, Build Your System)
    Compact table: label column 1.5x a data column, header zone (pictures, pilr logo, column titles) straight on the
    page background, ONE rounded tinted box under it for the rows (no divider lines), and the pilr column as a white
    rounded panel that runs from the top of the header zone to just above the bottom of the rows box, behind the checks.
-   The Large Pill Pod reference page (body.page-hybrid-old) is left out on purpose.
    ====================================================================== */
 body:not(.page-hybrid-old) .comparison-table-wrap {
   --cmp-img-zone: 60px;       /* header zone, top part: competitor pictures + pilr logo */
@@ -7761,8 +7744,6 @@ body:not(.page-hybrid-old) :is(
   :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-intro-link { order: 4; display: none; }
   :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-section .comparison-table-wrap { order: 5; margin: 15.6px 0 23.2px; }
 }
-/* the Large Pill Pod page keeps its own label sizes elsewhere, but these section labels follow the Full Stack page */
-body.page-hybrid-old :is(.pilr-system-eyebrow, .tsa-content .why-label, .comparison-intro .why-label, .wp-faq-eyebrow) { font-size: 13px !important; text-transform: uppercase !important; }
 
 /* Home "Sized around real doses" button: a small white arrow after the text */
 .built-routine-section--home .built-routine-btn-arrow { display: inline-block; margin-left: 0.5em; color: #fff; transform: translateY(-1.3px); }   /* lifted to line up with the middle of the capital letters */

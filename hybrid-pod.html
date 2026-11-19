@@ -33,7 +33,6 @@
     #product-info-inner .product-reviews-star { width: 13.28px; height: 13.28px; }
     #product-info-inner .product-reviews-count { font-size: 0.7571rem; }
     #product-info-inner .product-reviews-bar { margin-top: -0.3rem; }
-    #product-info-inner .product-page-tagline { margin-top: -0.3rem; }
     #product-info-inner .product-btn-add { width: 100%; margin-top: -0.85rem; }
     #product-info-inner .pod-add-submit-save {
       color: rgba(255,255,255,0.65); font-weight: 400; text-transform: none;
@@ -46,7 +45,6 @@
     #product-info-inner .product-title-row {
       display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
-    #product-info-inner .product-title-price { font-size: 1.54rem; }
     #product-info-inner .product-title-price .pod-add-row-strike {
       font-size: 0.75em; margin-left: 0.4rem; margin-right: 0;
     }
@@ -235,7 +233,7 @@
     }
   </style>
 </head>
-<body class="page-product-bottom page-hybrid-old">
+<body class="page-product-bottom">
 
   <div class="product-sticky-bar" id="product-sticky-bar">
     <div class="product-sticky-img"><img src="images/lifestyle_section/Hybrid Pod.png" alt="Large Pill Pod" /></div>
@@ -334,7 +332,7 @@
     <div class="product-images-col">
       <div class="pg-gallery">
         <div class="pg-thumbs" id="pg-thumbs">
-          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Large Pill Pod Prod New 5.jpg" data-imgstyle="transform: translate(-3px, -11px) scale(1.75)" aria-label="Photo 1">
+          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Large Pill Pod Prod New 5.jpg" data-imgstyle="transform: translate(-2px, -7px) scale(1.15)" aria-label="Photo 1">
             <img src="images/lifestyle_section/Large Pill Pod Prod New 5.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Large Pill Pod Prod New 3.jpg" data-imgstyle="transform: translate(15px, -29px) scale(1.268)" aria-label="Photo 2">
@@ -350,7 +348,7 @@
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img" id="pg-main-img" style="transform: translate(-3px, -11px) scale(1.75)" src="images/lifestyle_section/Large Pill Pod Prod New 5.jpg" alt="Large Pill Pod" />
+            <img class="pg-main-img" id="pg-main-img" style="transform: translate(-2px, -7px) scale(1.15)" src="images/lifestyle_section/Large Pill Pod Prod New 5.jpg" alt="Large Pill Pod" />
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -375,8 +373,9 @@
       <ul class="product-feature-list">
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, food-safe.</li>
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods in any order, add as many as you need.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
-<!--@include partials/legacy/preorder-card.html-->
+<!--@include partials/preorder-card.html-->
 
       <div class="pod-add" id="pod-add">
         <button type="button" class="pod-add-trigger" id="pod-add-trigger" aria-expanded="false" aria-controls="pod-add-panel">
@@ -428,9 +427,9 @@
       </div>
 
       <button class="product-btn-add" id="product-btn-add-main">ADD TO CART</button>
-<!--@include partials/legacy/preorder-note.html-->
+<!--@include partials/preorder-note.html-->
+<!--@include partials/preorder-foot.html-->
       <div class="product-info-sections">
-<!--@include partials/legacy/preorder-how.html-->
         <div class="product-accordion">
           <button class="product-accordion-trigger" aria-expanded="false">
             <span>Details</span>
@@ -459,13 +458,12 @@
           </div>
         </div>
       </div>
-<!--@include partials/legacy/preorder-foot.html-->
       <a href="./build-your-system.html" class="bys-block" aria-label="Build your system">
-        <img class="bys-photo" src="images/lifestyle_section/Build Your System Photo.png" alt="pilr pods stacked together" width="450" height="300" loading="lazy" />
+        <img class="bys-photo" src="images/lifestyle_section/Build Your System Photo Cutout.png" alt="pilr pods stacked together" width="450" height="300" loading="lazy" />
         <div class="bys-text">
           <div>
             <p class="bys-label">Build Your System</p>
-            <p class="bys-desc">Build the stack that fits your routine.</p>
+            <p class="bys-desc">Build a custom stack that fits your routine.</p>
           </div>
           <span class="bys-arrow" aria-hidden="true">&rarr;</span>
         </div>
