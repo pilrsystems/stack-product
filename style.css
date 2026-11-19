@@ -7759,3 +7759,8 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
 @media (min-width: 601px) {
   body.system-page .page-product-bottom.why-compare { padding-bottom: 0; }
 }
+
+/* Why pilr "How it works" video (web): the last 1% on the right is cut off, to hide the dark padding strip at the right edge of the 1080px-wide file */
+@media (min-width: 601px) {
+  .how-video-el { clip-path: inset(0 1% 0 0); }
+}
