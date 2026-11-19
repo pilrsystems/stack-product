@@ -348,8 +348,8 @@
   .page-product-bottom .wp-faq-list { margin-top: 5px; }
 }
 
-/* Full Stack page: slightly rounded corners on the "Built to travel" stacked photos */
-body.page-classic-stack .tsa-stack-card { border-radius: 6px; overflow: hidden; }
+/* Full Stack page: 2px rounded corners on the "Built to travel" stacked photos */
+body.page-classic-stack .tsa-stack-card { border-radius: 2px; overflow: hidden; }
 
 /* Full Stack page: slightly rounded corners on the pre-order perks box and the photo thumbnails */
 body.page-classic-stack .preorder-card { border-radius: 6px; overflow: hidden; }

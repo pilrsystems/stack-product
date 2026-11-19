@@ -7625,9 +7625,9 @@ body:not(.page-hybrid-old) :is(
   body .problem--v2 .problem-card-link { font-size: 11px; margin-top: 4px; margin-bottom: 1.15px; padding-bottom: 2.5px; }
   body .problem--v2 .problem-card-art { top: 31.74px; }
   /* pilr card: logo lines up with the other cards' titles and the description with theirs; the link stays where it is */
-  body .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: -6.3px; }
-  body .problem--v2 .problem-card--pilr .problem-card-desc { position: relative; top: -7px; }
-  body .problem--v2 .problem-card--pilr .problem-card-link { position: relative; top: -2.1px; }   /* 11px from the description to the link */
+  body .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: -25.4px; }
+  body .problem--v2 .problem-card--pilr .problem-card-desc { position: relative; top: -26.2px; }
+  body .problem--v2 .problem-card--pilr .problem-card-link { position: relative; top: -4.1px; }   /* 11px from the description to the link */
   /* the icons' actual sizes are set per card further up; scaled here */
   body .problem--v2 .problem-card:nth-child(1) .problem-card-icon img.problem-card-icon--wide { width: 122.03px; height: 65.58px; }
   body .problem--v2 .problem-card:nth-child(2) .problem-card-icon img { height: 70.89px; }
@@ -7712,3 +7712,15 @@ body:not(.page-hybrid-old) :is(
 /* Reviews are switched off while the store is on pre-order (no reviews yet): the star row under the product title is hidden.
    The bottom reviews section was taken off the product pages too (partials/reviews.html and src/reviews.js are kept for later). */
 .product-reviews-bar { display: none !important; }
+
+/* Home page: 2px rounded corners on the "Nothing to hide" video and the cards in "The new standard" */
+.fly-video-media, .fly-video-el { border-radius: 2px; overflow: hidden; }
+.problem--v2 .problem-card { border-radius: 2px; }
+
+/* Home page: 2px rounded corners on the lifestyle photos under "The new standard" */
+.home-lifestyle-item { border-radius: 2px; overflow: hidden; }
+
+/* "View the full test" button (phone): the label stays on one line */
+@media (max-width: 600px) {
+  body .built-routine-btn { white-space: nowrap; padding-left: 2.6rem; padding-right: 2.6rem; }
+}
