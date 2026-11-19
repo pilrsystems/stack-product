@@ -7749,3 +7749,8 @@ body:not(.page-hybrid-old) :is(
 @media (max-width: 600px) {
   html body:not(#_):has(.problem--v2) :is(span.built-routine-item, span.built-routine-val) { font-size: 12px !important; }
 }
+
+/* Build Your System page: no "(with Powder Pod)" on the free scooper, and the four "Included with your pre-order" points share the box evenly */
+body.system-page .preorder-perk-with { display: none; }
+body.system-page .preorder-perk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 1rem; }
+body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: normal; }
