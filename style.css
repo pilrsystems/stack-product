@@ -7745,10 +7745,6 @@ body:not(.page-hybrid-old) :is(
   :is(body.page-product-bottom, body.system-page, div.page-product-bottom) .comparison-section .comparison-table-wrap { order: 5; margin: 15.6px 0 23.2px; }
 }
 
-/* Home "Sized around real doses" button: a small white arrow after the text */
-.built-routine-section--home .built-routine-btn-arrow { display: inline-block; margin-left: 0.5em; color: #fff; transform: translateY(-1.3px); }   /* lifted to line up with the middle of the capital letters */
-@media (max-width: 600px) { .built-routine-section--home .built-routine-btn-arrow { transform: translateY(-1.25px); } }
-
 /* Home "Sized around real doses" table (phone): names and amounts 12px */
 @media (max-width: 600px) {
   html body:not(#_):has(.problem--v2) :is(span.built-routine-item, span.built-routine-val) { font-size: 12px !important; }
