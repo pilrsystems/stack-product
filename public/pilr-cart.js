@@ -31,7 +31,7 @@
     id: 'single-lid-free',
     title: 'Single Lid',
     price: 0,
-    listPrice: 7,
+    listPrice: 9,
     image: 'images/lifestyle_section/Full Render.png',
   }
   const PODS_THAT_INCLUDE_A_FREE_LID = ['pill-pod', 'hybrid-pod', 'powder-pod', 'classic-stack']
@@ -45,7 +45,7 @@
   // both call this so every price shown anywhere always agrees.
   const FREE_SHIPPING_THRESHOLD = 75
 
-  const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 11, 'single-lid-free': 7 }
+  const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 11, 'single-lid-free': 9 }
   function freePerkLineTotal(id, quantity) {
     const basePrice = FIRST_UNIT_FREE_BASE_PRICE[id]
     if (basePrice == null) return null
@@ -556,7 +556,7 @@
     { id: 'travel-scooper', title: 'Travel Scooper',  image: 'images/lifestyle_section/Scooper.png' },
     { id: 'single-lid',     title: 'Single Lid',      image: 'images/lifestyle_section/Full Render.png' },
   ]
-  const OFFER_FLAT_PRICE = { 'travel-scooper': 11, 'single-lid': 7 }
+  const OFFER_FLAT_PRICE = { 'travel-scooper': 11, 'single-lid': 9 }
   function offerFlatPrice(id) { return OFFER_FLAT_PRICE[id] ?? 0 }
 
   // A single pod's offer price is what adding ONE MORE would actually cost

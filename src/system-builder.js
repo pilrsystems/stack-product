@@ -51,7 +51,7 @@ const SUPPLEMENTS = {
 // the *paid* ids (not '-free'), so an add-on purchase never merges with
 // the free lid/scooper perk PilrCart grants automatically elsewhere.
 const ADD_ONS = {
-  'single-lid':     { label: 'Single Lid',     price: 7, image: 'images/lifestyle_section/Full Render.png', maxQty: 5 },
+  'single-lid':     { label: 'Single Lid',     price: 9, image: 'images/lifestyle_section/Full Render.png', maxQty: 5 },
   'travel-scooper': { label: 'Travel Scooper', price: 11, image: 'images/lifestyle_section/Scooper.png' },
 }
 
@@ -1314,7 +1314,7 @@ const POD_SPECS = {
 }
 
 // Every order includes one free lid, same rule and same product (id
-// 'single-lid-free', $7 list) as PilrCart's own auto-granted perk — kept
+// 'single-lid-free', $9 list) as PilrCart's own auto-granted perk — kept
 // in sync manually since there's no shared pricing config yet. Shown here
 // purely as a preview line; PilrCart grants the real cart item itself the
 // moment any pod lands in the cart, so this row never needs to touch
@@ -1322,7 +1322,7 @@ const POD_SPECS = {
 const FREE_LID = {
   title: 'Single Lid',
   image: 'images/lifestyle_section/Full Render.png',
-  listPrice: 7,
+  listPrice: 9,
 }
 function makeLidRow(chevron) {
   return `<div class="sys-acc-row">

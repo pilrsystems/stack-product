@@ -5103,7 +5103,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-page-tagline {
-  font-size: 1.13rem; color: #7a8a94; margin: 0; line-height: 1.5;
+  font-size: 1.25rem; color: #7a8a94; margin: 0; line-height: 1.5;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-reviews-bar {
@@ -5220,7 +5220,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 .bys-photo {
   width: 120px; height: 120px; flex-shrink: 0; aspect-ratio: 1 / 1; object-fit: cover;
-  border-radius: var(--radius); background: #EFEDE9;
+  border-radius: var(--radius); background: transparent;   /* the photo is a cutout, so no box color behind it */
 }
 .bys-text {
   flex: 1; min-width: 0;
@@ -6945,15 +6945,18 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 }
 
 .preorder-card { border: 1px solid rgba(66,85,99,0.15); background: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-.preorder-card-top { padding: 0.95rem 1.1rem 0.9rem; }
-.preorder-card-claimed { font-size: 0.78rem; color: #5e6e7a; margin: 0; }
+.preorder-card-top { padding: 0.6rem 1.1rem 0.55rem; }
+.preorder-card-claimed { font-size: 0.78rem; color: #5e6e7a; margin: 0; text-align: center; }
 .preorder-card-claimed strong { font-weight: 700; }
-.preorder-card-track { height: 4px; background: rgba(66,85,99,0.14); border-radius: 2px; overflow: hidden; margin: 0.6rem 0 0.55rem; }
+.preorder-card-track { height: 4px; background: rgba(66,85,99,0.14); border-radius: 2px; overflow: hidden; margin: 0.45rem 0 0; }
 .preorder-card-fill { display: block; height: 100%; width: 0; background: #3d4f5c; border-radius: 2px; }
 .preorder-card-left { font-size: 0.68rem; color: #7a8a94; margin: 0; }
 .preorder-perks.product-accordion { border-top: 1px solid rgba(66,85,99,0.15); border-bottom: none; }
 .preorder-perks .product-accordion-trigger { padding: 0.8rem 1.1rem; font-size: 0.6875rem; }
-.preorder-perks .product-accordion-panel.is-open { max-height: 240px; padding-bottom: 1rem; }
+.preorder-perks .product-accordion-panel.is-open { max-height: 300px; padding-bottom: 1rem; }
+.preorder-card-note { font-size: 0.672rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: 0.9rem 1.1rem 0; }
+/* the note now lives inside the perks dropdown, so hide the standalone one under the button wherever the card is */
+body:has(.preorder-card) .preorder-note { display: none; }
 .preorder-perk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.2rem; padding: 0.1rem 1.1rem 0; }
 .preorder-perk { display: flex; align-items: flex-start; gap: 0.6rem; }
 .preorder-perk svg { width: 18.48px; height: 18.48px; flex-shrink: 0; margin-top: 2px; color: #7a8a94; }
@@ -7244,3 +7247,225 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
   text-decoration: line-through;
   margin-right: 0.35em;
 }
+
+/* Full Stack page: no "(with Powder Pod)" after the free scooper perk (it already includes a Powder Pod) */
+body.page-classic-stack .preorder-perk-with { visibility: hidden; }   /* web: still takes up its space so the right-hand column stays where it was */
+@media (max-width: 600px) { body.page-classic-stack .preorder-perk-with { display: none; } }
+
+/* the guarantee line sits right under the pre-order button, in the spot the shipping note used to be */
+body:has(.preorder-card) .preorder-note + .preorder-foot { margin-top: 0.25rem; }
+
+/* Product pages (web): the checkmark bullets are the same size as the tagline above them */
+@media (min-width: 601px) {
+  body #product-info-inner .product-feature-list li { font-size: 1.13rem; }
+  body #product-info-inner .product-feature-list .product-feature-check { width: 16px; height: 16px; }
+}
+
+/* Product pages: a little more room between the last checkmark line and the pre-order box below it */
+body #product-info-inner ul.product-feature-list { margin-bottom: 10px; }
+
+/* Pre-order perks box: "Included with your pre-order" centered, the + stays at the right edge */
+.preorder-perks .product-accordion-trigger { position: relative; justify-content: center; }
+.preorder-perks .product-accordion-icon { position: absolute; right: 1.1rem; top: 50%; margin-top: -0.7rem; }
+
+/* ---- Large Pill Pod page (hybrid-pod.html) kept exactly as it was before the pre-order tweaks, as a reference ----
+   It uses the copies in partials/legacy/ and these rules put the shared styles back to their old values. */
+body.page-hybrid-old .preorder-card-top { padding: 0.95rem 1.1rem 0.9rem; }
+body.page-hybrid-old .preorder-card-claimed { text-align: left; }
+body.page-hybrid-old .preorder-card-track { margin: 0.6rem 0 0.55rem; }
+body.page-hybrid-old .preorder-perks .product-accordion-panel.is-open { max-height: 240px; }
+body.page-hybrid-old .preorder-note { display: block; }
+body.page-hybrid-old .product-page-tagline { font-size: 1.13rem; }
+body.page-hybrid-old #product-info-inner ul.product-feature-list { margin-bottom: 2px; }
+@media (min-width: 601px) {
+  body.page-hybrid-old #product-info-inner .product-feature-list li { font-size: 0.98rem; }
+}
+body.page-hybrid-old .preorder-perks .product-accordion-trigger { position: static; justify-content: space-between; }
+body.page-hybrid-old .preorder-perks .product-accordion-icon { position: static; margin-top: 0; }
+body.page-hybrid-old .bys-photo { background: #EFEDE9; }
+
+/* ======================================================================
+   COMPARE TABLE (shared: every product page, Why pilr, Build Your System)
+   Compact table: label column 1.5x a data column, header zone (pictures, pilr logo, column titles) straight on the
+   page background, ONE rounded tinted box under it for the rows (no divider lines), and the pilr column as a white
+   rounded panel that runs from the top of the header zone to just above the bottom of the rows box, behind the checks.
+   The Large Pill Pod reference page (body.page-hybrid-old) is left out on purpose.
+   ====================================================================== */
+body:not(.page-hybrid-old) .comparison-table-wrap {
+  --cmp-img-zone: 60px;       /* header zone, top part: competitor pictures + pilr logo */
+  --cmp-label-zone: 46px;     /* header zone, bottom part: column titles */
+  --cmp-head-h: calc(var(--cmp-img-zone) + var(--cmp-label-zone));
+  --cmp-pad: 14px;            /* even padding inside the rows box */
+  --cmp-row-h: 46px;
+  --cmp-logo-h: 34px;         /* pilr logo */
+  --cmp-stone: #EFEDE9;       /* the site's existing stone colour (photo thumbnails, Build Your System photo box) */
+}
+body:not(.page-hybrid-old) .comparison-section .comparison-table {
+  position: relative;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+}
+/* rows box: one rounded box under the header, a touch lighter than the stone colour (50% stone / 50% page background) */
+body:not(.page-hybrid-old) .comparison-section .comparison-table::before {
+  content: ''; position: absolute; z-index: 0;
+  left: 0; right: 0; top: var(--cmp-head-h); bottom: 0;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--cmp-stone) 50%, var(--bg) 50%);
+}
+/* pilr panel: white, rounded, very soft shadow; sits over the tint and behind the checkmarks */
+body:not(.page-hybrid-old) .comparison-section .comparison-table::after {
+  content: ''; position: absolute; z-index: 1;
+  left: calc(100% * 1.5 / 4.5); width: calc(100% / 4.5);
+  top: 0; bottom: 7px;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(94, 110, 122, 0.06), 0 8px 24px rgba(94, 110, 122, 0.08);
+}
+/* cells: no fills, no divider lines; above the panel */
+body:not(.page-hybrid-old) .comparison-section .comparison-table > .comparison-cell:nth-child(n) {
+  position: relative; z-index: 2;
+  background: transparent; border: 0;
+}
+body:not(.page-hybrid-old) .comparison-section .comparison-table > .comparison-cell:not(.comparison-header):nth-child(n) { height: var(--cmp-row-h); }
+body:not(.page-hybrid-old) .comparison-section .comparison-table > .comparison-cell:nth-child(n+5):nth-child(-n+8) { margin-top: var(--cmp-pad); }
+body:not(.page-hybrid-old) .comparison-section .comparison-table > .comparison-cell:nth-last-child(-n+4) { margin-bottom: var(--cmp-pad); }
+body:not(.page-hybrid-old) .comparison-section .comparison-label { padding-left: calc(var(--cmp-pad) + 4px); }
+/* header: titles sit at the bottom of the zone, the pilr logo level with the pictures */
+body:not(.page-hybrid-old) .comparison-section .comparison-header {
+  height: var(--cmp-head-h); align-items: flex-end; padding: 0 6px 12px;
+}
+body:not(.page-hybrid-old) .comparison-section .comparison-header--pilr {
+  align-items: center; padding: 0 6px;   /* logo centred between the top of the white panel and the top of the grey rows box */
+}
+body:not(.page-hybrid-old) .comparison-section .comparison-header--pilr::before { display: none; }   /* the phone's old grey column cap */
+body:not(.page-hybrid-old) .comparison-section .comparison-logo { height: var(--cmp-logo-h); }
+/* the two small pictures now live inside the header zone, centred over their columns */
+body:not(.page-hybrid-old) .comparison-section .comparison-photo {
+  bottom: auto; top: calc(var(--cmp-img-zone) / 2); margin-bottom: 0; z-index: 2;
+}
+body:not(.page-hybrid-old) .comparison-section .comparison-photo--organizer { left: calc(100% * 3 / 4.5); transform: translate(-50%, -50%); }
+body:not(.page-hybrid-old) .comparison-section .comparison-photo--ziploc { left: calc(100% * 4 / 4.5); transform: translate(-50%, -50%); }
+
+@media (min-width: 761px) {
+  /* a little more air in the text column: 1.75rem under the headline; 2rem (32px) between the paragraph and the button, the same as the TSA section above */
+  body:not(.page-hybrid-old) .comparison-intro-title { margin-bottom: 1.75rem; }
+  body:not(.page-hybrid-old) .comparison-intro-desc { margin-bottom: 2rem; }
+}
+@media (max-width: 760px) {
+  body:not(.page-hybrid-old) .comparison-section .comparison-table > .comparison-cell:not(.comparison-header):nth-child(n) { height: auto; }
+}
+@media (max-width: 600px) {
+  body:not(.page-hybrid-old) .comparison-table-wrap {
+    --cmp-img-zone: 38px; --cmp-label-zone: 38px; --cmp-pad: 8px; --cmp-logo-h: 25px;
+  }
+  body:not(.page-hybrid-old) .comparison-section .comparison-table-wrap { margin: 48px 0 23.2px; }   /* the pictures are inside the table now: only the gap under the title is left above it */
+  body:not(.page-hybrid-old) .comparison-section .comparison-header { padding: 0 3px 8px; }
+  body:not(.page-hybrid-old) .comparison-section .comparison-header--pilr { padding: 0 3px; }
+  body:not(.page-hybrid-old) .comparison-section .comparison-label { padding-left: calc(var(--cmp-pad) + 2px); }
+  body:not(.page-hybrid-old) .comparison-section .comparison-table::after { bottom: 5px; }
+}
+
+/* Web only (phones untouched): the all-caps section labels (TSA Compliant, Compare, FAQ) are 12px.
+   The Large Pill Pod reference page keeps its old 14px. */
+@media (min-width: 601px) {
+  body:not(.page-hybrid-old) .pilr-system-eyebrow,
+  body:not(.page-hybrid-old) .comparison-intro .why-label,
+  body:not(.page-hybrid-old) .tsa-content .why-label,
+  body:not(.page-hybrid-old) .wp-faq-eyebrow { font-size: 12px; }
+}
+
+/* Compare "Build your system" button: no arrow. The Large Pill Pod reference page keeps its old button. */
+body:not(.page-hybrid-old) .comparison-intro-link .comparison-intro-link-icon { display: none; }
+/* ...and its outline is 1px, as thin as the lines under the TSA table rows, with 2px corners, the same as the Pre-order button */
+body:not(.page-hybrid-old) .comparison-intro-link { border-width: 1px; border-radius: 2px; }
+/* Compare "Build your system" button: filled with the palette's Muted slate (#7a8a94) and white text, in every state */
+body:not(.page-hybrid-old) .comparison-intro-link,
+body:not(.page-hybrid-old) .comparison-intro-link:hover,
+body:not(.page-hybrid-old) .comparison-intro-link:focus { background: #7a8a94; border-color: #7a8a94; color: #fff; }
+body:not(.page-hybrid-old) .comparison-intro-link:active { background: #7a8a94; border-color: #7a8a94; color: #fff; opacity: 0.9; }
+
+/* "PRE-ORDER — $" button: the same Muted slate (#7a8a94) as the Compare button, a solid colour instead of a see-through dark blue.
+   The Large Pill Pod reference page keeps its old button colour. */
+body:not(.page-hybrid-old) .product-btn-add { background: #7a8a94; }
+
+/* HOMEPAGE (web only, phones untouched): the all-caps labels and the titles under them are centred within their own column,
+   on the same lines they sit on now. */
+@media (min-width: 601px) {
+  #why .why-right .why-label, #why .why-right h2,
+  .problem--v2 .why-label, .problem--v2 .problem-headline,
+  .built-routine-section--home .why-label, .built-routine-section--home .built-routine-title, .built-routine-section--home .built-routine-desc,
+  .explore-routine .why-label, .explore-routine .explore-routine-title,
+  .home-lifestyle-header, .home-lifestyle-title, .home-lifestyle-sub { text-align: center; }
+  .problem--v2 .problem-headline, .built-routine-section--home .built-routine-title,
+  .explore-routine .explore-routine-title, .home-lifestyle-title, #why .why-right h2 { width: 100%; max-width: none; margin-left: 0; margin-right: 0; }
+}
+
+/* FULL STACK page (web only, phones untouched): the all-caps labels, titles and body text of the pilr system, TSA, Compare and FAQ
+   sections are centred within their own column, on the same lines they sit on now. */
+@media (min-width: 601px) {
+  body.page-classic-stack .pilr-system-title,
+  body.page-classic-stack .tsa-content .why-label, body.page-classic-stack .tsa-title, body.page-classic-stack .tsa-desc,
+  body.page-classic-stack .comparison-intro .why-label, body.page-classic-stack .comparison-intro-title, body.page-classic-stack .comparison-intro-desc,
+  body.page-classic-stack .wp-faq-eyebrow, body.page-classic-stack .wp-faq-headline { text-align: center; }
+  body.page-classic-stack .tsa-desc, body.page-classic-stack .comparison-intro-desc { margin-left: auto; margin-right: auto; }
+  body.page-classic-stack .comparison-intro { text-align: center; }   /* the "Build your system" button too */
+}
+
+/* HOMEPAGE, "Many problems, one solution" (web only): the pilr card's "Build your system" link sits half way between the text above it and the
+   bottom of the card (9.5px higher). Done with the margins, not a transform, so the whole card stays clickable. */
+@media (min-width: 601px) {
+  .problem--v2 .problem-card-link { margin-top: 9.5px; margin-bottom: 15.5px; }
+}
+
+/* HOMEPAGE "Sized around real doses" section: the "View the full test" button matches the Compare "Build your system" button on the
+   Full Stack page: Muted slate fill (#7a8a94), white text, no arrow, 1px outline, 2px corners, centred, same size, same in every state. */
+body:not(.system-page) .built-routine-section--home .built-routine-btn,
+body:not(.system-page) .built-routine-section--home .built-routine-btn:hover,
+body:not(.system-page) .built-routine-section--home .built-routine-btn:focus,
+body:not(.system-page) .built-routine-section--home .built-routine-btn:active {
+  background: #7a8a94; border: 1px solid #7a8a94; border-radius: var(--radius); color: #fff;
+}
+body:not(.system-page) .built-routine-section--home .built-routine-btn:active { opacity: 0.9; }
+body:not(.system-page) .built-routine-section--home .built-routine-btn {
+  display: inline-flex; justify-content: center; align-items: center; align-self: center; text-align: center;
+  width: min(100%, 260px); padding: 0.7rem 3.5rem; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em;
+}
+body:not(.system-page) .built-routine-section--home .built-routine-btn svg { display: none; }
+@media (min-width: 601px) {
+  body:not(.system-page) .built-routine-section--home .built-routine-btn { width: min(100%, 295px); padding: 0.8rem 3.5rem; font-size: 12.5px; }
+}
+
+
+/* FULL STACK page (web): the Compare title sits the same distance above its line as the TSA title does (16px). */
+@media (min-width: 761px) {
+  body.page-classic-stack .comparison-intro-title { margin-bottom: 1rem; }
+}
+
+/* ALL BUTTONS: the same 2px corners as the Pre-order button (var(--radius)). Round things (arrows, close X, dots, thumbnails) are left alone.
+   The Large Pill Pod reference page keeps its own square product-page buttons. */
+body .btn, body .btn--dark, body .btn--white,
+body .built-routine-btn, body .legal-form-btn, body .pod-back-btn, body .nav-cta-filled { border-radius: var(--radius); }
+body .ea-input-row .btn, body .ea-phone-row .btn { border-radius: 0 var(--radius) var(--radius) 0; }   /* the Notify Me button joined to its email box */
+body:not(.page-hybrid-old) .product-btn-add, body:not(.page-hybrid-old) .product-btn-buy,
+body:not(.page-hybrid-old) .product-sticky-cta { border-radius: var(--radius); }
+
+/* SECTION LABELS ("THE SYSTEM", "COMPARE", "FAQ", ...): every small label above a section title is 13px and all caps, on every page and every screen size.
+   Not included: the hero's "PACK STACK GO" tagline. The Large Pill Pod reference page keeps its own label sizes. */
+body:not(.page-hybrid-old) :is(
+  .why-label, .pilr-system-eyebrow, .wp-faq-eyebrow, .wp-system-eyebrow, .wp-break-eyebrow, .wp-science-eyebrow, .wp-materials-eyebrow,
+  .wp-hero-eyebrow, .about-section-eyebrow, .catalog-hero-eyebrow, .claim-eyebrow, .ea-why-eyebrow, .legal-eyebrow, .rp-eyebrow,
+  .section-eyebrow, .sg-eyebrow, .shop-header-eyebrow, .fly-video-label
+) { font-size: 13px !important; text-transform: uppercase !important; }
+
+/* FULL STACK page, PHONE: the Compare section goes "COMPARE", the title, the line under it, the button, then the chart. */
+@media (max-width: 600px) {
+  body.page-classic-stack .comparison-intro .comparison-intro-desc { order: 3; margin: 12px auto 20px; }
+  body.page-classic-stack .comparison-intro-link { order: 4; }
+  body.page-classic-stack .comparison-section .comparison-table-wrap { order: 5; margin: 40px 0 23.2px; }
+}
+
+/* HOMEPAGE (web only, phones untouched): 10px between a section label and its title, the same as on the product pages. */
+@media (min-width: 601px) {
+  #why .why-right .why-label, .problem--v2 .why-label,
+  .built-routine-section--home .why-label, .explore-routine .why-label { margin-bottom: 10px; }
+}
+

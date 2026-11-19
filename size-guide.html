@@ -18,6 +18,8 @@
        size invented for this page. -->
   <style>
     .sg-main { max-width: 960px; margin: 0 auto; padding: 11rem 3rem var(--section-gap); }
+    /* desktop: the same content width as the home page and the product pages (the page width minus 5vw each side, capped at 1296px), instead of the old 960px column */
+    @media (min-width: 761px) { .sg-main { width: calc(100% - 10vw); max-width: 1296px; padding-left: 0; padding-right: 0; padding-top: 8.75rem; /* 64px from the nav bar to "SIZE GUIDE", like the Catalog page */ } }
 
     .sg-eyebrow {
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
@@ -152,6 +154,7 @@
       flex: 1; font-size: 0.9rem; color: #5e6e7a;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
+    .sg-bucket-like { font-style: italic; color: #7a8a94; margin-left: 1rem; }   /* same text size as the label, to the right of the mm */
     .sg-bucket-count {
       font-size: 0.9rem; font-weight: 500; color: #3d4f5c;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -201,15 +204,37 @@
       .sg-main { padding-top: 106px; }   /* header to the "Will it fit?" title: 70px (was 92px) */
       .sg-tested { margin-bottom: 80px; }   /* gap from the table footnote to "Not on the list?" (was 128px) */
     }
+    /* Web: this page uses the same type sizes, label/title spacing and button as the rest of the site
+       (label 13px, title 42px, line under the title 17px, 10px label-to-title, 16px title-to-line, the standard filled slate button). */
+    @media (min-width: 601px) {
+      .sg-eyebrow { margin-bottom: 10px; }
+      .sg-title { font-size: 42px; font-weight: 500; margin-bottom: 16px; }
+      .sg-h2 { font-size: 42px; font-weight: 500; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 16px; }
+      .sg-subtitle { font-size: 17px; line-height: 1.65; }
+      .sg-link-cta {
+        display: inline-flex; align-items: center; justify-content: center; text-align: center;
+        padding: 0.8rem 2.5rem; font-size: 12.5px; font-weight: 500; letter-spacing: 0.14em;
+        background: #7a8a94; color: #fff; border: 1px solid #7a8a94; border-radius: var(--radius);
+      }
+      .sg-link-cta:hover { opacity: 0.88; }
+      .sg-cta-arrow { display: none; }
+      /* only the page header at the top is centred; "What we tested" and "Not on the list?" stay left-aligned with their tables */
+      .sg-header { text-align: center; }
+      /* "What we tested" is a normal centred section title (42px, sentence case), not a small all-caps label */
+      body .sg-main .sg-tested > .sg-eyebrow {
+        font-size: 42px !important; font-weight: 500; text-transform: none !important; letter-spacing: -0.025em; line-height: 1.15;
+        color: #5e6e7a; text-align: center; margin-bottom: 24px;
+      }
+    }
     /* Web: 50px below the "Not on the list?" section (was 128px); 90px (was 128px) from the pod cards to "What we tested" */
     @media (min-width: 601px) {
       .sg-buckets { margin-bottom: 50px; }
-      .sg-specs { margin-bottom: 90px; }
+      .sg-specs { margin-bottom: var(--section-gap); }   /* 128px from the pod cards to "What we tested", the same section gap as the rest of the site */
       /* Spec-card pod pictures (web): +7% inside their cards. Mobile keeps the sizes set in the script. */
       .sg-spec-col:nth-child(1) .sg-spec-photo > img:first-child { transform: translateY(10px) scale(0.7918) !important; }
       .sg-spec-col:nth-child(2) .sg-spec-photo > img:first-child { transform: translate(2px, 8px) scale(0.9031) !important; }
       .sg-spec-col:nth-child(3) .sg-spec-photo > img:first-child { transform: translate(3px, 5px) scale(0.8507) !important; }
-      .sg-tested { margin-bottom: 90px; }   /* footnote to "Not on the list?" (was 128px) */
+      .sg-tested { margin-bottom: var(--section-gap); }   /* 128px from the footnote to "Not on the list?" */
       .sg-main { padding-bottom: 60px; }   /* bottom line of the last row to the footer (was 128px) */
     }
   </style>
@@ -348,7 +373,7 @@
 
     <div class="sg-link-row">
       <span>Don't see your supplement? <a class="sg-inert-link" href="./tell-us.html">Tell us and we'll test it.</a></span>
-      <a class="sg-link-cta" href="./tell-us.html">TELL US &rarr;</a>
+      <a class="sg-link-cta" href="./tell-us.html">TELL US <span class="sg-cta-arrow">&rarr;</span></a>
     </div>
   </main>
 
@@ -412,9 +437,9 @@
         "bucketSub": "Measure the longest side of your pill, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "~ [size] mm", "count": "— pills" },
-          { "label": "~ [size] mm", "count": "— pills" },
-          { "label": "~ [size] mm", "count": "— pills" }
+          { "label": "~ [size] mm", "like": "about the size of a vitamin D pill", "count": "— pills" },
+          { "label": "~ [size] mm", "like": "about the size of a turmeric capsule", "count": "— pills" },
+          { "label": "~ [size] mm", "like": "about the size of a fish oil pill", "count": "— pills" }
         ]
       },
       "big": {
@@ -437,9 +462,9 @@
         "bucketSub": "Measure the longest side of your pill, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "~ [size] mm", "count": "— pills" },
-          { "label": "~ [size] mm", "count": "— pills" },
-          { "label": "~ [size] mm", "count": "— pills" }
+          { "label": "~ [size] mm", "like": "about the size of a vitamin D pill", "count": "— pills" },
+          { "label": "~ [size] mm", "like": "about the size of a turmeric capsule", "count": "— pills" },
+          { "label": "~ [size] mm", "like": "about the size of a fish oil pill", "count": "— pills" }
         ]
       },
       "powder": {
@@ -546,7 +571,7 @@
           return (
             '<div class="sg-bucket-row">' +
               '<span class="sg-bucket-pill sg-bucket-pill--' + (i + 1) + '"></span>' +
-              '<span class="sg-bucket-label">' + b.label + '</span>' +
+              '<span class="sg-bucket-label">' + b.label + (b.like ? ' <em class="sg-bucket-like">' + b.like + '</em>' : '') + '</span>' +
               '<span class="sg-bucket-count">' + b.count + '</span>' +
             '</div>'
           )
