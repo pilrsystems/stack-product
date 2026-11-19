@@ -7821,3 +7821,24 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
 @media (max-width: 600px) {
   body.system-page .page-product-bottom .pilr-system-section { margin-top: 80px; }
 }
+
+/* Pre-order card: Free Single Lid removed; icon margins follow the remaining perks, and on web the three perks sit in one row */
+.preorder-perk:nth-child(2) svg, .preorder-perk:nth-child(3) svg { width: 18.48px; height: 18.48px; margin-left: 1.43px; margin-right: 1.43px; }
+@media (min-width: 601px) {
+  .preorder-perk-grid { grid-template-columns: repeat(3, auto); justify-content: space-between; column-gap: 1.2rem; }
+  body.system-page .preorder-perk-grid { grid-template-columns: repeat(3, auto); justify-content: space-between; }
+}
+@media (min-width: 601px) {
+  .preorder-perk-grid { column-gap: 0.9rem; }
+  .preorder-perk-name { white-space: nowrap; }
+  .preorder-perk-with { display: block; }   /* "(with Powder Pod)" under the scooper name so the three perks fit in one row */
+  .preorder-perk-sub { white-space: nowrap; }
+}
+@media (min-width: 601px) {
+  body.system-page .preorder-perk-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 0.8rem; }
+  body.system-page .preorder-perk-name, body.system-page .preorder-perk-sub { white-space: normal; }
+}
+/* Full Stack (web): no "(with Powder Pod)" line, so "$11 value" sits right under the name like the other perks */
+@media (min-width: 601px) {
+  body.page-classic-stack .preorder-perk-with { display: none; }
+}
