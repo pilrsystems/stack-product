@@ -48,6 +48,7 @@ const POD_TITLE = { 'pill-pod': 'Small Pill Pod', 'hybrid-pod': 'Large Pill Pod'
 const SCOOPER_PRICE = 11
 const LID_PRICE = 9
 const FULL_STACK_PRICE = 68
+const FULL_STACK_PERCENT = 19.05   // (84 - 68) / 84, to the 2 decimals Shopify allows
 const TIER_DISCOUNT = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]  // by total pods, 6+ capped
 
 let cachedToken = null
@@ -107,15 +108,15 @@ export function buildLines(qty) {
   const loose = qty['pill-pod'] + qty['hybrid-pod'] + qty['powder-pod']
   if (stacks + loose === 0 && qty.scooper + qty.lid === 0) return lines
 
-  // Full Stacks: one of each pod, $68 in total. 16/84 off the three pods' list prices.
-  if (stacks > 0) {
-    const listTotal = POD_PRICE['pill-pod'] + POD_PRICE['hybrid-pod'] + POD_PRICE['powder-pod']  // 84
-    const pct = ((listTotal - FULL_STACK_PRICE) / listTotal) * 100
+  // Full Stacks: one of each pod, $68 in total. Shopify allows at most 2 decimals in a percentage,
+  // so 19.05% off the list prices (24 / 28 / 32), which rounds each pod to 19.43 / 22.67 / 25.90 = $68.00.
+  // One set of three lines per Full Stack, so the rounding is exactly $68 each however many there are.
+  for (let n = 0; n < stacks; n++) {
     for (const id of ['pill-pod', 'hybrid-pod', 'powder-pod']) {
       lines.push({
         variantId: gid(id),
-        quantity: stacks,
-        appliedDiscount: { title: 'Full Stack', valueType: 'PERCENTAGE', value: Number(pct.toFixed(4)) },
+        quantity: 1,
+        appliedDiscount: { title: 'Full Stack', valueType: 'PERCENTAGE', value: FULL_STACK_PERCENT },
         customAttributes: [{ key: 'bundle', value: 'full-stack' }],
       })
     }
