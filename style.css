@@ -7915,3 +7915,10 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
   .pilr-system-title .pst-desktop { display: none; }
   .pilr-system-title .pst-mobile { display: inline; }
 }
+
+/* Pre-order perks (web): the truck sits a touch up and to the right, the shield a touch to the right, to line up with their text */
+@media (min-width: 601px) {
+  .preorder-perks .preorder-perk:nth-child(1) svg { transform: translateY(-1px); }
+  .preorder-perks .preorder-perk:nth-child(2) svg { transform: translate(2px, -3px); }
+  .preorder-perks .preorder-perk:nth-child(3) svg { transform: translateX(4px); }
+}
