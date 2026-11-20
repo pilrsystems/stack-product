@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
-import { readFileSync } from 'fs'
+import { readFileSync, readdirSync, existsSync, mkdirSync, copyFileSync } from 'fs'
+import { dirname } from 'path'
 
 // Shared page sections. A page writes
 //   <!--@include partials/compare.html-->
@@ -35,9 +36,44 @@ function htmlPartials() {
   }
 }
 
+
+// Images that are only named inside JavaScript (the home page hero slides, videos, posters) are
+// not seen by Vite's build, so they were missing from the live site. After the build, this copies
+// every images/... file that a page or script mentions into dist at the same path.
+const IMAGE_REF = /['"(=]\s*((?:\.\/)?images\/[^'"()<>]+?\.(?:png|jpe?g|webp|svg|gif|mp4|webm|mov))/gi
+function copyReferencedImages() {
+  return {
+    name: 'copy-referenced-images',
+    apply: 'build',
+    closeBundle() {
+      const sources = []
+      for (const dir of ['.', 'src', 'public']) {
+        const abs = resolve(__dirname, dir)
+        if (!existsSync(abs)) continue
+        for (const f of readdirSync(abs)) if (/\.(html|js)$/.test(f)) sources.push(resolve(abs, f))
+      }
+      const seen = new Set()
+      for (const file of sources) {
+        const text = readFileSync(file, 'utf8')
+        for (const m of text.matchAll(IMAGE_REF)) {
+          let rel
+          try { rel = decodeURIComponent(m[1]).replace(/^\.\//, '') } catch (_) { continue }
+          if (seen.has(rel)) continue
+          seen.add(rel)
+          const from = resolve(__dirname, rel)
+          const to = resolve(__dirname, 'dist', rel)
+          if (!existsSync(from)) continue
+          mkdirSync(dirname(to), { recursive: true })
+          copyFileSync(from, to)
+        }
+      }
+    },
+  }
+}
+
 export default defineConfig({
   base: '/',
-  plugins: [htmlPartials()],
+  plugins: [htmlPartials(), copyReferencedImages()],
   server: {
     allowedHosts: true,
   },
