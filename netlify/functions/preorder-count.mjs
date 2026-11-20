@@ -48,9 +48,8 @@ async function getAccessToken(domain) {
   if (cachedToken && Date.now() < cachedTokenExpiresAt - TOKEN_REFRESH_BUFFER_MS) return cachedToken
   const clientId = ENV().SHOPIFY_CLIENT_ID
   const clientSecret = ENV().SHOPIFY_CLIENT_SECRET
-  if (!clientId || !clientSecret) {
-    throw new Error('Shopify Admin API is not configured (missing SHOPIFY_CLIENT_ID / SHOPIFY_CLIENT_SECRET)')
-  }
+  if (!clientId) throw new Error('Shopify Admin API is not configured (missing SHOPIFY_CLIENT_ID)')
+  if (!clientSecret) throw new Error('Shopify Admin API is not configured (missing SHOPIFY_CLIENT_SECRET)')
   const res = await fetch(`https://${domain}/admin/oauth/access_token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
