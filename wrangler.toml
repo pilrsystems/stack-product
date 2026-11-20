@@ -2,3 +2,8 @@
 name = "pilr"
 pages_build_output_dir = "./dist"
 compatibility_date = "2024-11-01"
+
+# Not secret, so it lives here. (When this file exists, Cloudflare uses it for plain variables and ignores
+# plain-text ones typed into the dashboard. Secrets such as SHOPIFY_CLIENT_SECRET still go in the dashboard.)
+[vars]
+SHOPIFY_STORE_DOMAIN = "pilr-2.myshopify.com"
