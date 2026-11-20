@@ -49,15 +49,15 @@
 
   const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 11, 'single-lid-free': 9 }
   // How many units of a free-perk line are free. Scooper: always 1 per cart.
-  // Lid: 1 per cart, or one per Full Stack when there are more than one
-  // (2 Full Stacks = 2 free lids; Full Stack + a loose pod = still 1; a cart
-  // of loose / Build Your System pods = 1 however many pods).
+  // Lid: one per Full Stack, plus one for every 3 single pods (1-3 singles = 1 lid,
+  // 4-6 singles = 2 lids, ...). Examples: Full Stack = 1; 1, 2 or 3 singles = 1;
+  // Full Stack + 1 single = 2; Full Stack + 4 singles = 3.
   function freeUnitsFor(id, items) {
     if (id === 'single-lid-free') {
-      const stacks = (items || getCart().items)
-        .filter(i => i.id === 'classic-stack')
-        .reduce((sum, i) => sum + i.quantity, 0)
-      return Math.max(1, stacks)
+      const list = items || getCart().items
+      const stacks = list.filter(i => i.id === 'classic-stack').reduce((sum, i) => sum + i.quantity, 0)
+      const singles = list.filter(i => STACKING_POD_BASE_PRICE[i.id] != null).reduce((sum, i) => sum + i.quantity, 0)
+      return Math.max(1, stacks + Math.ceil(singles / 3))
     }
     return 1
   }

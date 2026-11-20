@@ -15,7 +15,8 @@
      - Full Stack = one of each pod for $68 (sent to Shopify as three pod lines so
        each pod's stock goes down by 1).
      - One free Travel Scooper per cart when it has a Powder Pod or a Full Stack.
-     - One free Single Lid per cart, or one per Full Stack when there are more.
+     - Free Single Lids: one per Full Stack plus one for every 3 single pods
+       (1-3 singles = 1, 4-6 = 2; Full Stack + 1 single = 2).
      - Free shipping on every order.
 
    SWITCHED OFF by default: set CHECKOUT_ENABLED=true in Netlify to turn it on.
@@ -141,9 +142,9 @@ export function buildLines(qty) {
     if (qty.scooper - freeUnits > 0) lines.push({ variantId: gid('scooper'), quantity: qty.scooper - freeUnits })
   }
 
-  // Single Lid: one free per cart, or one per Full Stack when there are more.
+  // Single Lid: one per Full Stack, plus one for every 3 single pods.
   if (qty.lid > 0) {
-    const allowance = hasPod ? Math.max(1, stacks) : 0
+    const allowance = hasPod ? stacks + Math.ceil(loose / 3) : 0
     const freeUnits = Math.min(qty.lid, allowance)
     if (freeUnits) lines.push(free('lid', freeUnits, 'Free Single Lid'))
     if (qty.lid - freeUnits > 0) lines.push({ variantId: gid('lid'), quantity: qty.lid - freeUnits })
