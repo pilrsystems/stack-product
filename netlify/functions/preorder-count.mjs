@@ -57,13 +57,8 @@ async function getAccessToken(domain) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ grant_type: 'client_credentials', client_id: clientId, client_secret: clientSecret }),
   })
-  const raw = await res.text()
-  let payload = {}
-  try { payload = JSON.parse(raw) } catch (_) { /* not JSON */ }
-  if (!res.ok || !payload.access_token) {
-    // temporary diagnostics: status plus the start of the reply (never contains our secret)
-    throw new Error('Shopify token exchange failed: HTTP ' + res.status + ' ' + raw.replace(/\s+/g, ' ').slice(0, 160))
-  }
+  const payload = await res.json()
+  if (!res.ok || !payload.access_token) throw new Error('Shopify token exchange failed')
   cachedToken = payload.access_token
   cachedTokenExpiresAt = Date.now() + payload.expires_in * 1000
   return cachedToken
@@ -98,6 +93,6 @@ export default async () => {
     return json(200, { claimed, goal }, { 'Cache-Control': 'public, max-age=60' })
   } catch (err) {
     console.error('preorder-count:', err && err.message)
-    return json(500, { error: 'count unavailable', reason: err && err.message })   // reason: temporary, remove after setup
+    return json(500, { error: 'count unavailable' })
   }
 }
