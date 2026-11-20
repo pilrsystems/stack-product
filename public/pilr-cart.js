@@ -95,9 +95,13 @@
   // qty stepper — rather than only ever reflecting whatever was true the
   // moment a line was first added.
   function repriceStackingPods(cart) {
+    // A Full Stack in the cart counts as three pods toward the tier, so a single pod
+    // added next to one is the 4th pod (the 4-pod discount). The Full Stack itself
+    // stays at its own $68 price; only the loose pod lines are discounted.
     const totalQty = cart.items
       .filter(i => STACKING_POD_BASE_PRICE[i.id] != null)
-      .reduce((sum, i) => sum + i.quantity, 0)
+      .reduce((sum, i) => sum + i.quantity, 0) +
+      3 * cart.items.filter(i => i.id === 'classic-stack').reduce((sum, i) => sum + i.quantity, 0)
     const discount = stackingPodDiscountForQty(totalQty)
     cart.items.forEach(i => {
       const basePrice = STACKING_POD_BASE_PRICE[i.id]
@@ -121,33 +125,30 @@
     global.dispatchEvent(new CustomEvent('pilr:cart-updated', { detail: cart }))
   }
 
-  const FULL_STACK_PODS = [
-    { id: 'pill-pod',   title: 'Small Pill Pod' },
-    { id: 'hybrid-pod', title: 'Large Pill Pod' },
-    { id: 'powder-pod', title: 'Powder Pod' },
-  ]
-  // The reverse of explodeFullStacks: when what's left is exactly one of each of
-  // the three pods (e.g. the extra pod was removed again), it is a Full Stack
-  // again, at the Full Stack price. Only for exactly one of each: two of each
-  // is cheaper as loose pods at the 6-pod tier than as two Full Stacks.
-  function collapseToFullStack(cart) {
-    if (cart.items.some(i => i.id === 'classic-stack')) return
-    const lines = cart.items.filter(i => STACKING_POD_BASE_PRICE[i.id] != null)
-    if (lines.length !== 3) return
-    if (!FULL_STACK_PODS.every(p => lines.some(l => l.id === p.id && l.quantity === 1))) return
-    cart.items = cart.items.filter(i => STACKING_POD_BASE_PRICE[i.id] == null)
-    cart.items.unshift({ id: 'classic-stack', title: 'Full Stack', price: 68, listPrice: 84, image: cardImageFor('classic-stack', ''), quantity: 1 })
-  }
-  function explodeFullStacks(cart) {
-    const stacks = cart.items.filter(i => i.id === 'classic-stack')
-    if (!stacks.length) return
-    const n = stacks.reduce((sum, i) => sum + i.quantity, 0)
-    cart.items = cart.items.filter(i => i.id !== 'classic-stack')
-    FULL_STACK_PODS.forEach(pod => {
-      const line = cart.items.find(i => i.id === pod.id)
-      if (line) line.quantity += n
-      else cart.items.push({ id: pod.id, title: pod.title, price: STACKING_POD_BASE_PRICE[pod.id], image: cardImageFor(pod.id, ''), quantity: n })
-    })
+
+  // Sends the cart to /api/checkout (netlify/functions/create-checkout.mjs), which
+  // builds a Shopify draft order with the site's own prices and returns Shopify's
+  // payment page. While that function is switched off (it answers 503) the
+  // original "available soon" message is shown instead.
+  const CHECKOUT_SOON_MESSAGE = 'Checkout will be available once our store is live. Thank you for your interest!'
+  async function startCheckout(btn) {
+    const label = btn ? btn.textContent : ''
+    if (btn) { btn.disabled = true; btn.textContent = 'One moment…' }
+    const reset = () => { if (btn) { btn.disabled = false; btn.textContent = label } }
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: getCart().items.map(i => ({ id: i.id, quantity: i.quantity })) }),
+      })
+      if (res.status === 503 || res.status === 404) { reset(); alert(CHECKOUT_SOON_MESSAGE); return }
+      const data = await res.json()
+      if (res.ok && data && data.url) { global.location.href = data.url; return }
+      throw new Error('no url')
+    } catch (_) {
+      reset()
+      alert('Sorry, checkout did not load. Please try again in a moment.')
+    }
   }
 
   // Add or increment a product. `product` shape:
@@ -157,10 +158,6 @@
     quantity = quantity || 1
     const cart = getCart()
     const oldLidFree = freeUnitsFor(FREE_LID_PRODUCT.id, cart.items)
-    // Adding a single pod to a cart that holds a Full Stack: the Full Stack snaps
-    // into its three single pods first, so the new pod counts toward the pod tiers
-    // (Full Stack + 1 pod = 4 pods = the 4-pod discount).
-    if (STACKING_POD_BASE_PRICE[product.id] != null) explodeFullStacks(cart)
     const existing = cart.items.find(i => i.id === product.id)
     if (existing) {
       existing.quantity += quantity
@@ -196,7 +193,6 @@
       const item = cart.items.find(i => i.id === id)
       if (item) item.quantity = quantity
     }
-    collapseToFullStack(cart)
     syncFreeLids(cart, oldLidFree)
     repriceStackingPods(cart)
     saveCart(cart)
@@ -767,9 +763,7 @@
       document.getElementById('cart-drawer-promo').classList.toggle('open', promoOpen)
     })
     document.getElementById('cart-drawer-checkout-btn').addEventListener('click', () => {
-      // Redirect to Shopify checkout when live
-      // window.location.href = '/checkout'
-      alert('Checkout will be available once our store is live. Thank you for your interest!')
+      startCheckout(document.getElementById('cart-drawer-checkout-btn'))
     })
   }
 
@@ -798,6 +792,7 @@
     total: getCartTotal,
     clear: clearCart,
     freePerkLineTotal,
+    startCheckout,
     formatMoney,
     getItemDisplay,
     openDrawer,

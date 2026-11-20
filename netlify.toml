@@ -11,6 +11,14 @@
   status = 200
   force = true
 
+# Starts a Shopify checkout from the site cart (POST /api/checkout). Switched off
+# until CHECKOUT_ENABLED=true is set in Netlify.
+[[redirects]]
+  from = "/api/checkout"
+  to = "/.netlify/functions/create-checkout"
+  status = 200
+  force = true
+
 # Pre-order count shown on the product pages (GET /api/preorder-count).
 [[redirects]]
   from = "/api/preorder-count"

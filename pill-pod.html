@@ -739,7 +739,8 @@
           titlePriceEl.innerHTML = '<span class="pod-add-row-sale">' + formatPrice(addOnTotal) + '</span>' +
             '<span class="pod-add-row-strike">' + formatPrice(listTotal) + '</span>';
         } else {
-          podAddSubmit.textContent = 'ADD TO CART';
+          // One pod selected: the button shows that pod's price, even when it isn't this page's pod
+          podAddSubmit.textContent = totalQty === 1 ? 'ADD TO CART — ' + formatPrice(addOnTotal) : 'ADD TO CART';
           titlePriceEl.textContent = formatPrice(PRODUCT.price);
         }
         podAddSubmit.disabled = totalQty === 0;

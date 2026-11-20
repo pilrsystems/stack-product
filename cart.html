@@ -556,9 +556,7 @@
     })
 
     document.getElementById('cart-checkout-btn').addEventListener('click', () => {
-      // Redirect to Shopify checkout when live
-      // window.location.href = '/checkout'
-      alert('Checkout will be available once our store is live. Thank you for your interest!')
+      PilrCart.startCheckout(document.getElementById('cart-checkout-btn'))
     })
 
     loadCart()
