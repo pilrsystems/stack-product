@@ -7925,7 +7925,7 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 
 /* Header (web): the links, the pilr logo and the cart icon are about 13% bigger; the white bar keeps its height */
 @media (min-width: 601px) {
-  .nav-links > li > a { font-size: 14.5px; line-height: 13px; }
+  .nav-links > li > a { font-size: 13px; line-height: 13px; }
   /* the logo and cart keep the same layout height as before, so the bigger artwork does not make the bar taller */
   .nav-logo { height: 30px; display: flex; align-items: center; }
   .nav-logo-img { height: 34px; flex-shrink: 0; }
