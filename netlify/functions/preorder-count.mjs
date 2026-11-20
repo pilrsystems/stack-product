@@ -91,6 +91,7 @@ export default async () => {
     const goal = Number(ENV().PREORDER_GOAL) || 1000
     return json(200, { claimed, goal }, { 'Cache-Control': 'public, max-age=60' })
   } catch (err) {
-    return json(500, { error: 'count unavailable' })
+    console.error('preorder-count:', err && err.message)
+    return json(500, { error: 'count unavailable', reason: err && err.message })   // reason: temporary, for setting up Cloudflare
   }
 }
