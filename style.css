@@ -7900,3 +7900,8 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 .cart-drawer-count, .cart-drawer-qty-val, .cart-drawer-free-badge, .cart-drawer-offers-arrow { border-radius: var(--radius); }
 /* Cart drawer: the quantity is just the number, no box around it */
 .cart-drawer-qty-val { border: none; min-width: 24px; }
+
+/* "0 / 1,000 Claimed" in bold (with a capital C), then "spots until pre-order perks end" in italics at the normal weight (phone and desktop) */
+.preorder-card-claimed .pc-count { font-weight: 700; }
+.preorder-card-claimed .pc-word { text-transform: capitalize; }
+.preorder-card-claimed .pc-rest { font-style: italic; font-weight: 400; }
