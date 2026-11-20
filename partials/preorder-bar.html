@@ -1,9 +1,8 @@
-  <!-- PRE-ORDER BAR: status strip above the header on every product page. Numbers come from src/preorder.js -->
-  <div class="preorder-bar" role="region" aria-label="Pre-order status">
-    <span class="preorder-bar-open">Pre-orders now open</span>
-    <span class="preorder-bar-progress">
-      <span class="preorder-bar-track"><span class="preorder-bar-fill" data-preorder-fill></span></span>
+  <!-- PRE-ORDER BAR: status strip above the header. Numbers + rotation come from src/preorder.js (CLAIMED, GOAL, SHOW_COUNT_FROM) -->
+  <div class="preorder-bar" role="region" aria-label="Pre-order status" tabindex="0" data-mode="static">
+    <span class="pob-msg pob-msg--open"><span class="pob-dot" aria-hidden="true"></span><span class="preorder-bar-open">Pre-orders now open</span></span>
+    <span class="pob-msg pob-msg--claim" aria-hidden="true">
+      <span class="preorder-bar-track" role="progressbar" aria-label="Pre-order spots claimed" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="0"><span class="preorder-bar-fill"></span></span>
       <span class="preorder-bar-count"><span data-preorder-claimed>0</span> / <span data-preorder-goal>1,000</span> claimed</span>
     </span>
-    <span class="preorder-bar-perks">Free scooper + lid + shipping</span>
   </div>

@@ -3140,7 +3140,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .wp-stat {
-  border-top: 1px solid rgba(70, 84, 94, 0.3);
   padding-top: 1.5rem;
 }
 
@@ -3153,9 +3152,19 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .wp-stat-number sup {
-  font-size: 0.4em;
-  margin-left: 0.15em;
+  /* citation mark: small bracketed number at the top right of the figure, like [1] */
+  font-size: 0.32em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #7a8a94;
+  vertical-align: top;
+  line-height: 1;
+  position: relative;
+  top: 0.25em;
+  margin-left: 0.35em;
 }
+.wp-stat-number sup::before { content: "["; }
+.wp-stat-number sup::after { content: "]"; }
 
 .wp-stat-desc {
   font-size: 0.95rem;
@@ -3264,13 +3273,19 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .wp-break {
-  padding: 6rem 3rem;
+  padding: 6rem 0;
   background: var(--bg);
+  /* carousel geometry: the left edge is the page grid's left edge; slides are ~650px (62%) of the content width */
+  --wb-cont: min(90vw, var(--page-max, 1296px));   /* the content width every other section uses */
+  --wb-slide: calc(var(--wb-cont) * 0.46);
+  --wb-gap: 24px;
 }
 
 .wp-break-inner {
-  max-width: 1200px;
+  width: calc(100% - 10vw);
+  max-width: var(--page-max, 1296px);
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .wp-break-eyebrow {
@@ -3288,127 +3303,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   color: #5e6e7a;
   line-height: 1.2;
   margin-bottom: 2.5rem;
-}
-
-.wp-break-tabs {
-  display: flex;
-  gap: 2rem;
-  border-bottom: 1px solid rgba(66, 85, 99, 0.15);
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-}
-
-.wp-break-tab {
-  background: none;
-  border: none;
-  padding: 0 0 0.85rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #7a8a94;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.2s ease;
-}
-
-.wp-break-tab.is-active {
-  color: #46545e;
-  font-weight: 600;
-  border-bottom-color: #46545e;
-}
-
-.wp-break-tab:hover { color: #46545e; }
-
-.wp-break-panel {
-  display: none;
-  grid-template-columns: 0.9fr 1.15fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.wp-break-panel.is-active { display: grid; }
-
-.wp-break-panel-title {
-  font-size: 1.7rem;
-  font-weight: 500;
-  color: #5e6e7a;
-  margin-bottom: 1rem;
-}
-
-.wp-break-panel-friction {
-  font-size: 1rem;
-  color: #5e6e7a;
-  line-height: 1.6;
-  margin-bottom: 1.75rem;
-}
-
-.wp-break-panel-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #46545e;
-  margin-bottom: 0.5rem;
-}
-
-.wp-break-panel-answer {
-  font-size: 0.95rem;
-  color: #5e6e7a;
-  line-height: 1.6;
-}
-
-.wp-break-panel-list {
-  list-style: none;
-}
-
-.wp-break-panel-list li {
-  padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(66, 85, 99, 0.12);
-  font-size: 0.95rem;
-  color: #5e6e7a;
-}
-
-.wp-break-panel-list li:last-child { border-bottom: none; }
-
-.wp-break-panel-img {
-  aspect-ratio: 3 / 4;
-  max-width: 430px;
-  max-height: 573px;
-  margin: 0 auto;
-  background: #E7E6E2;
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.wp-break-panel-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius);
-}
-
-.wp-break-panel-img img[src*="Packing Why Pilr"] {
-  transform: scale(1.08);
-}
-
-.wp-break-panel-img img[src*="Transit Why Pilr"] {
-  transform: scale(1.03);
-}
-
-.wp-break-panel-img-placeholder {
-  font-size: 0.85rem;
-  color: #7a8a94;
-  text-align: center;
-  line-height: 1.6;
-  padding: 2rem;
-}
-
-@media (max-width: 900px) {
-  .wp-break-panel { grid-template-columns: 1fr; }
-  .wp-break-tabs { gap: 1.25rem; }
 }
 
 .wp-system {
@@ -4109,7 +4003,8 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 }
 
 .cart-drawer-shipping-msg {
-  font-size: 0.8rem;
+  font-size: 1rem;
+  font-weight: 500;
   color: #5e6e7a;
   margin: 0 0 0.65rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -5163,7 +5058,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-info-link {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
   padding: 0.7rem 1rem;
   border: 1.5px solid rgba(66,85,99,0.2); border-radius: var(--radius);
   font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
@@ -6414,39 +6309,18 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 @media (max-width: 600px) {
   .wp-stats, .wp-science, .wp-break, .wp-system, .wp-materials, .how-it-works, .wp-faq,
   .wp-footnotes, .why-compare { text-align: center; }
-  .wp-stat, .wp-science-copy, .wp-science-card, .wp-break-panel-copy, .wp-system-card,
+  .wp-stat, .wp-science-copy, .wp-science-card, .wp-system-card,
   .wp-system-pairings, .wp-materials-card, .how-it-works-content, .wp-faq-copy { text-align: center; }
 
   /* research list: number above its sentence */
   .wp-science-list li { flex-direction: column; align-items: center; gap: 0.3rem; }
   .wp-science-list-text { text-align: center; }
 
-  /* tabs, pairings and buttons */
-  .wp-break-tabs { justify-content: center; flex-wrap: nowrap; gap: clamp(8px, 3.4vw, 14px); margin-bottom: 26px; }   /* all four tabs on one line */
-  .wp-break-tab { font-size: clamp(10px, 3.3vw, 15.2px); white-space: nowrap; }   /* scales with the screen so the row always fits */
-  .wp-break-panel-friction { font-size: 13.5px; }   /* the description under each tab's title */
-  .wp-break-panel-answer { font-size: 14px; }     /* the "Pack. Stack. Go." line under "How pilr answers" */
-  /* each tab: the title, then the description, then its photo, then the "How pilr answers" line */
-  .wp-break-panel.is-active { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
-  .wp-break-panel-copy { display: contents; }
-  .wp-break-panel-title { order: 1; margin-bottom: 14px; }
-  .wp-break-panel-friction { order: 2; margin-bottom: 30px; }
-  .wp-break-panel-img { order: 3; width: 100%; margin: 0 auto 40px; }
-  .wp-break-panel-label { order: 4; }
-  .wp-break-panel-answer { order: 5; }
   .wp-system-pairings-row { justify-items: center; }
   .wp-system-pairing { text-align: center; }
   .wp-faq-question { text-align: center; }
   .wp-footnotes-toggle { justify-content: center; margin-left: auto; margin-right: auto; }
   .wp-footnotes-list-inner li { text-align: center; }
-}
-
-/* PHONE: Where routines break. The panels swipe: the next one slides in from the side you swiped toward. */
-@keyframes wpPanelNext { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
-@keyframes wpPanelPrev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
-@media (max-width: 600px) {
-  .wp-break-content[data-dir="next"] .wp-break-panel.is-active { animation: wpPanelNext .3s ease; }
-  .wp-break-content[data-dir="prev"] .wp-break-panel.is-active { animation: wpPanelPrev .3s ease; }
 }
 
 /* PHONE: "The system" pod cards sit in one row you swipe sideways (inside the page margins, the next card
@@ -6920,28 +6794,77 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   .problem--v2 .problem-card--pilr .problem-card-brand { position: relative; top: 1px; }   /* pilr logo 1px lower */
 }
 
-/* ── PRE-ORDER: status bar above the header, progress card and notes on every product page ── */
+/* ── PRE-ORDER: status bar above the header (partials/preorder-bar.html, driven by src/preorder.js) ── */
 .preorder-bar {
-  position: fixed; top: 0; left: 0; right: 0; height: 34px; z-index: 101;
-  display: flex; align-items: center; justify-content: center; gap: clamp(1.25rem, 5vw, 4.5rem);
-  padding: 0 1rem; background: #818E99; color: #fff;   /* same slate as the footer */
-  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; white-space: nowrap;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 600; text-transform: uppercase; white-space: nowrap;
   transition: transform 0.35s ease;
 }
-.preorder-bar-progress { display: inline-flex; align-items: center; gap: 0.75rem; }
-.preorder-bar-track { width: 84px; height: 3px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; }
-.preorder-bar-fill { display: block; height: 100%; width: 0; background: #fff; }
-/* the bar stays in place when the header hides on scroll down */
-body.has-preorder-bar { padding-top: 34px; }
-body.has-preorder-bar .nav { top: 34px; }
-body.has-preorder-bar .product-images-col { top: 130px; }
+.preorder-bar-fill { display: block; height: 100%; }
+.preorder-bar:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
+
+/* PHONE / TABLET (under 900px): the strip as it has always been — "Pre-orders now open" and the progress bar side by side */
+@media (max-width: 899px) {
+  .preorder-bar {
+    height: 34px; display: flex; align-items: center; justify-content: center; gap: clamp(1.25rem, 5vw, 4.5rem);
+    padding: 0 1rem; background: #818E99; color: #fff;   /* same slate as the footer */
+    font-size: 0.6875rem; letter-spacing: 0.12em;
+  }
+  .pob-msg--open { display: contents; }
+  .pob-dot { display: none; }
+  .pob-msg--claim { display: inline-flex; align-items: center; gap: 0.75rem; }
+  .preorder-bar-track { width: 84px; height: 3px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; }
+  .preorder-bar-fill { width: var(--pob-pct, 0%); background: #fff; }
+  body.has-preorder-bar { padding-top: 34px; }
+  body.has-preorder-bar .nav { top: 34px; }
+  body.has-preorder-bar .product-images-col { top: 130px; }
+}
 @media (max-width: 600px) {
   .preorder-bar { height: 30px; gap: 0.9rem; font-size: 0.5625rem; letter-spacing: 0.1em; }
-  .preorder-bar-perks { display: none; }
   .preorder-bar-track { width: 56px; }
   body.has-preorder-bar { padding-top: 30px; }
   body.has-preorder-bar .nav { top: 30px; }
+}
+
+/* DESKTOP (900px and wider): two messages crossfading in the same spot — "Pre-orders now open", then the claim count */
+@media (min-width: 900px) {
+  .preorder-bar {
+    height: 40px; display: grid; place-items: center; padding: 0 1rem;
+    background: #5e6e7a; color: var(--bg);   /* the same color as the pilr logo */
+    font-size: 11px; letter-spacing: 0.14em;
+  }
+  .pob-msg {
+    grid-area: 1 / 1; display: inline-flex; align-items: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.5s ease-in-out;
+  }
+  .pob-msg--open { opacity: 1; }
+  .preorder-bar.is-claim .pob-msg--open { opacity: 0; }
+  .preorder-bar.is-claim .pob-msg--claim { opacity: 1; }
+  /* below the threshold only "Pre-orders now open" shows, standing still */
+  .preorder-bar[data-mode="static"] .pob-msg--claim { display: none; }
+
+  .pob-dot { position: relative; width: 7px; height: 7px; margin-right: 10px; border-radius: 50%; background: currentColor; flex: none; }
+  .pob-dot::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    border: 1px solid currentColor; opacity: 0.5; animation: pobPulse 2s ease-out infinite;
+  }
+  @keyframes pobPulse { from { transform: scale(1); opacity: 0.5; } to { transform: scale(3); opacity: 0; } }
+
+  .preorder-bar-track { display: none; }   /* on desktop the claim message is just the centred count, no bar */
+
+  body.has-preorder-bar { padding-top: 40px; }
+  body.has-preorder-bar .nav { top: 40px; }
+  body.has-preorder-bar .product-images-col { top: 136px; }   /* the sticky photo column keeps its distance below the (6px taller) bar */
+
+  /* reduced motion: no rotation and no pulse; both messages sit on one line with a divider */
+  @media (prefers-reduced-motion: reduce) {
+    .pob-dot::after { animation: none; display: none; }
+    .preorder-bar[data-mode="rotate"] { display: flex; justify-content: center; }
+    .preorder-bar[data-mode="rotate"] .pob-msg { opacity: 1; transition: none; }
+    .preorder-bar[data-mode="rotate"] .pob-msg--claim::before {
+      content: ""; width: 1px; height: 14px; margin: 0 20px; background: color-mix(in srgb, var(--bg) 50%, transparent);
+    }
+  }
 }
 
 .preorder-card { border: 1px solid rgba(66,85,99,0.15); background: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -6950,20 +6873,6 @@ body.has-preorder-bar .product-images-col { top: 130px; }
 .preorder-card-claimed strong { font-weight: 700; }
 .preorder-card-track { height: 4px; background: rgba(66,85,99,0.14); border-radius: 2px; overflow: hidden; margin: 0.45rem 0 0; }
 .preorder-card-fill { display: block; height: 100%; width: 0; background: #3d4f5c; border-radius: 2px; }
-.preorder-card-left { font-size: 0.68rem; color: #7a8a94; margin: 0; }
-.preorder-perks.product-accordion { border-top: 1px solid rgba(66,85,99,0.15); border-bottom: none; }
-.preorder-perks .product-accordion-trigger { padding: 0.8rem 1.1rem; font-size: 0.6875rem; }
-.preorder-perks .product-accordion-panel.is-open { max-height: 300px; padding-bottom: 1rem; }
-.preorder-card-note { font-size: 0.672rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: 0.9rem 1.1rem 0; }
-/* the note now lives inside the perks dropdown, so hide the standalone one under the button wherever the card is */
-body:has(.preorder-card) .preorder-note { display: none; }
-.preorder-perk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.2rem; padding: 0.1rem 1.1rem 0; }
-.preorder-perk { display: flex; align-items: flex-start; gap: 0.6rem; }
-.preorder-perk svg { width: 18.48px; height: 18.48px; flex-shrink: 0; margin-top: 2px; color: #7a8a94; }
-.preorder-perk-name { font-size: 0.74rem; font-weight: 600; color: #3d4f5c; margin: 0; }
-.preorder-perk-sub { font-size: 0.66rem; color: #7a8a94; margin: 0.1rem 0 0; }
-.preorder-note { font-size: 0.672rem; line-height: 1.5; color: #7a8a94; text-align: center; margin: -0.2rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-.preorder-foot { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94; text-align: center; margin: 0.4rem 0 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 /* Why pilr "Built to fit together" cards: the same pictures and hover effect as the Shop all product cards.
    (They carry the .shop-card classes so the Shop all picture/hover rules apply; this resets the parts of
@@ -6982,12 +6891,6 @@ body:has(.preorder-card) .preorder-note { display: none; }
 @media (hover: hover) {
   .wp-system-card.shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.58); }
 }
-/* Pre-order card: all four icons 10% then 5% bigger (16px -> 18.48px; the scooper icon keeps its extra 5%: 19.4px) */
-.preorder-perk:first-child svg { width: 21.34px; height: 21.34px; }
-.preorder-perk:nth-child(2) svg { width: 20.33px; height: 20.33px; }   /* the Single Lid icon, also 10% bigger */
-/* Pre-order card perks: the four icons sit centred in the same 21.34px column, so all the text lines up */
-.preorder-perk:nth-child(2) svg { margin-left: 0.5px; margin-right: 0.5px; }
-.preorder-perk:nth-child(3) svg, .preorder-perk:nth-child(4) svg { margin-left: 1.43px; margin-right: 1.43px; }
 
 /* Footer email box: a whiter, softly translucent circle with a bolder white arrow */
 .footer-email-btn svg { width: 21.6px; height: 21.6px; overflow: visible; }   /* button 10% smaller */
@@ -6999,7 +6902,6 @@ body:has(.preorder-card) .preorder-note { display: none; }
 .preorder-card { margin-bottom: 2px; }
 /* Build Your System: room above the pre-order box (it sits right under the pod list) */
 .sys-panel-body .preorder-card { margin-top: 18px; margin-bottom: 0; }
-.sys-panel-body .preorder-note { margin: 0.75rem 0 0; }
 /* Product pages: 18px between the feature list and the next item (pre-order box, or quantity + button) */
 #product-info-inner ul.product-feature-list { margin-bottom: 2px; }
 /* Pod pages: 5px between the "Add a Pod" box and the Pre-order button */
@@ -7220,25 +7122,7 @@ body:has(.preorder-card) .preorder-note { display: none; }
 /* Stars under the product title: grey until there are real reviews (set by src/reviews.js) */
 body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 
-/* Pre-order note under the button (phone): +5% */
-@media (max-width: 600px) {
-  body .preorder-note { font-size: 0.672rem; }
-}
 
-/* "(with Powder Pod)" after Free Travel Scooper in the pre-order perks: lighter, and wraps as one unit */
-.preorder-perk-with { font-weight: 400; white-space: nowrap; }
-
-/* Pre-order perks: "Free Travel Scooper (with Powder Pod)" on one line */
-.preorder-perk:first-child .preorder-perk-name { white-space: nowrap; }
-@media (min-width: 601px) {
-  .preorder-perk-grid { grid-template-columns: max-content 1fr; column-gap: 2.6rem; }   /* first column as wide as the scooper line; the rest shift right */
-}
-@media (max-width: 600px) {
-  /* Two columns: Scooper + Free shipping on the left, Single Lid + Cancel anytime on the right */
-  .preorder-perk-grid { grid-template-columns: max-content 1fr; column-gap: 1rem; }
-  .preorder-perk:first-child .preorder-perk-name { white-space: normal; }
-  .preorder-perk-with { display: block; }   /* "(with Powder Pod)" on the second line */
-}
 
 /* Exclusive offers: struck-through full price beside the discounted pod price */
 .cart-drawer-offer-price .cart-item-price-strike {
@@ -7248,12 +7132,7 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
   margin-right: 0.35em;
 }
 
-/* Full Stack page: no "(with Powder Pod)" after the free scooper perk (it already includes a Powder Pod) */
-body.page-classic-stack .preorder-perk-with { visibility: hidden; }   /* web: still takes up its space so the right-hand column stays where it was */
-@media (max-width: 600px) { body.page-classic-stack .preorder-perk-with { display: none; } }
 
-/* the guarantee line sits right under the pre-order button, in the spot the shipping note used to be */
-body:has(.preorder-card) .preorder-note + .preorder-foot { margin-top: 0.25rem; }
 
 /* Product pages (web): the checkmark bullets are the same size as the tagline above them */
 @media (min-width: 601px) {
@@ -7264,9 +7143,6 @@ body:has(.preorder-card) .preorder-note + .preorder-foot { margin-top: 0.25rem; 
 /* Product pages: a little more room between the last checkmark line and the pre-order box below it */
 body #product-info-inner ul.product-feature-list { margin-bottom: 10px; }
 
-/* Pre-order perks box: "Included with your pre-order" centered, the + stays at the right edge */
-.preorder-perks .product-accordion-trigger { position: relative; justify-content: center; }
-.preorder-perks .product-accordion-icon { position: absolute; right: 1.1rem; top: 50%; margin-top: -0.7rem; }
 
 /* ======================================================================
    COMPARE TABLE (shared: every product page, Why pilr, Build Your System)
@@ -7631,7 +7507,6 @@ body:not(.page-hybrid-old) :is(
   body:has(.problem--v2) span.preorder-bar-open { font-size: 9.9px !important; }
   body:has(.problem--v2) span.preorder-bar-count { font-size: 9.9px !important; }
   body:has(.problem--v2) span.preorder-bar-count span { font-size: 9.9px !important; }
-  body:has(.problem--v2) span.preorder-bar-perks { font-size: 9.9px !important; }
   body:has(.problem--v2) a.shop-header-viewall { font-size: 10.67px !important; }
   body:has(.problem--v2) span.shop-header-viewall-arrow { font-size: 10.67px !important; }
   body:has(.problem--v2) div.shop-card-info h3 { font-size: 17.25px !important; }
@@ -7750,10 +7625,6 @@ body:not(.page-hybrid-old) :is(
   html body:not(#_):has(.problem--v2) :is(span.built-routine-item, span.built-routine-val) { font-size: 12px !important; }
 }
 
-/* Build Your System page: no "(with Powder Pod)" on the free scooper, and the four "Included with your pre-order" points share the box evenly */
-body.system-page .preorder-perk-with { display: none; }
-body.system-page .preorder-perk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 1rem; }
-body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: normal; }
 
 /* Build Your System (web): the same space between the Compare table and the FAQ as the product pages (no extra bottom padding) */
 @media (min-width: 601px) {
@@ -7822,29 +7693,194 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
   body.system-page .page-product-bottom .pilr-system-section { margin-top: 80px; }
 }
 
-/* Pre-order card: Free Single Lid removed; icon margins follow the remaining perks, and on web the three perks sit in one row */
-.preorder-perk:nth-child(2) svg, .preorder-perk:nth-child(3) svg { width: 18.48px; height: 18.48px; margin-left: 1.43px; margin-right: 1.43px; }
-@media (min-width: 601px) {
-  .preorder-perk-grid { grid-template-columns: repeat(3, auto); justify-content: space-between; column-gap: 1.2rem; }
-  body.system-page .preorder-perk-grid { grid-template-columns: repeat(3, auto); justify-content: space-between; }
-}
-@media (min-width: 601px) {
-  .preorder-perk-grid { column-gap: 0.9rem; }
-  .preorder-perk-name { white-space: nowrap; }
-  .preorder-perk-with { display: block; }   /* "(with Powder Pod)" under the scooper name so the three perks fit in one row */
-  .preorder-perk-sub { white-space: nowrap; }
-}
-@media (min-width: 601px) {
-  body.system-page .preorder-perk-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 0.8rem; }
-  body.system-page .preorder-perk-name, body.system-page .preorder-perk-sub { white-space: normal; }
-}
-/* Full Stack (web): no "(with Powder Pod)" line, so "$11 value" sits right under the name like the other perks */
-@media (min-width: 601px) {
-  body.page-classic-stack .preorder-perk-with { display: none; }
-}
-/* Pre-order card (phone): Free shipping sits in the right column, vertically centred against the two perks on the left */
-@media (max-width: 600px) {
-  .preorder-perk:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
-}
 /* Cart: the Full Stack picture sits flush with the bottom of its card (the wrist meets the edge) */
 .cart-drawer-item-img img[src*="Hand Render"], .cart-drawer-offer-img img[src*="Hand Render"] { transform: translateY(8%); }
+
+/* Cart drawer: free-shipping perk line (cream card, slate check circle) */
+.cart-drawer-perk {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
+}
+.cart-drawer-perk-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cart-drawer-perk-icon svg { display: block; }
+.cart-drawer-perk-text {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #46545e;
+}
+
+/* ======================================================================
+   PRE-ORDER BUY BOX: slim progress box above the button; the perks sit under it on the plain page background
+   (no box, no dividers). Shared by every product page and Build Your System (partials/preorder-card.html + preorder-perks.html)
+   ====================================================================== */
+/* spacing: product pages stack this column with a 16px flex gap, so the margins below are the target gap minus 16px
+   (progress box -> button 12px, button -> label 34px, perk row -> Details 36px, which also has 4px of its own margin) */
+#product-info-inner .preorder-card { margin-bottom: -4px; }
+#product-info-inner .preorder-perks { margin: 10px 0 16px; }
+/* Build Your System: plain block layout, so the real numbers; nothing below the perks */
+body .sys-panel-body .preorder-card { margin-top: 18px; margin-bottom: 12px; }
+body .sys-panel-body .system-cta { margin-top: 0; }
+body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
+.preorder-perks { align-self: stretch; width: 100%; box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.preorder-perks-label {
+  margin: 0 0 26px; text-align: center;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #5e6e7a;
+}
+.preorder-perk-grid { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.preorder-perk { display: flex; align-items: center; gap: 10px; }
+.preorder-perk svg { width: 26px; height: 26px; flex-shrink: 0; color: #7a8a94; }
+.preorder-perk-name { margin: 0; font-size: 13.5px; font-weight: 600; color: #3d4f5c; white-space: nowrap; }
+.preorder-perk-sub { margin: 2px 0 0; font-size: 12px; color: #7a8a94; white-space: nowrap; }
+@media (max-width: 480px) {
+  .preorder-perk-grid { flex-direction: column; align-items: flex-start; gap: 14px; }
+}
+/* Build Your System: the sidebar is too narrow for three perks in a row, so they stack like on a phone */
+.sys-panel-body .preorder-perk-grid { flex-direction: column; align-items: flex-start; gap: 14px; padding-left: 16px; }   /* a little indent */
+
+/* Product pages: when the last dropdown (Size Guide) is open, no divider line under its Full Size Guide button; closed, the line stays */
+.product-info-sections .product-accordion:last-child:has(> .product-accordion-trigger[aria-expanded="true"]) { border-bottom: none; }
+
+/* Why pilr: the "How it works" video has the same 2px corners as the other buttons and images */
+.how-it-works-media { border-radius: var(--radius); overflow: hidden; }
+.how-video-el { border-radius: var(--radius); }
+
+/* Why pilr hero photo (web): the same size as the stacked photo cards on the product pages (470 x 640), centred in its half */
+@media (min-width: 901px) {
+  .wp-hero-image { width: 470px; aspect-ratio: 470 / 640; justify-self: center; }
+}
+
+/* Why pilr (web): every section uses the same content width as the product pages (the page width minus 5vw each side, up to 1296px),
+   instead of the narrower 1200px (1160px for How it works) inside 3rem of side padding */
+@media (min-width: 901px) {
+  .wp-hero, .wp-stats, .wp-science, .wp-break, .wp-system, .wp-materials, .how-it-works, .wp-footnotes { padding-left: 0; padding-right: 0; }
+  .wp-hero-inner, .wp-stats-inner, .wp-science-inner, .wp-break-inner, .wp-system-inner, .wp-materials-inner, .how-it-works-inner, .wp-footnotes-inner {
+    width: calc(100% - 10vw); max-width: var(--page-max, 1296px); box-sizing: border-box;
+  }
+}
+
+/* Why pilr stats (web): each figure and its line centred in its column, so the three read evenly across the width */
+@media (min-width: 901px) {
+  .wp-stat { text-align: center; }
+}
+
+/* Why pilr citations: the numbers jump to their source in the Sources list; the sources link out */
+.wp-cite { color: inherit; text-decoration: none; }
+.wp-cite:hover { text-decoration: underline; }
+.wp-footnotes-list-inner li a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.wp-footnotes-list-inner li a:hover { color: #5e6e7a; }
+.wp-footnotes-list-inner li { transition: color 0.4s ease; border-radius: var(--radius); }
+.wp-footnotes-list-inner li.is-cited { background: rgba(94, 110, 122, 0.12); box-shadow: 0 0 0 6px rgba(94, 110, 122, 0.12); }
+
+/* ======================================================================
+   WHY PILR: "Where routines break" carousel — numbered tabs over a swipeable (scroll-snap) row of photo slides.
+   The tabs and the slides share the container's left edge, and the row is cut off at the container's right edge
+   so the next slide shows partway.
+   ====================================================================== */
+.wp-break-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 0 0 44px; }
+.wp-break-tab {
+  position: relative; min-width: 0; text-align: left;
+  background: none; border: 0; padding: 0 16px 14px 0; cursor: pointer;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #7a8a94;
+}
+/* one continuous 2px hairline under all four tabs (no gaps between the columns), with a 2px dark fill under the active one */
+.wp-break-tab::before, .wp-break-tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; }
+.wp-break-tab::before { background: rgba(66, 85, 99, 0.15); }
+.wp-break-tab::after { background: #46545e; transform: scaleX(0); transform-origin: left; }
+.wp-break-tab.is-active::after { transform: scaleX(1); }
+.wp-break-tab-num { display: block; margin-bottom: 6px; font-size: 11px; letter-spacing: 0.16em; }
+.wp-break-tab-label { display: block; font-size: 1rem; font-weight: 500; white-space: nowrap; }
+.wp-break-tab.is-active { color: #46545e; }
+.wp-break-tab.is-active .wp-break-tab-label { font-weight: 600; }
+.wp-break-tab:hover { color: #46545e; }
+.wp-break-tab:focus-visible { outline: 2px solid #46545e; outline-offset: 4px; }
+/* optional autoplay: the active tab's fill runs for 6s, then the next slide comes in */
+@keyframes wbFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.wp-break.is-autoplay .wp-break-tab.is-active::after { animation: wbFill 6s linear forwards; }
+.wp-break.is-paused .wp-break-tab.is-active::after { animation-play-state: paused; }
+
+.wp-break-track {
+  position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: var(--wb-slide); column-gap: var(--wb-gap);
+  grid-template-rows: auto auto auto auto;   /* photo, label row, headline + sub line, answer: each row is as tall as the tallest slide's, so the lines match across all four */
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-left: 0;
+  scrollbar-width: none;
+  /* the same width as every other section: the row is cut off at the container's right edge */
+  width: var(--wb-cont); margin: 0 auto;   /* no extra room after the last slide: at the end the last photo sits at the right edge */
+}
+.wp-break-track::-webkit-scrollbar { display: none; }
+.wp-break-slide {
+  min-width: 0; scroll-snap-align: start; text-align: left;
+  display: grid; grid-row: 1 / span 4; grid-template-rows: subgrid; row-gap: 0;
+  opacity: 0.5; transition: opacity 0.3s ease;
+}
+.wp-break-slide.is-active { opacity: 1; }
+.wp-break-photo { position: relative; height: clamp(300px, 42vh, 400px); overflow: hidden; border-radius: 6px; background: #E7E6E2; }   /* sized to the screen height so photo + text fit on one laptop screen */
+.wp-break-photo picture, .wp-break-photo img { display: block; width: 100%; height: 100%; }
+.wp-break-photo img { object-fit: cover; object-position: center; }
+
+.wp-break-arrows { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 8px; }
+.wp-break-slide:not(.is-active) .wp-break-arrows { display: none; }
+.wp-break-arrow {
+  width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg); color: #46545e; box-shadow: 0 2px 10px rgba(66, 85, 99, 0.25);
+  transition: opacity 0.2s ease;
+}
+.wp-break-arrow svg { width: 18px; height: 18px; }
+.wp-break-arrow:disabled { opacity: 0; pointer-events: none; }
+.wp-break-arrow:focus-visible { outline: 2px solid #46545e; outline-offset: 2px; }
+
+.wp-break-meta {
+  display: flex; justify-content: space-between; align-items: baseline; margin-top: 20px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #7a8a94;
+}
+.wp-break-meta b { font-weight: 700; color: #46545e; margin-right: 0.6em; }
+.wp-break-slide:not(.is-active) .wp-break-count { visibility: hidden; }
+.wp-break-slide-sub { margin: 10px 0 0; max-width: var(--wb-slide); font-size: 16px; font-weight: 400; line-height: 1.4; color: #5e6e7a; }   /* the whole slide text, as normal sentences */
+.wp-break-answer {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 16px;
+  grid-row: 4; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(66, 85, 99, 0.15);
+}
+.wp-break-answer-label {
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #7a8a94;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.wp-break-answer-text { margin: 0; font-size: 20px; font-weight: 500; color: #46545e; }
+
+/* slide width: 46% of the container on a wide screen (about 600px at 1440), a bit wider on a smaller one */
+@media (max-width: 1300px) { .wp-break { --wb-slide: calc(var(--wb-cont) * 0.49); } }
+@media (max-width: 1000px) { .wp-break { --wb-slide: calc(var(--wb-cont) * 0.62); } }
+@media (max-width: 600px) {
+  .wp-break { --wb-slide: calc(var(--wb-cont) - 36px); --wb-gap: 12px; }
+  .wp-break-tabs { overflow-x: auto; scrollbar-width: none; }
+  .wp-break-tabs::-webkit-scrollbar { display: none; }
+  .wp-break-tab { min-width: 104px; }
+  .wp-break-tabs { grid-template-columns: repeat(4, minmax(104px, 1fr)); }
+  .wp-break-arrow { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wp-break-slide { transition: none; }
+}
+@media (max-width: 600px) {
+  .wp-break-slide[data-slide="0"] img { object-position: 60% 50%; }   /* keep all six pods in the narrower phone crop */
+}
+
+/* Build Your System: the Details dropdown under the perks (same look as the product pages) */
+.sys-panel-body .bc-spec-row {
+  display: flex; justify-content: space-between; gap: 1rem;
+  font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #7a8a94; line-height: 1.8;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.sys-panel-body .bc-spec-row span:first-child { color: #3d4f5c; }

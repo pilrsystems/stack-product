@@ -100,18 +100,18 @@ const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Small Pill Pod'] + POD_BASE_PRI
 
 const POD_INFO = {
   'Small Pill Pod': {
-    desc: 'Built for the small capsules you take every day. Three compartments, a full week, one pod.',
-    specs: ['[Size] mL'],
+    desc: 'Built for your smaller pills and tablets.',
+    specs: ['2.78 fl oz (82.2 mL)', '1.34 × 2.56 in (3.4 × 6.5 cm)'],
     examples: 'Vitamin D, Zinc, Multivitamins, etc.',
   },
   'Large Pill Pod': {
-    desc: 'Built to carry a week\'s supply of medium and large capsules.',
-    specs: ['[Size] mL'],
+    desc: 'Built for your larger pills, capsules, and gummies.',
+    specs: ['4.78 fl oz (141.3 mL)', '2.01 × 2.56 in (5.1 × 6.5 cm)'],
     examples: 'Fish Oil, Magnesium, Ashwagandha, etc.',
   },
   'Powder Pod': {
-    desc: 'Stores your daily powders.',
-    specs: ['[Size] mL'],
+    desc: 'Built for any powder.',
+    specs: ['6.11 fl oz (180.6 mL)', '2.52 × 2.56 in (6.4 × 6.5 cm)'],
     examples: 'Creatine, Pre-Workout, Greens Powder',
   },
 }
@@ -760,7 +760,7 @@ function getSectionDetailSetup(sectionIndex) {
   box.getSize(size)
 
   const halfSpan = Math.max(size.x, size.z) / 2
-  const height   = Math.max((halfSpan / Math.tan(THREE.MathUtils.degToRad(20))) * 1.4, 3.5)
+  const height   = Math.max((halfSpan / Math.tan(THREE.MathUtils.degToRad(20))) * 1.75, 4.4)   // a little further back than before, so the lines and names have room beside the pod
   const camPos   = new THREE.Vector3(center.x - 0.55, center.y + height, center.z + 0.05)
 
   outerGroup.rotation.x = rx; outerGroup.rotation.y = ry
@@ -776,6 +776,7 @@ function enterDetailView(sectionIndex) {
   idleActive    = false
 
   gsap.to(outerGroup.rotation, { y: 0, duration: 0.4, ease: 'power2.out' })
+  gsap.to(floor.material, { opacity: 0, duration: 0.5 })   // no floor shadow behind the names on the top-down view
 
   sections.forEach((s, i) => {
     if (i === sectionIndex) return
@@ -805,7 +806,7 @@ function enterDetailView(sectionIndex) {
   gsap.to(cameraTarget, {
     x: podCenter.x, y: podCenter.y, z: podCenter.z,
     duration: 1.05, ease: 'power2.inOut',
-    onComplete: () => { transitioning = false; inDetailView = true },
+    onComplete: () => { transitioning = false; inDetailView = true; showPodCallouts(sectionIndex) },
   })
 
   document.getElementById('system-back-btn')?.classList.add('visible')
@@ -824,6 +825,8 @@ function exitDetailView() {
   document.getElementById('system-selector')?.classList.remove('hidden')
   document.querySelector('.system-layout')?.classList.remove('detail-active')
   hidePodPanel()
+  hidePodCallouts()
+  gsap.to(floor.material, { opacity: 0.55, duration: 0.6 })
 
   gsap.to(camera.position, {
     x: CAMERA_REST_POS.x, y: CAMERA_REST_POS.y, z: CAMERA_REST_POS.z,
@@ -858,13 +861,71 @@ function showPodPanel(podName) {
   document.getElementById('pod-detail-name').textContent      = podName
   document.getElementById('pod-detail-desc').textContent      = info?.desc ?? ''
   document.getElementById('pod-detail-specs').innerHTML       = (info?.specs ?? []).map(s => `<li>${s}</li>`).join('')
-  document.getElementById('pod-detail-examples').textContent  = info?.examples ?? ''
   panel.classList.add('visible')
 }
 
 function hidePodPanel() {
   document.getElementById('pod-detail-panel')?.classList.remove('visible')
 }
+
+// ── Lines on the top-down view: each compartment's supplement, with "about XX servings" under it ──
+// Screen angle (degrees, 0 = right, 90 = up) of the middle of each compartment as the pod is seen from above, and how far
+// out from the pod's centre (as a share of its radius) the dot sits.
+const COMPARTMENTS = {
+  'Small Pill Pod': { angles: [115, 233, 355], reach: 0.5 },
+  'Large Pill Pod': { angles: [90, 270],       reach: 0.5 },
+  'Powder Pod':     { angles: [90],            reach: 0.0 },
+}
+let calloutsFor = null   // which pod the lines are showing for (so a resize can redraw them)
+
+function hidePodCallouts() {
+  calloutsFor = null
+  document.getElementById('pod-callouts')?.remove()
+}
+
+function showPodCallouts(sectionIndex) {
+  hidePodCallouts()
+  const type   = currentPodTypes[sectionIndex]
+  const cfg    = COMPARTMENTS[type]
+  const supps  = getSuppListForPods(currentPodTypes)[sectionIndex] ?? []
+  const wrap   = document.querySelector('.system-canvas-wrap')
+  if (!cfg || !supps.length || !wrap) return
+  calloutsFor = sectionIndex
+
+  // The pod's opening on screen: its centre and radius in pixels
+  const box = new THREE.Box3()
+  sections[sectionIndex].mesh.traverse(c => { if (c.isMesh) box.expandByObject(c) })
+  const size = new THREE.Vector3(); box.getSize(size)
+  const top  = new THREE.Vector3((box.min.x + box.max.x) / 2, box.max.y, (box.min.z + box.max.z) / 2)
+  const rad  = Math.max(size.x, size.z) / 2
+  const rect = renderer.domElement.getBoundingClientRect()
+  const toPx = v => { const n = v.clone().project(camera); return { x: (n.x * 0.5 + 0.5) * rect.width, y: (-n.y * 0.5 + 0.5) * rect.height } }
+  const c = toPx(top)
+  const e = toPx(new THREE.Vector3(top.x + rad, top.y, top.z))
+  const r = Math.hypot(e.x - c.x, e.y - c.y)
+
+  const layer = document.createElement('div')
+  layer.id = 'pod-callouts'
+  layer.className = 'pod-callouts'
+  let lines = ''
+  let labels = ''
+  supps.slice(0, cfg.angles.length).forEach((name, i) => {
+    const a  = cfg.angles[i] * Math.PI / 180
+    const ax = c.x + r * cfg.reach * Math.cos(a)
+    const ay = c.y - r * cfg.reach * Math.sin(a)
+    const right = Math.cos(a) > -0.15 && !(Math.cos(a) < 0)   // dots on the right half label to the right, the rest to the left
+    const lx = right ? c.x + r + 22 : c.x - r - 22
+    const ly = ay + (ay < c.y ? -0.17 * r : 0.13 * r)
+    const sx = right ? lx - 10 : lx + 10
+    lines += `<line x1="${sx}" y1="${ly}" x2="${ax}" y2="${ay}"/><circle cx="${ax}" cy="${ay}" r="4.5"/>`
+    labels += `<div class="pod-callout pod-callout--${right ? 'right' : 'left'}" style="left:${lx}px;top:${ly - 12}px">
+      <span class="pod-callout-name">${name}</span><span class="pod-callout-serv">About XX servings</span></div>`
+  })
+  layer.innerHTML = `<svg class="pod-callout-lines" width="${rect.width}" height="${rect.height}">${lines}</svg>${labels}`
+  wrap.appendChild(layer)
+  requestAnimationFrame(() => layer.classList.add('visible'))
+}
+window.addEventListener('resize', () => { if (inDetailView && calloutsFor !== null) showPodCallouts(calloutsFor) })
 
 // ── Raycaster ────────────────────────────────────────────────
 const raycaster = new THREE.Raycaster()
@@ -1302,15 +1363,32 @@ function getLabelNamesForPods(podTypes) {
   })
 }
 
+// The supplement names in each pod of the stack (same order as the pods), for the lines drawn on the top-down view
+function getSuppListForPods(podTypes) {
+  const pCopy = [...selected.pills].map(id   => SUPPLEMENTS.pills.find(s => s.id === id).label)
+  const hCopy = [...selected.hybrid].map(id  => SUPPLEMENTS.hybrid.find(s => s.id === id).label)
+  const wCopy = [...selected.powders].map(id => SUPPLEMENTS.powders.find(s => s.id === id).label)
+  return podTypes.map(type => {
+    if (type === 'Small Pill Pod') return pCopy.splice(0, 3)
+    if (type === 'Large Pill Pod') return hCopy.splice(0, 2)
+    if (type === 'Powder Pod')     return wCopy.splice(0, 1)
+    return []
+  })
+}
+
 const POD_IMAGES = {
   'Small Pill Pod':   'images/lifestyle_section/Pill Pod.png',
   'Large Pill Pod': 'images/lifestyle_section/Hybrid Pod.png',
   'Powder Pod': 'images/lifestyle_section/Powder Pod Render.png',
 }
-const POD_SPECS = {
-  'Small Pill Pod':   '[pending mL]',
-  'Large Pill Pod': '[pending mL]',
-  'Powder Pod': '[pending mL]',
+// Supplements whose chip name is too long for the opened pod table show a shorter name there (the chip and the row title keep the full name)
+const TABLE_NAMES = { fishoil: 'Fish Oil' }
+
+// How many servings of each supplement fit in a pod (the "Fits about" column in an opened pod row). One place to edit them.
+// A supplement with no number yet shows "—" until you add it here.
+const SERVINGS = {
+  creatine: 14, fishoil: 10, magnesium: 14,
+  vitamind: 30, coq10: 30, b12: 60, ashwagandha: 30,
 }
 
 // Every order includes one free lid, same rule and same product (id
@@ -1324,11 +1402,32 @@ const FREE_LID = {
   image: 'images/lifestyle_section/Full Render.png',
   listPrice: 9,
 }
+// The supplements line under a pod name always stays on one line: if it is too long for the row, the text shrinks a little (down to 10px)
+function fitSupplementLines() {
+  document.querySelectorAll('.sys-acc-supp').forEach(el => {
+    el.style.fontSize = ''
+    let size = parseFloat(getComputedStyle(el).fontSize)
+    while (el.scrollWidth > el.clientWidth + 1 && size > 10) { size -= 0.5; el.style.fontSize = size + 'px' }
+  })
+}
+// Same for the opened pod table (Contains / Fits about): every line stays on one line, shrinking the text a little if the panel is narrow
+function fitTableLines() {
+  document.querySelectorAll('.sys-acc-table-head, .sys-acc-table-row').forEach(row => {
+    const spans = [...row.children]
+    spans.forEach(sp => { sp.style.fontSize = '' })
+    if (!row.clientWidth) return   // a closed row has no width to measure yet
+    const base = spans.map(sp => parseFloat(getComputedStyle(sp).fontSize))
+    let k = 1   // shrink every span by the same factor, so their sizes stay in proportion
+    while (row.scrollWidth > row.clientWidth + 1 && k > 0.65) { k -= 0.02; spans.forEach((sp, i) => { sp.style.fontSize = (base[i] * k) + 'px' }) }
+  })
+}
+window.addEventListener('resize', () => { fitSupplementLines(); fitTableLines() })
+
 function makeLidRow(chevron) {
   return `<div class="sys-acc-row">
     <button class="sys-acc-header">
       <span class="sys-acc-dot"></span>
-      <span class="sys-acc-name">${FREE_LID.title} <span class="sys-acc-supp">— <em>Included with your pods</em></span></span>
+      <span class="sys-acc-name"><strong class="sys-acc-title">${FREE_LID.title}</strong><span class="sys-acc-supp"><em>Included with your pods</em></span></span>
       <span class="sys-acc-price"><span class="sys-acc-price-strike">${formatPrice(FREE_LID.listPrice)}</span>Free</span>
       ${chevron}
     </button>
@@ -1493,8 +1592,11 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   function makeRow(podName, supps, category, ids) {
     const label     = supps.join(', ')
     const imgSrc    = POD_IMAGES[podName] || ''
-    const spec      = POD_SPECS[podName]  || ''
     const idsAttr   = JSON.stringify(ids || [])
+    const containsRows = supps.map((name, i) => {
+      const n = SERVINGS[(ids || [])[i]]
+      return `<div class="sys-acc-table-row"><span>${TABLE_NAMES[(ids || [])[i]] || name}</span><span>${n ? n + ' servings' : '—'}</span></div>`
+    }).join('')
     const listPrice = POD_BASE_PRICE[podName]
     const salePrice = listPrice * (1 - discount)
     cartTotal += salePrice
@@ -1505,7 +1607,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
     return `<div class="sys-acc-row">
       <button class="sys-acc-header">
         <span class="sys-acc-dot"></span>
-        <span class="sys-acc-name">${podName} <span class="sys-acc-supp">— <em>${label}</em></span></span>
+        <span class="sys-acc-name"><strong class="sys-acc-title">${podName}</strong><span class="sys-acc-supp"><em>${label}</em></span></span>
         ${priceHtml}
         ${chevron}
       </button>
@@ -1515,13 +1617,9 @@ function updateSummary(pillPods, hybridPods, powderPods) {
             <img src="${imgSrc}" alt="${podName}" class="sys-acc-pod-img" />
           </div>
           <div class="sys-acc-pod-info">
-            <div class="sys-acc-info-field">
-              <span class="sys-acc-info-label">Contains</span>
-              <span class="sys-acc-info-value">${label}</span>
-            </div>
-            <div class="sys-acc-info-field">
-              <span class="sys-acc-info-label">Capacity</span>
-              <span class="sys-acc-info-value">${spec}</span>
+            <div class="sys-acc-table">
+              <div class="sys-acc-table-head"><span>Contains</span><span>Fits about</span></div>
+              ${containsRows}
             </div>
             <div class="sys-acc-pod-actions">
               <button class="sys-acc-remove" data-category="${category}" data-ids='${idsAttr}'>× Remove Pod</button>
@@ -1542,6 +1640,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   if (total > 0) rows += makeLidRow(chevron)
   rows += addonIds.map(id => makeAddonRow(id, chevron)).join('')
   el.innerHTML = `<div class="sys-acc-list">${rows}</div>`
+  fitSupplementLines()
+  fitTableLines()
 
   currentCartTotal     = cartTotal + addonTotal
   currentCartListTotal = listTotal + addonTotal
@@ -1551,6 +1651,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
     btn.addEventListener('click', () => {
       const row = btn.closest('.sys-acc-row')
       row.classList.toggle('open')
+      fitTableLines()
       if (row.dataset.addonRow) row.classList.contains('open') ? openAddonRows.add(row.dataset.addonRow) : openAddonRows.delete(row.dataset.addonRow)
     })
   })

@@ -168,11 +168,10 @@
     }
     .sg-link-row {
       display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-      padding: 1.1rem 0; border-top: 1px solid rgba(66,85,99,0.15);
+      padding: 1.1rem 0;
       font-size: 0.9rem; color: #7a8a94;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    .sg-link-row:last-child { border-bottom: 1px solid rgba(66,85,99,0.15); }
     .sg-link-cta {
       background: none; border: none; cursor: pointer; flex-shrink: 0; text-decoration: none;
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
@@ -422,7 +421,7 @@
         "tabLabel": "Small Pill Pod",
         "name": "Small Pill Pod",
         "image": "images/lifestyle_section/Pill Pod.png",
-        "specs": { "compartments": "3", "internalVolume": "82.2 mL", "openingWidth": "—" },
+        "specs": { "compartments": "3", "internalVolume": "2.78 fl oz (82.2 mL)", "heightWidth": "1.34 × 2.56 in (3.4 × 6.5 cm)" },
         "columns": ["Supplement", "Form tested", "Size", "Pills per pod"],
         "supplements": [
           { "name": "Vitamin D3", "form": "Softgel", "size": "—", "count": "—" },
@@ -438,16 +437,16 @@
         "bucketSub": "Measure the longest side of your pill, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "~ [size] mm", "like": "about the size of a vitamin D pill", "count": "— pills" },
-          { "label": "~ [size] mm", "like": "about the size of a turmeric capsule", "count": "— pills" },
-          { "label": "~ [size] mm", "like": "about the size of a fish oil pill", "count": "— pills" }
+          { "label": "~ 8–9 mm", "like": "about the size of a Vitamin D3 2000 IU pill", "count": "— pills" },
+          { "label": "~ 12–13 mm", "like": "about the size of an Ibuprofen 200 mg (Advil) tablet", "count": "— pills" },
+          { "label": "~ 18–19 mm", "like": "about the size of a Tylenol Extra Strength caplet", "count": "— pills" }
         ]
       },
       "big": {
         "tabLabel": "Large Pill Pod",
         "name": "Large Pill Pod",
         "image": "images/lifestyle_section/Hybrid Pod.png",
-        "specs": { "compartments": "2", "internalVolume": "—", "openingWidth": "—" },
+        "specs": { "compartments": "2", "internalVolume": "4.78 fl oz (141.3 mL)", "heightWidth": "2.01 × 2.56 in (5.1 × 6.5 cm)" },
         "columns": ["Supplement", "Form tested", "Size", "Pills per pod"],
         "supplements": [
           { "name": "Fish oil / Omega-3", "form": "Softgel", "size": "—", "count": "—" },
@@ -463,16 +462,16 @@
         "bucketSub": "Measure the longest side of your pill, then find it below.",
         "bucketFootnote": "Pills and servings: most supplements are 1–3 pills per serving. Divide the pill count by your serving size.",
         "buckets": [
-          { "label": "~ [size] mm", "like": "about the size of a vitamin D pill", "count": "— pills" },
-          { "label": "~ [size] mm", "like": "about the size of a turmeric capsule", "count": "— pills" },
-          { "label": "~ [size] mm", "like": "about the size of a fish oil pill", "count": "— pills" }
+          { "label": "~ 19–20 mm", "like": "about the size of a Multivitamin (Centrum Adults) tablet", "count": "— pills" },
+          { "label": "~ 21–22 mm", "like": "about the size of a Fish oil 1000 mg softgel", "count": "— pills" },
+          { "label": "~ 23–25 mm", "like": "about the size of a Glucosamine/chondroitin caplet (Osteo Bi-Flex Triple Strength)", "count": "— pills" }
         ]
       },
       "powder": {
         "tabLabel": "Powder Pod",
         "name": "Powder Pod",
         "image": "images/lifestyle_section/Powder Pod Render.png",
-        "specs": { "compartments": "1", "internalVolume": "—", "openingWidth": "—" },
+        "specs": { "compartments": "1", "internalVolume": "6.11 fl oz (180.6 mL)", "heightWidth": "2.52 × 2.56 in (6.4 × 6.5 cm)" },
         "columns": ["Supplement", "Form tested", "Scoop size", "Servings per pod"],
         "supplements": [
           { "name": "Creatine monohydrate", "form": "Powder", "size": "—", "count": "—" },
@@ -542,7 +541,7 @@
               '</a>' +
               specRow('Compartments', d.specs.compartments) +
               specRow('Internal volume', d.specs.internalVolume) +
-              specRow('Opening width', d.specs.openingWidth) +
+              specRow('Height × width', d.specs.heightWidth) +
             '</div>'
           )
         }).join('')

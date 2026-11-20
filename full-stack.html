@@ -151,15 +151,13 @@
     #product-info-inner .bc-capacity-row {
       display: flex; justify-content: space-between; gap: 1rem;
       font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: #7a8a94; line-height: 1.8; padding: 0.4rem 0;
+      color: #7a8a94; line-height: 1.8;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #product-info-inner .bc-capacity-row span:first-child { color: #3d4f5c; }
-    #product-info-inner .bc-capacity-row + .bc-capacity-row { border-top: 1px solid rgba(66,85,99,0.15); }
     #product-info-inner .bc-capacity-note {
       display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
       font-size: 0.6rem; color: #9aa7ae; margin: 0 0 0.6rem; padding-top: 0.4rem;
-      border-top: 1px solid rgba(66,85,99,0.15);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #product-info-inner .bc-capacity-note-unit {
@@ -199,7 +197,7 @@
       color: #7a8a94; line-height: 1.8;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    #product-info-inner .bc-spec-row span:first-child { color: #5e6e7a; }
+    #product-info-inner .bc-spec-row span:first-child { color: #3d4f5c; }
 
     /* Single column at every breakpoint; this rule lives only in
        this page's own <style> block, not in style.css, so it has no
@@ -418,8 +416,7 @@
 
       <!-- 7. Primary button — the only filled button in this column -->
       <button class="product-btn-add">ADD TO CART</button>
-<!--@include partials/preorder-note.html-->
-<!--@include partials/preorder-foot.html-->
+<!--@include partials/preorder-perks.html-->
 
       <!-- 10. Three accordions -->
       <div class="product-info-sections">
@@ -441,14 +438,12 @@
             <span class="product-accordion-icon">+</span>
           </button>
           <div class="product-accordion-panel">
-            <div class="bc-capacity-row"><span>Creatine</span><span>~XX servings</span></div>
-            <div class="bc-capacity-row"><span>Greens</span><span>~XX servings</span></div>
-            <div class="bc-capacity-row"><span>Fish oil</span><span>~XX pills</span></div>
-            <div class="bc-capacity-row"><span>Magnesium glycinate</span><span>~XX pills</span></div>
-            <div class="bc-capacity-row"><span>Multivitamin</span><span>~XX pills</span></div>
-            <div class="bc-capacity-row"><span>Vitamin D3</span><span>~XX pills</span></div>
+            <div class="bc-capacity-row"><span>Creatine</span><span>~14 servings (days)</span></div>
+            <div class="bc-capacity-row"><span>Fish oil</span><span>~10 servings (days)</span></div>
+            <div class="bc-capacity-row"><span>Magnesium glycinate</span><span>~14 servings (days)</span></div>
+            <div class="bc-capacity-row"><span>Vitamin D3</span><span>~30 servings (days)</span></div>
             <p class="bc-capacity-note"><span>Based on standard retail sizes. Yours may vary.</span><span class="bc-capacity-note-unit">Per Pod</span></p>
-            <a href="./size-guide.html" class="product-info-link"><span>Full Size Guide</span><span>&rarr;</span></a>
+            <a href="./size-guide.html" class="product-info-link"><span>Full Size Guide</span></a>
           </div>
         </div>
       </div>

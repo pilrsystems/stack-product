@@ -144,13 +144,13 @@ body.system-page {
   color: #5e6e7a;
   opacity: 0.75;
   line-height: 1.6;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.6rem;   /* the same gap under the description as under the name */
 }
 
 .pod-detail-specs {
   list-style: none;
   padding: 0;
-  margin: 0 0 0.85rem;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -158,27 +158,10 @@ body.system-page {
 
 .pod-detail-specs li {
   font-size: 0.67rem;
-  font-weight: 600;
-  color: #5e6e7a;
-  letter-spacing: 0.02em;
-}
-
-.pod-detail-examples-label {
-  font-size: 0.55rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  color: #9aa7ae;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: #5e6e7a;
-  opacity: 0.5;
-  margin-bottom: 0.2rem;
-}
-
-.pod-detail-examples {
-  font-size: 0.67rem;
-  color: #5e6e7a;
-  opacity: 0.7;
-  line-height: 1.5;
-  font-style: italic;
 }
 
 /* Hide info overlay when in detail view */
@@ -264,10 +247,10 @@ body.system-page {
 
 .blabel-explore {
   font-size: 0.6rem;
-  font-weight: 600;
+  font-weight: 400;   /* lighter than the supplement name above it */
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--accent-teal);
+  color: #7a8a94;
   background: none;
   border: none;
   padding: 0;
@@ -943,7 +926,7 @@ body.system-page {
 
 .sys-acc-row {
   border: 1px solid #E5E4DF;
-  border-radius: 8px;
+  border-radius: var(--radius);
   overflow: hidden;
   background: #fff;
 }
@@ -974,13 +957,15 @@ body.system-page {
 
 .sys-acc-name {
   flex: 1;
+  min-width: 0;
   font-size: 0.85rem;
   color: #5e6e7a;
   font-weight: 400;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.sys-acc-supp { color: #7a8a94; }
+.sys-acc-title { font-weight: 600; }   /* the pod name, bold at the same size */
+.sys-acc-supp { display: block; color: #7a8a94; font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* the supplements sit on one line below the name, a little smaller so they fit */
 
 .sys-acc-bundle-badge {
   display: inline-block;
@@ -1092,6 +1077,18 @@ body.system-page {
   border-top: 1px solid #E5E4DF;
 }
 
+/* An opened pod row: what it contains, how many servings of each fit, and the pod's capacity */
+.sys-acc-table { display: flex; flex-direction: column; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.sys-acc-table-head, .sys-acc-table-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.sys-acc-table-head {
+  padding-bottom: 0.5rem;
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: #7a8a94;
+}
+.sys-acc-table-head span, .sys-acc-table-row span { white-space: nowrap; }   /* never two lines */
+.sys-acc-table-row { padding: 0.55rem 0; border-top: 1px solid #E5E4DF; font-size: 0.82rem; color: #5e6e7a; }
+.sys-acc-table-row span:first-child { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+.sys-acc-table + .sys-acc-pod-actions { border-top: none; padding-top: 0; margin-top: 0.7rem; }
+
 .sys-qty {
   display: flex;
   align-items: center;
@@ -1151,7 +1148,7 @@ body.system-page {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 1.5px dashed #C8C7C2;
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: none;
   cursor: pointer;
   font-size: 0.8rem;
@@ -1166,3 +1163,15 @@ body.system-page {
   border-color: #7a8a94;
   color: #5e6e7a;
 }
+
+/* Top-down view of one pod: a line from each compartment to its supplement, with "about XX servings" under the name */
+.pod-callouts { position: absolute; inset: 0; pointer-events: none; z-index: 5; opacity: 0; transition: opacity 0.35s ease; }
+.pod-callouts.visible { opacity: 1; }
+.pod-callout-lines { position: absolute; inset: 0; overflow: visible; }
+.pod-callout-lines line { stroke: #9aa7ae; stroke-width: 1; }
+.pod-callout-lines circle { fill: #fff; stroke: #9aa7ae; stroke-width: 1; }
+.pod-callout { position: absolute; display: flex; flex-direction: column; gap: 3px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.pod-callout--left { transform: translateX(-100%); align-items: flex-end; text-align: right; }
+.pod-callout--right { align-items: flex-start; text-align: left; }
+.pod-callout-name { font-size: 0.95rem; font-weight: 700; color: #5e6e7a; line-height: 1.1; white-space: nowrap; }
+.pod-callout-serv { font-size: 0.56rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #9aa7ae; white-space: nowrap; }

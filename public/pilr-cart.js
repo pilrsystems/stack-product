@@ -404,9 +404,17 @@
     // (restore the threshold with: remaining <= 0)
     const unlocked  = true
     const pct       = 100
-    const msg       = unlocked
-      ? "Congratulations! You've unlocked FREE shipping!"
-      : "You're " + formatMoney(remaining) + ' away from free shipping.'
+    const msg       = "You're " + formatMoney(remaining) + ' away from free shipping.'
+    if (unlocked) {
+      return (
+        '<div class="cart-drawer-perk">' +
+          '<span class="cart-drawer-perk-icon">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</span>' +
+          '<span class="cart-drawer-perk-text">Pre-orders get FREE shipping!</span>' +
+        '</div>'
+      )
+    }
     return (
       '<p class="cart-drawer-shipping-msg">' + msg + '</p>' +
       '<div class="cart-drawer-shipping-bar">' +

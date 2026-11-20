@@ -110,7 +110,7 @@
       <div class="wp-hero-copy">
         <p class="wp-hero-eyebrow">Why pilr</p>
         <h1 class="wp-hero-headline">Routines don't break. They get left behind.</h1>
-        <p class="wp-hero-support">One system for every supplement you take, built to travel with you.</p>
+        <p class="wp-hero-support">Every supplement you take. One system that travels.</p>
         <div class="wp-hero-actions">
           <a href="./build-your-system.html" class="wp-btn wp-btn--dark">Build Your System</a>
           <a href="#wp-system" class="wp-btn wp-btn--outline">See how it works</a>
@@ -126,16 +126,16 @@
   <section class="wp-stats">
     <div class="wp-stats-inner">
       <div class="wp-stat">
-        <div class="wp-stat-number">3 in 4<sup>1</sup></div>
-        <p class="wp-stat-desc">Americans take dietary supplements.</p>
+        <div class="wp-stat-number">3 in 4<sup><a class="wp-cite" href="#wp-source-1">1</a></sup></div>
+        <p class="wp-stat-desc">Americans take supplements.</p>
       </div>
       <div class="wp-stat">
-        <div class="wp-stat-number">66 days<sup>2</sup></div>
+        <div class="wp-stat-number">66 days<sup><a class="wp-cite" href="#wp-source-2">2</a></sup></div>
         <p class="wp-stat-desc">The average time to build a daily habit.</p>
       </div>
       <div class="wp-stat">
-        <div class="wp-stat-number">33%<sup>3</sup></div>
-        <p class="wp-stat-desc">Of supplement users aren't consistent with any of their supplements.</p>
+        <div class="wp-stat-number">33%<sup><a class="wp-cite" href="#wp-source-3">3</a></sup></div>
+        <p class="wp-stat-desc">Of supplement users aren't consistent with any of them.</p>
       </div>
     </div>
   </section>
@@ -146,77 +146,101 @@
       <div class="wp-science-copy">
         <p class="wp-science-eyebrow">The premise</p>
         <h2 class="wp-science-headline">Habits live in places</h2>
-        <p class="wp-science-body">Research on habit shows routines are triggered by context: the same shelf, the same counter, the same time. Change the setting and the habit loses its trigger, unless the cues come with you.<sup>4</sup></p>
+        <p class="wp-science-body">Routines run on cues: the same shelf, the same counter, the same time. Change the setting and the cue disappears. Unless it comes with you.<sup><a class="wp-cite" href="#wp-source-4">4</a></sup></p>
       </div>
       <div class="wp-science-card">
         <p class="wp-science-card-label">What the research shows</p>
         <ol class="wp-science-list">
-          <li><span class="wp-science-list-num">01</span><span class="wp-science-list-text">Habits formed in one setting often don't survive a move to another.<sup>4</sup></span></li>
-          <li><span class="wp-science-list-num">02</span><span class="wp-science-list-text">When familiar cues reappear, the old habit returns quickly.<sup>4</sup></span></li>
-          <li><span class="wp-science-list-num">03</span><span class="wp-science-list-text">A single missed day doesn't undo a habit. Repeated disruption does.<sup>2</sup></span></li>
+          <li><span class="wp-science-list-num">01</span><span class="wp-science-list-text">Habits built in one place rarely survive the move.<sup><a class="wp-cite" href="#wp-source-4">4</a></sup></span></li>
+          <li><span class="wp-science-list-num">02</span><span class="wp-science-list-text">Bring back the cue, and the habit returns.<sup><a class="wp-cite" href="#wp-source-4">4</a></sup></span></li>
+          <li><span class="wp-science-list-num">03</span><span class="wp-science-list-text">One missed day doesn't break a habit. Repeated ones do.<sup><a class="wp-cite" href="#wp-source-2">2</a></sup></span></li>
         </ol>
         <a href="#wp-footnotes" class="wp-science-sources">View sources</a>
       </div>
     </div>
   </section>
 
-  <!-- WHERE ROUTINES BREAK (tabbed) -->
-  <section class="wp-break">
+  <!-- WHERE ROUTINES BREAK — numbered tabs over a swipeable (scroll-snap) row of four photo slides -->
+  <section class="wp-break" id="wp-break">
     <div class="wp-break-inner">
       <p class="wp-break-eyebrow">Where routines break</p>
       <h2 class="wp-break-headline">Every trip has four weak points</h2>
-      <div class="wp-break-tabs" id="wp-break-tabs">
-        <button class="wp-break-tab is-active" data-tab="packing" type="button">Packing</button>
-        <button class="wp-break-tab" data-tab="transit" type="button">Transit</button>
-        <button class="wp-break-tab" data-tab="mornings" type="button">Days away</button>
-        <button class="wp-break-tab" data-tab="coming-home" type="button">Coming home</button>
+      <div class="wp-break-tabs" id="wp-break-tabs" role="tablist" aria-label="Where routines break">
+        <button class="wp-break-tab is-active" role="tab" id="wb-tab-0" aria-controls="wb-slide-0" aria-selected="true" tabindex="0" type="button"><span class="wp-break-tab-num">01</span><span class="wp-break-tab-label">Packing</span></button>
+        <button class="wp-break-tab" role="tab" id="wb-tab-1" aria-controls="wb-slide-1" aria-selected="false" tabindex="-1" type="button"><span class="wp-break-tab-num">02</span><span class="wp-break-tab-label">Transit</span></button>
+        <button class="wp-break-tab" role="tab" id="wb-tab-2" aria-controls="wb-slide-2" aria-selected="false" tabindex="-1" type="button"><span class="wp-break-tab-num">03</span><span class="wp-break-tab-label">Days away</span></button>
+        <button class="wp-break-tab" role="tab" id="wb-tab-3" aria-controls="wb-slide-3" aria-selected="false" tabindex="-1" type="button"><span class="wp-break-tab-num">04</span><span class="wp-break-tab-label">Coming home</span></button>
       </div>
-      <div class="wp-break-content">
-        <div class="wp-break-panel is-active" data-panel="packing">
-          <div class="wp-break-panel-copy">
-            <h3 class="wp-break-panel-title">Packing</h3>
-            <p class="wp-break-panel-friction">A few days of supplements shouldn’t require full-size containers, a collection of plastic bags, and the headache of packing it all.</p>
-            <p class="wp-break-panel-label">How pilr answers</p>
-            <p class="wp-break-panel-answer">Pack. Stack. Go.</p>
-          </div>
-          <div class="wp-break-panel-img">
-            <img src="images/lifestyle_section/Packing Why Pilr.JPG" alt="" />
-          </div>
-        </div>
-        <div class="wp-break-panel" data-panel="transit">
-          <div class="wp-break-panel-copy">
-            <h3 class="wp-break-panel-title">Transit</h3>
-            <p class="wp-break-panel-friction">A bag full of Ziplocs, loose pills, and powders isn't exactly easy to keep organized - travel can turn a simple supplement routine into a messy one.</p>
-            <p class="wp-break-panel-label">How pilr answers</p>
-            <p class="wp-break-panel-answer">Pills and powders, all in one organized system.</p>
-          </div>
-          <div class="wp-break-panel-img">
-            <img src="images/lifestyle_section/Transit Why Pilr.JPG" alt="" />
+    </div>
+    <div class="wp-break-track" id="wp-break-track">
+      <article class="wp-break-slide is-active" role="tabpanel" id="wb-slide-0" aria-labelledby="wb-tab-0" data-slide="0">
+        <div class="wp-break-photo">
+          <picture>
+            <source type="image/webp" srcset="images/lifestyle_section/break/packing-600.webp 600w, images/lifestyle_section/break/packing-900.webp 900w" sizes="(max-width: 600px) calc(90vw - 36px), (max-width: 1300px) 49vw, 600px">
+            <img src="images/lifestyle_section/break/packing-14x9.jpg" width="1318" height="847" alt="" decoding="async" />
+          </picture>
+          <div class="wp-break-arrows">
+            <button class="wp-break-arrow" type="button" data-dir="-1" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="wp-break-arrow" type="button" data-dir="1" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </div>
         </div>
-        <div class="wp-break-panel" data-panel="mornings">
-          <div class="wp-break-panel-copy">
-            <h3 class="wp-break-panel-title">Days away</h3>
-            <p class="wp-break-panel-friction">Different environment. Different schedule. Different routine. When you're away from your normal routine, even simple habits can be harder to maintain.</p>
-            <p class="wp-break-panel-label">How pilr answers</p>
-            <p class="wp-break-panel-answer">Keep everything you need for your routine in one place.</p>
-          </div>
-          <div class="wp-break-panel-img">
-            <img src="images/lifestyle_section/Days Away Pic 2.jpg" alt="" />
+        <div class="wp-break-meta"><span><b>01</b>Packing</span><span class="wp-break-count">01 / 04</span></div>
+        <div class="wp-break-text">
+          <p class="wp-break-slide-sub">A few days of supplements shouldn’t mean <span class="nw">full-size</span> tubs and a bag of Ziplocs.</p>
+        </div>
+        <div class="wp-break-answer"><span class="wp-break-answer-label">How pilr answers</span><p class="wp-break-answer-text">Pack. Stack. Go.</p></div>
+      </article>
+      <article class="wp-break-slide" role="tabpanel" id="wb-slide-1" aria-labelledby="wb-tab-1" data-slide="1">
+        <div class="wp-break-photo">
+          <picture>
+            <source type="image/webp" srcset="images/lifestyle_section/break/transit-600.webp 600w, images/lifestyle_section/break/transit-900.webp 900w" sizes="(max-width: 600px) calc(90vw - 36px), (max-width: 1300px) 49vw, 600px">
+            <img src="images/lifestyle_section/break/transit-14x9.jpg" width="1340" height="861" alt="" loading="lazy" decoding="async" />
+          </picture>
+          <div class="wp-break-arrows">
+            <button class="wp-break-arrow" type="button" data-dir="-1" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="wp-break-arrow" type="button" data-dir="1" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </div>
         </div>
-        <div class="wp-break-panel" data-panel="coming-home">
-          <div class="wp-break-panel-copy">
-            <h3 class="wp-break-panel-title">Coming home</h3>
-            <p class="wp-break-panel-friction">Your routine shouldn't have to restart when you get home. A few missed days becomes a few missed weeks. The longer you're out of your routine, the harder it can be to start again.</p>
-            <p class="wp-break-panel-label">How pilr answers</p>
-            <p class="wp-break-panel-answer">A simple system that keeps you consistent away from home.</p>
-          </div>
-          <div class="wp-break-panel-img">
-            <img src="images/lifestyle_section/Lifestyle Section Image 2.jpg" alt="" />
+        <div class="wp-break-meta"><span><b>02</b>Transit</span><span class="wp-break-count">02 / 04</span></div>
+        <div class="wp-break-text">
+          <p class="wp-break-slide-sub">Loose pills. Leaking powder. Bags inside bags.</p>
+        </div>
+        <div class="wp-break-answer"><span class="wp-break-answer-label">How pilr answers</span><p class="wp-break-answer-text">Pills and powders. One sealed system.</p></div>
+      </article>
+      <article class="wp-break-slide" role="tabpanel" id="wb-slide-2" aria-labelledby="wb-tab-2" data-slide="2">
+        <div class="wp-break-photo">
+          <picture>
+            <source type="image/webp" srcset="images/lifestyle_section/break/days-away-600.webp 600w, images/lifestyle_section/break/days-away-900.webp 900w" sizes="(max-width: 600px) calc(90vw - 36px), (max-width: 1300px) 49vw, 600px">
+            <img src="images/lifestyle_section/break/days-away-14x9.jpg" width="900" height="579" alt="" loading="lazy" decoding="async" />
+          </picture>
+          <div class="wp-break-arrows">
+            <button class="wp-break-arrow" type="button" data-dir="-1" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="wp-break-arrow" type="button" data-dir="1" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </div>
         </div>
-      </div>
+        <div class="wp-break-meta"><span><b>03</b>Days away</span><span class="wp-break-count">03 / 04</span></div>
+        <div class="wp-break-text">
+          <p class="wp-break-slide-sub">Different environment. Different schedule. Different routine. When you're away from your normal routine, even simple habits can be harder to maintain.</p>
+        </div>
+        <div class="wp-break-answer"><span class="wp-break-answer-label">How pilr answers</span><p class="wp-break-answer-text">Everything your routine needs, in one place.</p></div>
+      </article>
+      <article class="wp-break-slide" role="tabpanel" id="wb-slide-3" aria-labelledby="wb-tab-3" data-slide="3">
+        <div class="wp-break-photo">
+          <picture>
+            <source type="image/webp" srcset="images/lifestyle_section/break/coming-home-600.webp 600w, images/lifestyle_section/break/coming-home-900.webp 900w" sizes="(max-width: 600px) calc(90vw - 36px), (max-width: 1300px) 49vw, 600px">
+            <img src="images/lifestyle_section/break/coming-home-14x9.jpg" width="900" height="579" alt="" loading="lazy" decoding="async" />
+          </picture>
+          <div class="wp-break-arrows">
+            <button class="wp-break-arrow" type="button" data-dir="-1" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="wp-break-arrow" type="button" data-dir="1" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="wp-break-meta"><span><b>04</b>Coming home</span><span class="wp-break-count">04 / 04</span></div>
+        <div class="wp-break-text">
+          <p class="wp-break-slide-sub">A few missed days becomes a few missed weeks. The longer you’ve been inconsistent, the harder it can be to start again.</p>
+        </div>
+        <div class="wp-break-answer"><span class="wp-break-answer-label">How pilr answers</span><p class="wp-break-answer-text">Stay consistent, and there’s nothing to restart.</p></div>
+      </article>
     </div>
   </section>
 
@@ -232,8 +256,8 @@
             <img class="shop-card-img-hover shop-card-img-hover--cutout" src="images/lifestyle_section/Small Pill Pod Hover Cutout.png" alt="" loading="lazy" decoding="async" />
           </div>
           <h3 class="wp-system-card-title">Small Pill Pod</h3>
-          <p class="wp-system-card-spec">~[pending] mL</p>
-          <p class="wp-system-card-built">Built for small capsules and tablets</p>
+          <p class="wp-system-card-spec">82.2 mL</p>
+          <p class="wp-system-card-built">Small capsules and tablets</p>
         </a>
         <a href="./hybrid-pod.html" class="wp-system-card shop-card">
           <div class="wp-system-card-img shop-card-img shop-card-img--sm">
@@ -241,8 +265,8 @@
             <img class="shop-card-img-hover shop-card-img-hover--cutout" src="images/lifestyle_section/Large Pill Pod Hover Cutout.png" alt="" loading="lazy" decoding="async" />
           </div>
           <h3 class="wp-system-card-title">Large Pill Pod</h3>
-          <p class="wp-system-card-spec">~[pending] mL</p>
-          <p class="wp-system-card-built">Built for medium and large capsules</p>
+          <p class="wp-system-card-spec">141.3 mL</p>
+          <p class="wp-system-card-built">Medium and large capsules</p>
         </a>
         <a href="./powder-pod.html" class="wp-system-card shop-card" id="section-single-pods">
           <div class="wp-system-card-img shop-card-img">
@@ -250,8 +274,8 @@
             <img class="shop-card-img-hover shop-card-img-hover--cutout" src="images/lifestyle_section/Powder Pod Hover Cutout.png" alt="" loading="lazy" decoding="async" />
           </div>
           <h3 class="wp-system-card-title">Powder Pod</h3>
-          <p class="wp-system-card-spec">~[pending] mL</p>
-          <p class="wp-system-card-built">Built for your daily powders</p>
+          <p class="wp-system-card-spec">180.6 mL</p>
+          <p class="wp-system-card-built">Daily powders</p>
         </a>
         <a href="./single-lid.html" class="wp-system-card shop-card">
           <div class="wp-system-card-img shop-card-img">
@@ -259,7 +283,7 @@
           </div>
           <h3 class="wp-system-card-title">Single Lid</h3>
           <p class="wp-system-card-spec">Fits every pod</p>
-          <p class="wp-system-card-built">Built for sealing pods</p>
+          <p class="wp-system-card-built">Seals any pod</p>
         </a>
       </div>
       <div class="wp-system-progress" aria-hidden="true"><span class="wp-system-progress-fill"></span></div>
@@ -271,21 +295,21 @@
     <div class="wp-materials-inner">
       <div class="wp-materials-copy">
         <p class="wp-materials-eyebrow">Materials</p>
-        <h2 class="wp-materials-headline">Made from Tritan</h2>
-        <p class="wp-materials-body">Tritan is a durable copolyester made for things you use every day. It keeps its shape and finish through drops, heat, and repeated washing.</p>
+        <h2 class="wp-materials-headline">Tritan TX1001</h2>
+        <p class="wp-materials-body">A durable copolyester built to take daily use. It resists impact, holds its shape, and won't hold onto odors or stains.</p>
       </div>
       <div class="wp-materials-cards">
         <div class="wp-materials-card">
-          <p class="wp-materials-card-title">Tritan TX1001</p>
-          <p class="wp-materials-card-def">A durable, BPA-free copolyester from Eastman, made for everyday use.</p>
+          <p class="wp-materials-card-title">Impact-resistant</p>
+          <p class="wp-materials-card-def">Built to survive drops without cracking.</p>
         </div>
         <div class="wp-materials-card">
-          <p class="wp-materials-card-title">BPA-free</p>
-          <p class="wp-materials-card-def">Made without bisphenol A.</p>
+          <p class="wp-materials-card-title">Odor &amp; stain resistant</p>
+          <p class="wp-materials-card-def">Fish oil, greens, and powders don't linger.</p>
         </div>
         <div class="wp-materials-card">
-          <p class="wp-materials-card-title">Food-contact</p>
-          <p class="wp-materials-card-def">Suitable for repeat contact with food, under FDA regulations.</p>
+          <p class="wp-materials-card-title">BPA-free &amp; food-safe</p>
+          <p class="wp-materials-card-def">Made without BPA. Meets FDA food-contact requirements.</p>
         </div>
       </div>
     </div>
@@ -295,61 +319,8 @@
        Wrapped in .page-product-bottom so product-bottom.css styles it; the wrapper's
        own spacing keeps the gaps this page already had around the section. -->
   <div class="page-product-bottom why-compare">
-    <!--@include partials/compare.html title="A better way to carry<br class='compare-title-br'> what you take" desc="Designed to make traveling with your pills and powders simpler, more organized, and more convenient."-->
+    <!--@include partials/compare.html title="Designed around what matters" desc="All your supplements, packed in one stack."-->
   </div>
-
-  <!-- HOW IT WORKS — click-to-play video (real 9:16 clip, capped at 80vh,
-       uncropped) with three chapter steps. Video source and chapter
-       timestamps are single constants in the script below. Moved here
-       from the homepage. -->
-  <section class="how-it-works">
-    <div class="how-it-works-inner">
-      <div class="how-it-works-media">
-        <video
-          class="how-video-el"
-          data-src="images/lifestyle_section/How It Works Video.mp4"
-          data-src-mobile="images/lifestyle_section/How It Works Video Mobile.mp4"
-          poster="images/lifestyle_section/How It Works Poster.jpg"
-          preload="none"
-          playsinline
-          muted
-          loop
-          width="1080"
-          height="1920"
-        ></video>
-      </div>
-      <div class="how-it-works-content">
-        <p class="why-label">HOW IT WORKS</p>
-        <h2 class="how-headline">Pack. Stack. Go.</h2>
-        <div class="how-steps">
-          <button class="how-step" type="button">
-            <div class="how-step-top">
-              <span class="how-step-num">01</span>
-              <span class="how-step-title">Pack</span>
-              <span class="how-step-time"></span>
-            </div>
-            <p class="how-step-desc">Scoop in powder. Load your pills.</p>
-          </button>
-          <button class="how-step" type="button">
-            <div class="how-step-top">
-              <span class="how-step-num">02</span>
-              <span class="how-step-title">Stack</span>
-              <span class="how-step-time"></span>
-            </div>
-            <p class="how-step-desc">Thread the pods together.</p>
-          </button>
-          <button class="how-step" type="button">
-            <div class="how-step-top">
-              <span class="how-step-num">03</span>
-              <span class="how-step-title">Go</span>
-              <span class="how-step-time"></span>
-            </div>
-            <p class="how-step-desc">Seal it and pack it.</p>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- FAQ -->
     <div class="page-product-bottom">
@@ -428,10 +399,10 @@
       </button>
       <div class="wp-footnotes-list" id="wp-footnotes-list">
         <ol class="wp-footnotes-list-inner">
-          <li>Council for Responsible Nutrition, 2024 Consumer Survey on Dietary Supplements, conducted by Ipsos.</li>
-          <li>Lally P, et al. How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 2010. 96 volunteers over 12 weeks.</li>
-          <li>NHANES 2011–2018 (Nutrients, 2024, n=12,529). About 67% of supplement users were highly adherent to at least one supplement, so roughly a third weren't highly adherent to any.</li>
-          <li>Wood W, Tam L, Guerrero Witt M. Changing circumstances, disrupting habits. Journal of Personality and Social Psychology, 2005.</li>
+          <li id="wp-source-1"><a href="https://www.crnusa.org/newsroom/three-quarters-americans-take-dietary-supplements-most-users-agree-they-are-essential" target="_blank" rel="noopener">Council for Responsible Nutrition, 2024 Consumer Survey on Dietary Supplements, conducted by Ipsos.</a></li>
+          <li id="wp-source-2"><a href="https://doi.org/10.1002/ejsp.674" target="_blank" rel="noopener">Lally P, et al. How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 2010. 96 volunteers over 12 weeks.</a></li>
+          <li id="wp-source-3"><a href="https://pubmed.ncbi.nlm.nih.gov/38931186/" target="_blank" rel="noopener">NHANES 2011–2018 (Nutrients, 2024, n=12,529). About 67% of supplement users were highly adherent to at least one supplement, so roughly a third weren't highly adherent to any.</a></li>
+          <li id="wp-source-4"><a href="https://doi.org/10.1037/0022-3514.88.6.918" target="_blank" rel="noopener">Wood W, Tam L, Guerrero Witt M. Changing circumstances, disrupting habits. Journal of Personality and Social Psychology, 2005.</a></li>
         </ol>
       </div>
     </div>
@@ -486,41 +457,124 @@
   </script>
   <script>
     (function() {
-      var tabs = document.querySelectorAll('#wp-break-tabs .wp-break-tab')
-      var panels = document.querySelectorAll('.wp-break-panel')
-      if (!tabs.length) return
-      tabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
-          var target = tab.getAttribute('data-tab')
-          tabs.forEach(function(t) { t.classList.toggle('is-active', t === tab) })
-          panels.forEach(function(p) { p.classList.toggle('is-active', p.getAttribute('data-panel') === target) })
+      var section = document.getElementById('wp-break')
+      var track = document.getElementById('wp-break-track')
+      if (!section || !track) return
+      var tabs = Array.prototype.slice.call(section.querySelectorAll('.wp-break-tab'))
+      var tablist = document.getElementById('wp-break-tabs')
+      var slides = Array.prototype.slice.call(track.querySelectorAll('.wp-break-slide'))
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      var current = 0, locked = false, lockTimer = 0, autoplay = !reduce, byTab = false
+
+      function padLeft() { return parseFloat(getComputedStyle(track).paddingLeft) || 0 }
+      function maxScroll() { return track.scrollWidth - track.clientWidth }
+
+      function setActive(i) {
+        current = i
+        tabs.forEach(function(t, n) {
+          var on = n === i
+          t.classList.toggle('is-active', on)
+          t.setAttribute('aria-selected', on ? 'true' : 'false')
+          t.setAttribute('tabindex', on ? '0' : '-1')
         })
+        slides.forEach(function(sl, n) {
+          sl.classList.toggle('is-active', n === i)
+          var prev = sl.querySelector('[data-dir="-1"]'), next = sl.querySelector('[data-dir="1"]')
+          prev.disabled = i === 0
+          next.disabled = i === slides.length - 1
+        })
+        // phone: the tabs row scrolls sideways, keep the active tab in view
+        var t = tabs[i]
+        if (tablist.scrollWidth > tablist.clientWidth) {
+          tablist.scrollTo({ left: t.offsetLeft - (tablist.clientWidth - t.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' })
+        }
+      }
+
+      function goTo(i, instant) {
+        i = Math.max(0, Math.min(slides.length - 1, i))
+        byTab = true
+        setActive(i)
+        locked = true
+        clearTimeout(lockTimer)
+        lockTimer = setTimeout(function() { locked = false }, 900)
+        track.scrollTo({ left: Math.min(slides[i].offsetLeft - padLeft(), maxScroll()), behavior: (reduce || instant) ? 'auto' : 'smooth' })
+      }
+
+      // swiping / scrolling: the slide whose left edge is nearest the grid edge becomes active
+      function fromScroll() {
+        if (locked) return
+        // all the way at the end: the last photo (on the right) is the active one
+        if (track.scrollLeft >= maxScroll() - 2) {
+          if (!byTab) setActive(slides.length - 1)
+          return
+        }
+        var best = 0, bestD = Infinity
+        slides.forEach(function(sl, n) {
+          var d = Math.abs(sl.offsetLeft - padLeft() - track.scrollLeft)
+          if (d < bestD) { bestD = d; best = n }
+        })
+        if (best !== current) setActive(best)
+      }
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(fromScroll, { root: track, threshold: [0, 0.25, 0.5, 0.75, 1] })
+        slides.forEach(function(sl) { io.observe(sl) })
+      }
+      track.addEventListener('scrollend', function() { locked = false; fromScroll() })
+
+      // autoplay: the active tab's fill runs 6s, then the next slide; stops for good after any manual use
+      function stopAutoplay() { autoplay = false; section.classList.remove('is-autoplay', 'is-paused') }
+      tablist.addEventListener('animationend', function(e) {
+        if (e.animationName !== 'wbFill' || !autoplay) return
+        if (current >= slides.length - 1) { stopAutoplay(); return }
+        goTo(current + 1)
+      })
+      if (autoplay) {
+        section.classList.add('is-autoplay', 'is-paused')
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function(entries) {
+            if (!autoplay) return
+            section.classList.toggle('is-paused', !entries[0].isIntersecting || hovered || focused)
+            visible = entries[0].isIntersecting
+          }, { threshold: 0.4 }).observe(section)
+        }
+      }
+      var hovered = false, focused = false, visible = false
+      function syncPause() { if (autoplay) section.classList.toggle('is-paused', !visible || hovered || focused) }
+      section.addEventListener('mouseenter', function() { hovered = true; syncPause() })
+      section.addEventListener('mouseleave', function() { hovered = false; syncPause() })
+      section.addEventListener('focusin', function() { focused = true; syncPause() })
+      section.addEventListener('focusout', function() { focused = false; syncPause() })
+      ;['touchstart', 'wheel', 'pointerdown'].forEach(function(ev) {
+        track.addEventListener(ev, function() { byTab = false; stopAutoplay() }, { passive: true })
       })
 
-      // Phone: swipe left / right on the content to go to the next / previous weak point.
-      var content = document.querySelector('.wp-break-content')
-      var phone = window.matchMedia('(max-width: 600px)')
-      var x0 = 0, y0 = 0, tracking = false
-      function go(step) {
-        var list = Array.prototype.slice.call(tabs)
-        var i = list.findIndex(function(t) { return t.classList.contains('is-active') })
-        var next = list[i + step]
-        if (!next) return
-        content.setAttribute('data-dir', step > 0 ? 'next' : 'prev')
-        next.click()
-      }
-      if (content) {
-        content.addEventListener('touchstart', function(e) {
-          if (!phone.matches || e.touches.length !== 1) { tracking = false; return }
-          tracking = true; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY
-        }, { passive: true })
-        content.addEventListener('touchend', function(e) {
-          if (!tracking) return
-          tracking = false
-          var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0
-          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1)
-        }, { passive: true })
-      }
+      // tabs: click, Enter / Space (native button), arrow keys
+      tabs.forEach(function(t, n) {
+        t.addEventListener('click', function() { stopAutoplay(); goTo(n) })
+      })
+      tablist.addEventListener('keydown', function(e) {
+        var n = tabs.indexOf(document.activeElement)
+        if (n < 0) return
+        var to = null
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') to = (n + 1) % tabs.length
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') to = (n - 1 + tabs.length) % tabs.length
+        else if (e.key === 'Home') to = 0
+        else if (e.key === 'End') to = tabs.length - 1
+        if (to === null) return
+        e.preventDefault()
+        stopAutoplay()
+        tabs[to].focus()
+        goTo(to)
+      })
+      // prev / next
+      track.addEventListener('click', function(e) {
+        var btn = e.target.closest('.wp-break-arrow')
+        if (!btn) return
+        stopAutoplay()
+        goTo(current + parseInt(btn.getAttribute('data-dir'), 10))
+      })
+      setActive(0)
+      window.addEventListener('resize', function() { goTo(current, true) })
     })()
   </script>
   <script>
@@ -562,6 +616,21 @@
         toggle.classList.toggle('is-active')
         list.classList.toggle('is-active')
       })
+      document.querySelectorAll('a.wp-cite').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var target = document.querySelector(link.getAttribute('href'))
+          if (!target) return
+          e.preventDefault()
+          toggle.classList.add('is-active')
+          list.classList.add('is-active')
+          // wait for the list to finish opening, then scroll the source into view and flag it
+          setTimeout(function() {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            target.classList.add('is-cited')
+            setTimeout(function() { target.classList.remove('is-cited') }, 2200)
+          }, 300)
+        })
+      })
       var sourceLinks = document.querySelectorAll('a[href="#wp-footnotes"]')
       sourceLinks.forEach(function(link) {
         link.addEventListener('click', function() {
@@ -571,97 +640,7 @@
       })
     })()
   </script>
-  <script>
-    (function() {
-      // Real clip is ~7s, not the 30-45s the layout was mocked up with —
-      // chapters are placeholder splits; edit to match real chapter times.
-      var HOW_IT_WORKS_CHAPTERS = [0, 2.5, 5];
-
-      var section = document.querySelector('.how-it-works');
-      if (!section) return;
-      var vid = section.querySelector('.how-video-el');
-      var steps = Array.prototype.slice.call(section.querySelectorAll('.how-step'));
-      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      steps.forEach(function(step, i) {
-        var t = HOW_IT_WORKS_CHAPTERS[i];
-        step.setAttribute('data-time', t);
-        var m = Math.floor(t / 60);
-        var s = Math.round(t % 60);
-        step.querySelector('.how-step-time').textContent = m + ':' + (s < 10 ? '0' : '') + s;
-      });
-
-      // The clip is only downloaded when the section is about a screen away (phones get a small
-      // 720p copy), so it never slows the first load of the page.
-      var phone = window.matchMedia('(max-width: 600px)').matches;
-      var src = phone ? vid.getAttribute('data-src-mobile') : vid.getAttribute('data-src');
-      var loaded = false;
-      function ensureLoaded() {
-        if (loaded) return;
-        loaded = true;
-        vid.src = src;
-        vid.load();
-      }
-      function play() { ensureLoaded(); vid.play().catch(function() {}); }
-
-      var nearIo = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting) { ensureLoaded(); nearIo.disconnect(); }
-      }, { rootMargin: '100% 0px' });
-      nearIo.observe(vid);
-
-      if (!reduceMotion) {
-        // Desktop with a mouse: plays while the pointer is over the section.
-        section.addEventListener('mouseenter', function() { if (!autoplayInView) play(); });
-        section.addEventListener('mouseleave', function() {
-          if (autoplayInView) return;
-          vid.pause();
-          vid.currentTime = 0;
-        });
-      }
-
-      // Phones and touch screens (no hover): the clip plays by itself while it is on screen, and pauses when it is not.
-      var autoplayInView = !reduceMotion && (phone || window.matchMedia('(hover: none)').matches);
-      if (autoplayInView) {
-        var playIo = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) { play(); } else { vid.pause(); }
-          });
-        }, { threshold: 0.35 });
-        playIo.observe(vid);
-      }
-
-      // A tap still toggles play/pause.
-      vid.addEventListener('click', function() {
-        if (vid.paused || vid.ended) { play(); } else { vid.pause(); }
-      });
-
-      steps.forEach(function(step) {
-        step.addEventListener('click', function() {
-          vid.currentTime = parseFloat(step.getAttribute('data-time'));
-          play();
-        });
-      });
-
-      vid.addEventListener('timeupdate', function() {
-        var t = vid.currentTime;
-        var activeIndex = 0;
-        for (var i = 0; i < HOW_IT_WORKS_CHAPTERS.length; i++) {
-          if (t >= HOW_IT_WORKS_CHAPTERS[i]) activeIndex = i;
-        }
-        steps.forEach(function(step, i) {
-          step.classList.toggle('is-active', i === activeIndex);
-        });
-      });
-
-      var howIo = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (!entry.isIntersecting && !vid.paused) { vid.pause(); }
-        });
-      }, { threshold: 0.1 });
-      howIo.observe(vid);
-    })();
-  </script>
-  <script type="module" src="./nav-outside.js"></script>
+    <script type="module" src="./nav-outside.js"></script>
   <script type="module" src="./src/preorder.js"></script>
 </body>
 </html>

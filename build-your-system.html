@@ -173,8 +173,6 @@
         <div class="pod-detail-name" id="pod-detail-name"></div>
         <div class="pod-detail-desc" id="pod-detail-desc"></div>
         <ul class="pod-detail-specs" id="pod-detail-specs"></ul>
-        <div class="pod-detail-examples-label">common supplements</div>
-        <div class="pod-detail-examples" id="pod-detail-examples"></div>
       </div>
     </div>
 
@@ -191,7 +189,22 @@
           </div>
 <!--@include partials/preorder-card.html-->
           <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Pre-order</button>
-<!--@include partials/preorder-note.html-->
+<!--@include partials/preorder-perks.html-->
+          <!-- Same Details dropdown as the product pages -->
+          <div class="product-info-sections">
+            <div class="product-accordion">
+              <button class="product-accordion-trigger" aria-expanded="false">
+                <span>Details</span>
+                <span class="product-accordion-icon">+</span>
+              </button>
+              <div class="product-accordion-panel">
+                <div class="bc-spec-row"><span>Material</span><span>PCTG Eastman Tritan&trade; TX1001</span></div>
+                <div class="bc-spec-row"><span>Internal volume</span><span>82.2 / 141.3 / 180.6 mL</span></div>
+                <div class="bc-spec-row"><span>Compliance</span><span>BPA-FREE &middot; FDA 21 CFR 177.1580</span></div>
+                <div class="bc-spec-row"><span>Care</span><span>Rinse with warm water and dish soap</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </aside>
@@ -412,7 +425,7 @@
   <script type="module" src="./src/preorder.js"></script>
   <script type="module" src="./tsa-stack.js"></script>
   <script>
-    document.querySelectorAll('.preorder-perks .product-accordion-trigger').forEach(function (btn) {
+    document.querySelectorAll('.sys-panel-body .product-accordion-trigger').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var open = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!open));
