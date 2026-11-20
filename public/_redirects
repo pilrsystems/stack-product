@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects (same syntax as Netlify's _redirects).
+# The Full Stack page used to live at /classic-stack. Keep old links and search results working.
+# (Cloudflare serves /full-stack.html as /full-stack, so the redirect points there directly.)
+/classic-stack.html /full-stack 301
+/classic-stack /full-stack 301

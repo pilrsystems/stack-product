@@ -21,6 +21,9 @@
    site keeps showing its built-in number (CLAIMED in src/preorder.js).
 ──────────────────────────────────────────────── */
 
+// Settings come from Netlify's process.env, or from Cloudflare's env (set by functions/api/*.js).
+const ENV = () => globalThis.__ENV || (typeof process !== 'undefined' && process.env ? process.env : {})
+
 const ADMIN_API_VERSION = '2024-10'
 const TOKEN_REFRESH_BUFFER_MS = 60_000
 const CACHE_MS = 60_000
@@ -35,7 +38,7 @@ function json(status, body, extra = {}) {
     status,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
+      'Access-Control-Allow-Origin': ENV().SITE_ORIGIN || '*',
       ...extra,
     },
   })
@@ -43,8 +46,8 @@ function json(status, body, extra = {}) {
 
 async function getAccessToken(domain) {
   if (cachedToken && Date.now() < cachedTokenExpiresAt - TOKEN_REFRESH_BUFFER_MS) return cachedToken
-  const clientId = process.env.SHOPIFY_CLIENT_ID
-  const clientSecret = process.env.SHOPIFY_CLIENT_SECRET
+  const clientId = ENV().SHOPIFY_CLIENT_ID
+  const clientSecret = ENV().SHOPIFY_CLIENT_SECRET
   if (!clientId || !clientSecret) {
     throw new Error('Shopify Admin API is not configured (missing SHOPIFY_CLIENT_ID / SHOPIFY_CLIENT_SECRET)')
   }
@@ -62,10 +65,10 @@ async function getAccessToken(domain) {
 
 async function countOrders() {
   if (cachedCount !== null && Date.now() - cachedCountAt < CACHE_MS) return cachedCount
-  const domain = process.env.SHOPIFY_STORE_DOMAIN
+  const domain = ENV().SHOPIFY_STORE_DOMAIN
   if (!domain) throw new Error('Shopify Admin API is not configured (missing SHOPIFY_STORE_DOMAIN)')
   const token = await getAccessToken(domain)
-  const search = process.env.PREORDER_ORDER_QUERY || 'test:false -status:cancelled'
+  const search = ENV().PREORDER_ORDER_QUERY || 'test:false -status:cancelled'
   const res = await fetch(`https://${domain}/admin/api/${ADMIN_API_VERSION}/graphql.json`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
@@ -85,7 +88,7 @@ async function countOrders() {
 export default async () => {
   try {
     const claimed = await countOrders()
-    const goal = Number(process.env.PREORDER_GOAL) || 1000
+    const goal = Number(ENV().PREORDER_GOAL) || 1000
     return json(200, { claimed, goal }, { 'Cache-Control': 'public, max-age=60' })
   } catch (err) {
     return json(500, { error: 'count unavailable' })

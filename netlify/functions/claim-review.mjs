@@ -25,6 +25,9 @@
    Docs: https://shopify.dev/docs/apps/build/authentication-authorization/client-credentials-grant
 ──────────────────────────────────────────────── */
 
+// Settings come from Netlify's process.env, or from Cloudflare's env (set by functions/api/*.js).
+const ENV = () => globalThis.__ENV || (typeof process !== 'undefined' && process.env ? process.env : {})
+
 const ADMIN_API_VERSION = '2024-10'
 const CLAIMED_NAMESPACE = 'custom'
 const CLAIMED_KEY = 'review_discount_claimed'
@@ -34,7 +37,7 @@ const DISCOUNT_DAYS_VALID = 30
 const TOKEN_REFRESH_BUFFER_MS = 60_000 // re-exchange 60s before actual expiry
 
 function corsHeaders() {
-  const origin = process.env.SITE_ORIGIN || '*'
+  const origin = ENV().SITE_ORIGIN || '*'
   return {
     'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -59,8 +62,8 @@ async function getAccessToken(domain) {
     return cachedToken
   }
 
-  const clientId = process.env.SHOPIFY_CLIENT_ID
-  const clientSecret = process.env.SHOPIFY_CLIENT_SECRET
+  const clientId = ENV().SHOPIFY_CLIENT_ID
+  const clientSecret = ENV().SHOPIFY_CLIENT_SECRET
   if (!clientId || !clientSecret) {
     throw new Error('Shopify Admin API is not configured (missing SHOPIFY_CLIENT_ID / SHOPIFY_CLIENT_SECRET env vars)')
   }
@@ -85,7 +88,7 @@ async function getAccessToken(domain) {
 }
 
 async function shopifyAdmin(query, variables) {
-  const domain = process.env.SHOPIFY_STORE_DOMAIN
+  const domain = ENV().SHOPIFY_STORE_DOMAIN
   if (!domain) {
     throw new Error('Shopify Admin API is not configured (missing SHOPIFY_STORE_DOMAIN env var)')
   }

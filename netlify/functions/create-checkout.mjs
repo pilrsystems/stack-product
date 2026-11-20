@@ -29,6 +29,9 @@
    STATUS: written but NOT yet tested against the live store.
 ──────────────────────────────────────────────── */
 
+// Settings come from Netlify's process.env, or from Cloudflare's env (set by functions/api/*.js).
+const ENV = () => globalThis.__ENV || (typeof process !== 'undefined' && process.env ? process.env : {})
+
 const ADMIN_API_VERSION = '2024-10'
 const TOKEN_REFRESH_BUFFER_MS = 60_000
 
@@ -55,15 +58,15 @@ function json(status, body) {
     status,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': process.env.SITE_ORIGIN || '*',
+      'Access-Control-Allow-Origin': ENV().SITE_ORIGIN || '*',
     },
   })
 }
 
 async function getAccessToken(domain) {
   if (cachedToken && Date.now() < cachedTokenExpiresAt - TOKEN_REFRESH_BUFFER_MS) return cachedToken
-  const clientId = process.env.SHOPIFY_CLIENT_ID
-  const clientSecret = process.env.SHOPIFY_CLIENT_SECRET
+  const clientId = ENV().SHOPIFY_CLIENT_ID
+  const clientSecret = ENV().SHOPIFY_CLIENT_SECRET
   if (!clientId || !clientSecret) throw new Error('Shopify Admin API is not configured')
   const res = await fetch(`https://${domain}/admin/oauth/access_token`, {
     method: 'POST',
@@ -154,7 +157,7 @@ export function buildLines(qty) {
 }
 
 export default async (req) => {
-  if (process.env.CHECKOUT_ENABLED !== 'true') return json(503, { error: 'checkout not enabled' })
+  if (ENV().CHECKOUT_ENABLED !== 'true') return json(503, { error: 'checkout not enabled' })
   if (req.method !== 'POST') return json(405, { error: 'POST only' })
 
   let body
@@ -163,7 +166,7 @@ export default async (req) => {
   if (!lineItems.length) return json(400, { error: 'empty cart' })
 
   try {
-    const domain = process.env.SHOPIFY_STORE_DOMAIN
+    const domain = ENV().SHOPIFY_STORE_DOMAIN
     if (!domain) throw new Error('missing SHOPIFY_STORE_DOMAIN')
     const token = await getAccessToken(domain)
     const res = await fetch(`https://${domain}/admin/api/${ADMIN_API_VERSION}/graphql.json`, {

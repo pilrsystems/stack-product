@@ -1,0 +1,4 @@
+# Cloudflare Pages settings (used by `npx wrangler pages dev dist` for local testing, and by Pages itself).
+name = "pilr"
+pages_build_output_dir = "./dist"
+compatibility_date = "2024-11-01"

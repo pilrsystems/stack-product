@@ -320,7 +320,7 @@
         e.preventDefault()
         var btn = form.querySelector('button[type="submit"]')
         btn.disabled = true
-        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+        fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
           .then(function (r) { if (!r.ok) throw new Error('bad status'); form.reset(); show('Thanks, we have your request. We will test it and let you know.', true) })
           .catch(function () { show('Sorry, that did not go through. Please email us at support@pilrsystems.com instead.', false) })
           .then(function () { btn.disabled = false })
