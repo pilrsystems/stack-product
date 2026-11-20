@@ -7846,3 +7846,5 @@ body.system-page .preorder-perk:first-child .preorder-perk-name { white-space: n
 @media (max-width: 600px) {
   .preorder-perk:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
 }
+/* Cart: the Full Stack picture sits flush with the bottom of its card (the wrist meets the edge) */
+.cart-drawer-item-img img[src*="Hand Render"], .cart-drawer-offer-img img[src*="Hand Render"] { transform: translateY(8%); }

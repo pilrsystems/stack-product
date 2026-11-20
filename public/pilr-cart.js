@@ -400,8 +400,10 @@
   function shippingBarHtml() {
     const total     = getCartTotal()
     const remaining = FREE_SHIPPING_THRESHOLD - total
-    const unlocked  = remaining <= 0
-    const pct       = Math.min(100, Math.max(0, (total / FREE_SHIPPING_THRESHOLD) * 100))
+    // Pre-order: every order ships free, so the bar is always full while something is in the cart
+    // (restore the threshold with: remaining <= 0)
+    const unlocked  = true
+    const pct       = 100
     const msg       = unlocked
       ? "Congratulations! You've unlocked FREE shipping!"
       : "You're " + formatMoney(remaining) + ' away from free shipping.'
@@ -415,7 +417,6 @@
           '<div class="cart-drawer-shipping-icon' + (unlocked ? ' cart-drawer-shipping-icon--done' : '') + '">' +
             (unlocked ? SHIPPING_CHECK_ICON : SHIPPING_TRUCK_ICON) +
           '</div>' +
-          '<span class="cart-drawer-shipping-threshold-amt">' + formatMoney(FREE_SHIPPING_THRESHOLD) + '</span>' +
         '</div>' +
       '</div>'
     )
