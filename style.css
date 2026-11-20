@@ -7922,3 +7922,13 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
   .preorder-perks .preorder-perk:nth-child(2) svg { transform: translate(2px, -3px); }
   .preorder-perks .preorder-perk:nth-child(3) svg { transform: translateX(4px); }
 }
+
+/* Header (web): the links, the pilr logo and the cart icon are about 13% bigger; the white bar keeps its height */
+@media (min-width: 601px) {
+  .nav-links > li > a { font-size: 13px; line-height: 13px; }
+  /* the logo and cart keep the same layout height as before, so the bigger artwork does not make the bar taller */
+  .nav-logo { height: 30px; display: flex; align-items: center; }
+  .nav-logo-img { height: 34px; flex-shrink: 0; }
+  .nav-cart-btn, .nav-cart-icon { margin-block: -2px; }
+  .nav-cart-btn svg, .nav-cart-icon svg { width: 23px; height: 23px; }
+}
