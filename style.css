@@ -7930,5 +7930,5 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
   .nav-logo { height: 30px; display: flex; align-items: center; }
   .nav-logo-img { height: 34px; flex-shrink: 0; }
   .nav-cart-btn, .nav-cart-icon { margin-block: -2px; }
-  .nav-cart-btn svg, .nav-cart-icon svg { width: 23px; height: 23px; }
+  .nav-cart-btn svg, .nav-cart-icon svg { width: 25px; height: 25px; }
 }
