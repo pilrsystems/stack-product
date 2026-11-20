@@ -57,8 +57,13 @@ async function getAccessToken(domain) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ grant_type: 'client_credentials', client_id: clientId, client_secret: clientSecret }),
   })
-  const payload = await res.json()
-  if (!res.ok || !payload.access_token) throw new Error('Shopify token exchange failed')
+  const raw = await res.text()
+  let payload = {}
+  try { payload = JSON.parse(raw) } catch (_) { /* not JSON */ }
+  if (!res.ok || !payload.access_token) {
+    // temporary diagnostics: status plus the start of the reply (never contains our secret)
+    throw new Error('Shopify token exchange failed: HTTP ' + res.status + ' ' + raw.replace(/\s+/g, ' ').slice(0, 160))
+  }
   cachedToken = payload.access_token
   cachedTokenExpiresAt = Date.now() + payload.expires_in * 1000
   return cachedToken
