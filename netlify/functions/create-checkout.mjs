@@ -73,8 +73,10 @@ async function getAccessToken(domain) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ grant_type: 'client_credentials', client_id: clientId, client_secret: clientSecret }),
   })
-  const payload = await res.json()
-  if (!res.ok || !payload.access_token) throw new Error('Shopify token exchange failed')
+  const raw = await res.text()
+  let payload = {}
+  try { payload = JSON.parse(raw) } catch (_) { /* not JSON */ }
+  if (!res.ok || !payload.access_token) throw new Error('Shopify token exchange failed: HTTP ' + res.status + ' ' + raw.replace(/\s+/g, ' ').slice(0, 160))
   cachedToken = payload.access_token
   cachedTokenExpiresAt = Date.now() + payload.expires_in * 1000
   return cachedToken
@@ -193,11 +195,12 @@ export default async (req) => {
     const result = payload && payload.data && payload.data.draftOrderCreate
     const url = result && result.draftOrder && result.draftOrder.invoiceUrl
     if (!res.ok || payload.errors || (result && result.userErrors && result.userErrors.length) || !url) {
-      console.error('draftOrderCreate failed', JSON.stringify(payload && (payload.errors || (result && result.userErrors))))
-      throw new Error('draft order failed')
+      const detail = JSON.stringify(payload && (payload.errors || (result && result.userErrors)) || {}).slice(0, 600)
+      console.error('draftOrderCreate failed', detail)
+      throw new Error('draft order failed: HTTP ' + res.status + ' ' + detail)   // detail: temporary, for the first live test
     }
     return json(200, { url })
   } catch (err) {
-    return json(500, { error: 'checkout unavailable' })
+    return json(500, { error: 'checkout unavailable', reason: err && err.message })   // reason: temporary, for the first live test
   }
 }
