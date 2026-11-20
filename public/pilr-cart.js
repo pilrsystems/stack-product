@@ -34,6 +34,8 @@
     listPrice: 9,
     image: 'images/lifestyle_section/Full Render.png',
   }
+  // One free Travel Scooper per cart, earned by a Powder Pod or a Full Stack (which contains one).
+  const PODS_THAT_INCLUDE_A_FREE_SCOOPER = ['powder-pod', 'classic-stack']
   const PODS_THAT_INCLUDE_A_FREE_LID = ['pill-pod', 'hybrid-pod', 'powder-pod', 'classic-stack']
 
   // Both free perks can be bumped up from their own cart row — the first
@@ -109,7 +111,7 @@
     } else {
       cart.items.push({ ...product, quantity })
     }
-    if (product.id === 'classic-stack' && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
+    if (PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(product.id) && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
       cart.items.push({ ...FREE_SCOOPER_PRODUCT, quantity: 1 })
     }
     if (PODS_THAT_INCLUDE_A_FREE_LID.includes(product.id) && !cart.items.some(i => i.id === FREE_LID_PRODUCT.id)) {
@@ -124,8 +126,8 @@
     const cart = getCart()
     if (quantity <= 0) {
       cart.items = cart.items.filter(i => i.id !== id)
-      // The free scooper perk goes away with the Full Stack it came with.
-      if (id === 'classic-stack') {
+      // The free scooper goes away once neither a Powder Pod nor a Full Stack is left in the cart.
+      if (PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(id) && !cart.items.some(i => PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(i.id))) {
         cart.items = cart.items.filter(i => i.id !== FREE_SCOOPER_PRODUCT.id)
       }
       // The free lid goes away once no pod that earns one is left in the cart.
