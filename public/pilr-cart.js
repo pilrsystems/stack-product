@@ -48,10 +48,32 @@
   const FREE_SHIPPING_THRESHOLD = 75
 
   const FIRST_UNIT_FREE_BASE_PRICE = { 'travel-scooper-free': 11, 'single-lid-free': 9 }
+  // How many units of a free-perk line are free. Scooper: always 1 per cart.
+  // Lid: 1 per cart, or one per Full Stack when there are more than one
+  // (2 Full Stacks = 2 free lids; Full Stack + a loose pod = still 1; a cart
+  // of loose / Build Your System pods = 1 however many pods).
+  function freeUnitsFor(id, items) {
+    if (id === 'single-lid-free') {
+      const stacks = (items || getCart().items)
+        .filter(i => i.id === 'classic-stack')
+        .reduce((sum, i) => sum + i.quantity, 0)
+      return Math.max(1, stacks)
+    }
+    return 1
+  }
   function freePerkLineTotal(id, quantity) {
     const basePrice = FIRST_UNIT_FREE_BASE_PRICE[id]
     if (basePrice == null) return null
-    return Math.max(0, quantity - 1) * basePrice
+    return Math.max(0, quantity - freeUnitsFor(id)) * basePrice
+  }
+  // Keeps the free lid line at least as big as its free allowance, and moves it
+  // down with the Full Stack count when Full Stacks are removed.
+  function syncFreeLids(cart, oldFree) {
+    const lid = cart.items.find(i => i.id === FREE_LID_PRODUCT.id)
+    if (!lid) return
+    const newFree = freeUnitsFor(lid.id, cart.items)
+    if (oldFree != null && newFree < oldFree) lid.quantity = Math.max(newFree, lid.quantity - (oldFree - newFree))
+    if (lid.quantity < newFree) lid.quantity = newFree
   }
 
   // Same bundle-discount curve as each pod product page's own "Add a Pod"
@@ -99,12 +121,46 @@
     global.dispatchEvent(new CustomEvent('pilr:cart-updated', { detail: cart }))
   }
 
+  const FULL_STACK_PODS = [
+    { id: 'pill-pod',   title: 'Small Pill Pod' },
+    { id: 'hybrid-pod', title: 'Large Pill Pod' },
+    { id: 'powder-pod', title: 'Powder Pod' },
+  ]
+  // The reverse of explodeFullStacks: when what's left is exactly one of each of
+  // the three pods (e.g. the extra pod was removed again), it is a Full Stack
+  // again, at the Full Stack price. Only for exactly one of each: two of each
+  // is cheaper as loose pods at the 6-pod tier than as two Full Stacks.
+  function collapseToFullStack(cart) {
+    if (cart.items.some(i => i.id === 'classic-stack')) return
+    const lines = cart.items.filter(i => STACKING_POD_BASE_PRICE[i.id] != null)
+    if (lines.length !== 3) return
+    if (!FULL_STACK_PODS.every(p => lines.some(l => l.id === p.id && l.quantity === 1))) return
+    cart.items = cart.items.filter(i => STACKING_POD_BASE_PRICE[i.id] == null)
+    cart.items.unshift({ id: 'classic-stack', title: 'Full Stack', price: 68, listPrice: 84, image: cardImageFor('classic-stack', ''), quantity: 1 })
+  }
+  function explodeFullStacks(cart) {
+    const stacks = cart.items.filter(i => i.id === 'classic-stack')
+    if (!stacks.length) return
+    const n = stacks.reduce((sum, i) => sum + i.quantity, 0)
+    cart.items = cart.items.filter(i => i.id !== 'classic-stack')
+    FULL_STACK_PODS.forEach(pod => {
+      const line = cart.items.find(i => i.id === pod.id)
+      if (line) line.quantity += n
+      else cart.items.push({ id: pod.id, title: pod.title, price: STACKING_POD_BASE_PRICE[pod.id], image: cardImageFor(pod.id, ''), quantity: n })
+    })
+  }
+
   // Add or increment a product. `product` shape:
   //   { id, title, price, image, variantId? }
   // variantId is unused locally but will be needed for Shopify.
   function addToCart(product, quantity) {
     quantity = quantity || 1
     const cart = getCart()
+    const oldLidFree = freeUnitsFor(FREE_LID_PRODUCT.id, cart.items)
+    // Adding a single pod to a cart that holds a Full Stack: the Full Stack snaps
+    // into its three single pods first, so the new pod counts toward the pod tiers
+    // (Full Stack + 1 pod = 4 pods = the 4-pod discount).
+    if (STACKING_POD_BASE_PRICE[product.id] != null) explodeFullStacks(cart)
     const existing = cart.items.find(i => i.id === product.id)
     if (existing) {
       existing.quantity += quantity
@@ -117,6 +173,7 @@
     if (PODS_THAT_INCLUDE_A_FREE_LID.includes(product.id) && !cart.items.some(i => i.id === FREE_LID_PRODUCT.id)) {
       cart.items.push({ ...FREE_LID_PRODUCT, quantity: 1 })
     }
+    syncFreeLids(cart, oldLidFree)
     repriceStackingPods(cart)
     saveCart(cart)
     return cart
@@ -124,6 +181,7 @@
 
   function updateQuantity(id, quantity) {
     const cart = getCart()
+    const oldLidFree = freeUnitsFor(FREE_LID_PRODUCT.id, cart.items)
     if (quantity <= 0) {
       cart.items = cart.items.filter(i => i.id !== id)
       // The free scooper goes away once neither a Powder Pod nor a Full Stack is left in the cart.
@@ -138,6 +196,8 @@
       const item = cart.items.find(i => i.id === id)
       if (item) item.quantity = quantity
     }
+    collapseToFullStack(cart)
+    syncFreeLids(cart, oldLidFree)
     repriceStackingPods(cart)
     saveCart(cart)
     return cart
@@ -523,7 +583,8 @@
   // so both halves still move together as one line underneath.
   function perkDrawerRowsHtml(item) {
     const basePrice = FIRST_UNIT_FREE_BASE_PRICE[item.id]
-    const paidQty = item.quantity - 1
+    const freeUnits = freeUnitsFor(item.id)
+    const paidQty = item.quantity - freeUnits
     const split = paidQty > 0
     const href = PRODUCT_PAGE_BY_ID[item.id] || null
     const desc = CATALOG_BLURB_BY_ID[item.id] || PRODUCT_BLURB_BY_ID[item.id]
@@ -536,8 +597,8 @@
       priceInner: '<span class="cart-drawer-free-badge">Free</span>',
       desc: desc,
       qtyHtml: split
-        ? '<div class="cart-drawer-qty-ctrl cart-drawer-qty-ctrl--static"><span class="cart-drawer-qty-val">1</span></div>'
-        : qtyCtrlAddOnlyHtml(item.id, 1),
+        ? '<div class="cart-drawer-qty-ctrl cart-drawer-qty-ctrl--static"><span class="cart-drawer-qty-val">' + freeUnits + '</span></div>'
+        : qtyCtrlAddOnlyHtml(item.id, freeUnits),
     })
 
     const paidHtml = split
@@ -548,7 +609,7 @@
           href: href,
           priceInner: formatMoney(basePrice * paidQty),
           desc: desc,
-          qtyHtml: qtyCtrlHtml(item.id, paidQty, 1),
+          qtyHtml: qtyCtrlHtml(item.id, paidQty, freeUnits),
         })
       : ''
 
