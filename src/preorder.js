@@ -4,18 +4,17 @@
 // whenever it can't). The live count comes from Shopify through /api/preorder-count.
 const CLAIMED = 0
 const GOAL = 1000
-// The top banner (desktop) shows only "Pre-orders now open" until this many spots are claimed; from here on
+// The top banner shows only "Pre-orders now open" until this many spots are claimed; from here on
 // it alternates that message with the claim bar and the count.
 const SHOW_COUNT_FROM = 0
-const BANNER_MS = 4000   // how long each banner message stays up
+const BANNER_MS = 3000   // how long each banner message stays up
 
 const fmt = (n) => n.toLocaleString('en-US')
 
 document.body.classList.add('has-preorder-bar')
 
-// ── Top banner: "Pre-orders now open" <-> claim bar, crossfading (desktop only; the phone strip shows both) ──
+// ── Top banner: "Pre-orders now open" <-> the claim count, crossfading (every screen size) ──
 const bar = document.querySelector('.preorder-bar')
-const desktop = window.matchMedia('(min-width: 900px)')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 let rotation = null
 let held = false   // hover / keyboard focus pauses the rotation
@@ -25,7 +24,7 @@ function bannerAria() {
   const open = bar.querySelector('.pob-msg--open')
   const claim = bar.querySelector('.pob-msg--claim')
   const rotate = bar.dataset.mode === 'rotate'
-  const both = !desktop.matches || (rotate && reduceMotion.matches)   // both messages on screen at once
+  const both = rotate && reduceMotion.matches   // both messages on screen at once
   const showClaim = bar.classList.contains('is-claim')
   open.setAttribute('aria-hidden', both || !showClaim ? 'false' : 'true')
   claim.setAttribute('aria-hidden', both || (rotate && showClaim) ? 'false' : 'true')
@@ -33,7 +32,7 @@ function bannerAria() {
 function stopRotation() { clearInterval(rotation); rotation = null }
 function startRotation() {
   stopRotation()
-  if (!bar || held || bar.dataset.mode !== 'rotate' || !desktop.matches || reduceMotion.matches) return
+  if (!bar || held || bar.dataset.mode !== 'rotate' || reduceMotion.matches) return
   rotation = setInterval(() => { bar.classList.toggle('is-claim'); bannerAria() }, BANNER_MS)
 }
 function renderBanner(claimed, goal, pct) {
@@ -53,7 +52,7 @@ if (bar) {
   bar.addEventListener('mouseleave', () => { held = false; startRotation() })
   bar.addEventListener('focusin', () => { held = true; stopRotation() })
   bar.addEventListener('focusout', () => { held = false; startRotation() })
-  ;[desktop, reduceMotion].forEach((mq) => mq.addEventListener('change', () => { bannerAria(); startRotation() }))
+  reduceMotion.addEventListener('change', () => { bannerAria(); startRotation() })
 }
 
 function render(claimed, goal) {

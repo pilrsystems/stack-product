@@ -1745,6 +1745,9 @@ document.getElementById('system-summary-content')?.addEventListener('click', e =
 })
 
 function updateSystem() {
+  // Nothing picked yet: on a phone the empty render area collapses so the picker sits right under the header (see builder.css)
+  const anySelected = selected.powders.size + selected.hybrid.size + selected.pills.size + selected.addons.size > 0
+  document.getElementById('system-layout')?.classList.toggle('is-empty', !anySelected)
   const { powderPods, hybridPods, pillPods } = calcPods()
   const totalPods = powderPods + hybridPods + pillPods
 
@@ -1832,6 +1835,7 @@ animate()
 // Nothing selected yet on first load — leave the canvas empty until the
 // user actually picks a supplement, rather than previewing a Classic
 // Stack nobody chose.
+document.getElementById('system-layout')?.classList.add('is-empty')
 const initZ = idealCameraZ(0)
 CAMERA_REST_POS.z = initZ
 camera.position.z = initZ

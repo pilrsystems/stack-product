@@ -454,7 +454,7 @@
       <p class="product-page-tagline">Built for your smaller pills and tablets.</p>
       <ul class="product-feature-list">
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>TSA-compliant, BPA-free, food-safe.</li>
-        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack pods in any order, add as many as you need.</li>
+        <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack as many pods as you need, in any order.</li>
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
 <!--@include partials/preorder-card.html-->
@@ -466,6 +466,7 @@
           <span class="pod-add-trigger-label--open">Stack more, save more — up to 28% off.</span>
           <span class="pod-add-trigger-note">(up to 28% off)</span>
         </button>
+        <p class="pod-add-note" id="pod-add-note" hidden></p>
         <div class="pod-add-panel" id="pod-add-panel">
           <div class="pod-add-row" data-qty="1" data-pod-id="pill-pod" data-pod-title="Small Pill Pod" data-pod-image="images/lifestyle_section/Pill Pod Hero.png">
             <p class="pod-add-row-name">Small Pill Pod</p>
@@ -551,7 +552,7 @@
     </div></div>
   </div>
 
-  <!--@include partials/pilr-system.html powder="Creatine, greens, collagen…" large="Fish oil, magnesium, multivitamins…" small="Vitamin D, CoQ10, biotin…"-->
+  <!--@include partials/pilr-system.html heading="Three pods" powder="Creatine, greens, collagen…" large="Fish oil, magnesium, multivitamins…" small="Vitamin D, CoQ10, biotin…"-->
 
   <!--@include partials/tsa.html name="Small Pill Pod" volume="82.2 mL" title="Clears security" body="Every pod is under TSA's 350 mL powder limit."-->
 
@@ -668,6 +669,7 @@
       // product page hardcodes its own price inline — so this is
       // scoped to this page until that's centralized.
       var POD_BASE_PRICE = { 'pill-pod': 24, 'hybrid-pod': 28, 'powder-pod': 32 };
+      var FULL_STACK_PRICE = 68;   // one Small Pill Pod + one Large Pill Pod + one Powder Pod
       var DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]; // index = total add-on pods, 6+ capped at index 6
       function discountForQty(qty) { return DISCOUNT_BY_QTY[Math.min(qty, 6)]; }
       // Whole-dollar prices show with no cents ($20), discounted
@@ -726,6 +728,10 @@
           row.querySelector('.pod-add-row-strike').classList.toggle('is-hidden', discount === 0);
         });
 
+        // Exactly one of each pod is the Full Stack: the price snaps to its $68 (the best deal) instead of the tiered 15% off
+        var isFullStack = totalQty === 3 && podAddRows.length >= 3 && Array.prototype.every.call(podAddRows, function(row) { return rowQty(row) === 1; });
+        if (isFullStack) { addOnTotal = FULL_STACK_PRICE; discount = 1 - FULL_STACK_PRICE / listTotal; }
+
         if (totalQty > 1) {
           var pct = Math.round(discount * 100);
           podAddSubmit.innerHTML = 'ADD TO CART — ' + formatPrice(addOnTotal) +
@@ -737,6 +743,13 @@
           titlePriceEl.textContent = formatPrice(PRODUCT.price);
         }
         podAddSubmit.disabled = totalQty === 0;
+
+        // The pod this page is for is no longer in the order: say so, so nobody is surprised
+        var thisRow = document.querySelector('.pod-add-row[data-pod-id="' + PRODUCT.id + '"]');
+        var note = document.getElementById('pod-add-note');
+        var missing = totalQty > 0 && thisRow && rowQty(thisRow) === 0;
+        note.hidden = !missing;
+        if (missing) note.textContent = "Note: You're on the " + PRODUCT.title + " page, but there's no " + PRODUCT.title + " in your cart.";
       }
 
       podAddRows.forEach(function(row) {

@@ -3947,7 +3947,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   align-items: center;
   justify-content: space-between;
   padding: 1.1rem 1.75rem;
-  border-bottom: 1px solid rgba(66,85,99,0.12);
   flex-shrink: 0;
 }
 
@@ -3998,7 +3997,6 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 /* ── Free shipping progress bar ──────────────────────────── */
 .cart-drawer-shipping {
   padding: 1rem 1.75rem 1.1rem;
-  border-bottom: 1px solid rgba(66,85,99,0.12);
   flex-shrink: 0;
 }
 
@@ -4998,7 +4996,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-page-tagline {
-  font-size: 1.25rem; color: #7a8a94; margin: 0; line-height: 1.5;
+  font-size: 1.34rem; color: #7a8a94; margin: 0; line-height: 1.5;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .product-reviews-bar {
@@ -6803,68 +6801,63 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 .preorder-bar-fill { display: block; height: 100%; }
 .preorder-bar:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
 
-/* PHONE / TABLET (under 900px): the strip as it has always been — "Pre-orders now open" and the progress bar side by side */
-@media (max-width: 899px) {
-  .preorder-bar {
-    height: 34px; display: flex; align-items: center; justify-content: center; gap: clamp(1.25rem, 5vw, 4.5rem);
-    padding: 0 1rem; background: #818E99; color: #fff;   /* same slate as the footer */
-    font-size: 0.6875rem; letter-spacing: 0.12em;
+/* Every screen size: two messages crossfading in the same spot — "Pre-orders now open", then the claim count.
+   (The height, colour and page offsets below are set per screen size.) */
+.preorder-bar {
+  display: grid; place-items: center; padding: 0 1rem;
+  font-size: 11px; letter-spacing: 0.14em;
+}
+.pob-msg {
+  grid-area: 1 / 1; display: inline-flex; align-items: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.5s ease-in-out;
+}
+.pob-msg--open { opacity: 1; }
+.preorder-bar.is-claim .pob-msg--open { opacity: 0; }
+.preorder-bar.is-claim .pob-msg--claim { opacity: 1; }
+/* below the threshold only "Pre-orders now open" shows, standing still */
+.preorder-bar[data-mode="static"] .pob-msg--claim { display: none; }
+
+.pob-dot { position: relative; width: 7px; height: 7px; margin-right: 10px; border-radius: 50%; background: currentColor; flex: none; }
+.pob-dot::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid currentColor; opacity: 0.5; animation: pobPulse 2s ease-out infinite;
+}
+@keyframes pobPulse { from { transform: scale(1); opacity: 0.5; } to { transform: scale(3); opacity: 0; } }
+
+.preorder-bar-track { display: none; }   /* the claim message is just the centred count, no bar */
+
+/* reduced motion: no rotation and no pulse; both messages sit on one line with a divider */
+@media (prefers-reduced-motion: reduce) {
+  .pob-dot::after { animation: none; display: none; }
+  .preorder-bar[data-mode="rotate"] { display: flex; justify-content: center; }
+  .preorder-bar[data-mode="rotate"] .pob-msg { opacity: 1; transition: none; }
+  .preorder-bar[data-mode="rotate"] .pob-msg--claim::before {
+    content: ""; width: 1px; height: 14px; margin: 0 20px; background: color-mix(in srgb, var(--bg) 50%, transparent);
   }
-  .pob-msg--open { display: contents; }
-  .pob-dot { display: none; }
-  .pob-msg--claim { display: inline-flex; align-items: center; gap: 0.75rem; }
-  .preorder-bar-track { width: 84px; height: 3px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; }
-  .preorder-bar-fill { width: var(--pob-pct, 0%); background: #fff; }
+}
+
+/* Colour, every screen size: the lighter slate (the footer's colour) */
+.preorder-bar { background: #818E99; color: #fff; }
+
+/* PHONE / TABLET (under 900px) */
+@media (max-width: 899px) {
+  .preorder-bar { height: 34px; }
   body.has-preorder-bar { padding-top: 34px; }
   body.has-preorder-bar .nav { top: 34px; }
   body.has-preorder-bar .product-images-col { top: 130px; }
 }
 @media (max-width: 600px) {
-  .preorder-bar { height: 30px; gap: 0.9rem; font-size: 0.5625rem; letter-spacing: 0.1em; }
-  .preorder-bar-track { width: 56px; }
+  .preorder-bar { height: 30px; font-size: 10px; letter-spacing: 0.12em; }
   body.has-preorder-bar { padding-top: 30px; }
   body.has-preorder-bar .nav { top: 30px; }
 }
 
-/* DESKTOP (900px and wider): two messages crossfading in the same spot — "Pre-orders now open", then the claim count */
+/* DESKTOP (900px and wider) */
 @media (min-width: 900px) {
-  .preorder-bar {
-    height: 40px; display: grid; place-items: center; padding: 0 1rem;
-    background: #5e6e7a; color: var(--bg);   /* the same color as the pilr logo */
-    font-size: 11px; letter-spacing: 0.14em;
-  }
-  .pob-msg {
-    grid-area: 1 / 1; display: inline-flex; align-items: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.5s ease-in-out;
-  }
-  .pob-msg--open { opacity: 1; }
-  .preorder-bar.is-claim .pob-msg--open { opacity: 0; }
-  .preorder-bar.is-claim .pob-msg--claim { opacity: 1; }
-  /* below the threshold only "Pre-orders now open" shows, standing still */
-  .preorder-bar[data-mode="static"] .pob-msg--claim { display: none; }
-
-  .pob-dot { position: relative; width: 7px; height: 7px; margin-right: 10px; border-radius: 50%; background: currentColor; flex: none; }
-  .pob-dot::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    border: 1px solid currentColor; opacity: 0.5; animation: pobPulse 2s ease-out infinite;
-  }
-  @keyframes pobPulse { from { transform: scale(1); opacity: 0.5; } to { transform: scale(3); opacity: 0; } }
-
-  .preorder-bar-track { display: none; }   /* on desktop the claim message is just the centred count, no bar */
-
+  .preorder-bar { height: 40px; }
   body.has-preorder-bar { padding-top: 40px; }
   body.has-preorder-bar .nav { top: 40px; }
   body.has-preorder-bar .product-images-col { top: 136px; }   /* the sticky photo column keeps its distance below the (6px taller) bar */
-
-  /* reduced motion: no rotation and no pulse; both messages sit on one line with a divider */
-  @media (prefers-reduced-motion: reduce) {
-    .pob-dot::after { animation: none; display: none; }
-    .preorder-bar[data-mode="rotate"] { display: flex; justify-content: center; }
-    .preorder-bar[data-mode="rotate"] .pob-msg { opacity: 1; transition: none; }
-    .preorder-bar[data-mode="rotate"] .pob-msg--claim::before {
-      content: ""; width: 1px; height: 14px; margin: 0 20px; background: color-mix(in srgb, var(--bg) 50%, transparent);
-    }
-  }
 }
 
 .preorder-card { border: 1px solid rgba(66,85,99,0.15); background: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -7008,7 +7001,7 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (max-width: 600px) {
   body #product-info-inner .product-reviews-star { width: 12.65px !important; height: 12.65px !important; }
   body #product-info-inner .product-reviews-count { font-size: 0.72105rem !important; }
-  body #product-info-inner .product-page-tagline { font-size: 0.98rem !important; }
+  body #product-info-inner .product-page-tagline { font-size: clamp(15.7px, calc((100vw - 48px) / 20), 17px) !important; }   /* a little bigger than the bullets under it, as big as still fits on one line */
 }
 
 /* Cart drawer free-shipping truck icon (phone): +1% */
@@ -7601,10 +7594,6 @@ body:not(.page-hybrid-old) :is(
   html body:not(#_):has(.problem--v2) .nav-drop-desc { font-size: 13.7px !important; line-height: 17.81px !important; }
 }
 
-/* Hero button: the arrow sits lower than the letters, so lift it to the vertical centre of the box */
-.hero-cta-arrow { display: inline-block; transform: translateY(-2.25px); }
-@media (max-width: 600px) { .hero-cta-arrow { transform: translateY(-1.5px); } }
-
 /* The Compare / TSA / FAQ / system sections on the other product pages (and Build Your System) use the Full Stack page's layout */
 @media (min-width: 601px) {
   :is(body.page-product-bottom, body.system-page, div.page-product-bottom) :is(.pilr-system-title, .tsa-content .why-label, .tsa-title, .tsa-desc, .comparison-intro .why-label, .comparison-intro-title, .comparison-intro-desc, .wp-faq-eyebrow, .wp-faq-headline) { text-align: center; }
@@ -7884,3 +7873,30 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .sys-panel-body .bc-spec-row span:first-child { color: #3d4f5c; }
+
+/* Phone, product pages: the three perks are three equal columns, each one centred: icon on top, then the title, then the small line */
+@media (max-width: 480px) {
+  #product-info-inner .preorder-perk-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 4px; align-items: start; }   /* the middle perk sits exactly on the page's centre line */
+  #product-info-inner .preorder-perk:first-child { justify-self: start; }
+  #product-info-inner .preorder-perk:last-child { justify-self: end; }
+  #product-info-inner .preorder-perks { margin-bottom: 0; }   /* tighter: the line above Details sits 20px under the perks (36px before) */
+  #product-info-inner .preorder-perk { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+  #product-info-inner .preorder-perk svg { width: min(25px, 6.4vw); height: min(25px, 6.4vw); }
+  #product-info-inner .preorder-perk-name { font-size: min(11.7px, 3vw); white-space: nowrap; }   /* scales down a little on a narrower phone so all three always fit */
+  #product-info-inner .preorder-perk-sub { font-size: min(9.6px, 2.45vw); white-space: nowrap; }   /* one line */
+}
+
+/* "Add a Pod": a small italic note when the pod this page is for has been taken out of the order */
+.pod-add-note { margin: 0.5rem 0 0; font-size: 0.78rem; font-style: italic; line-height: 1.4; color: #7a8a94; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.pod-add-note[hidden] { display: none; }
+/* tablet widths: the column is narrower, so the product tagline keeps its earlier size and stays on one line */
+@media (min-width: 601px) and (max-width: 900px) { .product-page-tagline { font-size: 1.25rem; } }
+
+/* Cart drawer: no line under the last item (the "Exclusive offers" block's own line below it is the only one) */
+.cart-drawer-body .cart-drawer-item:last-child,
+.cart-drawer-body .cart-drawer-item:has(+ .cart-drawer-offers) { border-bottom: none; }
+
+/* Cart drawer: the count badge, the quantity boxes, the "Free" tags and the offer arrows all use the site's 2px corners */
+.cart-drawer-count, .cart-drawer-qty-val, .cart-drawer-free-badge, .cart-drawer-offers-arrow { border-radius: var(--radius); }
+/* Cart drawer: the quantity is just the number, no box around it */
+.cart-drawer-qty-val { border: none; min-width: 24px; }

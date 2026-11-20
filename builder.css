@@ -144,7 +144,7 @@ body.system-page {
   color: #5e6e7a;
   opacity: 0.75;
   line-height: 1.6;
-  margin-bottom: 0.6rem;   /* the same gap under the description as under the name */
+  margin-bottom: 0.3rem;   /* the same gap under the description as between the size lines below it */
 }
 
 .pod-detail-specs {
@@ -1175,3 +1175,11 @@ body.system-page {
 .pod-callout--right { align-items: flex-start; text-align: left; }
 .pod-callout-name { font-size: 0.95rem; font-weight: 700; color: #5e6e7a; line-height: 1.1; white-space: nowrap; }
 .pod-callout-serv { font-size: 0.56rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #9aa7ae; white-space: nowrap; }
+
+/* Phone, nothing picked yet: the empty render area takes no room, so "Build Your System" starts right under the header.
+   (The render keeps its own size underneath, so it is ready when the first supplement is picked.) */
+@media (max-width: 700px) {
+  .system-layout.is-empty { grid-template-rows: 0 auto auto; }
+  .system-layout.is-empty .system-canvas-wrap { pointer-events: none; z-index: 0; }
+  .system-layout.is-empty .system-sidebar--left { position: relative; z-index: 1; }   /* the picker sits on top of the (empty) render area behind it */
+}

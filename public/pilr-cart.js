@@ -191,10 +191,10 @@
     'hybrid-pod': 'Fits medium and large capsules.',
     'powder-pod': 'Keeps your powder fresh.',
     'classic-stack': 'Powder Pod, Large Pill Pod, Little Pill Pod',
-    'travel-scooper': 'Scoop and go, anywhere.',
-    'travel-scooper-free': 'Scoop and go, anywhere.',
-    'single-lid': 'Locks every pod shut tight.',
-    'single-lid-free': 'Locks every pod shut tight.',
+    'travel-scooper': '5 mL stainless steel. Fits right inside your Powder Pod.',
+    'travel-scooper-free': '5 mL stainless steel. Fits right inside your Powder Pod.',
+    'single-lid': 'Caps your stack. Add a second to split it into two, like pills and powders.',
+    'single-lid-free': 'Caps your stack. Add a second to split it into two, like pills and powders.',
   }
 
   // The descriptions shown on the Shop all page, used for the rows in "Your Items".
@@ -204,10 +204,10 @@
     'hybrid-pod': 'Built for your larger pills, capsules, and gummies.',
     'powder-pod': 'Built for any powder.',
     'classic-stack': 'Our three-pod starter set',
-    'travel-scooper': '5 mL stainless steel scooper. Designed to fit inside the Powder Pod.',
-    'travel-scooper-free': '5 mL stainless steel scooper. Designed to fit inside the Powder Pod.',
-    'single-lid': 'Compatible with all three pods across your stack. For extra stacks or replacements.',
-    'single-lid-free': 'Compatible with all three pods across your stack. For extra stacks or replacements.',
+    'travel-scooper': '5 mL stainless steel. Fits right inside your Powder Pod.',
+    'travel-scooper-free': '5 mL stainless steel. Fits right inside your Powder Pod.',
+    'single-lid': 'Caps your stack. Add a second to split it into two, like pills and powders.',
+    'single-lid-free': 'Caps your stack. Add a second to split it into two, like pills and powders.',
   }
 
   // Fixed (not quantity-discount-dependent) list prices, keyed by id, for

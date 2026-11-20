@@ -73,6 +73,9 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     .sg-spec-row span:first-child { color: #3d4f5c; }
+    .sg-specs-progress { display: none; }
+    .sg-spec-row span { white-space: nowrap; }   /* label and value always on one line */
+    @media (max-width: 600px) { .sg-spec-row .sg-cm { display: none; } }   /* phone: just the inches, the centimetres in brackets take up room */
 
     /* ── What we tested ────────────────────────────────────── */
     .sg-tested { margin-bottom: var(--section-gap); }
@@ -152,12 +155,12 @@
     .sg-bucket-pill--3 { width: 88px; }
     .sg-buckets .sg-tabs-row { margin-top: 1.5rem; margin-bottom: 0.75rem; }
     .sg-bucket-label {
-      flex: 1; font-size: 0.9rem; color: #5e6e7a;
+      font-size: 0.9rem; color: #5e6e7a;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-    .sg-bucket-like { font-style: italic; color: #7a8a94; margin-left: 1rem; }   /* same text size as the label, to the right of the mm */
+    .sg-bucket-like { flex: 1; font-style: italic; font-size: 0.9rem; color: #7a8a94; margin-left: -0.25rem; }   /* same text size as the label, to the right of the mm */
     .sg-bucket-count {
-      font-size: 0.9rem; font-weight: 500; color: #3d4f5c;
+      margin-left: auto; font-size: 0.9rem; font-weight: 500; color: #3d4f5c;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
@@ -192,9 +195,24 @@
         display: flex; gap: 1.25rem; overflow-x: auto; overscroll-behavior-x: contain;
         scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
         scrollbar-width: none; padding-bottom: 0.25rem;
-        margin-bottom: 76px;   /* 80px in total from the cards to "What we tested" (was 132px) */
+        margin-bottom: 16px;   /* with the bar below: 76px in total from the cards to "What we tested" */
       }
       .sg-specs::-webkit-scrollbar { display: none; }
+      /* Phone: smaller pill shapes on the left; the mm and the count on the first line, the "about the size of …" line under them across the full width, all on one line */
+      .sg-bucket-row {
+        display: grid; grid-template-columns: 46px 1fr auto; grid-template-areas: "pill label count" "like like like";
+        column-gap: 0.75rem; row-gap: 0.2rem; align-items: center;
+      }
+      .sg-bucket-pill { grid-area: pill; height: 18px; border-radius: 9px; width: 20px; }
+      .sg-bucket-pill--2 { width: 32px; }
+      .sg-bucket-pill--3 { width: 46px; }
+      .sg-bucket-label { grid-area: label; }
+      .sg-bucket-count { grid-area: count; margin-left: 0; }
+      .sg-bucket-like { grid-area: like; margin-left: 0; flex: none; white-space: nowrap; overflow: hidden; }
+      .sg-link-row .sg-inert-link { display: none; }   /* "Tell us and we'll test it." goes to the same page as the TELL US button next to it, so only the question stays */
+      /* the thin bar under the cards shows where you are in the swipe, like on the homepage */
+      .sg-specs-progress { display: block; height: 3px; margin: 0 0 57px; background: rgba(94, 110, 122, 0.22); overflow: hidden; }
+      .sg-specs-progress-fill { display: block; height: 100%; width: 40%; background: #5e6e7a; will-change: transform; }
       .sg-spec-col { flex: 0 0 78%; scroll-snap-align: start; min-width: 0; }
       .sg-spec-name { text-align: center; }
       .sg-tested > .sg-eyebrow, .sg-buckets .sg-eyebrow, .sg-buckets .sg-h2, .sg-buckets .sg-subtitle { text-align: center; }   /* centred headings */
@@ -336,6 +354,7 @@
     <section class="sg-specs" id="sg-specs" aria-label="Pod specifications">
       <!-- filled by JS from the SIZE_GUIDE_DATA block below -->
     </section>
+    <div class="sg-specs-progress" aria-hidden="true"><span class="sg-specs-progress-fill"></span></div>
 
     <section class="sg-tested">
       <p class="sg-eyebrow">What we tested</p>
@@ -541,11 +560,47 @@
               '</a>' +
               specRow('Compartments', d.specs.compartments) +
               specRow('Internal volume', d.specs.internalVolume) +
-              specRow('Height × width', d.specs.heightWidth) +
+              specRow('Height × width', d.specs.heightWidth.replace(/\s*(\([^)]*cm\))$/, '<span class="sg-cm"> $1</span>')) +
             '</div>'
           )
         }).join('')
+      
+        fitSpecRows()
+        updateSpecsBar()
       }
+
+      // Every spec line (label + value) stays on one line, and they all share one text size: the size the longest line needs
+      function fitSpecRows() {
+        var rows = Array.prototype.slice.call(specsEl.querySelectorAll('.sg-spec-row'))
+        function apply(k) {
+          rows.forEach(function (row) {
+            Array.prototype.forEach.call(row.children, function (sp) {
+              sp.style.fontSize = k === 1 ? '' : (base * k) + 'px'
+              sp.style.letterSpacing = k === 1 ? '' : (0.14 * k) + 'em'
+            })
+          })
+        }
+        if (!rows.length || !rows[0].clientWidth) return
+        var base = parseFloat(getComputedStyle(rows[0].children[0]).fontSize)
+        apply(1)
+        var k = 1
+        var tooWide = function () { return rows.some(function (r) { return r.scrollWidth > r.clientWidth + 1 }) }
+        while (tooWide() && k > 0.6) { k -= 0.02; apply(k) }
+      }
+      window.addEventListener('resize', fitSpecRows)
+
+      // Phone: the pod cards swipe sideways; the thin bar under them shows where you are
+      var specsFill = document.querySelector('.sg-specs-progress-fill')
+      function updateSpecsBar() {
+        if (!specsFill) return
+        var max = specsEl.scrollWidth - specsEl.clientWidth
+        var share = max > 0 ? specsEl.clientWidth / specsEl.scrollWidth : 1
+        var pos = max > 0 ? specsEl.scrollLeft / max : 0
+        specsFill.style.width = (share * 100) + '%'
+        specsFill.style.transform = 'translateX(' + (pos * (1 - share) / share * 100) + '%)'
+      }
+      specsEl.addEventListener('scroll', updateSpecsBar, { passive: true })
+      window.addEventListener('resize', updateSpecsBar)
 
       function renderTableHead(d) {
         tableHead.innerHTML = d.columns.map(function (c) { return '<span>' + c + '</span>' }).join('')
@@ -571,12 +626,28 @@
           return (
             '<div class="sg-bucket-row">' +
               '<span class="sg-bucket-pill sg-bucket-pill--' + (i + 1) + '"></span>' +
-              '<span class="sg-bucket-label">' + b.label + (b.like ? ' <em class="sg-bucket-like">' + b.like + '</em>' : '') + '</span>' +
+              '<span class="sg-bucket-label">' + b.label + '</span>' +
+              (b.like ? '<em class="sg-bucket-like">' + b.like + '</em>' : '') +
               '<span class="sg-bucket-count">' + b.count + '</span>' +
             '</div>'
           )
         }).join('')
+        fitBucketLike()
       }
+
+      // Phone: every "about the size of …" line stays on one line, and they all share one text size (the size the longest needs)
+      function fitBucketLike() {
+        var likes = Array.prototype.slice.call(bucketRows.querySelectorAll('.sg-bucket-like'))
+        likes.forEach(function (el) { el.style.fontSize = '' })
+        if (!likes.length || !window.matchMedia('(max-width: 600px)').matches) return
+        var base = parseFloat(getComputedStyle(likes[0]).fontSize)
+        var k = 0.84   // smaller than the mm and count above it
+        function apply() { likes.forEach(function (el) { el.style.fontSize = (base * k) + 'px' }) }
+        apply()
+        function tooWide() { return likes.some(function (el) { return el.scrollWidth > el.clientWidth + 1 }) }
+        while (tooWide() && k > 0.45) { k -= 0.02; apply() }
+      }
+      window.addEventListener('resize', fitBucketLike)
 
       function applySearch() {
         var term = searchTerm.trim().toLowerCase()
