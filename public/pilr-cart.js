@@ -252,11 +252,11 @@
     'pill-pod': 'Keeps your pills organized.',
     'hybrid-pod': 'Fits medium and large capsules.',
     'powder-pod': 'Keeps your powder fresh.',
-    'classic-stack': 'Powder Pod, Large Pill Pod, Little Pill Pod',
+    'classic-stack': 'One of each pod. Built to travel with both pills and powder.',
     'travel-scooper': '5 mL stainless steel. Fits right inside your Powder Pod.',
     'travel-scooper-free': '5 mL stainless steel. Fits right inside your Powder Pod.',
-    'single-lid': 'Caps your stack. Add a second to split it into two, like pills and powders.',
-    'single-lid-free': 'Caps your stack. Add a second to split it into two, like pills and powders.',
+    'single-lid': 'Caps your stack. Compatible with all three pods.',
+    'single-lid-free': 'Caps your stack. Compatible with all three pods.',
   }
 
   // The descriptions shown on the Shop all page, used for the rows in "Your Items".
@@ -265,11 +265,11 @@
     'pill-pod': 'Built for your smaller pills and tablets.',
     'hybrid-pod': 'Built for your larger pills, capsules, and gummies.',
     'powder-pod': 'Built for any powder.',
-    'classic-stack': 'Our three-pod starter set',
+    'classic-stack': 'One of each pod. Built to travel with both pills and powder.',
     'travel-scooper': '5 mL stainless steel. Fits right inside your Powder Pod.',
     'travel-scooper-free': '5 mL stainless steel. Fits right inside your Powder Pod.',
-    'single-lid': 'Caps your stack. Add a second to split it into two, like pills and powders.',
-    'single-lid-free': 'Caps your stack. Add a second to split it into two, like pills and powders.',
+    'single-lid': 'Caps your stack. Compatible with all three pods.',
+    'single-lid-free': 'Caps your stack. Compatible with all three pods.',
   }
 
   // Fixed (not quantity-discount-dependent) list prices, keyed by id, for
