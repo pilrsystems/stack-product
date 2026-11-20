@@ -48,7 +48,8 @@ const POD_TITLE = { 'pill-pod': 'Small Pill Pod', 'hybrid-pod': 'Large Pill Pod'
 const SCOOPER_PRICE = 11
 const LID_PRICE = 9
 const FULL_STACK_PRICE = 68
-const FULL_STACK_PERCENT = 19.05   // (84 - 68) / 84, to the 2 decimals Shopify allows
+// $16 off a Full Stack, split across its three pods so it sums exactly: Small 24 -> 19.43, Large 28 -> 22.67, Powder 32 -> 25.90
+const FULL_STACK_DISCOUNT = { 'pill-pod': 4.57, 'hybrid-pod': 5.33, 'powder-pod': 6.10 }
 const TIER_DISCOUNT = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]  // by total pods, 6+ capped
 
 let cachedToken = null
@@ -108,17 +109,24 @@ export function buildLines(qty) {
   const loose = qty['pill-pod'] + qty['hybrid-pod'] + qty['powder-pod']
   if (stacks + loose === 0 && qty.scooper + qty.lid === 0) return lines
 
-  // Full Stacks: one of each pod, $68 in total. Shopify allows at most 2 decimals in a percentage,
-  // so 19.05% off the list prices (24 / 28 / 32), which rounds each pod to 19.43 / 22.67 / 25.90 = $68.00.
-  // One set of three lines per Full Stack, so the rounding is exactly $68 each however many there are.
-  for (let n = 0; n < stacks; n++) {
-    for (const id of ['pill-pod', 'hybrid-pod', 'powder-pod']) {
-      lines.push({
-        variantId: gid(id),
-        quantity: 1,
-        appliedDiscount: { title: 'Full Stack', valueType: 'PERCENTAGE', value: FULL_STACK_PERCENT },
-        customAttributes: [{ key: 'bundle', value: 'full-stack' }],
-      })
+  // Full Stacks: one of each pod for $68.
+  // If FULL_STACK_BUNDLE_VARIANT is set (the numeric variant ID of the Full Stack bundle product in Shopify),
+  // each Full Stack is ONE line at the bundle's own $68 price, which shows as "Full Stack" in checkout.
+  // Otherwise it is sent as three pod lines with exact dollar-amount discounts that add up to $16.00
+  // (4.57 + 5.33 + 6.10), so each Full Stack is exactly $68.00. One set per Full Stack keeps it exact.
+  const bundleVariant = String(ENV().FULL_STACK_BUNDLE_VARIANT || '').trim()
+  if (stacks > 0 && /^\d+$/.test(bundleVariant)) {
+    lines.push({ variantId: `gid://shopify/ProductVariant/${bundleVariant}`, quantity: stacks })
+  } else {
+    for (let n = 0; n < stacks; n++) {
+      for (const id of ['pill-pod', 'hybrid-pod', 'powder-pod']) {
+        lines.push({
+          variantId: gid(id),
+          quantity: 1,
+          appliedDiscount: { title: 'Full Stack', valueType: 'FIXED_AMOUNT', value: FULL_STACK_DISCOUNT[id] },
+          customAttributes: [{ key: '_bundle', value: 'full-stack' }],   // the leading _ hides it from the customer
+        })
+      }
     }
   }
 
