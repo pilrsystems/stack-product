@@ -334,7 +334,7 @@
 <body class="page-product-bottom">
 
   <div class="product-sticky-bar" id="product-sticky-bar">
-    <div class="product-sticky-img"><img src="images/lifestyle_section/Pill Pod Hero.webp" alt="Small Pill Pod" /></div>
+    <div class="product-sticky-img"><img loading="lazy" decoding="async" src="images/lifestyle_section/Pill Pod Hero.webp" alt="Small Pill Pod" /></div>
     <div class="product-sticky-info"><span class="product-sticky-name">Small Pill Pod</span>
     <span class="product-sticky-price">$24</span>
   </div>
@@ -357,28 +357,28 @@
             <div class="nav-dropdown-inner">
               <div class="nav-drop-grid">
                 <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
+                  <div class="nav-drop-img nav-drop-img--large"><img loading="lazy" decoding="async" src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Build Your System</span>
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
                   </div>
                 </a>
                 <a href="./full-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
+                  <div class="nav-drop-img nav-drop-img--bottom"><img loading="lazy" decoding="async" src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
                     <span class="nav-drop-desc">One of each pod. Save $16.</span>
                   </div>
                 </a>
                 <a href="./catalog.html#section-single-pods" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Single Pods.png" alt="Single Pods"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img loading="lazy" decoding="async" src="images/lifestyle_section/Single Pods.png" alt="Single Pods"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Single Pods</span>
                     <span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span>
                   </div>
                 </a>
                 <a href="./catalog.html" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
+                  <div class="nav-drop-img"><img loading="lazy" decoding="async" src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">All Products</span>
                     <span class="nav-drop-desc">Browse the complete pilr collection.</span>
@@ -431,22 +431,22 @@
       <div class="pg-gallery">
         <div class="pg-thumbs" id="pg-thumbs">
           <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Small Pill Pod Prod New 1.jpg" data-imgstyle="transform: translate(-1px, -39px) scale(1.115)" aria-label="Photo 1">
-            <img src="images/lifestyle_section/Small Pill Pod Prod New 1.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Small Pill Pod Prod New 1.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Small Pill Pod Prod New 2.jpg" data-imgstyle="transform: translate(-5px, -20px) scale(1.06)" aria-label="Photo 2">
-            <img src="images/lifestyle_section/Small Pill Pod Prod New 2.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Small Pill Pod Prod New 2.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" data-src="images/lifestyle_section/Small Pill Pod Prod New 3.jpg" data-imgstyle="transform: translate(5px, 15px) scale(1.15)" aria-label="Photo 3">
-            <img src="images/lifestyle_section/Small Pill Pod Prod New 3.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Small Pill Pod Prod New 3.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" data-video="images/lifestyle_section/Small Pill Pod Video.mp4" data-imgstyle="object-position: 50% 40%" data-poster="images/lifestyle_section/Small Pill Pod Video Poster.jpg" aria-label="Video">
-            <img src="images/lifestyle_section/Small Pill Pod Video Poster.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Small Pill Pod Video Poster.jpg" alt="" />
           </button>
         </div>
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img" id="pg-main-img" style="transform: translate(-1px, -39px) scale(1.115)" src="images/lifestyle_section/Small Pill Pod Prod New 1.jpg" alt="Small Pill Pod" />
+            <img fetchpriority="high" class="pg-main-img" id="pg-main-img" style="transform: translate(-1px, -39px) scale(1.115)" src="images/lifestyle_section/Small Pill Pod Prod New 1.jpg" alt="Small Pill Pod" />
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -668,7 +668,7 @@
           return;
         }
         mainFrame.innerHTML = src
-          ? '<img class="pg-main-img" id="pg-main-img"' + (thumb.dataset.imgstyle ? ' style="' + thumb.dataset.imgstyle + '"' : '') + ' src="' + src + '" alt="Small Pill Pod" />'
+          ? '<img fetchpriority="high" class="pg-main-img" id="pg-main-img"' + (thumb.dataset.imgstyle ? ' style="' + thumb.dataset.imgstyle + '"' : '') + ' src="' + src + '" alt="Small Pill Pod" />'
           : '<div class="pg-main-placeholder">Product photo</div>';
         thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
         current = index;

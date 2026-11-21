@@ -82,7 +82,7 @@
        cover (not contain, which pill/hybrid/powder-pod use for their
        single-product renders) keeps them filling the frame edge to
        edge like they did in the old layout. All slides are pre-rendered
-       as real <img src> tags (so the build's asset hashing applies to
+       as real <img loading="lazy" decoding="async" src> tags (so the build's asset hashing applies to
        them) and stacked via absolute position; JS toggles .is-active
        instead of rewriting innerHTML from an unprocessed data-src. */
     .pg-main-frame .pg-main-img {
@@ -267,7 +267,7 @@
 
   <!-- STICKY PRODUCT BAR -->
   <div class="product-sticky-bar" id="product-sticky-bar">
-    <div class="product-sticky-img"><img src="images/lifestyle_section/Hand Render.webp" alt="The Full Stack" /></div>
+    <div class="product-sticky-img"><img loading="lazy" decoding="async" src="images/lifestyle_section/Hand Render.webp" alt="The Full Stack" /></div>
     <div class="product-sticky-info"><span class="product-sticky-name">Full Stack</span>
     <span class="product-sticky-price">$68</span>
   </div>
@@ -291,28 +291,28 @@
             <div class="nav-dropdown-inner">
               <div class="nav-drop-grid">
                 <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
+                  <div class="nav-drop-img nav-drop-img--large"><img loading="lazy" decoding="async" src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Build Your System</span>
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
                   </div>
                 </a>
                 <a href="./full-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
+                  <div class="nav-drop-img nav-drop-img--bottom"><img loading="lazy" decoding="async" src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
                     <span class="nav-drop-desc">One of each pod. Save $16.</span>
                   </div>
                 </a>
                 <a href="./catalog.html#section-single-pods" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Single Pods.png" alt="Single Pods"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img loading="lazy" decoding="async" src="images/lifestyle_section/Single Pods.png" alt="Single Pods"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Single Pods</span>
                     <span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span>
                   </div>
                 </a>
                 <a href="./catalog.html" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
+                  <div class="nav-drop-img"><img loading="lazy" decoding="async" src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">All Products</span>
                     <span class="nav-drop-desc">Browse the complete pilr collection.</span>
@@ -366,33 +366,33 @@
       <div class="pg-gallery">
         <div class="pg-thumbs" id="pg-thumbs">
           <button type="button" class="pg-thumb is-active" aria-label="Photo 1">
-            <img src="images/lifestyle_section/Classic Stack Prod 2.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Classic Stack Prod 2.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" aria-label="Photo 2">
-            <img src="images/lifestyle_section/Classic Stack Prod 3.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Classic Stack Prod 3.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" aria-label="Photo 3">
-            <img src="images/lifestyle_section/Classic Stack Prod 1.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Classic Stack Prod 1.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" aria-label="Photo 4">
-            <img src="images/lifestyle_section/Classic Stack Photo 4.webp" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Classic Stack Photo 4.webp" alt="" />
           </button>
           <button type="button" class="pg-thumb" aria-label="Photo 5">
-            <img src="images/lifestyle_section/Classic Stack Prod Page 6.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Classic Stack Prod Page 6.jpg" alt="" />
           </button>
           <button type="button" class="pg-thumb" aria-label="Photo 6">
-            <img src="images/lifestyle_section/Build Your System Video Poster.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="images/lifestyle_section/Build Your System Video Poster.jpg" alt="" />
           </button>
         </div>
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img is-active" style="left: -1px; width: calc(100% + 16px); object-position: 50% 54.2%" src="images/lifestyle_section/Classic Stack Prod 2.jpg" alt="The Full Stack" />
-            <img class="pg-main-img" style="width: calc(100% + 6px); object-position: 50% 53.2%" src="images/lifestyle_section/Classic Stack Prod 3.jpg" alt="The Full Stack" />
-            <img class="pg-main-img" style="left: -3px; width: calc(100% + 3px); object-position: 50% 46.8%" src="images/lifestyle_section/Classic Stack Prod 1.jpg" alt="The Full Stack" />
-            <img class="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 4.webp" alt="The Full Stack" />
-            <img class="pg-main-img" src="images/lifestyle_section/Classic Stack Prod Page 6.jpg" alt="The Full Stack" />
-            <video class="pg-main-img" src="images/lifestyle_section/Build Your System Video.mp4" poster="images/lifestyle_section/Build Your System Video Poster.jpg" autoplay muted loop playsinline aria-label="pilr pod held against a white backdrop"></video>
+            <img fetchpriority="high" class="pg-main-img is-active" style="left: -1px; width: calc(100% + 16px); object-position: 50% 54.2%" src="images/lifestyle_section/Classic Stack Prod 2.jpg" alt="The Full Stack" />
+            <img loading="lazy" decoding="async" class="pg-main-img" style="width: calc(100% + 6px); object-position: 50% 53.2%" src="images/lifestyle_section/Classic Stack Prod 3.jpg" alt="The Full Stack" />
+            <img loading="lazy" decoding="async" class="pg-main-img" style="left: -3px; width: calc(100% + 3px); object-position: 50% 46.8%" src="images/lifestyle_section/Classic Stack Prod 1.jpg" alt="The Full Stack" />
+            <img loading="lazy" decoding="async" class="pg-main-img" src="images/lifestyle_section/Classic Stack Photo 4.webp" alt="The Full Stack" />
+            <img loading="lazy" decoding="async" class="pg-main-img" src="images/lifestyle_section/Classic Stack Prod Page 6.jpg" alt="The Full Stack" />
+            <video class="pg-main-img" src="images/lifestyle_section/Build Your System Video.mp4" poster="images/lifestyle_section/Build Your System Video Poster.jpg" preload="none" muted loop playsinline aria-label="pilr pod held against a white backdrop"></video>
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -598,7 +598,14 @@
       var current = 0;
 
       function renderSlide(index) {
-        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
+        slides.forEach(function (s, i) {
+          s.classList.toggle('is-active', i === index);
+          // the video loads and plays only while it is the photo on screen
+          if (s.tagName === 'VIDEO') {
+            if (i === index) { var pr = s.play(); if (pr && pr.catch) pr.catch(function () {}); }
+            else { s.pause(); }
+          }
+        });
         thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
         current = index;
       }
