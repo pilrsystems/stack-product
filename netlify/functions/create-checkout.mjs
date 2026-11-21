@@ -49,6 +49,8 @@ const SCOOPER_PRICE = 11
 const LID_PRICE = 9
 const FULL_STACK_PRICE = 68
 // $16 off a Full Stack, split across its three pods so it sums exactly: Small 24 -> 19.43, Large 28 -> 22.67, Powder 32 -> 25.90
+// Shown in checkout's "Shipping method" row and on the order. Change the date here when it moves.
+const SHIPPING_TITLE = 'Free shipping · Estimated ship date Jan. 25'
 const FULL_STACK_DISCOUNT = { 'pill-pod': 4.57, 'hybrid-pod': 5.33, 'powder-pod': 6.10 }
 const TIER_DISCOUNT = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]  // by total pods, 6+ capped
 
@@ -194,7 +196,7 @@ export default async (req) => {
           input: {
             lineItems,
             tags: ['preorder'],
-            shippingLine: { title: 'Free shipping', price: '0.00' },
+            shippingLine: { title: SHIPPING_TITLE, price: '0.00' },
             note: 'Pre-order placed on the pilr site',
           },
         },
