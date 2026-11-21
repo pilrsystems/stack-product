@@ -52,7 +52,14 @@
       display: flex; align-items: center; justify-content: center; padding: 0;
       overflow: hidden;
     }
-    .pg-main-frame .pg-main-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    /* All five slides (four photos and the video) are stacked in the frame; JS toggles .is-active. They fill the square frame (cover). */
+    .pg-main-frame { position: relative; }
+    .pg-main-frame .pg-main-img {
+      display: block; width: 100%; height: 100%; object-fit: cover;
+      position: absolute; inset: 0; opacity: 0; pointer-events: none;
+    }
+    .pg-main-frame .pg-main-img.is-active { opacity: 1; pointer-events: auto; }
+    .pg-thumb img { object-fit: cover; padding: 0; }
     .pg-main-frame .pg-main-placeholder {
       border: 1px dashed rgba(94,110,122,0.35); border-radius: var(--radius);
       width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -220,18 +227,20 @@
     <div class="product-images-col">
       <div class="pg-gallery">
         <div class="pg-thumbs" id="pg-thumbs">
-          <button type="button" class="pg-thumb is-active" data-src="images/lifestyle_section/Full Render.png" aria-label="Photo 1">
-            <img src="images/lifestyle_section/Full Render.png" alt="" />
-          </button>
-          <button type="button" class="pg-thumb" aria-label="Photo 2"><span class="pg-thumb-placeholder">Photo</span></button>
-          <button type="button" class="pg-thumb" aria-label="Photo 3"><span class="pg-thumb-placeholder">Photo</span></button>
-          <button type="button" class="pg-thumb" aria-label="Photo 4"><span class="pg-thumb-placeholder">Photo</span></button>
-          <button type="button" class="pg-thumb" aria-label="Photo 5"><span class="pg-thumb-placeholder">Photo</span></button>
+          <button type="button" class="pg-thumb is-active" aria-label="Photo 1"><img src="images/lifestyle_section/Single Lid Side Hero.jpg" alt="" /></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 2"><img src="images/lifestyle_section/Single Lid Overhead.jpg" alt="" /></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 3"><img src="images/lifestyle_section/Single Lid Photo 3.jpg" alt="" /></button>
+          <button type="button" class="pg-thumb" aria-label="Photo 4"><img src="images/lifestyle_section/Single Lid Photo 4.jpg" alt="" /></button>
+          <button type="button" class="pg-thumb" aria-label="Video"><img src="images/lifestyle_section/Single Lid Video Poster.jpg" alt="" /></button>
         </div>
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
           <div class="pg-main-frame" id="pg-main-frame">
-            <img class="pg-main-img" id="pg-main-img" src="images/lifestyle_section/Full Render.png" alt="Single Lid" />
+            <img class="pg-main-img is-active" style="object-position: 50% 54%" src="images/lifestyle_section/Single Lid Side Hero.jpg" alt="The pilr Single Lid, seen from the side" />
+            <img class="pg-main-img" style="object-position: 50% 54%" src="images/lifestyle_section/Single Lid Overhead.jpg" alt="The pilr Single Lid, seen from above" />
+            <img class="pg-main-img" style="object-position: 52% 50%" src="images/lifestyle_section/Single Lid Photo 3.jpg" alt="A hand holding the pilr Single Lid" />
+            <img class="pg-main-img" style="object-position: 56% 50%" src="images/lifestyle_section/Single Lid Photo 4.jpg" alt="A hand holding the pilr Single Lid" />
+            <video class="pg-main-img" style="object-position: 50% 38%" src="images/lifestyle_section/Single Lid Video.mp4" poster="images/lifestyle_section/Single Lid Video Poster.jpg" muted loop playsinline preload="metadata" aria-label="The pilr Single Lid in hand"></video>
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -396,17 +405,20 @@
   <script>
     ;(function () {
       var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pg-thumb'));
-      var mainFrame = document.getElementById('pg-main-frame');
+      var slides = Array.prototype.slice.call(document.querySelectorAll('.pg-main-frame > .pg-main-img'));
       var prevBtn = document.getElementById('pg-prev');
       var nextBtn = document.getElementById('pg-next');
       var current = 0;
 
       function renderSlide(index) {
-        var thumb = thumbs[index];
-        var src = thumb.dataset.src;
-        mainFrame.innerHTML = src
-          ? '<img class="pg-main-img" id="pg-main-img" src="' + src + '" alt="Single Lid" />'
-          : '<div class="pg-main-placeholder">Product photo</div>';
+        slides.forEach(function (sl, i) {
+          sl.classList.toggle('is-active', i === index);
+          // the video plays only while it is the photo on screen
+          if (sl.tagName === 'VIDEO') {
+            if (i === index) { var pr = sl.play(); if (pr && pr.catch) pr.catch(function () {}); }
+            else { sl.pause(); }
+          }
+        });
         thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
         current = index;
       }
