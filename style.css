@@ -4142,11 +4142,12 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   font-weight: 400;
   color: #9aa7ae;
   text-decoration: line-through;
-  margin-right: 0.3em;
+  margin-left: 0.4em;
 }
 
 .cart-drawer-item-desc {
-  font-size: 0.8rem;
+  font-size: var(--cart-desc-size, 0.75rem);
+  white-space: nowrap;
   font-weight: 400;
   color: #7a8a94;
   margin: 0;
@@ -7122,7 +7123,7 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
   font-weight: 400;
   color: #9aa7ae;
   text-decoration: line-through;
-  margin-right: 0.35em;
+  margin-left: 0.4em;
 }
 
 
@@ -7927,3 +7928,8 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 @media (min-width: 601px) {
   .nav-links > li > a { font-size: 13px; line-height: 13px; }
 }
+
+/* Free gifts in the cart: "$0  $11 (struck)  [Free gift included with pre-order]" on one line, wrapping the pill under the price when narrow */
+.cart-drawer-item-price:has(.cart-gift-price) { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; }
+.cart-gift-price-strike { font-weight: 400; color: #9aa7ae; text-decoration: line-through; margin-left: 0.4em; }
+.cart-drawer-free-badge.cart-gift-badge { white-space: nowrap; }

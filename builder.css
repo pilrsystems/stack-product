@@ -1183,3 +1183,43 @@ body.system-page {
   .system-layout.is-empty .system-canvas-wrap { pointer-events: none; z-index: 0; }
   .system-layout.is-empty .system-sidebar--left { position: relative; z-index: 1; }   /* the picker sits on top of the (empty) render area behind it */
 }
+
+/* Desktop, nothing picked yet: "Build Your System" stretches across the empty middle to meet "Edit Your System",
+   and the two share one divider line. The render keeps its own place underneath (so it is ready, and the same size,
+   the moment the first supplement is picked), and the picker slides back to its normal column then. */
+@media (min-width: 701px) {
+  .system-layout.is-empty .system-sidebar--left { grid-column: 1 / 3; grid-row: 1; position: relative; z-index: 1; }
+  .system-layout.is-empty .system-canvas-wrap { grid-column: 2; grid-row: 1; pointer-events: none; }
+  .system-layout.is-empty .system-sidebar--right { grid-column: 3; grid-row: 1; border-left: none; }
+}
+
+/* ...and while it is stretched across the middle, everything in it is centered (a comfortable width, centered in the wide panel) */
+@media (min-width: 701px) {
+  .system-layout.is-empty #system-selector { width: 100%; max-width: 900px; margin: 0 auto; text-align: center; }
+  .system-layout.is-empty #system-selector .sys-panel-header { justify-content: center; }
+  .system-layout.is-empty #system-selector .supp-chips { justify-content: center; }
+  .system-layout.is-empty #system-selector .bas-footer-row { justify-content: center; }
+}
+
+/* Stretched-out picker: the title and text use the same sizes as the rest of the site
+   (section titles 39px / 500 like the homepage; body text 15.2px like the homepage paragraphs). */
+@media (min-width: 701px) {
+  .system-layout.is-empty #system-selector .sys-panel-header-title { font-size: 24.4px; line-height: 1.3; font-weight: 500; }
+  .system-layout.is-empty #system-selector .bas-desc { font-size: 15.2px; line-height: 1.65; }
+  .system-layout.is-empty #system-selector .bas-section-q { font-size: 24.4px; line-height: 1.3; font-weight: 500; margin: 1.6rem 0 1.4rem; }
+}
+
+/* Stretched-out picker: more room around each group (label size, gap under the label, and gap between groups) */
+@media (min-width: 701px) {
+  .system-layout.is-empty #system-selector .bas-cat-label { font-size: 0.8rem; margin-bottom: 1.2rem; }
+  .system-layout.is-empty #system-selector .bas-category-block { margin-bottom: 2.6rem; }
+  .system-layout.is-empty #system-selector .bas-category-block:nth-last-child(2) { margin-bottom: 0.6rem; }
+  .system-layout.is-empty #system-selector .supp-chips { gap: 10px; }
+}
+
+/* Stretched-out picker: slightly bigger buttons, easier to pick */
+@media (min-width: 701px) {
+  .system-layout.is-empty #system-selector { --chip-fs: clamp(0.66rem, calc((100vw - 520px) / 62), 0.86rem); }
+  .system-layout.is-empty #system-selector .supp-chip { font-size: var(--chip-fs); padding: 0.6em 1.1em; white-space: nowrap; }
+  .system-layout.is-empty #system-selector .supp-chips { flex-wrap: nowrap; gap: 8px; }   /* every group is one row; the buttons shrink together on narrower windows */
+}

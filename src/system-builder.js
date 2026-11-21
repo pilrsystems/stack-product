@@ -51,7 +51,7 @@ const SUPPLEMENTS = {
 // the *paid* ids (not '-free'), so an add-on purchase never merges with
 // the free lid/scooper perk PilrCart grants automatically elsewhere.
 const ADD_ONS = {
-  'single-lid':     { label: 'Single Lid',     price: 9, image: 'images/lifestyle_section/Full Render.png', maxQty: 5 },
+  'single-lid':     { label: 'Single Lid',     price: 9, image: 'images/lifestyle_section/Single Lid Card.webp', maxQty: 5 },
   'travel-scooper': { label: 'Travel Scooper', price: 11, image: 'images/lifestyle_section/Scooper.png' },
 }
 
@@ -94,7 +94,7 @@ function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) 
 // over again.
 const CLASSIC_STACK = {
   id: 'classic-stack', title: 'Full Stack', price: 68,
-  image: 'images/lifestyle_section/Hand Render.png',
+  image: 'images/lifestyle_section/Hand Render.webp',
 }
 const CLASSIC_STACK_LIST_PRICE = POD_BASE_PRICE['Small Pill Pod'] + POD_BASE_PRICE['Large Pill Pod'] + POD_BASE_PRICE['Powder Pod']
 
@@ -1399,7 +1399,7 @@ const SERVINGS = {
 // currentCartTotal/currentCartListTotal.
 const FREE_LID = {
   title: 'Single Lid',
-  image: 'images/lifestyle_section/Full Render.png',
+  image: 'images/lifestyle_section/Single Lid Card.webp',
   listPrice: 9,
 }
 // The supplements line under a pod name always stays on one line: if it is too long for the row, the text shrinks a little (down to 10px)

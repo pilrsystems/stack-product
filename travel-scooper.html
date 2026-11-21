@@ -167,7 +167,7 @@
                   </div>
                 </a>
                 <a href="./full-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.png" alt="Full Stack"></div>
+                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
                     <span class="nav-drop-desc">One of each pod. Save $16.</span>
@@ -181,28 +181,28 @@
                   </div>
                 </a>
                 <a href="./catalog.html" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Build Your System Hover Cutout 2.png" alt="All Products"></div>
+                  <div class="nav-drop-img"><img src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">All Products</span>
                     <span class="nav-drop-desc">Browse the complete pilr collection.</span>
                   </div>
                 </a>
                 <a href="./powder-pod.html" class="nav-drop-card nav-drop-phone">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Card.png" alt="Powder Pod" loading="lazy"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Card.webp" alt="Powder Pod" loading="lazy"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Powder Pod</span>
                     <span class="nav-drop-desc">Built for your daily powders.</span>
                   </div>
                 </a>
                 <a href="./hybrid-pod.html" class="nav-drop-card nav-drop-phone">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Large Pill Pod Card 2.png" alt="Large Pill Pod" loading="lazy"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Large Pill Pod Card 2.webp" alt="Large Pill Pod" loading="lazy"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Large Pill Pod</span>
                     <span class="nav-drop-desc">Holds your larger pills.</span>
                   </div>
                 </a>
                 <a href="./pill-pod.html" class="nav-drop-card nav-drop-phone">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Small Pill Pod Card 2.png" alt="Small Pill Pod" loading="lazy"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Small Pill Pod Card 2.webp" alt="Small Pill Pod" loading="lazy"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Small Pill Pod</span>
                     <span class="nav-drop-desc">Holds your smaller pills.</span>
@@ -248,6 +248,9 @@
           <button type="button" class="pg-thumb" aria-label="Photo 5">
             <img src="images/lifestyle_section/Travel Scooper Prod 5.jpg" alt="" />
           </button>
+          <button type="button" class="pg-thumb" aria-label="Video">
+            <img src="images/lifestyle_section/Travel Scooper Video Poster.jpg" alt="" />
+          </button>
         </div>
         <div class="pg-main">
           <button type="button" class="pg-arrow pg-arrow--prev" id="pg-prev" aria-label="Previous photo">&lsaquo;</button>
@@ -257,6 +260,7 @@
             <img class="pg-main-img" src="images/lifestyle_section/Travel Scooper Prod 3 Wide.jpg" alt="Travel Scooper" />
             <img class="pg-main-img" style="left: -30px; width: calc(100% + 30px); object-position: 50% 85.4%" src="images/lifestyle_section/Powder Pod Prod Image 5.jpg" alt="Travel Scooper" />
             <img class="pg-main-img" style="transform: translate(-20px, -45px) scale(1.18)" src="images/lifestyle_section/Travel Scooper Prod 5.jpg" alt="Travel Scooper" />
+            <video class="pg-main-img" src="images/lifestyle_section/Travel Scooper Video.mp4" poster="images/lifestyle_section/Travel Scooper Video Poster.jpg" muted loop playsinline preload="metadata" aria-label="Travel Scooper video"></video>
           </div>
           <button type="button" class="pg-arrow pg-arrow--next" id="pg-next" aria-label="Next photo">&rsaquo;</button>
         </div>
@@ -316,7 +320,7 @@
         </div>
       </div>
       <a href="./build-your-system.html" class="bys-block" aria-label="Build your system">
-        <img class="bys-photo" src="images/lifestyle_section/Build Your System Photo Cutout.png" alt="pilr pods stacked together" width="450" height="300" loading="lazy" />
+        <img class="bys-photo" src="images/lifestyle_section/Build Your System Photo Cutout.webp" alt="pilr pods stacked together" width="450" height="300" loading="lazy" />
         <div class="bys-text">
           <div>
             <p class="bys-label">Build Your System</p>
@@ -419,13 +423,20 @@
   <script>
     ;(function () {
       var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pg-thumb'));
-      var slides = Array.prototype.slice.call(document.querySelectorAll('.pg-main-img'));
+      var slides = Array.prototype.slice.call(document.querySelectorAll('.pg-main-frame > .pg-main-img'));
       var prevBtn = document.getElementById('pg-prev');
       var nextBtn = document.getElementById('pg-next');
       var current = 0;
 
       function renderSlide(index) {
-        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
+        slides.forEach(function (s, i) {
+          s.classList.toggle('is-active', i === index);
+          // the video plays only while it is the photo on screen
+          if (s.tagName === 'VIDEO') {
+            if (i === index) { var pr = s.play(); if (pr && pr.catch) pr.catch(function () {}); }
+            else { s.pause(); }
+          }
+        });
         thumbs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
         current = index;
       }

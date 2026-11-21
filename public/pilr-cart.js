@@ -32,7 +32,7 @@
     title: 'Single Lid',
     price: 0,
     listPrice: 9,
-    image: 'images/lifestyle_section/Full Render.png',
+    image: 'images/lifestyle_section/Single Lid Card.webp',
   }
   // One free Travel Scooper per cart, earned by a Powder Pod or a Full Stack (which contains one).
   const PODS_THAT_INCLUDE_A_FREE_SCOOPER = ['powder-pod', 'classic-stack']
@@ -174,10 +174,12 @@
     } else {
       cart.items.push({ ...product, quantity })
     }
-    if (PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(product.id) && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
+    // A gift the customer removed stays removed (cart.declinedGifts) until no pod that earns it is left in the cart.
+    const declined = cart.declinedGifts || []
+    if (PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(product.id) && !declined.includes(FREE_SCOOPER_PRODUCT.id) && !cart.items.some(i => i.id === FREE_SCOOPER_PRODUCT.id)) {
       cart.items.push({ ...FREE_SCOOPER_PRODUCT, quantity: 1 })
     }
-    if (PODS_THAT_INCLUDE_A_FREE_LID.includes(product.id) && !cart.items.some(i => i.id === FREE_LID_PRODUCT.id)) {
+    if (PODS_THAT_INCLUDE_A_FREE_LID.includes(product.id) && !declined.includes(FREE_LID_PRODUCT.id) && !cart.items.some(i => i.id === FREE_LID_PRODUCT.id)) {
       cart.items.push({ ...FREE_LID_PRODUCT, quantity: 1 })
     }
     syncFreeLids(cart, oldLidFree)
@@ -187,6 +189,7 @@
   }
 
   function updateQuantity(id, quantity) {
+    if (quantity <= 0 && (id === FREE_SCOOPER_PRODUCT.id || id === FREE_LID_PRODUCT.id)) return removeFromCart(id)
     const cart = getCart()
     const oldLidFree = freeUnitsFor(FREE_LID_PRODUCT.id, cart.items)
     if (quantity <= 0) {
@@ -194,10 +197,12 @@
       // The free scooper goes away once neither a Powder Pod nor a Full Stack is left in the cart.
       if (PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(id) && !cart.items.some(i => PODS_THAT_INCLUDE_A_FREE_SCOOPER.includes(i.id))) {
         cart.items = cart.items.filter(i => i.id !== FREE_SCOOPER_PRODUCT.id)
+        cart.declinedGifts = (cart.declinedGifts || []).filter(g => g !== FREE_SCOOPER_PRODUCT.id)
       }
       // The free lid goes away once no pod that earns one is left in the cart.
       if (PODS_THAT_INCLUDE_A_FREE_LID.includes(id) && !cart.items.some(i => PODS_THAT_INCLUDE_A_FREE_LID.includes(i.id))) {
         cart.items = cart.items.filter(i => i.id !== FREE_LID_PRODUCT.id)
+        cart.declinedGifts = (cart.declinedGifts || []).filter(g => g !== FREE_LID_PRODUCT.id)
       }
     } else {
       const item = cart.items.find(i => i.id === id)
@@ -210,11 +215,32 @@
   }
 
   function removeFromCart(id) {
+    // Removing a free gift takes the whole gift line out and remembers the choice,
+    // so adding another pod doesn't put it straight back.
+    if (id === FREE_SCOOPER_PRODUCT.id || id === FREE_LID_PRODUCT.id) {
+      const cart = getCart()
+      const oldLidFree = freeUnitsFor(FREE_LID_PRODUCT.id, cart.items)
+      cart.items = cart.items.filter(i => i.id !== id)
+      cart.declinedGifts = Array.from(new Set([...(cart.declinedGifts || []), id]))
+      syncFreeLids(cart, oldLidFree)
+      repriceStackingPods(cart)
+      saveCart(cart)
+      return cart
+    }
     return updateQuantity(id, 0)
   }
 
+  // The number on the cart icon (and in the drawer title) counts only what the
+  // customer chose to add. The free gifts (the free lid, the free scooper) don't
+  // count; only units beyond a gift's free allowance do, because those are bought.
   function getCartCount() {
-    return getCart().items.reduce((sum, i) => sum + i.quantity, 0)
+    const cart = getCart()
+    return cart.items.reduce((sum, i) => {
+      if (FIRST_UNIT_FREE_BASE_PRICE[i.id] != null) {
+        return sum + Math.max(0, i.quantity - freeUnitsFor(i.id, cart.items))
+      }
+      return sum + i.quantity
+    }, 0)
   }
 
   function getCartTotal() {
@@ -381,7 +407,10 @@
       const qtyBtn = e.target.closest('.cart-drawer-qty-btn')
       const offerAddBtn = e.target.closest('.cart-drawer-offer-add')
       const offerArrow = e.target.closest('.cart-drawer-offers-arrow')
-      if (qtyBtn) {
+      if (qtyBtn && qtyBtn.dataset.action === 'remove-gift') {
+        removeFromCart(qtyBtn.dataset.key)
+        renderDrawer()
+      } else if (qtyBtn) {
         const key = qtyBtn.dataset.key
         const floor = parseInt(qtyBtn.dataset.floor || '0', 10)
         const current = getCart().items.find(i => i.id === key)
@@ -509,8 +538,8 @@
     'pill-pod':             'images/lifestyle_section/Small Pill Pod Card 2.png',
     'travel-scooper':       'images/lifestyle_section/Travel Scooper Card.png',
     'travel-scooper-free':  'images/lifestyle_section/Travel Scooper Card.png',
-    'single-lid':           'images/lifestyle_section/Full Render.png',
-    'single-lid-free':      'images/lifestyle_section/Full Render.png',
+    'single-lid':           'images/lifestyle_section/Single Lid Card.webp',
+    'single-lid-free':      'images/lifestyle_section/Single Lid Card.webp',
   }
   function cardImageFor(id, fallback) { return CARD_IMAGE_BY_ID[id] || fallback }
 
@@ -557,18 +586,27 @@
   function qtyCtrlAddOnlyHtml(key, qty) {
     return (
       '<div class="cart-drawer-qty-ctrl">' +
+        '<button type="button" class="cart-drawer-qty-btn" data-action="remove-gift" data-key="' + key + '" aria-label="Remove free gift">-</button>' +
         '<span class="cart-drawer-qty-val">' + qty + '</span>' +
         '<button type="button" class="cart-drawer-qty-btn" data-action="increase" data-key="' + key + '">+</button>' +
       '</div>'
     )
   }
 
+  // Free-gift price line: "$0" followed by the real price struck through. The
+  // "included with pre-order" wording lives in the Free Gifts section heading.
+  function freeGiftPriceHtml(listTotal) {
+    return '<span class="cart-gift-price">' + formatMoney(0) +
+      (listTotal != null ? '<span class="cart-gift-price-strike">' + formatMoney(listTotal) + '</span>' : '') +
+      '</span>'
+  }
+
   function drawerItemRowHtml(item) {
     const d = getItemDisplay(item)
     const priceInner = d.isFree
-      ? '<span class="cart-drawer-free-badge">Free</span>'
+      ? freeGiftPriceHtml(d.lineListTotal)
       : d.hasDiscount
-        ? '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span>' + formatMoney(d.lineTotal)
+        ? formatMoney(d.lineTotal) + '<span class="cart-item-price-strike">' + formatMoney(d.lineListTotal) + '</span>'
         : formatMoney(d.lineTotal)
     return drawerRowHtml({
       key: item.id,
@@ -600,7 +638,7 @@
       title: item.title,
       image: item.image,
       href: href,
-      priceInner: '<span class="cart-drawer-free-badge">Free</span>',
+      priceInner: freeGiftPriceHtml(basePrice * freeUnits),
       desc: desc,
       qtyHtml: split
         ? '<div class="cart-drawer-qty-ctrl cart-drawer-qty-ctrl--static"><span class="cart-drawer-qty-val">' + freeUnits + '</span></div>'
@@ -632,7 +670,7 @@
     { id: 'hybrid-pod',     title: 'Large Pill Pod',    image: 'images/lifestyle_section/Hybrid Pod.png' },
     { id: 'powder-pod',     title: 'Powder Pod',      image: 'images/lifestyle_section/Powder Pod Render.png' },
     { id: 'travel-scooper', title: 'Travel Scooper',  image: 'images/lifestyle_section/Scooper.png' },
-    { id: 'single-lid',     title: 'Single Lid',      image: 'images/lifestyle_section/Full Render.png' },
+    { id: 'single-lid',     title: 'Single Lid',      image: 'images/lifestyle_section/Single Lid Card.webp' },
   ]
   const OFFER_FLAT_PRICE = { 'travel-scooper': 11, 'single-lid': 9 }
   function offerFlatPrice(id) { return OFFER_FLAT_PRICE[id] ?? 0 }
@@ -658,7 +696,7 @@
     const price = offerPrice(id)
     const base = STACKING_POD_BASE_PRICE[id]
     if (base != null && price < base) {
-      return '<span class="cart-item-price-strike">' + formatMoney(base) + '</span>' + formatMoney(price)
+      return formatMoney(price) + '<span class="cart-item-price-strike">' + formatMoney(base) + '</span>'
     }
     return formatMoney(price)
   }
@@ -703,6 +741,29 @@
   // remove click just because its DOM got replaced.
   let promoOpen = false
 
+  // Every description in the drawer is one line, all in the same size: the size is
+  // the largest one (up to 12px) at which the longest description still fits
+  // between its picture and the edge of the drawer, never below 9px.
+  function fitDrawerDescriptions() {
+    const drawer = document.getElementById(DRAWER_ID)
+    if (!drawer) return
+    const descs = drawer.querySelectorAll('.cart-drawer-item-desc')
+    if (!descs.length) return
+    const BASE = 12
+    drawer.style.setProperty('--cart-desc-size', BASE + 'px')
+    let scale = 1
+    descs.forEach(d => {
+      const item = d.closest('.cart-drawer-item')
+      const info = d.parentElement
+      const avail = item.getBoundingClientRect().right - info.getBoundingClientRect().left
+      const need = d.scrollWidth
+      if (avail > 0 && need > 0) scale = Math.min(scale, avail / need)
+    })
+    const size = Math.max(9, Math.floor(BASE * scale * 0.98 * 10) / 10)
+    drawer.style.setProperty('--cart-desc-size', size + 'px')
+  }
+  window.addEventListener('resize', fitDrawerDescriptions)
+
   function renderDrawer() {
     const body = document.getElementById('cart-drawer-body')
     const footer = document.getElementById('cart-drawer-footer')
@@ -742,7 +803,7 @@
       html += '<div class="cart-drawer-section-label">Your Items</div>' + yourItemsHtml
     }
     if (freeGiftsHtml) {
-      html += '<div class="cart-drawer-section-label">Free Gifts</div>' + freeGiftsHtml
+      html += '<div class="cart-drawer-section-label">Free gifts included with pre-order</div>' + freeGiftsHtml
     }
     html += offersHtml()
     body.innerHTML = html
@@ -775,6 +836,8 @@
     document.getElementById('cart-drawer-checkout-btn').addEventListener('click', () => {
       startCheckout(document.getElementById('cart-drawer-checkout-btn'))
     })
+    fitDrawerDescriptions()
+    requestAnimationFrame(fitDrawerDescriptions)
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -799,6 +862,7 @@
     updateQuantity,
     remove: removeFromCart,
     count: getCartCount,
+    freeGiftPriceHtml: freeGiftPriceHtml,
     total: getCartTotal,
     clear: clearCart,
     freePerkLineTotal,

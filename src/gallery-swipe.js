@@ -33,6 +33,15 @@ function slideFor(i, stacked) {
     const pos = positionOf(src.getAttribute('style'))
     if (pos) img.style.objectPosition = pos
     slide.appendChild(img)
+  } else if (thumbs[i] && thumbs[i].dataset.video) {
+    const v = document.createElement('video')
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata'
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', '')
+    v.src = thumbs[i].dataset.video
+    if (thumbs[i].dataset.poster) v.poster = thumbs[i].dataset.poster
+    const vpos = positionOf(thumbs[i].dataset.imgstyle)
+    if (vpos) v.style.objectPosition = vpos
+    slide.appendChild(v)
   } else if (thumbs[i] && thumbs[i].dataset.src) {
     const img = document.createElement('img')
     img.src = thumbs[i].dataset.src; img.alt = ''; img.loading = i < 2 ? 'eager' : 'lazy'; img.draggable = false
