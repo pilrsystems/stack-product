@@ -135,7 +135,7 @@
       <div class="hero-product">
         <picture>
           <source id="hero-slide-src-mobile" media="(max-width: 600px)" srcset="images/lifestyle_section/mobile-hero-3.jpg" />
-          <img class="hero-product-img hero-product-img--suitcase" id="hero-slide-img" data-mobile="3" src="images/Hero Banner 2 Compressed 3.jpg" alt="A hand holding three open pilr pods filled with powder and pills" />
+          <img fetchpriority="high" class="hero-product-img hero-product-img--suitcase" id="hero-slide-img" data-mobile="3" src="images/Hero Banner 2 Compressed 3.jpg" alt="A hand holding three open pilr pods filled with powder and pills" />
         </picture>
       </div>
       <div class="hero-slide-nav">
@@ -830,7 +830,6 @@
         { src: 'images/Suitcase Home Page Pic.webp', mobileSrc: 'images/lifestyle_section/Mobile Hero 3.jpg', mobileOrder: 1, mobileAlt: 'A hand holding three open pilr pods filled with powder, capsules and pills', scrim: 0.55, alt: 'A pilr pod on a Rimowa suitcase next to a passport and headphones, ready to travel' }
       ];
 
-      // Load every slide up front so rotating never waits on a download.
       var phoneMQ = window.matchMedia('(max-width: 600px)');
       function pickSlides() {
         if (!phoneMQ.matches) return HERO_SLIDES;
@@ -838,10 +837,18 @@
           .sort(function(a, b) { return (a.mobileOrder || 99) - (b.mobileOrder || 99); });
       }
       var slides = pickSlides();
-      slides.forEach(function(s) {
-        var url = (phoneMQ.matches && s.mobileSrc) ? s.mobileSrc : s.src;
-        if (url) { var im = new Image(); im.src = url; }
-      });
+      // The first photo gets the whole connection while the page loads. The other slides are
+      // fetched once the page has finished loading, and the slideshow only starts rotating
+      // after they are all in, so a slide never waits on a download.
+      var autoplayReady = false;
+      function preloadOtherSlides(done) {
+        var urls = slides.slice(1).map(function(s) { return (phoneMQ.matches && s.mobileSrc) ? s.mobileSrc : s.src; }).filter(Boolean);
+        if (!urls.length) { done(); return; }
+        var left = urls.length, finished = false;
+        function one() { if (--left <= 0 && !finished) { finished = true; done(); } }
+        urls.forEach(function(url) { var im = new Image(); im.onload = one; im.onerror = one; im.src = url; });
+        setTimeout(function() { if (!finished) { finished = true; done(); } }, 10000);   // never wait forever
+      }
 
       var heroSection = document.getElementById('hero');
       var slideImg = document.getElementById('hero-slide-img');
@@ -910,7 +917,7 @@
       });
 
       function startAutoplay() {
-        if (allSlidesIdentical()) return;
+        if (!autoplayReady || autoplayTimer || allSlidesIdentical()) return;
         autoplayTimer = setInterval(function() {
           renderSlide((current + 1) % slides.length);
         }, 5000);
@@ -933,7 +940,13 @@
       if (phoneMQ.addEventListener) phoneMQ.addEventListener('change', onBreakpointChange);
       else if (phoneMQ.addListener) phoneMQ.addListener(onBreakpointChange);
 
-      startAutoplay();
+      function whenPageLoaded(fn) {
+        if (document.readyState === 'complete') setTimeout(fn, 1000);
+        else window.addEventListener('load', function() { setTimeout(fn, 1000); });
+      }
+      whenPageLoaded(function() {
+        preloadOtherSlides(function() { autoplayReady = true; startAutoplay(); });
+      });
     })();
   
     // ── Phone: shop cards swipe sideways; the thin bar under them shows where you are ──

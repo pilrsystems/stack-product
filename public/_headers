@@ -1,0 +1,5 @@
+# Cloudflare Pages: files in /assets/ get a new name whenever their content changes,
+# so browsers can keep them for a year. Nothing else here is cached longer than usual
+# (the cart script and the fixed-name images keep the default).
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
