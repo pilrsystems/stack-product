@@ -48,6 +48,10 @@ const POD_TITLE = { 'pill-pod': 'Small Pill Pod', 'hybrid-pod': 'Large Pill Pod'
 const SCOOPER_PRICE = 11
 const LID_PRICE = 9
 const FULL_STACK_PRICE = 68
+// $16 off a Full Stack, split across its three pods so it sums exactly: Small 24 -> 19.43, Large 28 -> 22.67, Powder 32 -> 25.90
+// Shown in checkout's "Shipping method" row and on the order. Change the date here when it moves.
+const SHIPPING_TITLE = 'Free shipping · Estimated ship date Jan. 25'
+const FULL_STACK_DISCOUNT = { 'pill-pod': 4.57, 'hybrid-pod': 5.33, 'powder-pod': 6.10 }
 const TIER_DISCOUNT = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]  // by total pods, 6+ capped
 
 let cachedToken = null
@@ -107,17 +111,24 @@ export function buildLines(qty) {
   const loose = qty['pill-pod'] + qty['hybrid-pod'] + qty['powder-pod']
   if (stacks + loose === 0 && qty.scooper + qty.lid === 0) return lines
 
-  // Full Stacks: one of each pod, $68 in total. 16/84 off the three pods' list prices.
-  if (stacks > 0) {
-    const listTotal = POD_PRICE['pill-pod'] + POD_PRICE['hybrid-pod'] + POD_PRICE['powder-pod']  // 84
-    const pct = ((listTotal - FULL_STACK_PRICE) / listTotal) * 100
-    for (const id of ['pill-pod', 'hybrid-pod', 'powder-pod']) {
-      lines.push({
-        variantId: gid(id),
-        quantity: stacks,
-        appliedDiscount: { title: 'Full Stack', valueType: 'PERCENTAGE', value: Number(pct.toFixed(4)) },
-        customAttributes: [{ key: 'bundle', value: 'full-stack' }],
-      })
+  // Full Stacks: one of each pod for $68.
+  // If FULL_STACK_BUNDLE_VARIANT is set (the numeric variant ID of the Full Stack bundle product in Shopify),
+  // each Full Stack is ONE line at the bundle's own $68 price, which shows as "Full Stack" in checkout.
+  // Otherwise it is sent as three pod lines with exact dollar-amount discounts that add up to $16.00
+  // (4.57 + 5.33 + 6.10), so each Full Stack is exactly $68.00. One set per Full Stack keeps it exact.
+  const bundleVariant = String(ENV().FULL_STACK_BUNDLE_VARIANT || '').trim()
+  if (stacks > 0 && /^\d+$/.test(bundleVariant)) {
+    lines.push({ variantId: `gid://shopify/ProductVariant/${bundleVariant}`, quantity: stacks })
+  } else {
+    for (let n = 0; n < stacks; n++) {
+      for (const id of ['pill-pod', 'hybrid-pod', 'powder-pod']) {
+        lines.push({
+          variantId: gid(id),
+          quantity: 1,
+          appliedDiscount: { title: 'Full Stack', valueType: 'FIXED_AMOUNT', value: FULL_STACK_DISCOUNT[id] },
+          customAttributes: [{ key: '_bundle', value: 'full-stack' }],   // the leading _ hides it from the customer
+        })
+      }
     }
   }
 
@@ -185,7 +196,7 @@ export default async (req) => {
           input: {
             lineItems,
             tags: ['preorder'],
-            shippingLine: { title: 'Free shipping', price: '0.00' },
+            shippingLine: { title: SHIPPING_TITLE, price: '0.00' },
             note: 'Pre-order placed on the pilr site',
           },
         },

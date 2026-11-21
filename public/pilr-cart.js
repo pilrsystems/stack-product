@@ -131,9 +131,19 @@
   // payment page. While that function is switched off (it answers 503) the
   // original "available soon" message is shown instead.
   const CHECKOUT_SOON_MESSAGE = 'Checkout will be available once our store is live. Thank you for your interest!'
+  // Coming back from Shopify's checkout with the browser's Back button restores this page exactly as it
+  // was left, including a checkout button stuck on "One moment…". Put those buttons back to normal.
+  function resetCheckoutButtons() {
+    document.querySelectorAll('[data-checkout-label]').forEach(function (b) {
+      b.disabled = false
+      b.textContent = b.dataset.checkoutLabel
+    })
+  }
+  global.addEventListener('pageshow', resetCheckoutButtons)
+
   async function startCheckout(btn) {
-    const label = btn ? btn.textContent : ''
-    if (btn) { btn.disabled = true; btn.textContent = 'One moment…' }
+    const label = btn ? (btn.dataset.checkoutLabel || btn.textContent) : ''
+    if (btn) { btn.dataset.checkoutLabel = label; btn.disabled = true; btn.textContent = 'One moment…' }
     const reset = () => { if (btn) { btn.disabled = false; btn.textContent = label } }
     try {
       const res = await fetch('/api/checkout', {
