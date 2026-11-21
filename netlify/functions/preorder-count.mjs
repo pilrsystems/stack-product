@@ -11,7 +11,7 @@
 
    Optional environment variables:
      PREORDER_ORDER_QUERY   Shopify order search that decides which orders count.
-                            Default: "test:false -status:cancelled"
+                            Default: "test:false" (cancelled orders are always left out)
                             Add a start date to count only from when pre-orders
                             opened, e.g.  created_at:>=2026-12-01 test:false -status:cancelled
      PREORDER_GOAL          default 1000
@@ -69,18 +69,27 @@ async function countOrders() {
   const domain = ENV().SHOPIFY_STORE_DOMAIN
   if (!domain) throw new Error('Shopify Admin API is not configured (missing SHOPIFY_STORE_DOMAIN)')
   const token = await getAccessToken(domain)
-  const search = ENV().PREORDER_ORDER_QUERY || 'test:false -status:cancelled'
-  const res = await fetch(`https://${domain}/admin/api/${ADMIN_API_VERSION}/graphql.json`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
-    body: JSON.stringify({
-      query: 'query Count($q: String) { ordersCount(query: $q, limit: null) { count } }',
-      variables: { q: search },
-    }),
-  })
-  const payload = await res.json()
-  const count = payload && payload.data && payload.data.ordersCount && payload.data.ordersCount.count
-  if (!res.ok || payload.errors || typeof count !== 'number') throw new Error('Shopify order count failed')
+  // Real (non-test) orders, counted here one page at a time so cancelled ones can be left out by their
+  // cancelledAt date. (Shopify's search word for cancelled orders did not exclude them reliably.)
+  const search = ENV().PREORDER_ORDER_QUERY || 'test:false'
+  let count = 0
+  let after = null
+  for (let page = 0; page < 10; page++) {
+    const res = await fetch(`https://${domain}/admin/api/${ADMIN_API_VERSION}/graphql.json`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
+      body: JSON.stringify({
+        query: 'query Orders($q: String, $after: String) { orders(first: 250, query: $q, after: $after) { nodes { cancelledAt } pageInfo { hasNextPage endCursor } } }',
+        variables: { q: search, after },
+      }),
+    })
+    const payload = await res.json()
+    const orders = payload && payload.data && payload.data.orders
+    if (!res.ok || payload.errors || !orders) throw new Error('Shopify order count failed')
+    count += orders.nodes.filter((o) => !o.cancelledAt).length
+    if (!orders.pageInfo.hasNextPage) break
+    after = orders.pageInfo.endCursor
+  }
   cachedCount = count
   cachedCountAt = Date.now()
   return count
