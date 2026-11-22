@@ -7944,3 +7944,10 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 /* The promo code box in the cart drawer is always open: the heading is just a label */
 .cart-drawer-promo-toggle { pointer-events: none; cursor: default; }
 .cart-drawer-promo-toggle svg { display: none; }
+
+/* Single Lid note in What's included: longer wording on web, the shorter one on phones */
+.lid-note-phone { display: none; }
+@media (max-width: 600px) {
+  .lid-note-web { display: none; }
+  .lid-note-phone { display: inline; }
+}
