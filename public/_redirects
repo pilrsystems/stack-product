@@ -3,3 +3,7 @@
 # (Cloudflare serves /full-stack.html as /full-stack, so the redirect points there directly.)
 /classic-stack.html /full-stack 301
 /classic-stack /full-stack 301
+/hybrid-pod.html /large-pill-pod 301
+/hybrid-pod /large-pill-pod 301
+/pill-pod.html /small-pill-pod 301
+/pill-pod /small-pill-pod 301

@@ -5098,7 +5098,7 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 /* ── Build Your System promo card ────────────────────────
    Shared across every product page's buy column, linking out to
-   build-your-system.html. Originally built for pill-pod.html only;
+   build-your-system.html. Originally built for small-pill-pod.html only;
    every value here is reused from elsewhere on the page it first
    shipped on: the accordion trigger's label recipe (0.75rem/600/
    0.14em uppercase/#5e6e7a) for "BUILD YOUR SYSTEM", the tagline's
@@ -6677,10 +6677,10 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   #section-single-pods:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-11px, -21px) scale(1.815); }
 }
 /* Large Pill Pod card (and the home page Single Pods card, which shows the same picture): its hover image is 5% smaller than the default (1.568 -> 1.49, hover 1.647 -> 1.565) */
-.shop-card[href*="hybrid-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
+.shop-card[href*="large-pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
 .shop-card[href*="section-single-pods"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.460); }
 @media (hover: hover) {
-  .shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
+  .shop-card[href*="large-pill-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout,
   .shop-card[href*="section-single-pods"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.534); }
 }
 
@@ -6713,9 +6713,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   .problem--v2 .problem-card-art { width: 50.44%; top: 71px; }
 }
 /* Small Pill Pod card only: its hover image is 20%, 30%, 15%, then another 15% bigger than the default (1.568 -> 3.236, hover 1.647 -> 3.397) */
-.shop-card[href*="pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.333); }
+.shop-card[href*="small-pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.333); }
 @media (hover: hover) {
-  .shop-card[href*="pill-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.499); }
+  .shop-card[href*="small-pill-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(-3px, 8px) scale(3.499); }
 }
 
 /* Phone, home page "Many problems" cards: the 7-day organizer and Ziploc photos are 15%, then another 5%, smaller */
@@ -6760,8 +6760,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 
 /* Phone menu, Shop tiles: the Small Pill Pod picture is 5% smaller and the Large Pill Pod picture 1px further left inside their tiles */
 @media (max-width: 600px) {
-  .nav-links .nav-drop-card.nav-drop-phone[href="./pill-pod.html"] .nav-drop-img img { transform: translateX(1.5%) scale(0.95); }
-  .nav-links .nav-drop-card.nav-drop-phone[href="./hybrid-pod.html"] .nav-drop-img img { transform: translateX(calc(1.5% - 1px)); }
+  .nav-links .nav-drop-card.nav-drop-phone[href="./small-pill-pod.html"] .nav-drop-img img { transform: translateX(1.5%) scale(0.95); }
+  .nav-links .nav-drop-card.nav-drop-phone[href="./large-pill-pod.html"] .nav-drop-img img { transform: translateX(calc(1.5% - 1px)); }
 }
 
 /* Cart: item and offer pictures sit on the same light grey as the product cards;
@@ -6881,9 +6881,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 .wp-system-card .wp-system-card-img.shop-card-img > img:first-child { transition: none; }
 .wp-system-card:hover .wp-system-card-img.shop-card-img > img:first-child { transform: none; }   /* (the pictures with their own inline size keep it) */
 /* Why pilr page only: the Large Pill Pod hover picture is 3% bigger than on Shop all (1.46 -> 1.504, hover 1.534 -> 1.58) */
-.wp-system-card.shop-card[href*="hybrid-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.504); }
+.wp-system-card.shop-card[href*="large-pill-pod"] .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.504); }
 @media (hover: hover) {
-  .wp-system-card.shop-card[href*="hybrid-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.58); }
+  .wp-system-card.shop-card[href*="large-pill-pod"]:hover .shop-card-img .shop-card-img-hover.shop-card-img-hover--cutout { transform: translate(13px, 9px) scale(1.58); }
 }
 
 /* Footer email box: a whiter, softly translucent circle with a bolder white arrow */

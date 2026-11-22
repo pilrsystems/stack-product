@@ -273,8 +273,8 @@
   // back to where it was bought. The two free-perk ids share their paid
   // counterpart's page.
   const PRODUCT_PAGE_BY_ID = {
-    'pill-pod': 'pill-pod.html',
-    'hybrid-pod': 'hybrid-pod.html',
+    'pill-pod': 'small-pill-pod.html',
+    'hybrid-pod': 'large-pill-pod.html',
     'powder-pod': 'powder-pod.html',
     'classic-stack': 'full-stack.html',
     'travel-scooper': 'travel-scooper.html',

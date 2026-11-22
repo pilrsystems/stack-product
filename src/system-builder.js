@@ -77,9 +77,9 @@ const LID_GLB = './models/Configurations/Multi-Pod%20Lid%20New.glb'
 
 // ── Pricing ────────────────────────────────────────────────────
 // Same base prices and tiered quantity discount curve as the "Add a
-// Pod" widget on the single-pod product pages (pill-pod.html etc.) —
+// Pod" widget on the single-pod product pages (small-pill-pod.html etc.) —
 // kept in sync manually since there's no shared pricing config in the
-// codebase yet; see pill-pod.html for the source of truth.
+// codebase yet; see small-pill-pod.html for the source of truth.
 const POD_BASE_PRICE  = { 'Small Pill Pod': 24, 'Large Pill Pod': 28, 'Powder Pod': 32 }
 const POD_CART_ID     = { 'Small Pill Pod': 'pill-pod', 'Large Pill Pod': 'hybrid-pod', 'Powder Pod': 'powder-pod' }
 const DISCOUNT_BY_QTY = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28] // index = total pods, 6+ capped at index 6
