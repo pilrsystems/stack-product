@@ -456,7 +456,8 @@
         "name": "Small Pill Pod",
         "image": "images/lifestyle_section/Pill Pod.png",
         "specs": { "compartments": "3", "internalVolume": "2.78 fl oz (82.2 mL)", "heightWidth": "1.34 × 2.56 in (3.4 × 6.5 cm)" },
-        "columns": ["Supplement", "1 serving", "Pills per pod"],
+        "featured": ["Advil", "Vitamin D3", "Iron", "Charcoal", "Seed"],
+        "columns": ["Supplement", "Serving Size", "Pills per pod"],
         "supplements": [
           { "name": "Fish Oil", "form": "2 softgels", "count": "6" },
           { "name": "Turmeric", "form": "2 capsules", "count": "9" },
@@ -490,7 +491,8 @@
         "name": "Large Pill Pod",
         "image": "images/lifestyle_section/Hybrid Pod.png",
         "specs": { "compartments": "2", "internalVolume": "4.78 fl oz (141.3 mL)", "heightWidth": "2.01 × 2.56 in (5.1 × 6.5 cm)" },
-        "columns": ["Supplement", "1 serving", "Pills per pod"],
+        "featured": ["Fish Oil", "Turmeric", "Seed", "Magnesium Citrate", "Adult Multivitamin Gummy", "Airbone"],
+        "columns": ["Supplement", "Serving Size", "Pills per pod"],
         "supplements": [
           { "name": "Fish Oil", "form": "2 softgels", "count": "16" },
           { "name": "Turmeric", "form": "2 capsules", "count": "22" },
@@ -643,9 +645,13 @@
       }
 
       function renderRows(d) {
-        tableRows.innerHTML = d.supplements.map(function (row, i) {
+        // The "featured" supplements show by default, in that order; the rest appear only when a search matches them
+        var featured = d.featured || []
+        var ordered = featured.map(function (n) { return d.supplements.filter(function (r) { return r.name === n })[0] }).filter(Boolean)
+        var rest = d.supplements.filter(function (r) { return featured.indexOf(r.name) === -1 })
+        tableRows.innerHTML = ordered.concat(rest).map(function (row, i) {
           return (
-            '<div class="sg-row" data-name="' + row.name.toLowerCase() + '">' +
+            '<div class="sg-row" data-name="' + row.name.toLowerCase() + '"' + (d.featured && featured.indexOf(row.name) === -1 ? ' data-extra' : '') + '>' +
               '<span class="sg-row-name">' + row.name + '</span>' +
               '<span>' + row.form + '</span>' +
               (row.size != null ? '<span class="sg-row-size">' + row.size + '</span>' : '') +
@@ -690,7 +696,8 @@
         var rows = tableRows.querySelectorAll('.sg-row')
         var visibleCount = 0
         rows.forEach(function (row) {
-          var match = !term || row.dataset.name.indexOf(term) !== -1
+          // Only the featured supplements show by default; the rest appear when a search matches them
+          var match = term ? row.dataset.name.indexOf(term) !== -1 : !row.hasAttribute('data-extra')
           row.hidden = !match
           if (match) visibleCount++
         })
