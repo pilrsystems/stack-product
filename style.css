@@ -7940,3 +7940,7 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 .cart-drawer-discount { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; color: #5e6e7a; padding: 0.35rem 0 0; }
 .cart-drawer-promo-msg { margin: 0.4rem 0 0; font-size: 0.72rem; color: #9a5a5a; min-height: 0; }
 .cart-drawer-promo-msg:empty { display: none; }
+
+/* The promo code box in the cart drawer is always open: the heading is just a label */
+.cart-drawer-promo-toggle { pointer-events: none; cursor: default; }
+.cart-drawer-promo-toggle svg { display: none; }

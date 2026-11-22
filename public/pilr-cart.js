@@ -779,7 +779,7 @@
   // (quantities/subtotal have to, to stay current) — tracked separately so
   // the promo accordion doesn't silently re-collapse on the next qty or
   // remove click just because its DOM got replaced.
-  let promoOpen = false
+  const promoOpen = true   // the promo box is always open (no click needed)
 
   // Every description in the drawer is one line, all in the same size: the size is
   // the largest one (up to 12px) at which the longest description still fits
@@ -877,11 +877,6 @@
       '</div>' +
       '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>'
 
-    const promoToggle = document.getElementById('cart-drawer-promo-toggle')
-    if (promoToggle) promoToggle.addEventListener('click', () => {
-      promoOpen = !promoOpen
-      document.getElementById('cart-drawer-promo').classList.toggle('open', promoOpen)
-    })
     const promoApply = document.getElementById('cart-drawer-promo-apply')
     if (promoApply) {
       const input = document.getElementById('cart-drawer-promo-input')
