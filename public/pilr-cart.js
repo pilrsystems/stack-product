@@ -69,8 +69,14 @@
   // Keeps the free lid line at least as big as its free allowance, and moves it
   // down with the Full Stack count when Full Stacks are removed.
   function syncFreeLids(cart, oldFree) {
-    const lid = cart.items.find(i => i.id === FREE_LID_PRODUCT.id)
-    if (!lid) return
+    let lid = cart.items.find(i => i.id === FREE_LID_PRODUCT.id)
+    if (!lid) {
+      // The lid line was removed by hand: bring it back whenever a pod that earns one is added or bumped up.
+      if (oldFree == null || !cart.items.some(i => PODS_THAT_INCLUDE_A_FREE_LID.includes(i.id))) return
+      if (freeUnitsFor(FREE_LID_PRODUCT.id, cart.items) <= oldFree) return
+      lid = { ...FREE_LID_PRODUCT, quantity: 0 }
+      cart.items.push(lid)
+    }
     const newFree = freeUnitsFor(lid.id, cart.items)
     if (oldFree != null && newFree < oldFree) lid.quantity = Math.max(newFree, lid.quantity - (oldFree - newFree))
     if (lid.quantity < newFree) lid.quantity = newFree
