@@ -411,6 +411,10 @@
             <span>Subtotal</span>
             <span id="cart-subtotal">—</span>
           </div>
+          <div class="cart-summary-row" id="cart-promo-row" style="display:none;">
+            <span id="cart-promo-label">Promo</span>
+            <span id="cart-promo-amount"></span>
+          </div>
           <div class="cart-summary-row">
             <span>Shipping</span>
             <span>Calculated at checkout</span>
@@ -545,7 +549,14 @@
     function updateSummary(total) {
       const formatted = PilrCart.formatMoney(total)
       document.getElementById('cart-subtotal').textContent = formatted
-      document.getElementById('cart-total').textContent    = formatted
+      const promo = PilrCart.getPromo()
+      const off = PilrCart.getPromoDiscount()
+      document.getElementById('cart-promo-row').style.display = off ? '' : 'none'
+      if (off) {
+        document.getElementById('cart-promo-label').textContent = 'Promo (' + promo.code + ')'
+        document.getElementById('cart-promo-amount').textContent = '−' + PilrCart.formatMoney(off)
+      }
+      document.getElementById('cart-total').textContent    = PilrCart.formatMoney(total - off)
     }
 
     function loadCart() {

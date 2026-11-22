@@ -32,6 +32,8 @@
 // Settings come from Netlify's process.env, or from Cloudflare's env (set by functions/api/*.js).
 const ENV = () => globalThis.__ENV || (typeof process !== 'undefined' && process.env ? process.env : {})
 
+import { countOrders } from './preorder-count.mjs'
+
 const ADMIN_API_VERSION = '2024-10'
 const TOKEN_REFRESH_BUFFER_MS = 60_000
 
@@ -169,6 +171,27 @@ export function buildLines(qty) {
   return lines
 }
 
+// Promo codes. Shopify does not let a customer type a code on a draft order's payment page, so the
+// code is checked here and sent to Shopify as a discount on the whole order. It comes off AFTER all the
+// other pricing above (pod tiers, the Full Stack price), so it stacks on top of them.
+// FIRST1000: 20% off the whole order, for the first 1,000 orders (the same count as the pre-order counter).
+// "One use per customer" is not enforced yet: this code never sees who the customer is.
+const PROMOS = { FIRST1000: { percent: 20 } }
+
+export async function checkPromo(rawCode) {
+  const code = String(rawCode || '').trim().toUpperCase()
+  const promo = PROMOS[code]
+  if (!promo) return { valid: false, message: 'That code is not valid.' }
+  try {
+    const claimed = await countOrders()
+    const goal = Number(ENV().PREORDER_GOAL) || 1000
+    if (claimed >= goal) return { valid: false, message: 'Sorry, this code has reached its limit.' }
+  } catch (err) {
+    console.error('promo: could not count orders, allowing the code', err && err.message)
+  }
+  return { valid: true, code, percent: promo.percent }
+}
+
 export default async (req) => {
   if (ENV().CHECKOUT_ENABLED !== 'true') return json(503, { error: 'checkout not enabled' })
   if (req.method !== 'POST') return json(405, { error: 'POST only' })
@@ -177,6 +200,12 @@ export default async (req) => {
   try { body = await req.json() } catch (_) { return json(400, { error: 'bad request' }) }
   const lineItems = buildLines(normaliseCart(body))
   if (!lineItems.length) return json(400, { error: 'empty cart' })
+
+  let promo = null
+  if (body && body.code) {
+    promo = await checkPromo(body.code)
+    if (!promo.valid) return json(400, { error: 'promo invalid', message: promo.message })
+  }
 
   try {
     const domain = ENV().SHOPIFY_STORE_DOMAIN
@@ -195,7 +224,8 @@ export default async (req) => {
         variables: {
           input: {
             lineItems,
-            tags: ['preorder'],
+            tags: promo ? ['preorder', 'promo-' + promo.code.toLowerCase()] : ['preorder'],
+            ...(promo ? { appliedDiscount: { title: promo.code, description: promo.percent + '% off your order', valueType: 'PERCENTAGE', value: promo.percent } } : {}),
             shippingLine: { title: SHIPPING_TITLE, price: '0.00' },
             note: 'Pre-order placed on the pilr site',
           },

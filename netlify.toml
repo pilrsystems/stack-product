@@ -19,6 +19,13 @@
   status = 200
   force = true
 
+# Checks a promo code from the cart (POST /api/promo).
+[[redirects]]
+  from = "/api/promo"
+  to = "/.netlify/functions/promo"
+  status = 200
+  force = true
+
 # Pre-order count shown on the product pages (GET /api/preorder-count).
 [[redirects]]
   from = "/api/preorder-count"

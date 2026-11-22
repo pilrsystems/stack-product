@@ -7933,3 +7933,10 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 .cart-drawer-item-price:has(.cart-gift-price) { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; }
 .cart-gift-price-strike { font-weight: 400; color: #9aa7ae; text-decoration: line-through; margin-left: 0.4em; }
 .cart-drawer-free-badge.cart-gift-badge { white-space: nowrap; }
+
+/* Promo code: applied chip, discount line, and error message in the cart drawer */
+.cart-drawer-promo-applied { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.7rem 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5e6e7a; }
+.cart-drawer-promo-applied button { border: none; background: none; padding: 0; font: inherit; font-size: 0.68rem; letter-spacing: 0.08em; text-decoration: underline; color: #7a8a94; cursor: pointer; }
+.cart-drawer-discount { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; color: #5e6e7a; padding: 0.35rem 0 0; }
+.cart-drawer-promo-msg { margin: 0.4rem 0 0; font-size: 0.72rem; color: #9a5a5a; min-height: 0; }
+.cart-drawer-promo-msg:empty { display: none; }

@@ -155,8 +155,12 @@
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: getCart().items.map(i => ({ id: i.id, quantity: i.quantity })) }),
+        body: JSON.stringify({ items: getCart().items.map(i => ({ id: i.id, quantity: i.quantity })), code: (getPromo() || {}).code }),
       })
+      if (res.status === 400) {
+        const bad = await res.json().catch(() => null)
+        if (bad && bad.error === 'promo invalid') { reset(); setPromo(null); alert((bad.message || 'That promo code can no longer be used.') + ' It has been removed from your cart.'); return }
+      }
       if (res.status === 503 || res.status === 404) { reset(); alert(CHECKOUT_SOON_MESSAGE); return }
       const data = await res.json()
       if (res.ok && data && data.url) { global.location.href = data.url; return }
@@ -254,6 +258,36 @@
       const freeTotal = freePerkLineTotal(i.id, i.quantity)
       return sum + (freeTotal != null ? freeTotal : i.price * i.quantity)
     }, 0)
+  }
+
+  // Promo code applied in the cart (checked by /api/promo, applied again by /api/checkout). Kept in the
+  // browser so it survives page changes. The checkout re-checks it, so editing this cannot give a discount.
+  const PROMO_KEY = 'pilr-promo'
+  function getPromo() {
+    try { return JSON.parse(localStorage.getItem(PROMO_KEY)) || null } catch (_) { return null }
+  }
+  function setPromo(p) {
+    try { if (p) localStorage.setItem(PROMO_KEY, JSON.stringify(p)); else localStorage.removeItem(PROMO_KEY) } catch (_) {}
+    global.dispatchEvent(new CustomEvent('pilr:cart-updated', { detail: getCart() }))
+  }
+  // Dollar amount the promo takes off the whole order (0 when no code is applied).
+  function getPromoDiscount() {
+    const p = getPromo()
+    return p ? Math.round(getCartTotal() * p.percent) / 100 : 0
+  }
+  let promoMessage = ''
+  async function applyPromoCode(code) {
+    code = String(code || '').trim()
+    if (!code) { promoMessage = 'Enter a code.'; return }
+    try {
+      const res = await fetch('/api/promo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) })
+      const data = await res.json()
+      if (res.ok && data && data.valid) { promoMessage = ''; setPromo({ code: data.code, percent: data.percent }); return }
+      promoMessage = (data && data.message) || 'That code is not valid.'
+    } catch (_) {
+      promoMessage = 'Could not check that code. Please try again.'
+    }
+    global.dispatchEvent(new CustomEvent('pilr:cart-updated', { detail: getCart() }))
   }
 
   function clearCart() {
@@ -814,31 +848,49 @@
     html += offersHtml()
     body.innerHTML = html
 
-    footer.innerHTML =
-      '<div class="cart-drawer-promo' + (promoOpen ? ' open' : '') + '" id="cart-drawer-promo">' +
-        '<button type="button" class="cart-drawer-promo-toggle" id="cart-drawer-promo-toggle">' +
-          '<span>Have a promo code?</span>' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
-        '</button>' +
-        '<div class="cart-drawer-promo-body">' +
-          '<div class="cart-drawer-promo-body-inner">' +
-            '<div class="cart-drawer-promo-row">' +
-              '<input type="text" placeholder="Enter code" />' +
-              '<button type="button">Apply</button>' +
+    const promo = getPromo()
+    const promoHtml = promo
+      ? '<div class="cart-drawer-promo-applied"><span>' + promo.code + ' applied &middot; ' + promo.percent + '% off</span>' +
+          '<button type="button" id="cart-drawer-promo-remove">Remove</button></div>'
+      : '<div class="cart-drawer-promo' + (promoOpen ? ' open' : '') + '" id="cart-drawer-promo">' +
+          '<button type="button" class="cart-drawer-promo-toggle" id="cart-drawer-promo-toggle">' +
+            '<span>Have a promo code?</span>' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</button>' +
+          '<div class="cart-drawer-promo-body">' +
+            '<div class="cart-drawer-promo-body-inner">' +
+              '<div class="cart-drawer-promo-row">' +
+                '<input type="text" id="cart-drawer-promo-input" placeholder="Enter code" autocapitalize="characters" />' +
+                '<button type="button" id="cart-drawer-promo-apply">Apply</button>' +
+              '</div>' +
+              '<p class="cart-drawer-promo-msg" id="cart-drawer-promo-msg">' + promoMessage + '</p>' +
             '</div>' +
           '</div>' +
-        '</div>' +
-      '</div>' +
+        '</div>'
+    const promoDiscount = getPromoDiscount()
+    footer.innerHTML =
+      promoHtml +
+      (promoDiscount ? '<div class="cart-drawer-discount"><span>Promo (' + promo.code + ')</span><span>&minus;' + formatMoney(promoDiscount) + '</span></div>' : '') +
       '<div class="cart-drawer-subtotal">' +
         '<span>Total</span>' +
-        '<span>' + formatMoney(getCartTotal()) + '</span>' +
+        '<span>' + formatMoney(getCartTotal() - promoDiscount) + '</span>' +
       '</div>' +
       '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>'
 
-    document.getElementById('cart-drawer-promo-toggle').addEventListener('click', () => {
+    const promoToggle = document.getElementById('cart-drawer-promo-toggle')
+    if (promoToggle) promoToggle.addEventListener('click', () => {
       promoOpen = !promoOpen
       document.getElementById('cart-drawer-promo').classList.toggle('open', promoOpen)
     })
+    const promoApply = document.getElementById('cart-drawer-promo-apply')
+    if (promoApply) {
+      const input = document.getElementById('cart-drawer-promo-input')
+      const go = async () => { promoApply.disabled = true; promoApply.textContent = '…'; await applyPromoCode(input.value); renderDrawer() }
+      promoApply.addEventListener('click', go)
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go() } })
+    }
+    const promoRemove = document.getElementById('cart-drawer-promo-remove')
+    if (promoRemove) promoRemove.addEventListener('click', () => { promoMessage = ''; setPromo(null) })
     document.getElementById('cart-drawer-checkout-btn').addEventListener('click', () => {
       startCheckout(document.getElementById('cart-drawer-checkout-btn'))
     })
@@ -875,6 +927,8 @@
     startCheckout,
     formatMoney,
     getItemDisplay,
+    getPromo,
+    getPromoDiscount,
     openDrawer,
     closeDrawer,
   }

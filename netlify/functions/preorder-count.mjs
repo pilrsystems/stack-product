@@ -64,7 +64,7 @@ async function getAccessToken(domain) {
   return cachedToken
 }
 
-async function countOrders() {
+export async function countOrders() {
   if (cachedCount !== null && Date.now() - cachedCountAt < CACHE_MS) return cachedCount
   const domain = ENV().SHOPIFY_STORE_DOMAIN
   if (!domain) throw new Error('Shopify Admin API is not configured (missing SHOPIFY_STORE_DOMAIN)')
