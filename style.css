@@ -7140,7 +7140,7 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 body #product-info-inner ul.product-feature-list { margin-bottom: 10px; }
 
 
-/* ======================================================================
+/* ===============================================================
    COMPARE TABLE (shared: every product page, Why pilr, Build Your System)
    Compact table: label column 1.5x a data column, header zone (pictures, pilr logo, column titles) straight on the
    page background, ONE rounded tinted box under it for the rows (no divider lines), and the pilr column as a white
@@ -7967,3 +7967,44 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 @media (max-width: 600px) {
   body #product-info-inner .preorder-card { display: none !important; }
 }
+=======
+/* Full Stack page: pre-order perks laid out as a free-gift picture (left) beside free shipping + cancel anytime stacked (right) */
+.pp-gift-row { display: flex; align-items: center; justify-content: center; gap: 40px; }
+.pp-gift-img { width: 48%; max-width: 230px; height: auto; display: block; flex-shrink: 0; }
+.pp-gift-side { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+#product-info-inner .pp-gift .preorder-perk { flex-direction: row; align-items: center; text-align: left; gap: 10px; justify-self: auto; }
+#product-info-inner .pp-gift .preorder-perk svg { width: 26px; height: 26px; transform: none; }
+#product-info-inner .pp-gift .preorder-perk-name { font-size: 13.5px; }
+#product-info-inner .pp-gift .preorder-perk-sub { font-size: 12px; }
+@media (max-width: 600px) {
+  #product-info-inner .pp-gift .preorder-perk svg { width: min(22px, 5.6vw); height: min(22px, 5.6vw); }
+  #product-info-inner .pp-gift .preorder-perk-name { font-size: min(11.7px, 3vw); }
+  #product-info-inner .pp-gift .preorder-perk-sub { font-size: min(9.6px, 2.45vw); }
+  .pp-gift-side { gap: 18px; }
+}
+/* Full Stack perks (web): 40px of blank space from the heading to the top of the Free Gift label (the picture carries ~44px of its own) */
+@media (min-width: 601px) { .pp-gift .preorder-perks-label { margin-bottom: -4px; } }
+/* Full Stack perks (web): 40px from the bottom of the scooper to the line above Details (the picture carries ~29px of its own at the bottom) */
+@media (min-width: 601px) { #product-info-inner .pp-gift { margin-bottom: -9px; } }
+@media (max-width: 600px) { .pp-gift-row { gap: 10px; } .pp-gift-img { width: 40%; } }   /* phone: the three perks + picture have to fit side by side */
+/* Free Gift picture: a bit bigger, and nudged to the right */
+.pp-gift-img { max-width: 280px; transform: translate(14px, 0.7%); }   /* keeps the artwork on the vertical middle of the section */
+@media (max-width: 600px) { .pp-gift-img { width: 46%; transform: translate(6px, 0.7%); } }
+/* Free Gift picture: a little smaller */
+.pp-gift-img { width: 215px; max-width: 215px; }
+@media (max-width: 600px) { .pp-gift-img { width: 40%; max-width: none; } }
+/* Free Gift picture: a touch smaller still */
+.pp-gift-img { width: 195px; max-width: 195px; }
+@media (max-width: 600px) { .pp-gift-img { width: 36%; max-width: none; } }
+/* Free Gift picture: settled between the two previous sizes */
+.pp-gift-img { width: 205px; max-width: 205px; }
+@media (max-width: 600px) { .pp-gift-img { width: 38%; max-width: none; } }
+/* Free Gift picture: +5% (205px -> 215px web, 38% -> 40% phone) */
+.pp-gift-img { width: 215px; max-width: 215px; }
+@media (max-width: 600px) { .pp-gift-img { width: 40%; max-width: none; } }
+/* Free Gift picture (web): +5% more (215px -> 226px) and 2px higher */
+@media (min-width: 601px) { .pp-gift-img { width: 226px; max-width: 226px; transform: translate(14px, calc(0.7% - 2px)); } }
+/* Full Stack perks (web): 40px from the heading to the top of the Free Gift box */
+@media (min-width: 601px) { .pp-gift .preorder-perks-label { margin-bottom: -10px; } }
+/* Full Stack perks (web): 40px from the bottom of the scooper to the line above Details */
+@media (min-width: 601px) { #product-info-inner .pp-gift { margin-bottom: -33px; } }
