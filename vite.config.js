@@ -101,6 +101,7 @@ export default defineConfig({
         earlyAccess: resolve(__dirname, 'early-access.html'),
         shippingInfo: resolve(__dirname, 'shipping-information.html'),
         returnsExchanges: resolve(__dirname, 'returns-exchanges.html'),
+        preorderRefund: resolve(__dirname, 'pre-order-refund-policy.html'),
         contactUs: resolve(__dirname, 'contact-us.html'),
         tellUs: resolve(__dirname, 'tell-us.html'),
         faq: resolve(__dirname, 'faq.html'),
