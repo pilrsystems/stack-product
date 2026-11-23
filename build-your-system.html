@@ -202,7 +202,11 @@
           </div>
 <!--@include partials/preorder-card.html-->
           <button type="button" class="btn btn--dark system-cta" id="system-add-to-cart-btn" disabled>Pre-order</button>
-<!--@include partials/preorder-perks.html-->
+<!-- "Included with your pre-order": the Free Gift layout while a Powder Pod is in the system, the two-perk layout otherwise (src/system-builder.js sets data-powder) -->
+<div id="bys-perks" data-powder="0">
+<!--@include partials/preorder-perks-gift.html-->
+<!--@include partials/preorder-perks-two.html-->
+</div>
           <!-- Same Details dropdown as the product pages -->
           <div class="product-info-sections">
             <div class="product-accordion">

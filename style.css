@@ -7973,14 +7973,21 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 .pp-gift-row { display: flex; align-items: center; justify-content: center; gap: 40px; }
 .pp-gift-img { width: 48%; max-width: 230px; height: auto; display: block; flex-shrink: 0; }
 .pp-gift-side { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
-#product-info-inner .pp-gift .preorder-perk { flex-direction: row; align-items: center; text-align: left; gap: 10px; justify-self: auto; }
-#product-info-inner .pp-gift .preorder-perk svg { width: 26px; height: 26px; transform: none; }
-#product-info-inner .pp-gift .preorder-perk-name { font-size: 13.5px; }
-#product-info-inner .pp-gift .preorder-perk-sub { font-size: 12px; }
+#product-info-inner .pp-gift .preorder-perk,
+.sys-panel-body .pp-gift .preorder-perk { flex-direction: row; align-items: center; text-align: left; gap: 10px; justify-self: auto; }
+#product-info-inner .pp-gift .preorder-perk svg,
+.sys-panel-body .pp-gift .preorder-perk svg { width: 26px; height: 26px; transform: none; }
+#product-info-inner .pp-gift .preorder-perk-name,
+.sys-panel-body .pp-gift .preorder-perk-name { font-size: 13.5px; }
+#product-info-inner .pp-gift .preorder-perk-sub,
+.sys-panel-body .pp-gift .preorder-perk-sub { font-size: 12px; }
 @media (max-width: 600px) {
-  #product-info-inner .pp-gift .preorder-perk svg { width: min(22px, 5.6vw); height: min(22px, 5.6vw); }
-  #product-info-inner .pp-gift .preorder-perk-name { font-size: min(11.7px, 3vw); }
-  #product-info-inner .pp-gift .preorder-perk-sub { font-size: min(9.6px, 2.45vw); }
+  #product-info-inner .pp-gift .preorder-perk svg,
+  .sys-panel-body .pp-gift .preorder-perk svg { width: min(22px, 5.6vw); height: min(22px, 5.6vw); }
+  #product-info-inner .pp-gift .preorder-perk-name,
+  .sys-panel-body .pp-gift .preorder-perk-name { font-size: min(11.7px, 3vw); }
+  #product-info-inner .pp-gift .preorder-perk-sub,
+  .sys-panel-body .pp-gift .preorder-perk-sub { font-size: min(9.6px, 2.45vw); }
   .pp-gift-side { gap: 18px; }
 }
 /* Full Stack perks (web): 40px of blank space from the heading to the top of the Free Gift label (the picture carries ~44px of its own) */
@@ -8011,9 +8018,12 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 @media (min-width: 601px) { #product-info-inner .pp-gift { margin-bottom: -33px; } }
 /* Full Stack perks (phone): slightly bigger shipping / cancel icons + text, nudged left; slightly bigger Free Gift picture */
 @media (max-width: 600px) {
-  #product-info-inner .pp-gift .preorder-perk svg { width: min(23.5px, 6.2vw); height: min(23.5px, 6.2vw); }
-  #product-info-inner .pp-gift .preorder-perk-name { font-size: min(12.5px, 3.3vw); }
-  #product-info-inner .pp-gift .preorder-perk-sub { font-size: min(10.2px, 2.7vw); }
+  #product-info-inner .pp-gift .preorder-perk svg,
+  .sys-panel-body .pp-gift .preorder-perk svg { width: min(23.5px, 6.2vw); height: min(23.5px, 6.2vw); }
+  #product-info-inner .pp-gift .preorder-perk-name,
+  .sys-panel-body .pp-gift .preorder-perk-name { font-size: min(12.5px, 3.3vw); }
+  #product-info-inner .pp-gift .preorder-perk-sub,
+  .sys-panel-body .pp-gift .preorder-perk-sub { font-size: min(10.2px, 2.7vw); }
   .pp-gift-side { transform: translateX(-8px); }
   .pp-gift-img { width: 48%; }
 }
@@ -8037,4 +8047,20 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 }
 @media (max-width: 600px) {
   #product-info-inner .preorder-perks--two .preorder-perk-grid { display: flex; flex-direction: row; justify-content: center; align-items: flex-start; gap: 28px; }
+}
+
+/* Build Your System: which "Included with your pre-order" layout shows depends on whether a Powder Pod is in the system */
+#bys-perks[data-powder="0"] .pp-gift { display: none; }
+#bys-perks[data-powder="1"] .preorder-perks--two { display: none; }
+.sys-panel-body .preorder-perks--two .preorder-perk-grid { flex-direction: row; justify-content: center; align-items: flex-start; padding-left: 0; gap: 28px; }
+.sys-panel-body .preorder-perks--two .preorder-perk { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+/* Build Your System (web): the sidebar is only ~343px wide, the same as a phone, so the Free Gift layout uses the phone sizes there */
+@media (min-width: 601px) {
+  .sys-panel-body .pp-gift .pp-gift-row { gap: 10px; }
+  .sys-panel-body .pp-gift .pp-gift-img { width: 51.9%; max-width: none; transform: translate(10px, calc(0.7% - 4px)); }
+  .sys-panel-body .pp-gift .pp-gift-side { transform: translateX(-8px); }
+  .sys-panel-body .pp-gift .preorder-perk svg { width: 23.5px; height: 23.5px; }
+  .sys-panel-body .pp-gift .preorder-perk-name { font-size: 12.5px; }
+  .sys-panel-body .pp-gift .preorder-perk-sub { font-size: 10.2px; }
+  .sys-panel-body .pp-gift .preorder-perks-label { margin-bottom: 1px; }
 }
