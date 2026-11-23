@@ -58,7 +58,7 @@ function page(next, wrong) {
 </style></head>
 <body><main>
   <img src="/images/logov3-cropped.png" alt="pilr">
-  <p>Pre-orders go live tomorrow, 11/23, at 5 PM PST.</p>
+  <p>Pre-orders go live today, 11/23, at 5 PM PST.</p>
   <form method="post" action="/__password">
     <input type="hidden" name="next" value="${next.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))}">
     <input type="password" name="password" placeholder="Password" autocomplete="current-password" autofocus required>
