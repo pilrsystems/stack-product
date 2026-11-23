@@ -7967,7 +7967,7 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 @media (max-width: 600px) {
   body #product-info-inner .preorder-card { display: none !important; }
 }
-=======
+
 /* Full Stack page: pre-order perks laid out as a free-gift picture (left) beside free shipping + cancel anytime stacked (right) */
 .pp-gift-row { display: flex; align-items: center; justify-content: center; gap: 40px; }
 .pp-gift-img { width: 48%; max-width: 230px; height: auto; display: block; flex-shrink: 0; }
