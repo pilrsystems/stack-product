@@ -7002,7 +7002,9 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
 @media (max-width: 600px) {
   body #product-info-inner .product-reviews-star { width: 12.65px !important; height: 12.65px !important; }
   body #product-info-inner .product-reviews-count { font-size: 0.72105rem !important; }
-  body #product-info-inner .product-page-tagline { font-size: clamp(15.7px, calc((100vw - 48px) / 20), 17px) !important; }   /* a little bigger than the bullets under it, as big as still fits on one line */
+  body #product-info-inner .product-page-tagline { white-space: nowrap; font-size: min(17px, calc((100vw - 48px) / 23)) !important; }   /* always one line: the text shrinks with the screen width (--chars = rough length of the sentence) */
+  body #product-info-inner .product-feature-list { gap: 0.2rem; }
+  body #product-info-inner .product-feature-list li { font-weight: 400; color: #7a8a94; line-height: 1.5; white-space: nowrap; font-size: min(14.4px, calc((100vw - 48px - 26px) / var(--chars, 23.5))) !important; }   /* bullets: one line each, on every phone width */
 }
 
 /* Cart drawer free-shipping truck icon (phone): +1% */
@@ -7951,4 +7953,17 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 @media (max-width: 600px) {
   .lid-note-web { display: none; }
   .lid-note-phone { display: inline; }
+}
+
+/* ── PHONE: product photo sits inset from the screen edges (smaller, like other mobile shops), same square ratio, our own corner style ── */
+@media (max-width: 600px) {
+  body .pg-main { padding: 8px 1.5rem 0; box-sizing: border-box; }
+  body .pg-swipe, body .pg-main-frame { border-radius: var(--radius); overflow: hidden; }
+  /* the thumbnail strip starts and stops exactly where the main photo does (it scrolls inside that width instead of running off the screen) */
+  body .pg-thumbs { margin: 0 1.5rem; padding-left: 0; padding-right: 0; scroll-padding-left: 0; }
+}
+
+/* Phone, product pages: no "claimed until pre-order perks end" progress box (saves space above the buy button) */
+@media (max-width: 600px) {
+  body #product-info-inner .preorder-card { display: none !important; }
 }
