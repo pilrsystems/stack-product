@@ -33,7 +33,7 @@
 const ENV = () => globalThis.__ENV || (typeof process !== 'undefined' && process.env ? process.env : {})
 
 import { countOrders } from './preorder-count.mjs'
-import { RATES, currencyForCountry } from './currency.mjs'
+import { RATES, currencyForCountry, isKnownCountry } from './currency.mjs'
 
 const ADMIN_API_VERSION = '2024-10'
 const TOKEN_REFRESH_BUFFER_MS = 60_000
@@ -236,6 +236,8 @@ export default async (req) => {
   // Shopper's currency / country (from the site's currency picker). Anything unknown falls back to US dollars.
   const currency = body && RATES[body.currency] && body.currency !== 'USD' ? body.currency : null
   const marketCountry = currency && /^[A-Za-z]{2}$/.test(String(body.country || '')) ? String(body.country).toUpperCase() : null
+  // The country picked in the site's footer bar: the checkout opens with it already selected (the customer can still change it).
+  const addressCountry = body && isKnownCountry(body.country) ? String(body.country).toUpperCase() : null
 
   let promo = null
   if (body && body.code) {
@@ -253,7 +255,7 @@ export default async (req) => {
       body: JSON.stringify({
         query: `mutation Create($input: DraftOrderInput!) {
           draftOrderCreate(input: $input) {
-            draftOrder { id invoiceUrl totalPriceSet { shopMoney { amount currencyCode } presentmentMoney { amount currencyCode } } subtotalPriceSet { presentmentMoney { amount } } totalTaxSet { presentmentMoney { amount } } lineItems(first: 20) { nodes { title quantity originalUnitPriceSet { presentmentMoney { amount currencyCode } } discountedTotalSet { presentmentMoney { amount } } } } }
+            draftOrder { id invoiceUrl shippingAddress { countryCodeV2 } totalPriceSet { shopMoney { amount currencyCode } presentmentMoney { amount currencyCode } } subtotalPriceSet { presentmentMoney { amount } } totalTaxSet { presentmentMoney { amount } } lineItems(first: 20) { nodes { title quantity originalUnitPriceSet { presentmentMoney { amount currencyCode } } discountedTotalSet { presentmentMoney { amount } } } } }
             userErrors { field message }
           }
         }`,
@@ -268,6 +270,7 @@ export default async (req) => {
             note: 'Pre-order placed on the pilr site',
             ...(currency ? { presentmentCurrencyCode: currency } : {}),
             ...(marketCountry ? { marketRegionCountryCode: marketCountry } : {}),
+            ...(addressCountry ? { shippingAddress: { countryCode: addressCountry } } : {}),
           },
         },
       }),
