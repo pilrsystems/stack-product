@@ -20,6 +20,7 @@ const SUPPLEMENTS = {
     { id: 'magnesium',    label: 'Magnesium' },
     { id: 'multivitamin', label: 'Multivitamin' },
     { id: 'ltheanine',    label: 'L-Theanine' },
+    { id: 'turmeric',     label: 'Turmeric' },
     { id: 'other-hybrid', label: 'Other' },
   ],
   pills: [
@@ -30,7 +31,6 @@ const SUPPLEMENTS = {
     { id: 'ashwagandha',  label: 'Ashwagandha' },
     { id: 'b12',          label: 'B12' },
     { id: 'vitaminc',     label: 'Vitamin C' },
-    { id: 'turmeric',     label: 'Turmeric' },
     { id: 'other-pills',  label: 'Other' },
   ],
   // Not actual supplements — real, individually-purchasable products.
@@ -1369,8 +1369,8 @@ function getLabelNamesForPods(podTypes) {
 // Maps each supplement chip to its Size Guide row, per pod type. A supplement with no row (or no tested count) gets no number yet.
 const SIZE_GUIDE_ROW = {
   'Powder Pod':     { creatine: 'Creatine Monohydrate', preworkout: 'Pre-Workout', electrolytes: 'Electrolytes', collagen: 'Collagen Peptides', greens: 'Greens / AG1', bcaas: 'BCAAs' },
-  'Large Pill Pod': { fishoil: 'Fish Oil', magnesium: 'Magnesium Glycinate', multivitamin: 'Adult Multivitamin Gummy', ltheanine: 'L-Theanine' },
-  'Small Pill Pod': { vitamind: 'Vitamin D3', turmeric: 'Turmeric', zinc: 'Zinc', coq10: 'CoQ10', probiotic: 'Probiotic', ashwagandha: 'Ashwagandha', b12: 'B12', vitaminc: 'Vitamin C' },
+  'Large Pill Pod': { fishoil: 'Fish Oil', magnesium: 'Magnesium Glycinate', multivitamin: 'Adult Multivitamin Gummy', ltheanine: 'L-Theanine', turmeric: 'Turmeric' },
+  'Small Pill Pod': { vitamind: 'Vitamin D3', zinc: 'Zinc', coq10: 'CoQ10', probiotic: 'Probiotic', ashwagandha: 'Ashwagandha', b12: 'B12', vitaminc: 'Vitamin C' },
 }
 const SIZE_GUIDE_TAB = { 'Small Pill Pod': 'small', 'Large Pill Pod': 'big', 'Powder Pod': 'powder' }
 // Powder: the Size Guide already counts servings per pod. Pills: it counts pills per compartment, so divide by the pills in one serving.
