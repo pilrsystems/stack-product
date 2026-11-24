@@ -7149,7 +7149,7 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 body #product-info-inner ul.product-feature-list { margin-bottom: 10px; }
 
 
-/* ===============================================================
+/* ========================================================
    COMPARE TABLE (shared: every product page, Why pilr, Build Your System)
    Compact table: label column 1.5x a data column, header zone (pictures, pilr logo, column titles) straight on the
    page background, ONE rounded tinted box under it for the rows (no divider lines), and the pilr column as a white
@@ -8264,3 +8264,13 @@ html.cur-modal-open { overflow: hidden; }
 .cur-intl .usd-only { display: none !important; }
 .intl-only { display: none; }
 .cur-intl .intl-only { display: inline; }
+=======
+/* Consent banner (shown only where Shopify's region settings require it) */
+#pilr-consent { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 2147483000; max-width: 560px; margin: 0 auto;
+  background: #5e6e7a; color: #f5f0e8; border-radius: 6px; padding: 14px 16px; display: flex; gap: 14px; align-items: center; justify-content: space-between;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 1.45; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+#pilr-consent p { margin: 0; }
+#pilr-consent div { display: flex; gap: 8px; flex-shrink: 0; }
+#pilr-consent button { border: 1px solid rgba(245,240,232,.55); background: transparent; color: #f5f0e8; border-radius: 4px; padding: 8px 14px; font: inherit; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+#pilr-consent button[data-c="yes"] { background: #f5f0e8; color: #5e6e7a; border-color: #f5f0e8; }
+@media (max-width: 520px) { #pilr-consent { flex-direction: column; align-items: stretch; } #pilr-consent div { justify-content: flex-end; } }
