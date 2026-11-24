@@ -8068,10 +8068,10 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 .pi-subwrap { container-type: inline-size; --pi-pitch: 31px; --pi-fs: min(13.5px, calc((100cqw - 82px) / 21.6)); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #33414a; margin: -6px 0 -8px; }
 @media (max-width: 600px) { .pi-subwrap { --pi-pitch: 28px; } }
 
-/* Cart drawer: light green 'Use FIRST1000' button to the right of 'Have a promo code?' (same green as the Limited-time offer pill). It fills all the space to the right of the label. Tapping it applies the code. On a narrow screen it drops to its own line and fills the full width. */
-.cart-drawer-promo-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+/* Cart drawer: light green 'Use FIRST1000' button to the right of 'Have a promo code?' (same green as the Limited-time offer pill). It is only as wide as its text (like the pill), centred in the open space to the right of the label on a wide cart. Tapping it applies the code. On a narrow screen it drops to its own line on its own line, centred, under it. */
+.cart-drawer-promo-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 0; }
 .cart-drawer-promo-head .cart-drawer-promo-toggle { width: auto; flex: none; }
-.cart-drawer-offer-btn { flex: 1 1 auto; margin: 0; padding: 0.7rem 1rem; border: 0; border-radius: 6px; background: #E4EDE2; color: #4A6B4F; font: inherit; font-size: 0.82rem; font-weight: 400; text-align: center; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
+.cart-drawer-offer-btn { flex: 0 1 auto; min-width: 0; margin: 0 auto; padding: 0.55em 0.95em; border: 0; border-radius: 6px; background: #E4EDE2; color: #4A6B4F; font: inherit; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1; text-align: center;   /* same look as the green 'Limited time pre-order offer' pill on the product pages */ white-space: nowrap; cursor: pointer; transition: background 0.2s; }
 .cart-drawer-offer-btn strong { font-weight: 700; }
 .cart-drawer-offer-btn:hover { background: #d8e5d5; }
 .cart-drawer-offer-btn:disabled { opacity: 0.6; cursor: default; }
@@ -8207,4 +8207,11 @@ body .sys-panel-body .pi-subwrap { margin: 12px 0 8px; }   /* this panel is a pl
   .sys-panel-body .pp-gift .preorder-perk-name { font-size: 12.5px; }
   .sys-panel-body .pp-gift .preorder-perk-sub { font-size: 10.2px; }
   .sys-panel-body .pp-gift .preorder-perks-label { margin-bottom: 1px; }
+}
+@media (max-width: 352px) { .cart-drawer-offer-btn { font-size: 0.52rem; letter-spacing: 0.03em; padding: 0.45em 0.55em; } }   /* very small phones: keep the green button inside the drawer */
+
+/* Phones: the green button stays beside 'Have a promo code?'; if it is too wide for the space left it wraps onto two lines instead of dropping down */
+@media (max-width: 600px) {
+  .cart-drawer-promo-head .cart-drawer-promo-toggle { margin-right: 0.5rem; }
+  .cart-drawer-offer-btn { white-space: normal; line-height: 1.3; padding: 0.45em 0.8em; }
 }
