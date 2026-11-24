@@ -250,6 +250,25 @@ export default async (req) => {
     const domain = ENV().SHOPIFY_STORE_DOMAIN
     if (!domain) throw new Error('missing SHOPIFY_STORE_DOMAIN')
     const token = await getAccessToken(domain)
+    // Price every line at Shopify's own market price for the shopper's country, so the first checkout screen already shows
+    // the same amounts as the site (without this Shopify converts USD at a plain rate, then reprices once an address is entered).
+    let overrides = null
+    if (marketCountry) {
+      try {
+        const local = await getLocalPrices(marketCountry)
+        if (local.currency === currency) {
+          const keyOf = {}
+          for (const [k, v] of Object.entries(VARIANT_ID)) keyOf[`gid://shopify/ProductVariant/${v}`] = k
+          const bundle = String(ENV().FULL_STACK_BUNDLE_VARIANT || '').trim()
+          if (/^\d+$/.test(bundle)) keyOf[`gid://shopify/ProductVariant/${bundle}`] = 'classic-stack'
+          overrides = lineItems.map((l) => {
+            const price = local.prices[keyOf[l.variantId]]
+            return price > 0 ? { ...l, priceOverride: { amount: price.toFixed(2), currencyCode: currency } } : l
+          })
+        }
+      } catch (err) { console.error('local price override skipped', err && err.message) }
+    }
+    const create = async (useCurrency) => {
     const res = await fetch(`https://${domain}/admin/api/${ADMIN_API_VERSION}/graphql.json`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
@@ -262,15 +281,15 @@ export default async (req) => {
         }`,
         variables: {
           input: {
-            lineItems,
+            lineItems: useCurrency && overrides ? overrides : lineItems,
             tags: promo ? ['preorder', 'promo-' + promo.code.toLowerCase()] : ['preorder'],
             ...(promo ? { appliedDiscount: { title: promo.code, description: promo.percent + '% off your order', valueType: 'PERCENTAGE', value: promo.percent } } : {}),
             // No shipping line is added here: Shopify picks the shipping rate from the address the customer enters at checkout
             // (free shipping for the US is a rate in Shopify's shipping settings; Managed Markets prices every other country).
             // A line added here would stay on the order whatever country the customer switches to.
             note: 'Pre-order placed on the pilr site',
-            ...(currency ? { presentmentCurrencyCode: currency } : {}),
-            ...(marketCountry ? { marketRegionCountryCode: marketCountry } : {}),
+            ...(useCurrency && currency ? { presentmentCurrencyCode: currency } : {}),
+            ...(useCurrency && marketCountry ? { marketRegionCountryCode: marketCountry } : {}),
             ...(addressCountry ? { shippingAddress: { countryCode: addressCountry } } : {}),
           },
         },
@@ -284,6 +303,17 @@ export default async (req) => {
       console.error('draftOrderCreate failed', detail)
       throw new Error('draft order failed: HTTP ' + res.status + ' ' + detail)   // detail: temporary, for the first live test
     }
+    return { url, result }
+    }
+    // If the shopper's currency is not enabled in Shopify (e.g. "Currency (MXN) is not enabled on this store"),
+    // fall back to a US-dollar order so checkout still works.
+    let made
+    try { made = await create(true) } catch (err) {
+      if (!currency) throw err
+      console.error('currency checkout failed, retrying in USD', currency, err && err.message)
+      made = await create(false)
+    }
+    const { url, result } = made
     // body.test: while the currency checkout is being tried out, also return what Shopify priced (no card is charged by creating a draft order).
     return json(200, body && body.test ? { url, priced: result.draftOrder } : { url })
   } catch (err) {
