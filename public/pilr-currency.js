@@ -109,14 +109,14 @@
   function refreshBars() { bars.forEach(function (b) { b.innerHTML = barHtml() }) }
   function mountBar() {
     if (bars.length) return
-    var right = document.querySelector('.nav-right')
-    if (!right) return
+    var copy = document.querySelector('.site-footer-copy')   // the bar lives in the footer, right after "© pilr 2026."
+    if (!copy) return
     var wrap = document.createElement('div')
     wrap.className = 'cur-picker cur-picker--bar'
     var btn = document.createElement('button')
     btn.type = 'button'; btn.className = 'cur-btn'; btn.setAttribute('aria-haspopup', 'dialog'); btn.setAttribute('aria-label', 'Change country and currency')
     btn.addEventListener('click', openModal)
-    wrap.appendChild(btn); right.insertBefore(wrap, right.firstChild)
+    wrap.appendChild(btn); copy.parentNode.insertBefore(wrap, copy.nextSibling)
     bars.push(btn); refreshBars()
   }
 

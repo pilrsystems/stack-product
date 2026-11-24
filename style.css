@@ -8222,13 +8222,9 @@ body .sys-panel-body .pi-subwrap { margin: 12px 0 8px; }   /* this panel is a pl
 .cur-btn:hover { color: #4a5a67; }
 .cur-flag { width: 20px; height: 15px; object-fit: cover; border-radius: 2px; flex: none; }
 .cur-short { display: none; }
-@media (max-width: 600px) {
-  /* phone header: a compact "🇨🇦 CAD" just left of the cart icon */
-  .cur-full { display: none; }
-  .cur-short { display: inline; }
-  .cur-picker--bar { grid-column: 3; grid-row: 1; justify-self: end; margin-right: 2.6rem; }
-  .cur-btn { font-size: 12.16px; }
-}
+/* In the footer (dark band): lighter text, same letter-spaced style as the footer's other small text */
+.site-footer .cur-btn { color: rgba(255,255,255,0.7); }
+.site-footer .cur-btn:hover { color: #fff; }
 
 .cur-modal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1.25rem; background: rgba(40, 52, 61, 0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .cur-modal.open { display: flex; }
