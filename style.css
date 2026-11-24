@@ -4443,6 +4443,15 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .cart-drawer-checkout-btn:hover { background: #6f7c88; }
 
+.cart-drawer-refund-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+  color: #7a8a94;
+}
+.cart-drawer-refund-note a { display: block; margin-top: 0.2rem; color: #5e6e7a; text-decoration: underline; text-underline-offset: 2px; }
+
 @media (max-width: 480px) {
   .cart-drawer { width: 100vw; }
 }
@@ -7140,7 +7149,7 @@ body .product-reviews-star.product-reviews-star--off { fill: #d3d8db; }
 body #product-info-inner ul.product-feature-list { margin-bottom: 10px; }
 
 
-/* ======================================================================
+/* ===============================================================
    COMPARE TABLE (shared: every product page, Why pilr, Build Your System)
    Compact table: label column 1.5x a data column, header zone (pictures, pilr logo, column titles) straight on the
    page background, ONE rounded tinted box under it for the rows (no divider lines), and the pilr column as a white
@@ -7884,7 +7893,7 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
   #product-info-inner .preorder-perk:last-child { justify-self: end; }
   #product-info-inner .preorder-perks { margin-bottom: 0; }   /* tighter: the line above Details sits 20px under the perks (36px before) */
   #product-info-inner .preorder-perk { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
-  #product-info-inner .preorder-perk svg { width: min(25px, 6.4vw); height: min(25px, 6.4vw); }
+  #product-info-inner .preorder-perk svg { width: min(23.5px, 6.2vw); height: min(23.5px, 6.2vw); }
   #product-info-inner .preorder-perk-name { font-size: min(11.7px, 3vw); white-space: nowrap; }   /* scales down a little on a narrower phone so all three always fit */
   #product-info-inner .preorder-perk-sub { font-size: min(9.6px, 2.45vw); white-space: nowrap; }   /* one line */
 }
@@ -7958,7 +7967,8 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 /* ── PHONE: product photo sits inset from the screen edges (smaller, like other mobile shops), same square ratio, our own corner style ── */
 @media (max-width: 600px) {
   body .pg-main { padding: 8px 1.5rem 0; box-sizing: border-box; }
-  body .pg-swipe, body .pg-main-frame { border-radius: var(--radius); overflow: hidden; }
+  body .pg-swipe, body .pg-main-frame { border-radius: var(--radius); }
+  body .pg-main-frame { overflow: hidden; }   /* (the swipe carousel must keep overflow-x: auto, or it can't scroll; its own rounded corners clip it) */
   /* the thumbnail strip starts and stops exactly where the main photo does (it scrolls inside that width instead of running off the screen) */
   body .pg-thumbs { margin: 0 1.5rem; padding-left: 0; padding-right: 0; scroll-padding-left: 0; }
 }
@@ -8102,3 +8112,99 @@ body .sys-panel-body .pi-subwrap { margin: 12px 0 8px; }   /* this panel is a pl
 .pi-gift[hidden] { display: none !important; }
 /* Build Your System: the live prices stay hidden until a pod is chosen (the script marks them data-live) */
 .pi-subwrap[data-pi-dynamic] .pi-subtotal-price:not([data-live]) { display: none; }
+
+/* Full Stack page: pre-order perks laid out as a free-gift picture (left) beside free shipping + cancel anytime stacked (right) */
+.pp-gift-row { display: flex; align-items: center; justify-content: center; gap: 40px; }
+.pp-gift-img { width: 48%; max-width: 230px; height: auto; display: block; flex-shrink: 0; }
+.pp-gift-side { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+#product-info-inner .pp-gift .preorder-perk,
+.sys-panel-body .pp-gift .preorder-perk { flex-direction: row; align-items: center; text-align: left; gap: 10px; justify-self: auto; }
+#product-info-inner .pp-gift .preorder-perk svg,
+.sys-panel-body .pp-gift .preorder-perk svg { width: 26px; height: 26px; transform: none; }
+#product-info-inner .pp-gift .preorder-perk-name,
+.sys-panel-body .pp-gift .preorder-perk-name { font-size: 13.5px; }
+#product-info-inner .pp-gift .preorder-perk-sub,
+.sys-panel-body .pp-gift .preorder-perk-sub { font-size: 12px; }
+@media (max-width: 600px) {
+  #product-info-inner .pp-gift .preorder-perk svg,
+  .sys-panel-body .pp-gift .preorder-perk svg { width: min(22px, 5.6vw); height: min(22px, 5.6vw); }
+  #product-info-inner .pp-gift .preorder-perk-name,
+  .sys-panel-body .pp-gift .preorder-perk-name { font-size: min(11.7px, 3vw); }
+  #product-info-inner .pp-gift .preorder-perk-sub,
+  .sys-panel-body .pp-gift .preorder-perk-sub { font-size: min(9.6px, 2.45vw); }
+  .pp-gift-side { gap: 18px; }
+}
+/* Full Stack perks (web): 40px of blank space from the heading to the top of the Free Gift label (the picture carries ~44px of its own) */
+@media (min-width: 601px) { .pp-gift .preorder-perks-label { margin-bottom: -4px; } }
+/* Full Stack perks (web): 40px from the bottom of the scooper to the line above Details (the picture carries ~29px of its own at the bottom) */
+@media (min-width: 601px) { #product-info-inner .pp-gift { margin-bottom: -9px; } }
+@media (max-width: 600px) { .pp-gift-row { gap: 10px; } .pp-gift-img { width: 40%; } }   /* phone: the three perks + picture have to fit side by side */
+/* Free Gift picture: a bit bigger, and nudged to the right */
+.pp-gift-img { max-width: 280px; transform: translate(14px, 0.7%); }   /* keeps the artwork on the vertical middle of the section */
+@media (max-width: 600px) { .pp-gift-img { width: 46%; transform: translate(10px, calc(0.7% - 4px)); } }
+/* Free Gift picture: a little smaller */
+.pp-gift-img { width: 215px; max-width: 215px; }
+@media (max-width: 600px) { .pp-gift-img { width: 40%; max-width: none; } }
+/* Free Gift picture: a touch smaller still */
+.pp-gift-img { width: 195px; max-width: 195px; }
+@media (max-width: 600px) { .pp-gift-img { width: 36%; max-width: none; } }
+/* Free Gift picture: settled between the two previous sizes */
+.pp-gift-img { width: 205px; max-width: 205px; }
+@media (max-width: 600px) { .pp-gift-img { width: 38%; max-width: none; } }
+/* Free Gift picture: +5% (205px -> 215px web, 38% -> 40% phone) */
+.pp-gift-img { width: 215px; max-width: 215px; }
+@media (max-width: 600px) { .pp-gift-img { width: 40%; max-width: none; } }
+/* Free Gift picture (web): +5% more (215px -> 226px) and 2px higher */
+@media (min-width: 601px) { .pp-gift-img { width: 226px; max-width: 226px; transform: translate(14px, calc(0.7% - 3px)); } }
+/* Full Stack perks (web): 40px from the heading to the top of the Free Gift box */
+@media (min-width: 601px) { .pp-gift .preorder-perks-label { margin-bottom: -10px; } }
+/* Full Stack perks (web): 40px from the bottom of the scooper to the line above Details */
+@media (min-width: 601px) { #product-info-inner .pp-gift { margin-bottom: -33px; } }
+/* Full Stack perks (phone): slightly bigger shipping / cancel icons + text, nudged left; slightly bigger Free Gift picture */
+@media (max-width: 600px) {
+  #product-info-inner .pp-gift .preorder-perk svg,
+  .sys-panel-body .pp-gift .preorder-perk svg { width: min(23.5px, 6.2vw); height: min(23.5px, 6.2vw); }
+  #product-info-inner .pp-gift .preorder-perk-name,
+  .sys-panel-body .pp-gift .preorder-perk-name { font-size: min(12.5px, 3.3vw); }
+  #product-info-inner .pp-gift .preorder-perk-sub,
+  .sys-panel-body .pp-gift .preorder-perk-sub { font-size: min(10.2px, 2.7vw); }
+  .pp-gift-side { transform: translateX(-8px); }
+  .pp-gift-img { width: 48%; }
+}
+/* Full Stack perks heading (web): 13px */
+@media (min-width: 601px) { .pp-gift .preorder-perks-label { font-size: 13px; } }
+/* Full Stack perks heading (phone): 13px */
+@media (max-width: 600px) { .pp-gift .preorder-perks-label { font-size: 13px; } }
+@media (max-width: 340px) { .pp-gift .preorder-perks-label { letter-spacing: 0.09em; } }   /* the smallest phones: tighter letters so 13px stays on one line */
+@media (max-width: 600px) { .pp-gift-img { width: 50.4%; } }   /* Free Gift picture (phone): +5% (48% -> 50.4%) */
+@media (max-width: 600px) { .pp-gift-img { width: 51.9%; } }   /* Free Gift picture (phone): +3% (50.4% -> 51.9%) */
+/* Full Stack perks (phone): 40px from the heading to the top of the Free Gift box. The picture's own empty top edge grows with the screen width, so the margin shrinks to match. */
+@media (max-width: 600px) { .pp-gift .preorder-perks-label { margin-bottom: calc(46.3px - 11.56vw); } }
+/* Full Stack perks (phone): 40px from the bottom of the scooper to the line above Details (the picture's empty bottom edge grows with the screen width, so the margin shrinks to match) */
+@media (max-width: 600px) { #product-info-inner .pp-gift { margin-bottom: calc(23.85px - 11.86vw); } }
+
+/* Large / Small Pill Pod pages: only two perks (free shipping + cancel anytime), centred as a pair */
+.preorder-perks--two .preorder-perk-grid { justify-content: center; gap: 64px; }
+@media (min-width: 601px) {
+  .preorder-perks--two .preorder-perk:nth-child(1) svg { transform: translate(2px, -3px); }
+  .preorder-perks--two .preorder-perk:nth-child(2) svg { transform: translateX(4px); }
+}
+@media (max-width: 600px) {
+  #product-info-inner .preorder-perks--two .preorder-perk-grid { display: flex; flex-direction: row; justify-content: center; align-items: flex-start; gap: 28px; }
+}
+
+/* Build Your System: which "Included with your pre-order" layout shows depends on whether a Powder Pod is in the system */
+#bys-perks[data-powder="0"] .pp-gift { display: none; }
+#bys-perks[data-powder="1"] .preorder-perks--two { display: none; }
+.sys-panel-body .preorder-perks--two .preorder-perk-grid { flex-direction: row; justify-content: center; align-items: flex-start; padding-left: 0; gap: 28px; }
+.sys-panel-body .preorder-perks--two .preorder-perk { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+/* Build Your System (web): the sidebar is only ~343px wide, the same as a phone, so the Free Gift layout uses the phone sizes there */
+@media (min-width: 601px) {
+  .sys-panel-body .pp-gift .pp-gift-row { gap: 10px; }
+  .sys-panel-body .pp-gift .pp-gift-img { width: 51.9%; max-width: none; transform: translate(10px, calc(0.7% - 4px)); }
+  .sys-panel-body .pp-gift .pp-gift-side { transform: translateX(-8px); }
+  .sys-panel-body .pp-gift .preorder-perk svg { width: 23.5px; height: 23.5px; }
+  .sys-panel-body .pp-gift .preorder-perk-name { font-size: 12.5px; }
+  .sys-panel-body .pp-gift .preorder-perk-sub { font-size: 10.2px; }
+  .sys-panel-body .pp-gift .preorder-perks-label { margin-bottom: 1px; }
+}

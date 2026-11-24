@@ -266,6 +266,15 @@
 
     .cart-checkout-btn:hover { background: #6f7c88; }
 
+    .cart-refund-note {
+      margin: 0.85rem 0 0;
+      font-size: 0.72rem;
+      line-height: 1.5;
+      text-align: center;
+      color: #7a8a94;
+    }
+    .cart-refund-note a { display: block; margin-top: 0.2rem; color: #5e6e7a; text-decoration: underline; text-underline-offset: 2px; }
+
     .cart-continue-link {
       display: block;
       text-align: center;
@@ -425,6 +434,7 @@
           </div>
           <!-- Shopify checkout button — href populated by JS -->
           <button class="cart-checkout-btn" id="cart-checkout-btn">Proceed to Checkout</button>
+          <p class="cart-refund-note">Pre-orders can be cancelled anytime before they ship for a full refund. <a href="./pre-order-refund-policy.html" target="_blank" rel="noopener">Pre-order refund policy</a></p>
           <a href="./catalog.html" class="cart-continue-link">Continue Shopping</a>
           <p class="cart-shipping-note"><strong>Free shipping</strong> on orders over $75.</p>
         </div>

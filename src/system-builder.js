@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 import gsap from 'gsap'
+import SIZE_GUIDE_DATA from './size-guide-data.js'
 
 // ── Supplement data ──────────────────────────────────────────
 const SUPPLEMENTS = {
@@ -888,6 +889,7 @@ function showPodCallouts(sectionIndex) {
   const type   = currentPodTypes[sectionIndex]
   const cfg    = COMPARTMENTS[type]
   const supps  = getSuppListForPods(currentPodTypes)[sectionIndex] ?? []
+  const suppIds = getSuppIdListForPods(currentPodTypes)[sectionIndex] ?? []
   const wrap   = document.querySelector('.system-canvas-wrap')
   if (!cfg || !supps.length || !wrap) return
   calloutsFor = sectionIndex
@@ -919,7 +921,7 @@ function showPodCallouts(sectionIndex) {
     const sx = right ? lx - 10 : lx + 10
     lines += `<line x1="${sx}" y1="${ly}" x2="${ax}" y2="${ay}"/><circle cx="${ax}" cy="${ay}" r="4.5"/>`
     labels += `<div class="pod-callout pod-callout--${right ? 'right' : 'left'}" style="left:${lx}px;top:${ly - 12}px">
-      <span class="pod-callout-name">${name}</span><span class="pod-callout-serv">About XX servings</span></div>`
+      <span class="pod-callout-name">${name}</span><span class="pod-callout-serv">About ${sizeGuideServings(type, suppIds[i]) ?? 'XX'} servings</span></div>`
   })
   layer.innerHTML = `<svg class="pod-callout-lines" width="${rect.width}" height="${rect.height}">${lines}</svg>${labels}`
   wrap.appendChild(layer)
@@ -1363,6 +1365,37 @@ function getLabelNamesForPods(podTypes) {
   })
 }
 
+// "About N servings" under each supplement on the opened pod, taken from the Size Guide (src/size-guide-data.js).
+// Maps each supplement chip to its Size Guide row, per pod type. A supplement with no row (or no tested count) gets no number yet.
+const SIZE_GUIDE_ROW = {
+  'Powder Pod':     { creatine: 'Creatine Monohydrate', preworkout: 'Pre-Workout', electrolytes: 'Electrolytes', collagen: 'Collagen Peptides', greens: 'Greens / AG1' },
+  'Large Pill Pod': { fishoil: 'Fish Oil', magnesium: 'Magnesium Glycinate', multivitamin: 'Adult Multivitamin Gummy' },
+  'Small Pill Pod': { vitamind: 'Vitamin D3', turmeric: 'Turmeric' },
+}
+const SIZE_GUIDE_TAB = { 'Small Pill Pod': 'small', 'Large Pill Pod': 'big', 'Powder Pod': 'powder' }
+// Powder: the Size Guide already counts servings per pod. Pills: it counts pills per compartment, so divide by the pills in one serving.
+function sizeGuideServings(podType, suppId) {
+  const rowName = SIZE_GUIDE_ROW[podType]?.[suppId]
+  const tab = SIZE_GUIDE_DATA[SIZE_GUIDE_TAB[podType]]
+  const row = rowName && tab ? tab.supplements.find(r => r.name === rowName) : null
+  const count = row ? parseInt(row.count, 10) : NaN
+  if (!Number.isFinite(count)) return null
+  if (podType === 'Powder Pod') return count
+  const perServing = parseInt(row.form, 10)
+  return Number.isFinite(perServing) && perServing > 0 ? Math.floor(count / perServing) : null
+}
+
+// The supplement ids in each pod of the stack (same order and grouping as getSuppListForPods)
+function getSuppIdListForPods(podTypes) {
+  const pCopy = [...selected.pills], hCopy = [...selected.hybrid], wCopy = [...selected.powders]
+  return podTypes.map(type => {
+    if (type === 'Small Pill Pod') return pCopy.splice(0, 3)
+    if (type === 'Large Pill Pod') return hCopy.splice(0, 2)
+    if (type === 'Powder Pod')     return wCopy.splice(0, 1)
+    return []
+  })
+}
+
 // The supplement names in each pod of the stack (same order as the pods), for the lines drawn on the top-down view
 function getSuppListForPods(podTypes) {
   const pCopy = [...selected.pills].map(id   => SUPPLEMENTS.pills.find(s => s.id === id).label)
@@ -1490,6 +1523,8 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   const total = pillPods + hybridPods + powderPods
 
   currentPodCounts = { pillPods, hybridPods, powderPods }
+  const perksBox = document.getElementById('bys-perks')   // pre-order perks: Free Gift layout only while a Powder Pod is in the system
+  if (perksBox) perksBox.setAttribute('data-powder', powderPods > 0 ? '1' : '0')
   const addonIds   = [...selected.addons]
   currentAddonIds  = addonIds
   const addonTotal = addonIds.reduce((sum, id) => sum + (ADD_ONS[id]?.price ?? 0) * qtyOf(id), 0)
