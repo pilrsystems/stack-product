@@ -1472,7 +1472,7 @@ function makeLidRow(chevron) {
         <div class="sys-acc-pod-info">
           <div class="sys-acc-info-field">
             <span class="sys-acc-info-label">Included</span>
-            <span class="sys-acc-info-value">Free with the purchase of any pod — extra lids are available under add ons.</span>
+            <span class="sys-acc-info-value">One free lid for every three pods. Extra lids are available under add ons.</span>
           </div>
         </div>
       </div>

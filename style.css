@@ -8032,7 +8032,7 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 
 /* Phone: the includes rows sit closer together (less vertical space between Full Stack, Free shipping and Cancel anytime) */
 @media (max-width: 600px) {
-  .pi-box { --pi-pitch: 28px; }
+  .pi-box { --pi-pitch: 29px; }
 }
 
 
