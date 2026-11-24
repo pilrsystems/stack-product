@@ -1719,7 +1719,8 @@ function updateOfferLine(totalQty) {
   if (gift) gift.hidden = !(totalQty > 0 && hasPowder)
   if (!pricesEl) return
   if (totalQty === 0) { delete pricesEl.dataset.live; return }
-  const ship = Number(wrap.dataset.piShip) || 0
+  const intl = window.PilrCurrency && window.PilrCurrency.get() !== 'USD'   // free shipping is US-only, so no shipping value outside the US
+  const ship = intl ? 0 : Number(wrap.dataset.piShip) || 0
   const scooper = gift && !gift.hidden ? Number(wrap.dataset.piScooper) || 0 : 0
   const pct = Number(wrap.dataset.piPercent) || 0
   const withCode = currentCartTotal * (1 - pct / 100)
@@ -1730,6 +1731,8 @@ function updateOfferLine(totalQty) {
   pricesEl.querySelector('.pi-save-tag').textContent = 'Save ' + formatPrice(Math.round(save * 100) / 100)
   pricesEl.dataset.live = '1'
 }
+
+window.addEventListener('pilr:currency-changed', () => { try { updateCartButton() } catch (_) {} })
 
 function updateCartButton() {
   const btn = document.getElementById('system-add-to-cart-btn')

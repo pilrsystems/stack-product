@@ -33,7 +33,7 @@
 const ENV = () => globalThis.__ENV || (typeof process !== 'undefined' && process.env ? process.env : {})
 
 import { countOrders } from './preorder-count.mjs'
-import { RATES } from './currency.mjs'
+import { RATES, currencyForCountry } from './currency.mjs'
 
 const ADMIN_API_VERSION = '2024-10'
 const TOKEN_REFRESH_BUFFER_MS = 60_000
@@ -193,6 +193,38 @@ export async function checkPromo(rawCode) {
   return { valid: true, code, percent: promo.percent }
 }
 
+// Shopify's own local prices (what its checkout will charge) for ONE country, for the site to show.
+// Returns { currency: 'CAD', prices: { 'pill-pod': 35, ..., 'classic-stack': 99 } } or throws.
+export async function getLocalPrices(country) {
+  const cc = String(country || '').toUpperCase()
+  if (!/^[A-Z]{2}$/.test(cc)) throw new Error('bad country')
+  const domain = ENV().SHOPIFY_STORE_DOMAIN
+  if (!domain) throw new Error('missing SHOPIFY_STORE_DOMAIN')
+  const token = await getAccessToken(domain)
+  const ids = { ...VARIANT_ID }
+  const bundle = String(ENV().FULL_STACK_BUNDLE_VARIANT || '').trim()
+  if (/^\d+$/.test(bundle)) ids['classic-stack'] = bundle
+  const fields = Object.entries(ids).map(([key, vid]) =>
+    `${key.replace(/-/g, '_')}: productVariant(id: "gid://shopify/ProductVariant/${vid}") { contextualPricing(context: { country: ${cc} }) { price { amount currencyCode } } }`)
+  const res = await fetch(`https://${domain}/admin/api/${ADMIN_API_VERSION}/graphql.json`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': token },
+    body: JSON.stringify({ query: `{ ${fields.join('\n')} }` }),
+  })
+  const payload = await res.json()
+  if (!res.ok || payload.errors) throw new Error('prices failed: ' + JSON.stringify(payload.errors || {}).slice(0, 300))
+  const prices = {}
+  let currency = null
+  for (const [alias, v] of Object.entries(payload.data || {})) {
+    const cp = v && v.contextualPricing && v.contextualPricing.price
+    if (!cp) continue
+    currency = currency || cp.currencyCode
+    prices[alias.replace(/_/g, '-')] = Number(cp.amount)
+  }
+  if (!currency) throw new Error('no prices for ' + cc)
+  return { currency, prices }
+}
+
 export default async (req) => {
   if (ENV().CHECKOUT_ENABLED !== 'true') return json(503, { error: 'checkout not enabled' })
   if (req.method !== 'POST') return json(405, { error: 'POST only' })
@@ -231,7 +263,8 @@ export default async (req) => {
             lineItems,
             tags: promo ? ['preorder', 'promo-' + promo.code.toLowerCase()] : ['preorder'],
             ...(promo ? { appliedDiscount: { title: promo.code, description: promo.percent + '% off your order', valueType: 'PERCENTAGE', value: promo.percent } } : {}),
-            shippingLine: { title: SHIPPING_TITLE, price: '0.00' },
+            // Free shipping is for US orders. Outside the US no shipping line is added, so Shopify Managed Markets prices shipping.
+            ...(currency ? {} : { shippingLine: { title: SHIPPING_TITLE, price: '0.00' } }),
             note: 'Pre-order placed on the pilr site',
             ...(currency ? { presentmentCurrencyCode: currency } : {}),
             ...(marketCountry ? { marketRegionCountryCode: marketCountry } : {}),

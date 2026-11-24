@@ -8215,3 +8215,49 @@ body .sys-panel-body .pi-subwrap { margin: 12px 0 8px; }   /* this panel is a pl
   .cart-drawer-promo-head .cart-drawer-promo-toggle { margin-right: 0.5rem; }
   .cart-drawer-offer-btn { white-space: normal; line-height: 1.3; padding: 0.45em 0.8em; }
 }
+
+/* ── COUNTRY / CURRENCY PICKER: header bar ("🇺🇸 UNITED STATES (USD $) ⌄") opens a popup ─────────────── */
+.cur-picker { position: relative; }
+.cur-btn { display: flex; align-items: center; gap: 0.45rem; background: none; border: none; padding: 0; cursor: pointer; font-family: inherit; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #5e6e7a; white-space: nowrap; transition: color 0.2s; }
+.cur-btn:hover { color: #4a5a67; }
+.cur-flag { width: 20px; height: 15px; object-fit: cover; border-radius: 2px; flex: none; }
+.cur-short { display: none; }
+@media (max-width: 600px) {
+  /* phone header: a compact "🇨🇦 CAD" just left of the cart icon */
+  .cur-full { display: none; }
+  .cur-short { display: inline; }
+  .cur-picker--bar { grid-column: 3; grid-row: 1; justify-self: end; margin-right: 2.6rem; }
+  .cur-btn { font-size: 12.16px; }
+}
+
+.cur-modal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1.25rem; background: rgba(40, 52, 61, 0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.cur-modal.open { display: flex; }
+html.cur-modal-open { overflow: hidden; }
+.cur-modal-card { position: relative; width: 100%; max-width: 480px; background: var(--bg); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.18); padding: 2.25rem 2rem 2rem; color: #5e6e7a; }
+.cur-modal-x { position: absolute; top: 0.9rem; right: 0.9rem; background: none; border: none; padding: 0.4rem; cursor: pointer; color: #5e6e7a; line-height: 0; }
+.cur-modal-title { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5e6e7a; margin: 0 1.6rem 1.5rem 0; line-height: 1.35; }
+.cur-modal-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8a94; margin: 0 0 0.5rem; }
+.cur-select { position: relative; margin-bottom: 1.4rem; }
+.cur-select-btn { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; width: 100%; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem 0.9rem; cursor: pointer; font-family: inherit; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #5e6e7a; text-align: left; }
+.cur-select-value { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+.cur-select-value span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cur-select.open .cur-chev { transform: rotate(180deg); }
+.cur-select-panel { display: none; position: absolute; left: 0; right: 0; top: calc(100% + 0.4rem); z-index: 5; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
+.cur-select.open .cur-select-panel { display: block; }
+.cur-search { display: block; width: calc(100% - 1.2rem); margin: 0.6rem; padding: 0.65rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; font-family: inherit; font-size: 0.8rem; color: #46545e; box-sizing: border-box; }
+.cur-search:focus { outline: none; border-color: #818E99; }
+.cur-list { list-style: none; margin: 0; padding: 0 0 0.35rem; max-height: 15rem; overflow-y: auto; border-top: 1px solid var(--border); }
+.cur-list li { display: flex; align-items: center; gap: 0.7rem; padding: 0.6rem 0.9rem; cursor: pointer; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: #5e6e7a; }
+.cur-list li:hover { background: rgba(94, 110, 122, 0.08); }
+.cur-list li[aria-selected="true"] { font-weight: 700; }
+.cur-list .cur-none { cursor: default; color: #8a98a2; }
+.cur-modal-primary, .cur-modal-secondary { display: block; width: 100%; border-radius: var(--radius); padding: 0.9rem; font-family: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.cur-modal-primary { background: #818E99; color: #fff; border: none; margin-bottom: 0.7rem; }
+.cur-modal-primary:hover { background: #6f7c88; }
+.cur-modal-secondary { background: transparent; color: #5e6e7a; border: 1px solid #5e6e7a; }
+.cur-modal-secondary:hover { background: rgba(94, 110, 122, 0.08); }
+
+/* Free shipping is for US orders only: hidden while a non-USD currency is chosen (set by pilr-currency.js) */
+.cur-intl .usd-only { display: none !important; }
+.intl-only { display: none; }
+.cur-intl .intl-only { display: inline; }

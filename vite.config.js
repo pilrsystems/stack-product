@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import { readFileSync, readdirSync, existsSync, mkdirSync, copyFileSync } from 'fs'
 import { dirname } from 'path'
+import { RATES, RATES_UPDATED, COUNTRIES, currencyForCountry } from './netlify/functions/currency.mjs'
 
 // Shared page sections. A page writes
 //   <!--@include partials/compare.html-->
@@ -37,6 +38,9 @@ function PRE_ORDER_PRICES(product = 'full-stack') {
     shipDateShort: String(p.shipDate).replace(/^(\w{3})\w*/, (m, a) => a.charAt(0).toUpperCase() + a.slice(1).toLowerCase() + '.'),   // 'January 25' -> 'Jan. 25' (phone wording)
     codeLimit: p.codeLimit,
     saveAmount: money(total - code),
+    // Outside the US there is no free-shipping value, so the total value and the saving leave the shipping out.
+    totalValueIntl: money(total - p.shippingValue),
+    saveAmountIntl: money(total - p.shippingValue - code),
   }
 }
 
@@ -121,9 +125,30 @@ function copyReferencedImages() {
   }
 }
 
+// Local stand-in for the Cloudflare /api/geo function: /api/geo?country=CA pretends the visitor is in Canada (default US).
+function devGeo() {
+  return {
+    name: 'dev-geo',
+    configureServer(server) {
+      // Local stand-in for /api/prices: only a few of Shopify's real CAD prices (seen in a test order); the rest fall back to the rates table.
+      server.middlewares.use('/api/prices', (req, res) => {
+        const c = (new URL(req.url, 'http://x').searchParams.get('country') || '').toUpperCase()
+        res.setHeader('Content-Type', 'application/json')
+        if (c !== 'CA') { res.statusCode = 502; return res.end('{}') }   // only Canada has Shopify's real numbers here; others use the rates fallback
+        res.end(JSON.stringify({ currency: 'CAD', prices: { 'pill-pod': 35, 'hybrid-pod': 41, 'powder-pod': 47, 'classic-stack': 99 } }))
+      })
+      server.middlewares.use('/api/geo', (req, res) => {
+        const country = (new URL(req.url, 'http://x').searchParams.get('country') || 'US').toUpperCase()
+        res.setHeader('Content-Type', 'application/json')
+        res.end(JSON.stringify({ country, currency: currencyForCountry(country), rates: RATES, updated: RATES_UPDATED, countries: COUNTRIES }))
+      })
+    },
+  }
+}
+
 export default defineConfig({
   base: '/',
-  plugins: [htmlPartials(), copyReferencedImages()],
+  plugins: [htmlPartials(), copyReferencedImages(), devGeo()],
   server: {
     allowedHosts: true,
   },

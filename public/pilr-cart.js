@@ -100,7 +100,33 @@
   // Add a Pod panel, the full cart page's qty stepper, or the drawer's own
   // qty stepper — rather than only ever reflecting whatever was true the
   // moment a line was first added.
+  // ── Local currency ──────────────────────────────────────────────────────────
+  // The cart does all its maths in whatever currency the shopper chose: the base prices below are swapped for
+  // Shopify's own local prices (what checkout charges), so tiers, free gifts and totals all stay exact.
+  const FLAT_PRICE_KEY = { 'classic-stack': 'classic-stack', 'travel-scooper': 'scooper', 'single-lid': 'lid' }
+  const POD_KEY = { 'pill-pod': 'pill-pod', 'hybrid-pod': 'hybrid-pod', 'powder-pod': 'powder-pod' }
+  const flatPrice = {}   // id -> current price of the flat-priced products
+  function applyCurrency() {
+    const pc = global.PilrCurrency
+    const P = k => (pc ? pc.price(k) : ({ 'pill-pod': 24, 'hybrid-pod': 28, 'powder-pod': 32, 'classic-stack': 68, scooper: 11, lid: 9 })[k])
+    for (const id in POD_KEY) STACKING_POD_BASE_PRICE[id] = P(POD_KEY[id])
+    for (const id in FLAT_PRICE_KEY) flatPrice[id] = P(FLAT_PRICE_KEY[id])
+    STATIC_LIST_PRICE_BY_ID['classic-stack'] = P('pill-pod') + P('hybrid-pod') + P('powder-pod')
+    FIRST_UNIT_FREE_BASE_PRICE['travel-scooper-free'] = P('scooper')
+    FIRST_UNIT_FREE_BASE_PRICE['single-lid-free'] = P('lid')
+    FREE_SCOOPER_PRODUCT.listPrice = P('scooper')
+    FREE_LID_PRODUCT.listPrice = P('lid')
+    OFFER_FLAT_PRICE['travel-scooper'] = P('scooper')
+    OFFER_FLAT_PRICE['single-lid'] = P('lid')
+  }
   function repriceStackingPods(cart) {
+    // Flat-priced lines (Full Stack, scooper, lid) and the free gifts' struck-through price follow the chosen currency too.
+    cart.items.forEach(i => {
+      if (flatPrice[i.id] != null) i.price = flatPrice[i.id]
+      if (i.id === FREE_SCOOPER_PRODUCT.id) i.listPrice = FREE_SCOOPER_PRODUCT.listPrice
+      if (i.id === FREE_LID_PRODUCT.id) i.listPrice = FREE_LID_PRODUCT.listPrice
+      if (i.id === 'classic-stack') i.listPrice = STATIC_LIST_PRICE_BY_ID['classic-stack']
+    })
     // A Full Stack in the cart counts as three pods toward the tier, so a single pod
     // added next to one is the 4th pod (the 4-pod discount). The Full Stack itself
     // stays at its own $68 price; only the loose pod lines are discounted.
@@ -156,7 +182,7 @@
   }
 
   async function startCheckout(btn) {
-    track('begin_checkout', { currency: 'USD', value: getCartTotal(), items: getCart().items.map(i => gaItem(i)) })
+    track('begin_checkout', { currency: global.PilrCurrency ? global.PilrCurrency.get() : 'USD', value: getCartTotal(), items: getCart().items.map(i => gaItem(i)) })
     const label = btn ? (btn.dataset.checkoutLabel || btn.textContent) : ''
     if (btn) { btn.dataset.checkoutLabel = label; btn.disabled = true; btn.textContent = 'One moment…' }
     const reset = () => { if (btn) { btn.disabled = false; btn.textContent = label } }
@@ -164,7 +190,7 @@
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: getCart().items.map(i => ({ id: i.id, quantity: i.quantity })), code: (getPromo() || {}).code }),
+        body: JSON.stringify({ items: getCart().items.map(i => ({ id: i.id, quantity: i.quantity })), code: (getPromo() || {}).code, currency: global.PilrCurrency ? global.PilrCurrency.get() : 'USD', country: global.PilrCurrency ? global.PilrCurrency.country() : '' }),
       })
       if (res.status === 400) {
         const bad = await res.json().catch(() => null)
@@ -310,6 +336,8 @@
     // (e.g. 32 * 0.85 - style multiplication) doesn't spuriously trip the
     // decimal branch.
     const rounded = Math.round(dollars * 100) / 100
+    const cur = global.PilrCurrency
+    if (cur && cur.get() !== 'USD') return cur.fmt(rounded)
     return '$' + (Number.isInteger(rounded) ? rounded : rounded.toFixed(2))
   }
 
@@ -545,6 +573,7 @@
     '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 7 9.5 17.5 4 12"/></svg>'
 
   function shippingBarHtml() {
+    if (global.PilrCurrency && global.PilrCurrency.get() !== 'USD') return ''   // free shipping is for US orders; Managed Markets prices shipping elsewhere
     const total     = getCartTotal()
     const remaining = FREE_SHIPPING_THRESHOLD - total
     // Pre-order: every order ships free, so the bar is always full while something is in the cart
@@ -943,4 +972,18 @@
     openDrawer,
     closeDrawer,
   }
+
+  // Currency changed (or Shopify's prices arrived): reprice the saved cart in the new currency and redraw.
+  function onCurrencyChanged() {
+    applyCurrency()
+    const cart = getCart()
+    if (cart.items.length) { repriceStackingPods(cart); saveCart(cart) }
+    else global.dispatchEvent(new CustomEvent('pilr:cart-updated', { detail: cart }))
+  }
+  global.addEventListener('pilr:currency-changed', onCurrencyChanged)
+  global.addEventListener('pilr:currency-ready', onCurrencyChanged)
+  applyCurrency()
 })(window)
+
+// Currency picker + country detection (own file so the rates/picker can change without touching the cart).
+;(function () { var s = document.createElement('script'); s.src = '/pilr-currency.js?v=20261124'; document.head.appendChild(s) })()

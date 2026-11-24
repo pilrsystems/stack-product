@@ -41,9 +41,8 @@ function renderBanner(claimed, goal, pct) {
   bar.dataset.mode = rotate ? 'rotate' : 'static'
   if (!rotate) bar.classList.remove('is-claim')
   bar.style.setProperty('--pob-pct', pct + '%')
-  const track = bar.querySelector('[role="progressbar"]')
-  track.setAttribute('aria-valuenow', String(claimed))
-  track.setAttribute('aria-valuemax', String(goal))
+  const track = bar.querySelector('[role="progressbar"]')   // the old claim bar; the banner now just says how many spots there are
+  if (track) { track.setAttribute('aria-valuenow', String(claimed)); track.setAttribute('aria-valuemax', String(goal)) }
   bannerAria()
   startRotation()
 }
