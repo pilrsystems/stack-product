@@ -130,6 +130,12 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     .sg-3col.sg-table-head, .sg-3col .sg-row { grid-template-columns: 1.6fr 1fr 1fr; }
+    /* Pill pods: Supplement | Serving size (stays where it was) | Pills per compartment | Servings (far right) */
+    .sg-4col.sg-table-head, .sg-4col .sg-row { grid-template-columns: calc((100% - 2rem) * 1.6 / 3.6) 1fr 1fr 1fr; }
+    .sg-4col .sg-row-count, .sg-4col.sg-table-head span:nth-child(3) { text-align: center; }   /* the middle column sits midway between Serving size and Servings, numbers centred under the title */
+    /* "Serving size" is a longer word than "Servings", so the middle column is nudged a little right to make the gaps on either side of it look equal */
+    .sg-4col .sg-row-count, .sg-4col.sg-table-head span:nth-child(3) { padding-left: 1.7rem; }
+    .sg-row-servings { text-align: right; color: #5e6e7a; font-weight: 600; }
     .sg-row-name { color: #3d4f5c; }
     .sg-row-size { color: #7a8a94; }
     .sg-row-count, .sg-table-head span:last-child { text-align: right; }
@@ -195,8 +201,14 @@
       .sg-main { padding: 8rem 1.5rem var(--section-gap); }
       .sg-specs { grid-template-columns: 1fr; gap: 1.75rem; }
       .sg-table-head, .sg-row { grid-template-columns: 1.4fr 1fr 1fr; }
-      .sg-table-head:not(.sg-3col) span:nth-child(3), .sg-row .sg-row-size { display: none; }
+      .sg-table-head:not(.sg-3col):not(.sg-4col) span:nth-child(3), .sg-row .sg-row-size { display: none; }
       .sg-3col.sg-table-head, .sg-3col .sg-row { grid-template-columns: 1.4fr 1fr 1fr; }
+      .sg-4col.sg-table-head, .sg-4col .sg-row { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 0.5rem; }
+      .sg-4col.sg-table-head { font-size: 0.5rem; letter-spacing: 0.04em; }
+      .sg-4col .sg-row { font-size: 0.8rem; }
+      .sg-4col .sg-row-count, .sg-4col.sg-table-head span:nth-child(3) { padding-left: 1rem; }
+      @media (max-width: 385px) { .sg-4col .sg-row-count, .sg-4col.sg-table-head span:nth-child(3) { padding-left: 0; } }   /* very narrow: no room for the nudge */
+      @media (max-width: 340px) { .sg-4col .sg-row { font-size: 0.7rem; } .sg-4col.sg-table-head { font-size: 0.45rem; } .sg-4col .sg-row-count, .sg-4col.sg-table-head span:nth-child(3) { padding-left: 0; } }
       .sg-search { width: 100%; }
       .sg-tabs-row { flex-direction: column; align-items: stretch; }
     }
@@ -542,10 +554,23 @@
       window.addEventListener('resize', updateSpecsBar)
 
       function renderTableHead(d) {
-        var three = d.columns.length === 3
+        // The pill pods also get a fourth column, "Servings", worked out from the pills per compartment
+        var four = d.countUnit === 'pills'
+        var three = d.columns.length === 3 && !four
         tableHead.classList.toggle('sg-3col', three)
         tableRows.classList.toggle('sg-3col', three)
-        tableHead.innerHTML = d.columns.map(function (c) { return '<span>' + c + '</span>' }).join('')
+        tableHead.classList.toggle('sg-4col', four)
+        tableRows.classList.toggle('sg-4col', four)
+        var cols = four ? d.columns.concat(['Servings']) : d.columns
+        tableHead.innerHTML = cols.map(function (c) { return '<span>' + c + '</span>' }).join('')
+      }
+
+      // Servings per pod for a pill row: pills per compartment divided by the pills in one serving ("2 softgels" -> 2). No tested count, no number.
+      function servingsFor(row) {
+        var estimate = /^~/.test(String(row.count))   // "~ 30" = an estimate: keep the "~" on the servings too
+        var pills = parseInt(String(row.count).replace(/^~\s*/, ''), 10)
+        var per = parseInt(row.form, 10)
+        return isFinite(pills) && isFinite(per) && per > 0 ? (estimate ? '~ ' : '') + Math.floor(pills / per) : '\u2014'
       }
 
       function renderRows(d) {
@@ -560,6 +585,7 @@
               '<span>' + row.form + '</span>' +
               (row.size != null ? '<span class="sg-row-size">' + row.size + '</span>' : '') +
               '<span class="sg-row-count">' + row.count + '</span>' +
+              (d.countUnit === 'pills' ? '<span class="sg-row-servings">' + servingsFor(row) + '</span>' : '') +
             '</div>'
           )
         }).join('')

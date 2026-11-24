@@ -27,7 +27,13 @@ export default {
       { "name": "Adult Calcium Gummy", "form": "2 gummies", "count": "3" },
       { "name": "Turmeric + Ginger gummy", "form": "2 gummies", "count": "4" },
       { "name": "Fiber Gummies", "form": "3 gummies", "count": "4" },
-      { "name": "Creatine Hydrochloride", "form": "1 capsule", "count": "8" }
+      { "name": "Creatine Hydrochloride", "form": "1 capsule", "count": "8" },
+      { "name": "Zinc", "form": "1 tablet", "count": "18" },
+      { "name": "CoQ10", "form": "1 softgel", "count": "10" },
+      { "name": "Probiotic", "form": "1 capsule", "count": "10" },
+      { "name": "Ashwagandha", "form": "1 capsule", "count": "12" },
+      { "name": "B12", "form": "1 tablet", "count": "30" },
+      { "name": "Vitamin C", "form": "1 caplet", "count": "15" }
     ],
     "countUnit": "pills",
     "footnote": "Counts are for standard retail sizes and vary by brand.",
@@ -65,7 +71,8 @@ export default {
       { "name": "Adult Calcium Gummy", "form": "2 gummies", "count": "8" },
       { "name": "Turmeric + Ginger gummy", "form": "2 gummies", "count": "10" },
       { "name": "Fiber Gummies", "form": "3 gummies", "count": "11" },
-      { "name": "Creatine Hydrochloride", "form": "1 capsule", "count": "23" }
+      { "name": "Creatine Hydrochloride", "form": "1 capsule", "count": "23" },
+      { "name": "L-Theanine", "form": "1 capsule", "count": "20" }
     ],
     "countUnit": "pills",
     "footnote": "Counts are for standard retail sizes and vary by brand.",
@@ -86,10 +93,11 @@ export default {
     "columns": ["Supplement", "Serving Size", "Servings per pod"],
     "supplements": [
       { "name": "Creatine Monohydrate", "form": "5 g", "count": "14" },
-      { "name": "Pre-Workout", "form": "8.5 / 17 g", "count": "8" },
-      { "name": "Electrolytes", "form": "5.42 g", "count": "—" },
+      { "name": "Pre-Workout", "form": "8.5 g", "count": "8" },
+      { "name": "Electrolytes", "form": "4.14 g", "count": "30" },
       { "name": "Collagen Peptides", "form": "11 g", "count": "4" },
-      { "name": "Greens / AG1", "form": "12 g", "count": "6" }
+      { "name": "Greens / AG1", "form": "12 g", "count": "6" },
+      { "name": "BCAAs", "form": "7 g", "count": "12" }
     ],
     "countUnit": "servings",
     "footnote": "Servings are for standard scoop sizes and vary by brand.",

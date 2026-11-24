@@ -1368,9 +1368,9 @@ function getLabelNamesForPods(podTypes) {
 // "About N servings" under each supplement on the opened pod, taken from the Size Guide (src/size-guide-data.js).
 // Maps each supplement chip to its Size Guide row, per pod type. A supplement with no row (or no tested count) gets no number yet.
 const SIZE_GUIDE_ROW = {
-  'Powder Pod':     { creatine: 'Creatine Monohydrate', preworkout: 'Pre-Workout', electrolytes: 'Electrolytes', collagen: 'Collagen Peptides', greens: 'Greens / AG1' },
-  'Large Pill Pod': { fishoil: 'Fish Oil', magnesium: 'Magnesium Glycinate', multivitamin: 'Adult Multivitamin Gummy' },
-  'Small Pill Pod': { vitamind: 'Vitamin D3', turmeric: 'Turmeric' },
+  'Powder Pod':     { creatine: 'Creatine Monohydrate', preworkout: 'Pre-Workout', electrolytes: 'Electrolytes', collagen: 'Collagen Peptides', greens: 'Greens / AG1', bcaas: 'BCAAs' },
+  'Large Pill Pod': { fishoil: 'Fish Oil', magnesium: 'Magnesium Glycinate', multivitamin: 'Adult Multivitamin Gummy', ltheanine: 'L-Theanine' },
+  'Small Pill Pod': { vitamind: 'Vitamin D3', turmeric: 'Turmeric', zinc: 'Zinc', coq10: 'CoQ10', probiotic: 'Probiotic', ashwagandha: 'Ashwagandha', b12: 'B12', vitaminc: 'Vitamin C' },
 }
 const SIZE_GUIDE_TAB = { 'Small Pill Pod': 'small', 'Large Pill Pod': 'big', 'Powder Pod': 'powder' }
 // Powder: the Size Guide already counts servings per pod. Pills: it counts pills per compartment, so divide by the pills in one serving.
@@ -1378,7 +1378,7 @@ function sizeGuideServings(podType, suppId) {
   const rowName = SIZE_GUIDE_ROW[podType]?.[suppId]
   const tab = SIZE_GUIDE_DATA[SIZE_GUIDE_TAB[podType]]
   const row = rowName && tab ? tab.supplements.find(r => r.name === rowName) : null
-  const count = row ? parseInt(row.count, 10) : NaN
+  const count = row ? parseInt(String(row.count).replace(/^~\s*/, ''), 10) : NaN   // a leading "~" marks an estimate (the label already says "About")
   if (!Number.isFinite(count)) return null
   if (podType === 'Powder Pod') return count
   const perServing = parseInt(row.form, 10)
@@ -1417,12 +1417,8 @@ const POD_IMAGES = {
 // Supplements whose chip name is too long for the opened pod table show a shorter name there (the chip and the row title keep the full name)
 const TABLE_NAMES = { fishoil: 'Fish Oil' }
 
-// How many servings of each supplement fit in a pod (the "Fits about" column in an opened pod row). One place to edit them.
-// A supplement with no number yet shows "—" until you add it here.
-const SERVINGS = {
-  creatine: 14, fishoil: 10, magnesium: 14,
-  vitamind: 30, coq10: 30, b12: 60, ashwagandha: 30,
-}
+// The "Fits about" column in an opened pod row reads the Size Guide (src/size-guide-data.js) through sizeGuideServings(), the same as the
+// "About N servings" label, so both always match the Size Guide page. A supplement the Size Guide has no tested count for shows "—".
 
 // Every order includes one free lid, same rule and same product (id
 // 'single-lid-free', $9 list) as PilrCart's own auto-granted perk — kept
@@ -1629,7 +1625,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
     const imgSrc    = POD_IMAGES[podName] || ''
     const idsAttr   = JSON.stringify(ids || [])
     const containsRows = supps.map((name, i) => {
-      const n = SERVINGS[(ids || [])[i]]
+      const n = sizeGuideServings(podName, (ids || [])[i])   // same number as the Size Guide page (the tested source)
       return `<div class="sys-acc-table-row"><span>${TABLE_NAMES[(ids || [])[i]] || name}</span><span>${n ? n + ' servings' : '—'}</span></div>`
     }).join('')
     const listPrice = POD_BASE_PRICE[podName]
