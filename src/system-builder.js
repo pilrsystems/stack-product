@@ -1495,7 +1495,7 @@ function updateSummary(pillPods, hybridPods, powderPods) {
   const addonTotal = addonIds.reduce((sum, id) => sum + (ADD_ONS[id]?.price ?? 0) * qtyOf(id), 0)
 
   if (total === 0 && addonIds.length === 0) {
-    el.innerHTML = '<p class="system-empty-state">Select your supplements<br>to build your system.</p>'
+    el.innerHTML = '<p class="system-empty-state">Select your supplements to build your system.</p>'
     currentCartTotal     = 0
     currentCartListTotal = 0
     isClassicStackCart = false
@@ -1676,20 +1676,38 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 }
 
 // ── Add to Cart ────────────────────────────────────────────────
+// The offer box on this page: the 'Limited-time offer' line shows what the chosen system costs with the code
+// (price now x (1 - code %)), the value it replaces, and what is saved. The free-scooper band appears only
+// when the system includes a Powder Pod (the cart gives one free scooper with a Powder Pod or a Full Stack).
+function updateOfferLine(totalQty) {
+  const wrap = document.querySelector('.pi-subwrap[data-pi-dynamic]')
+  if (!wrap) return
+  const pricesEl = wrap.querySelector('.pi-subtotal-price')
+  const gift = document.querySelector('.pi-gift')
+  const hasPowder = isClassicStackCart || currentPodCounts.powderPods > 0
+  if (gift) gift.hidden = !(totalQty > 0 && hasPowder)
+  if (!pricesEl) return
+  if (totalQty === 0) { delete pricesEl.dataset.live; return }
+  const ship = Number(wrap.dataset.piShip) || 0
+  const scooper = gift && !gift.hidden ? Number(wrap.dataset.piScooper) || 0 : 0
+  const pct = Number(wrap.dataset.piPercent) || 0
+  const withCode = currentCartTotal * (1 - pct / 100)
+  const value = currentCartListTotal + scooper + ship
+  const save = Math.max(0, value - withCode)
+  pricesEl.querySelector('b').textContent = formatPrice(Math.round(withCode * 100) / 100)
+  pricesEl.querySelector('s').textContent = formatPrice(Math.round(value * 100) / 100)
+  pricesEl.querySelector('.pi-save-tag').textContent = 'Save ' + formatPrice(Math.round(save * 100) / 100)
+  pricesEl.dataset.live = '1'
+}
+
 function updateCartButton() {
   const btn = document.getElementById('system-add-to-cart-btn')
   if (!btn) return
   const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + addonQtyTotal()
   btn.disabled = totalQty === 0
-  if (totalQty === 0) {
-    btn.textContent = 'Pre-order'
-    return
-  }
-  const hasDiscount = currentCartListTotal - currentCartTotal > 0.001
-  const priceHtml   = hasDiscount
-    ? `<span class="cart-btn-price-strike">${formatPrice(currentCartListTotal)}</span> ${formatPrice(currentCartTotal)}`
-    : formatPrice(currentCartTotal)
-  btn.innerHTML = 'Pre-order — ' + priceHtml
+  updateOfferLine(totalQty)
+  // The button just says 'Pre-order'; the price (with the code) is shown on the offer line above it.
+  btn.textContent = 'Pre-order'
 }
 
 document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {

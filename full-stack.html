@@ -425,11 +425,12 @@
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack as many pods as you need, in any order.</li>
         <li><svg class="product-feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="20 7 9.5 17.5 4 12" stroke="#7a8a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tight seal, no leaks or spills.</li>
       </ul>
-<!--@include partials/preorder-card.html-->
 
       <!-- 7. Primary button — the only filled button in this column -->
-      <button class="product-btn-add">ADD TO CART</button>
-<!--@include partials/preorder-perks.html-->
+      <!--@include partials/preorder-includes.html-->
+
+      <button class="product-btn-add" data-preorder-label="PRE-ORDER">ADD TO CART</button>
+
 
       <!-- 10. Three accordions -->
       <div class="product-info-sections">
@@ -469,7 +470,8 @@
             <div class="bc-spec-row"><span>Small Pill Pod</span></div>
             <div class="bc-spec-row"><span>Large Pill Pod</span></div>
             <div class="bc-spec-row"><span>Powder Pod</span></div>
-            <div class="bc-spec-row"><span style="white-space:nowrap">Single Lid</span><span style="text-align:right">1 free lid per Full Stack</span></div>
+            <div class="bc-spec-row"><span>Single Lid</span></div>
+            <div class="bc-spec-row"><span>Stainless Steel Travel Scooper</span></div>
           </div>
         </div>
       </div>
@@ -631,7 +633,7 @@
     })();
   </script>
   <script type="module" src="./tsa-stack.js"></script>
-  <script src="./pilr-cart.js?v=20261121"></script>
+  <script src="./pilr-cart.js?v=20261125"></script>
   <script>
     ;(function() {
       var PRODUCT = { id: 'classic-stack', title: 'Full Stack', price: 68, listPrice: 84, image: 'images/lifestyle_section/Hand Render.webp' }

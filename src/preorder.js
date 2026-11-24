@@ -84,8 +84,9 @@ function relabel(btn, withPrice) {
   let changed = false
   while ((node = walker.nextNode())) {
     if (/ADD TO CART/i.test(node.nodeValue)) {
-      node.nodeValue = node.nodeValue.replace(/ADD TO CART/i, 'PRE-ORDER')
-      changed = true
+      // a button can carry its own full label (the Full Stack one: "PRE-ORDER — $54.40 WITH CODE")
+      node.nodeValue = btn.dataset.preorderLabel ? btn.dataset.preorderLabel : node.nodeValue.replace(/ADD TO CART/i, 'PRE-ORDER')
+      changed = !btn.dataset.preorderLabel
     }
   }
   if (changed && withPrice && btn.textContent.trim() === 'PRE-ORDER') {

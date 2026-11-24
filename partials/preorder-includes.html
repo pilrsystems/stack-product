@@ -1,0 +1,37 @@
+      <!-- YOUR PRE-ORDER INCLUDES (Full Stack): replaces the "claimed" bar above the button. Numbers come from partials/preorder-pricing.json (the pi tokens). Static for now: the code is not applied automatically yet. -->
+      <div class="pi-box">
+        <p class="pi-heading{{headClass}}">{{pi.heading}}</p>
+        <!--if:gift-->
+        <div class="pi-gift">
+          <span class="pi-gift-img"><img src="images/lifestyle_section/Travel Scooper Perk.webp" alt="" width="300" height="275" decoding="async" /></span>
+          <span class="pi-gift-text"><span class="pi-gift-tag">Free gift</span><span class="pi-gift-name">Metal Travel Scooper</span></span>
+          <span class="pi-gift-price"><b class="pi-caps">FREE</b> <s>{{pi.scooperValue}}</s></span>
+        </div>
+        <!--endif:gift-->
+        <div class="pi-row">
+          <svg class="pi-icon" width="22" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" viewBox="1.25 6.25 20.5 14.1"><rect x="2" y="7" width="12" height="9" rx="1"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+          <span class="pi-label">Free Shipping</span>
+          <span class="pi-price"><b class="pi-caps">FREE</b> <s>{{pi.shippingValue}}</s></span>
+        </div>
+        <div class="pi-row">
+          <svg class="pi-icon" width="22" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" viewBox="2.2 2.2 19.4 19.4"><path d="M3 12.2V4.5a1.5 1.5 0 0 1 1.5-1.5h7.7a1.5 1.5 0 0 1 1.06.44l7.3 7.3a1.5 1.5 0 0 1 0 2.12l-7.7 7.7a1.5 1.5 0 0 1-2.12 0l-7.3-7.3A1.5 1.5 0 0 1 3 12.2z"/><circle cx="7.8" cy="7.8" r="1.2"/></svg>
+          <span class="pi-label">Code <b>&ldquo;FIRST1000&rdquo;</b></span>
+          <span class="pi-price"><b>EXTRA {{pi.codePercent}}% OFF</b></span>
+        </div>
+        <div class="pi-row pi-row--date">
+          <svg class="pi-icon" width="22" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" viewBox="3.25 2.25 17.5 19.5"><path d="M12 3l8 3v6c0 4.5-3.2 7.6-8 9-4.8-1.4-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span class="pi-label">Cancel Anytime Until It Ships</span>
+          <span class="pi-price pi-price--date"><span class="pi-date-long">Estimated ship date {{pi.shipDate}}</span><span class="pi-date-short">Estimated {{pi.shipDateShort}}</span></span>
+        </div>
+      </div>
+      <!--if:line-->
+      <!-- LIMITED-TIME OFFER line: sits right above the Pre-order button, a little apart from the offer box -->
+      <div class="pi-subwrap" data-pi-ship="{{pi.shippingNum}}" data-pi-scooper="{{pi.scooperNum}}" data-pi-percent="{{pi.percentNum}}"{{dynAttr}}>
+        <div class="pi-subtotal">
+          <!--if:linepill-->
+          <span class="pi-offer-pill">Limited-time offer</span>
+          <!--endif:linepill-->
+          <span class="pi-subtotal-price"><span class="pi-save-tag">Save {{pi.saveAmount}}</span><span class="pi-subtotal-nums"><b>{{pi.codePrice}}</b><s>{{pi.totalValue}}</s></span></span>
+        </div>
+      </div>
+      <!--endif:line-->

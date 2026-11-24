@@ -7967,3 +7967,138 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 @media (max-width: 600px) {
   body #product-info-inner .preorder-card { display: none !important; }
 }
+
+/* ── "Your pre-order includes" box (Full Stack; partials/preorder-includes.html). Numbers: partials/preorder-pricing.json ── */
+.pi-box {
+  container-type: inline-size;
+  border: 0; background: none;   /* no white box: sits straight on the page background */
+  padding: 6px 0 0; box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #33414a;
+  /* one size for every row. 13.5px when there is room; on narrow screens it shrinks so the longest row (Cancel anytime before shipment + Guaranteed) stays on one line */
+  --pi-fs: min(13.5px, calc((100cqw - 82px) / 21.6));
+  --pi-pitch: 31px;   /* every icon row is this tall, so the titles are exactly this far apart */
+  --pi-img: 30px; --pi-pw: 70px;   /* 10px band padding + 30px picture + 8px gap = 48px: the scooper title starts exactly where the row labels below do */   /* scooper picture box and the width of '$11 FREE' (both shrink a little on narrow phones, see the @container rules) */
+}
+.pi-box s { color: #9aa7ae; font-weight: 400; margin-left: .3em; }   /* the crossed-out price now sits at the far right, a little apart from the price before it */
+.pi-box b { font-weight: 700; }
+.pi-heading { margin: 0 0 10px; text-align: center; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: #5e6e7a; }   /* same size, weight and spacing as the 'Details' label below */
+.pi-gift { display: flex; align-items: center; gap: 8px; background: #E4E7E9; border-radius: 6px; padding: 6px 14px 6px 10px; margin: 0 0 5.5px; white-space: nowrap; min-height: 54px; box-sizing: border-box; }
+.pi-gift-img { flex: 0 0 calc(var(--pi-img) + 4px); width: calc(var(--pi-img) + 4px); margin-left: -4px; height: 40px; display: flex; align-items: center; justify-content: center; }   /* picture box starts 4px into the band's padding, so the title still starts at 48px */
+.pi-gift-img img { width: 100%; height: 100%; object-fit: contain; display: block; }   /* whole scooper always visible, never cropped */
+.pi-gift-text { flex: 1 1 auto; min-width: 0; position: relative; display: flex; align-items: center; }   /* only the title is in the flow, so it sits on the same line as '$11 FREE'; the small label floats just above it */
+.pi-gift-tag { position: absolute; left: 0; bottom: 100%; margin-bottom: 3px; font-size: 8px; line-height: 1; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: #7a8a94; white-space: nowrap; }
+.pi-gift-name { font-size: min(13.5px, calc((100cqw - 24px - var(--pi-img) - 16px - var(--pi-pw)) / 14.6)); font-weight: 700; color: #33414a; white-space: nowrap; }
+.pi-gift-price { flex: none; font-size: calc(var(--pi-fs) * .963); color: #33414a; }   /* same size as the prices in the rows below */   /* same size as the prices in the rows below */
+.pi-gift-price b { letter-spacing: .08em; }
+.pi-row { display: flex; align-items: center; gap: 12px; min-height: var(--pi-pitch); padding: 0 22px 0 14px; font-size: var(--pi-fs); white-space: nowrap; }   /* 14px on both sides: the icons sit as far in from the left edge as the prices do from the right (and prices line up with the gift band's '$11 FREE') */
+.pi-icon { flex: none; width: 22px; height: 20px; color: #5e6e7a; }   /* every icon is cropped tight to its drawing and centred in the same 22x20 box, so they line up in one column */
+.pi-icon * { vector-effect: non-scaling-stroke; stroke-width: 1.4px; }   /* same line weight on all three, whatever their size */
+.pi-label { flex: 1 1 auto; min-width: 0; font-weight: 400; color: #33414a; }
+.pi-sub { display: block; font-size: .963em; font-weight: 400; font-style: normal; color: #9aa7ae; line-height: 1; padding-top: 1px; }   /* same size and color as the crossed-out prices */
+
+.pi-price { flex: none; font-size: calc(var(--pi-fs) * .963); color: #33414a; }
+.pi-price b { font-weight: 700; }
+.pi-caps { letter-spacing: .08em; font-size: .88em; }   /* FREE / NO FEE a little smaller than the numbers */
+.pi-muted { color: #7a8a94; }
+.pi-row--sub { margin-bottom: 0; }   /* same height as the rows above, so the title lines up with its icon; the small line hangs underneath (extra space below the row makes room for it) */
+.pi-row--sub .pi-label { position: relative; }
+.pi-row--sub .pi-sub { position: absolute; left: 0; top: 100%; margin-top: 0; white-space: nowrap; }
+.pi-yourprice { display: flex; justify-content: space-between; align-items: center; background: #F2F3F2; border-radius: 4px; padding: 9px 12px; white-space: nowrap; }
+.pi-yourprice span { font-size: 14px; font-weight: 600; }
+.pi-yourprice b { font-size: 22px; font-weight: 600; }
+/* narrow phones: a slightly smaller picture, and below ~300px the crossed-out $11 goes so the scooper name still fits on one line */
+@container (max-width: 300px) { .pi-gift { --pi-pw: 44px; } .pi-gift-price s { display: none; } }
+/* the box now sits under the Pre-order button */
+#product-info-inner .pi-box { margin: -8px 0 4px; }   /* a little closer to the last bullet above */
+
+/* code band: slate-blue box, white text, centered: one sentence, small "FIRST1000 for pre-orders" line under it */
+.pi-code {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5px; white-space: nowrap;
+  background: #C5D1C6; color: #3F5443; border-radius: var(--radius); padding: 0 18px; margin: -8px 0 0; width: 100%; height: 36px; justify-content: center; box-sizing: border-box;   /* same width and height as the Pre-order button, 8px under it */
+  --pi-cf: min(16px, calc((100cqw - 36px) / 20.6));   /* shrinks on narrow phones so it stays on one line */
+}
+.pi-code-name { font-size: var(--pi-cf); font-weight: 400; line-height: 1.2; }
+.pi-code-name b { font-weight: 700; }
+@container (max-width: 260px) { .pi-row { font-size: calc((100cqw - 82px) / 21.6 * 1.12); } }   /* very small phones (320px): keep the small ship-date line on one line */
+
+/* Phone: the includes rows sit closer together (less vertical space between Full Stack, Free shipping and Cancel anytime) */
+@media (max-width: 600px) {
+  .pi-box { --pi-pitch: 28px; }
+}
+
+
+.pi-codewrap { container-type: inline-size; }   /* size reference for the code line (its text shrinks to fit narrow phones) */
+
+
+/* Phone only (desktop is unchanged): prices go back out to the right edge, and the scooper title is smaller */
+@media (max-width: 600px) {
+  .pi-row { padding-right: 14px; }
+  .pi-box s { margin-left: 0; }   /* slashed-out price sits just slightly apart from the price next to it */
+  .pi-gift-name { font-size: calc(min(13.5px, calc((100cqw - 24px - var(--pi-img) - 16px - var(--pi-pw)) / 14.6)) * .88); }
+}
+
+/* two rows now have a small line under the title: give the first one a little more room before the next row */
+
+/* Subtotal line at the bottom of the includes box: crossed-out value, bold price, and a small 'Save' tag (Sage Light tag, deep green text) */
+.pi-subtotal { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0; min-height: var(--pi-pitch); white-space: nowrap; font-size: var(--pi-fs); }
+.pi-subtotal-price { display: flex; flex-direction: row; align-items: center; gap: .5em; }   /* phones: Save tag, then $54.40, then the crossed-out price, on one row */
+.pi-subtotal-nums { display: flex; align-items: baseline; gap: .4em; }
+.pi-subtotal-price s { color: #9aa7ae; font-size: calc(var(--pi-fs) * .963); margin-left: 0; }
+.pi-subtotal-price b { color: #33414a; font-size: calc(var(--pi-fs) * 1.4); font-weight: 700; }
+.pi-save-tag { background: #E4EDE2; color: #3F5443; border-radius: var(--radius); padding: .35em .7em; font-size: calc(var(--pi-fs) * .9); line-height: 1; }
+@media (max-width: 600px) { .pi-gift { margin: 0 0 4px; } }
+
+/* ship date sits on the right of the Cancel row, same size and color as the crossed-out prices, right-aligned */
+.pi-price--date { margin-left: auto; font-style: italic; color: #9aa7ae; text-align: right; flex: 0 1 auto; min-width: 0; white-space: normal; line-height: 1.1; }   /* wraps to two lines (right-aligned) when the row is narrow */
+.pi-row--date .pi-label { flex: none; }
+
+/* 'Limited-time offer' pill (left of the bottom line) */
+.pi-offer-pill { background: #E4EDE2; color: #4A6B4F; border-radius: 6px; padding: .55em .95em; font-size: calc(var(--pi-fs) * .85); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1; white-space: nowrap; }
+
+/* the Limited-time offer line is its own block above the button (it needs the same size reference as the offer box) */
+.pi-subwrap { container-type: inline-size; --pi-pitch: 31px; --pi-fs: min(13.5px, calc((100cqw - 82px) / 21.6)); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #33414a; margin: -6px 0 -8px; }
+@media (max-width: 600px) { .pi-subwrap { --pi-pitch: 28px; } }
+
+/* Cart drawer: light green 'Use FIRST1000' button to the right of 'Have a promo code?' (same green as the Limited-time offer pill). It fills all the space to the right of the label. Tapping it applies the code. On a narrow screen it drops to its own line and fills the full width. */
+.cart-drawer-promo-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+.cart-drawer-promo-head .cart-drawer-promo-toggle { width: auto; flex: none; }
+.cart-drawer-offer-btn { flex: 1 1 auto; margin: 0; padding: 0.7rem 1rem; border: 0; border-radius: 6px; background: #E4EDE2; color: #4A6B4F; font: inherit; font-size: 0.82rem; font-weight: 400; text-align: center; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
+.cart-drawer-offer-btn strong { font-weight: 700; }
+.cart-drawer-offer-btn:hover { background: #d8e5d5; }
+.cart-drawer-offer-btn:disabled { opacity: 0.6; cursor: default; }
+
+/* the ship date on the Cancel row: full wording on desktop, short wording ('Estimated Jan. 25') on phones */
+.pi-date-short { display: none; }
+@media (max-width: 600px) { .pi-date-long { display: none; } .pi-date-short { display: inline; } }
+
+/* Desktop: the line reads $54.40, crossed-out $101, then the Save tag, all right-aligned on one row (pill on the left).
+   On phones (600px and narrower) the Save tag sits above the prices instead. */
+@media (min-width: 601px) {
+  .pi-subtotal { align-items: center; }
+  .pi-subtotal-price { flex-direction: row; align-items: center; gap: .7em; }
+  .pi-subtotal-price .pi-save-tag { order: 3; }
+}
+
+/* product pages with the 'Add a Pod' panel: the button used to hug the panel above it (negative top margin); now the Limited-time offer line sits right above it */
+#product-info-inner .pi-subwrap + #product-btn-add-main, #product-info-inner .pi-subwrap + .product-btn-add { margin-top: 0; }
+
+/* pages without the free-gift band: the first row follows the heading directly, so pull it up a little */
+.pi-heading + .pi-row { margin-top: -6px; }
+
+/* single-pod pages: 'Your pre-order offer' is the light green pill (same look as the Limited-time offer pill on the Full Stack page) */
+.pi-heading--pill { width: fit-content; margin: 0 auto 10px; background: #E4EDE2; color: #4A6B4F; border-radius: 6px; padding: .55em .95em; font-size: calc(var(--pi-fs) * .85); font-weight: 700; letter-spacing: .06em; line-height: 1; white-space: nowrap; }
+.pi-heading--pill + .pi-row { margin-top: 0; }   /* the pill needs its normal gap above the first row */
+
+/* Build Your System: the offer box sits above the Pre-order button in the side panel (plain block layout, not the product-page flex column) */
+body .sys-panel-body .pi-box { margin: 18px 0 0; }
+body .sys-panel-body .pi-subwrap { margin: 12px 0 8px; }   /* this panel is a plain block layout, so give the price line its own space above the button */
+
+/* Build Your System side panel: the empty-state line stays on one line (it shrinks a little on narrow screens instead of wrapping) */
+.sys-panel-body .system-empty-state { white-space: nowrap; font-size: min(0.85rem, calc((100vw - 56px) / 23.5)); }
+/* ...and the Details rows under the Pre-order button are smaller, with the same tighter letter spacing the phone layout uses, so they have room to breathe */
+.sys-panel-body .bc-spec-row { font-size: 0.625rem; letter-spacing: 0.08em; line-height: 1.9; gap: 0.75rem; }
+.sys-panel-body .bc-spec-row span:last-child { text-align: right; }
+@media (max-width: 340px) { .sys-panel-body .bc-spec-row { font-size: 0.55rem; letter-spacing: 0.04em; gap: 0.5rem; } }   /* very small phones: keep each Details row on one line */
+
+.pi-gift[hidden] { display: none !important; }
+/* Build Your System: the live prices stay hidden until a pod is chosen (the script marks them data-live) */
+.pi-subwrap[data-pi-dynamic] .pi-subtotal-price:not([data-live]) { display: none; }

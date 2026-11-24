@@ -853,10 +853,13 @@
       ? '<div class="cart-drawer-promo-applied"><span>' + promo.code + ' applied &middot; ' + promo.percent + '% off</span>' +
           '<button type="button" id="cart-drawer-promo-remove">Remove</button></div>'
       : '<div class="cart-drawer-promo' + (promoOpen ? ' open' : '') + '" id="cart-drawer-promo">' +
-          '<button type="button" class="cart-drawer-promo-toggle" id="cart-drawer-promo-toggle">' +
-            '<span>Have a promo code?</span>' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
-          '</button>' +
+          '<div class="cart-drawer-promo-head">' +
+            '<button type="button" class="cart-drawer-promo-toggle" id="cart-drawer-promo-toggle">' +
+              '<span>Have a promo code?</span>' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+            '</button>' +
+            '<button type="button" class="cart-drawer-offer-btn" id="cart-drawer-offer-btn">Use &ldquo;<strong>FIRST1000</strong>&rdquo; for extra 20% off</button>' +
+          '</div>' +
           '<div class="cart-drawer-promo-body">' +
             '<div class="cart-drawer-promo-body-inner">' +
               '<div class="cart-drawer-promo-row">' +
@@ -884,6 +887,8 @@
       promoApply.addEventListener('click', go)
       input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go() } })
     }
+    const offerBtn = document.getElementById('cart-drawer-offer-btn')
+    if (offerBtn) offerBtn.addEventListener('click', async () => { offerBtn.disabled = true; await applyPromoCode('FIRST1000'); renderDrawer() })
     const promoRemove = document.getElementById('cart-drawer-promo-remove')
     if (promoRemove) promoRemove.addEventListener('click', () => { promoMessage = ''; setPromo(null) })
     document.getElementById('cart-drawer-checkout-btn').addEventListener('click', () => {

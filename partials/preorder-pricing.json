@@ -1,0 +1,51 @@
+{
+  "_note": "The ONLY place the numbers in the 'Your pre-order offer' box (and the Full Stack pre-order button label) are set. For each page: 'retail' is the list price, 'price' is today's price. Total value = retail + scooper + shipping; the code price = price minus the code percent. shippingValue is a PLACEHOLDER until confirmed. 'scooper': whether that page shows the free Travel Scooper gift (and counts its value). 'summary': whether the Limited-time offer line shows the prices and the Save tag next to the pill (otherwise only the centered pill). 'heading': the text of the green pill at the top of the offer box. 'headingPill': true = the heading is the green pill and the price line has no pill; false = plain heading and a 'Limited-time offer' pill at the left of the price line. 'dynamic': the numbers on the price line are filled in live by src/system-builder.js from the pods chosen (Build Your System). 'scooper': 'dynamic' = the gift band only shows when the system includes a Powder Pod.",
+  "products": {
+    "full-stack": {
+      "retail": 84,
+      "price": 68,
+      "scooper": true,
+      "summary": true,
+      "heading": "Your pre-order offer",
+      "headingPill": false
+    },
+    "powder-pod": {
+      "retail": 32,
+      "price": 32,
+      "scooper": true,
+      "summary": false,
+      "heading": "Limited Time Pre-Order Offer",
+      "headingPill": true
+    },
+    "large-pill-pod": {
+      "retail": 28,
+      "price": 28,
+      "scooper": false,
+      "summary": false,
+      "heading": "Limited Time Pre-Order Offer",
+      "headingPill": true
+    },
+    "small-pill-pod": {
+      "retail": 24,
+      "price": 24,
+      "scooper": false,
+      "summary": false,
+      "heading": "Limited Time Pre-Order Offer",
+      "headingPill": true
+    },
+    "build-your-system": {
+      "retail": 0,
+      "price": 0,
+      "scooper": "dynamic",
+      "summary": true,
+      "heading": "Your pre-order offer",
+      "headingPill": false,
+      "dynamic": true
+    }
+  },
+  "scooperValue": 11,
+  "shippingValue": 6,
+  "codePercent": 20,
+  "shipDate": "January 25",
+  "codeLimit": "1,000"
+}
