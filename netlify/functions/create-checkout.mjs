@@ -52,8 +52,7 @@ const SCOOPER_PRICE = 11
 const LID_PRICE = 9
 const FULL_STACK_PRICE = 68
 // $16 off a Full Stack, split across its three pods so it sums exactly: Small 24 -> 19.43, Large 28 -> 22.67, Powder 32 -> 25.90
-// Shown in checkout's "Shipping method" row and on the order. Change the date here when it moves.
-const SHIPPING_TITLE = 'Free shipping · Estimated ship date Jan. 25'
+// (The "Free shipping · Estimated ship date Jan. 25" name now lives on the free US shipping rate in Shopify's shipping settings, not here.)
 const FULL_STACK_DISCOUNT = { 'pill-pod': 4.57, 'hybrid-pod': 5.33, 'powder-pod': 6.10 }
 const TIER_DISCOUNT = [0, 0, 0.10, 0.15, 0.20, 0.25, 0.28]  // by total pods, 6+ capped
 
@@ -263,8 +262,9 @@ export default async (req) => {
             lineItems,
             tags: promo ? ['preorder', 'promo-' + promo.code.toLowerCase()] : ['preorder'],
             ...(promo ? { appliedDiscount: { title: promo.code, description: promo.percent + '% off your order', valueType: 'PERCENTAGE', value: promo.percent } } : {}),
-            // Free shipping is for US orders. Outside the US no shipping line is added, so Shopify Managed Markets prices shipping.
-            ...(currency ? {} : { shippingLine: { title: SHIPPING_TITLE, price: '0.00' } }),
+            // No shipping line is added here: Shopify picks the shipping rate from the address the customer enters at checkout
+            // (free shipping for the US is a rate in Shopify's shipping settings; Managed Markets prices every other country).
+            // A line added here would stay on the order whatever country the customer switches to.
             note: 'Pre-order placed on the pilr site',
             ...(currency ? { presentmentCurrencyCode: currency } : {}),
             ...(marketCountry ? { marketRegionCountryCode: marketCountry } : {}),
