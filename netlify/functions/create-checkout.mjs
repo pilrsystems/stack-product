@@ -236,8 +236,9 @@ export default async (req) => {
   // Shopper's currency / country (from the site's currency picker). Anything unknown falls back to US dollars.
   const currency = body && RATES[body.currency] && body.currency !== 'USD' ? body.currency : null
   const marketCountry = currency && /^[A-Za-z]{2}$/.test(String(body.country || '')) ? String(body.country).toUpperCase() : null
-  // The country picked in the site's footer bar: the checkout opens with it already selected (the customer can still change it).
-  const addressCountry = body && isKnownCountry(body.country) ? String(body.country).toUpperCase() : null
+  // The checkout opens with the country already selected, for US orders only. Shopify refuses a country-only address
+  // on a Managed Markets (non-US) order ("Add customer's email, shipping phone number, and shipping address"), so other countries are not sent.
+  const addressCountry = body && String(body.country).toUpperCase() === 'US' ? 'US' : null
 
   let promo = null
   if (body && body.code) {
