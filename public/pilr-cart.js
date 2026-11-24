@@ -147,7 +147,16 @@
   }
   global.addEventListener('pageshow', resetCheckoutButtons)
 
+  // GA4 events (the gtag tag is already on every page). Never lets analytics break the cart.
+  function track(name, params) {
+    try { if (typeof global.gtag === 'function') global.gtag('event', name, params) } catch (_) {}
+  }
+  function gaItem(i, qty) {
+    return { item_id: i.id, item_name: i.title, price: i.price, quantity: qty != null ? qty : i.quantity }
+  }
+
   async function startCheckout(btn) {
+    track('begin_checkout', { currency: 'USD', value: getCartTotal(), items: getCart().items.map(i => gaItem(i)) })
     const label = btn ? (btn.dataset.checkoutLabel || btn.textContent) : ''
     if (btn) { btn.dataset.checkoutLabel = label; btn.disabled = true; btn.textContent = 'One moment…' }
     const reset = () => { if (btn) { btn.disabled = false; btn.textContent = label } }
@@ -195,6 +204,7 @@
     syncFreeLids(cart, oldLidFree)
     repriceStackingPods(cart)
     saveCart(cart)
+    track('add_to_cart', { currency: 'USD', value: (product.price || 0) * quantity, items: [gaItem(product, quantity)] })
     return cart
   }
 
