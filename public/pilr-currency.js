@@ -107,17 +107,25 @@
       '<svg class="cur-chev" viewBox="0 0 12 8" width="10" height="7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l5 5 5-5"/></svg>'
   }
   function refreshBars() { bars.forEach(function (b) { b.innerHTML = barHtml() }) }
-  function mountBar() {
-    if (bars.length) return
-    var copy = document.querySelector('.site-footer-copy')   // the bar lives in the footer, right after "© pilr 2026."
-    if (!copy) return
+  function makeBar(extra) {
     var wrap = document.createElement('div')
-    wrap.className = 'cur-picker cur-picker--bar'
+    wrap.className = 'cur-picker cur-picker--bar ' + extra
     var btn = document.createElement('button')
     btn.type = 'button'; btn.className = 'cur-btn'; btn.setAttribute('aria-haspopup', 'dialog'); btn.setAttribute('aria-label', 'Change country and currency')
     btn.addEventListener('click', openModal)
-    wrap.appendChild(btn); copy.parentNode.insertBefore(wrap, copy.nextSibling)
-    bars.push(btn); refreshBars()
+    wrap.appendChild(btn)
+    bars.push(btn)
+    return wrap
+  }
+  // Two copies, one shown per screen size (CSS): on web it sits in the social-icons row, above the payment icons;
+  // on phones it sits under "© pilr 2026." in the bottom row.
+  function mountBar() {
+    if (bars.length) return
+    var social = document.querySelector('.site-footer-social-inner')
+    if (social) social.appendChild(makeBar('cur-picker--web'))
+    var copy = document.querySelector('.site-footer-copy')
+    if (copy) copy.parentNode.insertBefore(makeBar('cur-picker--phone'), copy.nextSibling)
+    refreshBars()
   }
 
   // ── popup ───────────────────────────────────────────────────

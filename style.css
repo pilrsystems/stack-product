@@ -8225,6 +8225,13 @@ body .sys-panel-body .pi-subwrap { margin: 12px 0 8px; }   /* this panel is a pl
 /* In the footer (dark band): lighter text, same letter-spaced style as the footer's other small text */
 .site-footer .cur-btn { color: rgba(255,255,255,0.7); }
 .site-footer .cur-btn:hover { color: #fff; }
+/* web: the bar sits at the right end of the social-icons row (between the two footer lines); phones: under the copyright */
+.site-footer-social-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.cur-picker--phone { display: none; }
+@media (max-width: 600px) {
+  .cur-picker--web { display: none; }
+  .cur-picker--phone { display: block; }
+}
 
 .cur-modal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 1.25rem; background: rgba(40, 52, 61, 0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .cur-modal.open { display: flex; }
