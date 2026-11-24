@@ -875,7 +875,8 @@
         '<span>Total</span>' +
         '<span>' + formatMoney(getCartTotal() - promoDiscount) + '</span>' +
       '</div>' +
-      '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>'
+      '<button type="button" class="cart-drawer-checkout-btn" id="cart-drawer-checkout-btn">Checkout</button>' +
+      '<p class="cart-drawer-refund-note">Pre-orders can be cancelled anytime before they ship for a full refund. <a href="./pre-order-refund-policy.html" target="_blank" rel="noopener">Pre-order refund policy</a></p>'
 
     const promoApply = document.getElementById('cart-drawer-promo-apply')
     if (promoApply) {

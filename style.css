@@ -4443,6 +4443,15 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
 
 .cart-drawer-checkout-btn:hover { background: #6f7c88; }
 
+.cart-drawer-refund-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+  color: #7a8a94;
+}
+.cart-drawer-refund-note a { display: block; margin-top: 0.2rem; color: #5e6e7a; text-decoration: underline; text-underline-offset: 2px; }
+
 @media (max-width: 480px) {
   .cart-drawer { width: 100vw; }
 }
