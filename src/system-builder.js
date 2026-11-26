@@ -154,7 +154,47 @@ const isMobile = window.innerWidth < 768
 function cSize() { return { w: wrap.clientWidth, h: wrap.clientHeight } }
 let { w: CW, h: CH } = cSize()
 
-const renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true })
+// ── 3D load tracking (Microsoft Clarity) ─────────────────────
+// Reports one outcome per page view: cad_loaded or cad_load_failed. The page
+// starts empty, so the 10s clock starts when the first model is requested.
+const CAD_TIMEOUT_MS = 10000
+let cadReported = false
+let cadReady    = false   // model downloaded and in the scene, waiting to be drawn
+let cadTimer    = null
+
+function cadReport(failReason) {
+  if (cadReported) return
+  cadReported = true
+  clearTimeout(cadTimer)
+  if (!failReason) { window.clarity && window.clarity('event', 'cad_loaded'); return }
+  window.clarity && window.clarity('set', 'cad_fail_reason', failReason)
+  window.clarity && window.clarity('event', 'cad_load_failed')
+}
+function cadStart() {
+  if (cadReported || cadTimer) return
+  // A model that has arrived but isn't drawn yet (background tab) is not a timeout.
+  cadTimer = setTimeout(() => { if (!cadReady) cadReport('timeout') }, CAD_TIMEOUT_MS)
+}
+// The visitor removed everything before it finished loading: nothing to time.
+function cadCancel() {
+  clearTimeout(cadTimer)
+  cadTimer = null
+  cadReady = false
+}
+// cad_loaded fires the first time one of these meshes is actually drawn.
+function cadWatch(object) {
+  if (cadReported) return
+  cadReady = true
+  object.traverse(m => { if (m.isMesh) m.onAfterRender = () => cadReport() })
+}
+
+let renderer
+try {
+  renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true })
+} catch (err) {
+  cadReport('webgl_unsupported')
+  throw err
+}
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.toneMapping         = THREE.ACESFilmicToneMapping
 renderer.toneMappingExposure = 1.1
@@ -437,6 +477,7 @@ async function buildStack(podTypes, onReady) {
   currentPodTypes = [...podTypes]
 
   if (!podTypes.length) {
+    if (!selected.addons.has('single-lid')) cadCancel()
     modelLoaded = true
     initLabels([])
     if (onReady) onReady()
@@ -444,6 +485,7 @@ async function buildStack(podTypes, onReady) {
   }
 
   document.getElementById('system-loading')?.classList.remove('hidden')
+  cadStart()
 
   try {
     const stackGroup = new THREE.Group()
@@ -600,6 +642,7 @@ async function buildStack(podTypes, onReady) {
 
     modelLoaded = true
     document.getElementById('system-loading')?.classList.add('hidden')
+    cadWatch(stackGroup)
 
     const labelNames = getLabelNamesForPods(podTypes)
     initLabels(labelNames)
@@ -607,6 +650,7 @@ async function buildStack(podTypes, onReady) {
     if (onReady) onReady()
   } catch (err) {
     console.error('[System Builder] buildStack error:', err)
+    if (mySeq === buildSeq) cadReport('load_error')
     document.getElementById('system-loading')?.classList.add('hidden')
     modelLoaded = true
   }
@@ -1126,13 +1170,18 @@ function lidHolderTargetY(mesh) {
 async function addExtraLid(delay = 0) {
   if (!SHOW_EXTRA_LID_RENDER || extraLid || extraLidAdding) return
   extraLidAdding = true
-  const tpl = await getLidTemplate()
+  cadStart()
+  const tpl = await getLidTemplate().catch(err => { cadReport('load_error'); throw err })
   extraLidAdding = false
   // The chip may have been switched off (or the lid added) while loading.
-  if (!selected.addons.has('single-lid') || extraLid) return
+  if (!selected.addons.has('single-lid') || extraLid) {
+    if (!currentPodTypes.length && !selected.addons.has('single-lid')) cadCancel()
+    return
+  }
 
   const mesh = tpl.clone(true)
   lidHolder.add(mesh)
+  cadWatch(mesh)
   lidAloneBlend.v = lidAloneTarget()
   lidTilt.v = lidTiltTarget()
   lidHolderY.v = lidHolderTargetY(mesh)
