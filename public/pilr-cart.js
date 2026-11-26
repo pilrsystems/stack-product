@@ -231,6 +231,7 @@
     repriceStackingPods(cart)
     saveCart(cart)
     track('add_to_cart', { currency: 'USD', value: (product.price || 0) * quantity, items: [gaItem(product, quantity)] })
+    try { global.clarity && global.clarity('event', 'add_to_cart') } catch (_) {}
     try { global.dispatchEvent(new CustomEvent('pilr:added-to-cart', { detail: { product, quantity } })) } catch (_) {}
     return cart
   }

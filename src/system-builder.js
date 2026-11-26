@@ -161,9 +161,11 @@ const CAD_TIMEOUT_MS = 10000
 let cadReported = false
 let cadReady    = false   // model downloaded and in the scene, waiting to be drawn
 let cadTimer    = null
+// Hidden test switch: ?fallback=1 forces the no-3D photo and sends no load events.
+const FORCE_FALLBACK = new URLSearchParams(location.search).get('fallback') === '1'
 
 function cadReport(failReason) {
-  if (cadReported) return
+  if (cadReported || FORCE_FALLBACK) return
   cadReported = true
   clearTimeout(cadTimer)
   if (!failReason) { window.clarity && window.clarity('event', 'cad_loaded'); return }
@@ -188,12 +190,14 @@ function cadWatch(object) {
   object.traverse(m => { if (m.isMesh) m.onAfterRender = () => cadReport() })
 }
 
-// null when WebGL is unavailable: the page then runs without the 3D view.
+// null when WebGL is unavailable (or ?fallback=1): the page then runs without the 3D view.
 let renderer = null
-try {
-  renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true })
-} catch (err) {
-  cadReport('webgl_unsupported')
+if (!FORCE_FALLBACK) {
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true })
+  } catch (err) {
+    cadReport('webgl_unsupported')
+  }
 }
 if (renderer) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
