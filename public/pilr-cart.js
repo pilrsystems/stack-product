@@ -884,15 +884,14 @@
       html += '<div class="cart-drawer-section-label">Your Items</div>' + yourItemsHtml
     }
     if (freeGiftsHtml) {
-      html += '<div class="cart-drawer-section-label">Free gifts included with pre-order</div>' + freeGiftsHtml
+      html += '<div class="cart-drawer-section-label cart-drawer-section-label--pill">Free gifts included with pre-order</div>' + freeGiftsHtml
     }
     html += offersHtml()
     body.innerHTML = html
 
     const promo = getPromo()
     const promoHtml = promo
-      ? '<div class="cart-drawer-promo-applied"><span>' + promo.code + ' applied &middot; ' + promo.percent + '% off</span>' +
-          '<button type="button" id="cart-drawer-promo-remove">Remove</button></div>'
+      ? '<div class="cart-drawer-promo-applied"><span>Extra ' + promo.percent + '% off unlocked</span></div>'
       : '<div class="cart-drawer-promo' + (promoOpen ? ' open' : '') + '" id="cart-drawer-promo">' +
           '<div class="cart-drawer-promo-head">' +
             '<button type="button" class="cart-drawer-promo-toggle" id="cart-drawer-promo-toggle">' +
@@ -931,8 +930,6 @@
     }
     const offerBtn = document.getElementById('cart-drawer-offer-btn')
     if (offerBtn) offerBtn.addEventListener('click', async () => { offerBtn.disabled = true; await applyPromoCode('FIRST1000'); renderDrawer() })
-    const promoRemove = document.getElementById('cart-drawer-promo-remove')
-    if (promoRemove) promoRemove.addEventListener('click', () => { promoMessage = ''; setPromo(null) })
     document.getElementById('cart-drawer-checkout-btn').addEventListener('click', () => {
       startCheckout(document.getElementById('cart-drawer-checkout-btn'))
     })
@@ -971,6 +968,8 @@
     getItemDisplay,
     getPromo,
     getPromoDiscount,
+    // Applies a code from a page button; resolves to '' on success, otherwise the message to show.
+    applyPromo: async code => { await applyPromoCode(code); return promoMessage },
     openDrawer,
     closeDrawer,
   }

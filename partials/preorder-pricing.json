@@ -5,9 +5,9 @@
       "retail": 84,
       "price": 68,
       "scooper": true,
-      "summary": true,
-      "heading": "Your pre-order offer",
-      "headingPill": false
+      "summary": false,
+      "heading": "Limited Time Pre-Order Offer",
+      "headingPill": true
     },
     "powder-pod": {
       "retail": 32,
@@ -37,9 +37,9 @@
       "retail": 0,
       "price": 0,
       "scooper": "dynamic",
-      "summary": true,
-      "heading": "Your pre-order offer",
-      "headingPill": false,
+      "summary": false,
+      "heading": "Limited Time Pre-Order Offer",
+      "headingPill": true,
       "dynamic": true
     }
   },

@@ -4451,6 +4451,9 @@ a[href="./catalog.html#section-single-pods"]:hover .explore-routine-img img {
   color: #7a8a94;
 }
 .cart-drawer-refund-note a { display: block; margin-top: 0.2rem; color: #5e6e7a; text-decoration: underline; text-underline-offset: 2px; }
+/* the refund sentence stays on one line (it shrinks to fit narrow carts), with the policy link on the line under it */
+.cart-drawer-footer { container-type: inline-size; }
+.cart-drawer-footer .cart-drawer-refund-note { white-space: nowrap; font-size: min(0.72rem, 3.1cqw); }
 
 @media (max-width: 480px) {
   .cart-drawer { width: 100vw; }
@@ -7946,8 +7949,8 @@ body .sys-panel-body .preorder-perks { margin: 26px 0 36px; }
 .cart-drawer-free-badge.cart-gift-badge { white-space: nowrap; }
 
 /* Promo code: applied chip, discount line, and error message in the cart drawer */
-.cart-drawer-promo-applied { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.7rem 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5e6e7a; }
-.cart-drawer-promo-applied button { border: none; background: none; padding: 0; font: inherit; font-size: 0.68rem; letter-spacing: 0.08em; text-decoration: underline; color: #7a8a94; cursor: pointer; }
+.cart-drawer-promo-applied { display: flex; justify-content: flex-start; padding: 0.7rem 0 0.35rem; }
+.cart-drawer-promo-applied span { background: #E4EDE2; color: #4A6B4F; border-radius: 6px; padding: .6em .95em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2; }   /* same green pill as the product pages */
 .cart-drawer-discount { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; color: #5e6e7a; padding: 0.35rem 0 0; }
 .cart-drawer-promo-msg { margin: 0.4rem 0 0; font-size: 0.72rem; color: #9a5a5a; min-height: 0; }
 .cart-drawer-promo-msg:empty { display: none; }
@@ -8274,3 +8277,20 @@ html.cur-modal-open { overflow: hidden; }
 #pilr-consent button { border: 1px solid rgba(245,240,232,.55); background: transparent; color: #f5f0e8; border-radius: 4px; padding: 8px 14px; font: inherit; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
 #pilr-consent button[data-c="yes"] { background: #f5f0e8; color: #5e6e7a; border-color: #f5f0e8; }
 @media (max-width: 520px) { #pilr-consent { flex-direction: column; align-items: stretch; } #pilr-consent div { justify-content: flex-end; } }
+
+/* Black Friday button above Pre-order (Full Stack): light green with darker green lettering, same corners and font as the other buttons */
+.bf-offer-btn { container-type: inline-size; display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%; box-sizing: border-box; padding: 14px 12px; border: 0; border-radius: var(--radius); background: #E4EDE2; color: #4A6B4F; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-transform: uppercase; line-height: 1.2; cursor: pointer; }
+.bf-offer-btn:hover { background: #d8e5d5; }
+.bf-offer-title { display: flex; align-items: center; justify-content: center; gap: .55em; white-space: nowrap; font-size: min(13px, 2.9cqw); font-weight: 700; letter-spacing: .08em; }
+.bf-offer-lock { width: 1.15em; height: 1.15em; flex: none; margin-top: -.15em; }
+.bf-offer-sub { font-size: min(9.5px, 2.8cqw); font-weight: 600; letter-spacing: .12em; opacity: .75; }
+#product-info-inner > .bf-offer-btn { flex: none; margin-top: -10px; margin-bottom: -8px; }   /* sits close to the offer box and to Pre-order */
+body #product-info-inner > button.bf-offer-btn + button.product-btn-add#product-btn-add-main { margin-top: 0; }   /* pod pages pull Pre-order upward; not when the button above it is there */
+.bf-offer-btn .bf-offer-unlocked, .bf-offer-btn.is-unlocked .bf-offer-locked { display: none; }
+.bf-offer-btn.is-unlocked .bf-offer-unlocked { display: flex; }
+.bf-offer-btn.is-unlocked { background: #ECEDEF; color: #5e6e7a; box-shadow: inset 0 0 0 1px #D5D8DB; cursor: default; }
+/* Cart drawer: the free-gifts heading is the same light green pill as 'Limited time pre-order offer' on the product pages */
+.cart-drawer-section-label.cart-drawer-section-label--pill { width: fit-content; max-width: 100%; box-sizing: border-box; background: #E4EDE2; color: #4A6B4F; border-radius: 6px; padding: .6em .95em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; letter-spacing: .06em; line-height: 1.2; }
+/* Build Your System side panel (plain block layout): space around the Black Friday button */
+body .sys-panel-body .bf-offer-btn { margin: 14px 0 8px; }
+body .sys-panel-body .bf-offer-btn + .system-cta { margin-top: 0; }

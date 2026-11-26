@@ -143,6 +143,7 @@ function removeAddon(id) {
 let currentCartTotal     = 0
 let currentCartListTotal = 0   // sum of the struck-through list prices, for the Add to Cart button
 let isClassicStackCart = false
+var offer = null   // Black Friday button controller, set once the page script reaches it
 let lastPodKey      = ''
 let buildSeq        = 0   // incremented on each buildStack call; stale builds abort on completion
 
@@ -1809,16 +1810,15 @@ function updateSummary(pillPods, hybridPods, powderPods) {
 }
 
 // ── Add to Cart ────────────────────────────────────────────────
-// The offer box on this page: the 'Limited-time offer' line shows what the chosen system costs with the code
-// (price now x (1 - code %)), the value it replaces, and what is saved. The free-scooper band appears only
-// when the system includes a Powder Pod (the cart gives one free scooper with a Powder Pod or a Full Stack).
+// The offer box on this page. The free-scooper band appears only when the system includes a Powder Pod (the
+// cart gives one free scooper with a Powder Pod or a Full Stack). If the page has the price line (preorder-pricing
+// 'summary'), it shows what the chosen system costs with the code, the value it replaces, and what is saved.
 function updateOfferLine(totalQty) {
-  const wrap = document.querySelector('.pi-subwrap[data-pi-dynamic]')
-  if (!wrap) return
-  const pricesEl = wrap.querySelector('.pi-subtotal-price')
   const gift = document.querySelector('.pi-gift')
   const hasPowder = isClassicStackCart || currentPodCounts.powderPods > 0
   if (gift) gift.hidden = !(totalQty > 0 && hasPowder)
+  const wrap = document.querySelector('.pi-subwrap[data-pi-dynamic]')
+  const pricesEl = wrap?.querySelector('.pi-subtotal-price')
   if (!pricesEl) return
   if (totalQty === 0) { delete pricesEl.dataset.live; return }
   const intl = window.PilrCurrency && window.PilrCurrency.get() !== 'USD'   // free shipping is US-only, so no shipping value outside the US
@@ -1842,18 +1842,20 @@ function updateCartButton() {
   const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + addonQtyTotal()
   btn.disabled = totalQty === 0
   updateOfferLine(totalQty)
+  offer?.sync()
   // The button just says 'Pre-order'; the price (with the code) is shown on the offer line above it.
   btn.textContent = 'Pre-order'
 }
 
-document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
+// What the chosen system puts in the cart, for the Pre-order and Black Friday buttons: [{ product, quantity }]
+function systemSelection() {
   const { pillPods, hybridPods, powderPods } = currentPodCounts
   const total = pillPods + hybridPods + powderPods
-  if (total === 0 && currentAddonIds.length === 0) return
+  const list = []
 
   if (total > 0) {
     if (isClassicStackCart) {
-      window.PilrCart?.add(CLASSIC_STACK, 1)
+      list.push({ product: CLASSIC_STACK, quantity: 1 })
     } else {
       const discount = discountForQty(total)
       const counts = { 'Small Pill Pod': pillPods, 'Large Pill Pod': hybridPods, 'Powder Pod': powderPods }
@@ -1861,12 +1863,12 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
         const qty = counts[podName]
         if (qty === 0) return
         const salePrice = POD_BASE_PRICE[podName] * (1 - discount)
-        window.PilrCart?.add({
+        list.push({ product: {
           id:    POD_CART_ID[podName],
           title: podName,
           price: salePrice,
           image: POD_IMAGES[podName],
-        }, qty)
+        }, quantity: qty })
       })
     }
   }
@@ -1877,8 +1879,19 @@ document.getElementById('system-add-to-cart-btn')?.addEventListener('click', fun
   currentAddonIds.forEach(id => {
     const addon = ADD_ONS[id]
     if (!addon) return
-    window.PilrCart?.add({ id, title: addon.label, price: addon.price, image: addon.image }, qtyOf(id))
+    list.push({ product: { id, title: addon.label, price: addon.price, image: addon.image }, quantity: qtyOf(id) })
   })
+  return list
+}
+
+// Black Friday button (public/pilr-offer.js)
+offer = document.getElementById('bf-offer-btn') && window.PilrOffer ? window.PilrOffer(systemSelection) : null
+
+document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
+  const list = systemSelection()
+  if (list.length === 0) return
+  if (offer && offer.preorder(list)) return
+  list.forEach(w => window.PilrCart?.add(w.product, w.quantity))
 
   const btn  = this
   const orig = btn.innerHTML
