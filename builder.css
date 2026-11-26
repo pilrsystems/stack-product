@@ -629,6 +629,25 @@ body.system-page {
   position: relative;
 }
 
+/* Static photo shown in place of the 3D view (no WebGL, or a model failed). */
+.system-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 2rem;
+  object-fit: contain;
+  pointer-events: none;
+}
+.system-canvas-wrap.show-fallback .system-fallback { display: block; }
+.system-canvas-wrap.show-fallback #system-canvas,
+.system-canvas-wrap.show-fallback .blabel-container { visibility: hidden; }
+.system-layout.is-empty .system-fallback { display: none !important; }
+/* Desktop: the column runs a little past the screen, so keep the whole photo in view. */
+@media (min-width: 701px) { .system-fallback { padding-bottom: 5rem; } }
+
 .system-sidebar {
   display: flex;
   flex-direction: column;

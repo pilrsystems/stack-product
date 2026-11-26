@@ -188,19 +188,41 @@ function cadWatch(object) {
   object.traverse(m => { if (m.isMesh) m.onAfterRender = () => cadReport() })
 }
 
-let renderer
+// null when WebGL is unavailable: the page then runs without the 3D view.
+let renderer = null
 try {
   renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true })
 } catch (err) {
   cadReport('webgl_unsupported')
-  throw err
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.toneMapping         = THREE.ACESFilmicToneMapping
-renderer.toneMappingExposure = 1.1
-renderer.shadowMap.enabled   = !isMobile
-renderer.shadowMap.type      = THREE.PCFSoftShadowMap
-renderer.setSize(CW, CH)
+if (renderer) {
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.toneMapping         = THREE.ACESFilmicToneMapping
+  renderer.toneMappingExposure = 1.1
+  renderer.shadowMap.enabled   = !isMobile
+  renderer.shadowMap.type      = THREE.PCFSoftShadowMap
+  renderer.setSize(CW, CH)
+}
+
+// ── Static fallback ──────────────────────────────────────────
+// A product photo in place of the 3D view, shown when WebGL is unavailable or
+// a model fails or is too slow. Hidden by CSS while nothing is selected.
+const FALLBACK_IMAGE = 'images/lifestyle_section/Pilr Stack Cutout-trimmed.png'
+let fallbackEl = null
+function showFallback() {
+  if (!fallbackEl) {
+    fallbackEl = document.createElement('img')
+    fallbackEl.className = 'system-fallback'
+    fallbackEl.src = FALLBACK_IMAGE
+    fallbackEl.alt = 'pilr pod stack'
+    wrap.appendChild(fallbackEl)
+  }
+  wrap.classList.add('show-fallback')
+  document.getElementById('system-loading')?.classList.add('hidden')
+}
+function hideFallback() {
+  if (renderer) wrap.classList.remove('show-fallback')
+}
 
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0xFAFAF8)
@@ -461,6 +483,8 @@ async function ensureAllHeights() {
 
 // ── Build stack from individual pod GLBs ─────────────────────
 async function buildStack(podTypes, onReady) {
+  if (!renderer) return   // no 3D: the fallback image is already in place
+
   const mySeq = ++buildSeq   // claim this build slot; any prior in-flight build is now stale
 
   if (inDetailView) exitDetailView()
@@ -480,12 +504,15 @@ async function buildStack(podTypes, onReady) {
     if (!selected.addons.has('single-lid')) cadCancel()
     modelLoaded = true
     initLabels([])
+    hideFallback()
     if (onReady) onReady()
     return
   }
 
   document.getElementById('system-loading')?.classList.remove('hidden')
   cadStart()
+  // Still loading after the timeout: show the photo. A late model replaces it.
+  setTimeout(() => { if (mySeq === buildSeq && !modelLoaded) showFallback() }, CAD_TIMEOUT_MS)
 
   try {
     const stackGroup = new THREE.Group()
@@ -642,6 +669,7 @@ async function buildStack(podTypes, onReady) {
 
     modelLoaded = true
     document.getElementById('system-loading')?.classList.add('hidden')
+    hideFallback()
     cadWatch(stackGroup)
 
     const labelNames = getLabelNamesForPods(podTypes)
@@ -650,8 +678,19 @@ async function buildStack(podTypes, onReady) {
     if (onReady) onReady()
   } catch (err) {
     console.error('[System Builder] buildStack error:', err)
-    if (mySeq === buildSeq) cadReport('load_error')
     document.getElementById('system-loading')?.classList.add('hidden')
+    if (mySeq !== buildSeq) return
+    cadReport('load_error')
+    // Clear whatever was half built, show the photo, and try again on the next change.
+    if (currentGlbScene) outerGroup.remove(currentGlbScene)
+    currentGlbScene = null
+    sections        = []
+    lidSection      = null
+    stackBottomY    = null
+    stackTopY       = null
+    lastPodKey      = null
+    initLabels([])
+    showFallback()
     modelLoaded = true
   }
 }
@@ -1080,7 +1119,7 @@ function getLidTemplate() {
       lidTemplateCenterZ = (lm.zMin + lm.zMax) / 2
       lidTemplate = s
       return s
-    })
+    }).catch(err => { lidTemplatePromise = null; throw err })   // allow a retry
   }
   return lidTemplatePromise
 }
@@ -1168,11 +1207,20 @@ function lidHolderTargetY(mesh) {
 }
 
 async function addExtraLid(delay = 0) {
-  if (!SHOW_EXTRA_LID_RENDER || extraLid || extraLidAdding) return
+  if (!renderer || !SHOW_EXTRA_LID_RENDER || extraLid || extraLidAdding) return
   extraLidAdding = true
   cadStart()
-  const tpl = await getLidTemplate().catch(err => { cadReport('load_error'); throw err })
+  // With no pods the lid is the only model, so its failure needs the photo too.
+  const slow = setTimeout(() => { if (extraLidAdding && !currentPodTypes.length) showFallback() }, CAD_TIMEOUT_MS)
+  const tpl = await getLidTemplate().catch(err => { console.error('[System Builder] lid load error:', err); return null })
+  clearTimeout(slow)
   extraLidAdding = false
+  if (!tpl) {
+    cadReport('load_error')
+    if (!currentPodTypes.length && selected.addons.has('single-lid')) showFallback()
+    return
+  }
+  if (!currentPodTypes.length) hideFallback()
   // The chip may have been switched off (or the lid added) while loading.
   if (!selected.addons.has('single-lid') || extraLid) {
     if (!currentPodTypes.length && !selected.addons.has('single-lid')) cadCancel()
@@ -1316,6 +1364,7 @@ function applyFraming() {
 // current pods, then re-frames.
 function syncExtraLid(delay = 0) {
   const want = selected.addons.has('single-lid')
+  if (!want && !currentPodTypes.length) hideFallback()
   if (want && !extraLid) { addExtraLid(delay); return }
   if (!want && extraLid) { removeExtraLid(); applyFraming(); return }
   if (want && extraLid) { moveExtraLid(delay); applyFraming() }
@@ -1389,7 +1438,7 @@ new ResizeObserver(() => {
   const { w, h } = cSize()
   camera.aspect = w / h
   camera.updateProjectionMatrix()
-  renderer.setSize(w, h)
+  renderer?.setSize(w, h)
 }).observe(wrap)
 
 // ── Supplement pod logic ─────────────────────────────────────
@@ -1931,7 +1980,8 @@ renderChips('powders', 'powders-row')
 renderChips('hybrid',  'hybrid-row')
 renderChips('pills',   'pills-row')
 renderChips('addons',  'addons-row')
-animate()
+if (renderer) animate()
+else showFallback()
 
 // Nothing selected yet on first load — leave the canvas empty until the
 // user actually picks a supplement, rather than previewing a Classic
