@@ -8294,3 +8294,12 @@ body #product-info-inner > button.bf-offer-btn + button.product-btn-add#product-
 /* Build Your System side panel (plain block layout): space around the Black Friday button */
 body .sys-panel-body .bf-offer-btn { margin: 14px 0 8px; }
 body .sys-panel-body .bf-offer-btn + .system-cta { margin-top: 0; }
+/* Price at the top once the Black Friday offer is unlocked: new price, full price crossed out, 'You saved' tag under them */
+.bf-price-replaced { display: none !important; }
+.bf-price { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: auto; white-space: nowrap; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #5e6e7a; }
+.bf-price[hidden] { display: none; }
+.bf-price-line { display: flex; align-items: baseline; gap: 0.5rem; }
+.bf-price-line b { letter-spacing: -0.025em; line-height: 1.1; }   /* size, weight and colour are copied from the old price by pilr-offer.js */
+.bf-price-line s { font-size: 0.85rem; color: #a3aeb5; }
+.bf-price-save { background: #E4EDE2; color: #4A6B4F; border-radius: 6px; padding: 0.4em 0.75em; font-size: 0.85rem; line-height: 1; }
+

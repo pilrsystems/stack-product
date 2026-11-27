@@ -693,7 +693,7 @@
     })();
   </script>
   <script src="./pilr-cart.js?v=20261126c"></script>
-  <script src="./pilr-offer.js?v=20261126"></script>
+  <script src="./pilr-offer.js?v=20261126e"></script>
   <script>
     ;(function(){
       // Base prices for this product plus its add-on pods, and the
@@ -739,6 +739,7 @@
       });
 
       var offer;   // set below, once the page is ready for it
+      var shown;   // the amounts in the price at the top: { now, list }
 
       function rowQty(row) { return Number(row.dataset.qty); }
 
@@ -788,6 +789,7 @@
         var missing = totalQty > 0 && thisRow && rowQty(thisRow) === 0;
         note.hidden = !missing;
         if (missing) note.textContent = "Note: You're on the " + PRODUCT.title + " page, but there's no " + PRODUCT.title + " in your cart.";
+        shown = totalQty > 0 ? { now: addOnTotal, list: listTotal } : { now: PRODUCT.price, list: PRODUCT.price };
         if (offer) offer.sync();
       }
 
@@ -830,7 +832,9 @@
       });
 
       // Black Friday button (public/pilr-offer.js)
-      offer = PilrOffer(selection);
+      offer = PilrOffer(selection, function() {
+        return { el: titlePriceEl, now: shown ? shown.now : PRODUCT.price, list: shown ? shown.list : PRODUCT.price };
+      });
 
       updateWidget();
     })();

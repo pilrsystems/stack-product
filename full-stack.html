@@ -638,7 +638,7 @@
   </script>
   <script type="module" src="./tsa-stack.js"></script>
   <script src="./pilr-cart.js?v=20261126c"></script>
-  <script src="./pilr-offer.js?v=20261126"></script>
+  <script src="./pilr-offer.js?v=20261126e"></script>
   <script>
     ;(function() {
       var PRODUCT = { id: 'classic-stack', title: 'Full Stack', price: 68, listPrice: 84, image: 'images/lifestyle_section/Hand Render.webp' }
@@ -651,7 +651,9 @@
 
       // Black Friday button, and Pre-order once the code is applied (public/pilr-offer.js)
       var WANTED = [{ product: PRODUCT, quantity: 1 }]
-      var offer = PilrOffer(function() { return WANTED })
+      var offer = PilrOffer(function() { return WANTED }, function() {
+        return { el: document.querySelector('.product-title-price'), now: PRODUCT.price, list: PRODUCT.listPrice }
+      })
 
       document.querySelector('.product-btn-add').addEventListener('click', function() {
         if (offer.preorder(WANTED)) return

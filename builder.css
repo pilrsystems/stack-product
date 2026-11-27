@@ -697,6 +697,12 @@ body.system-page {
   flex: 1;
 }
 
+/* live price at the right of the "Edit Your System" title: bold slate blue, crossed-out full price after it */
+.sys-title-price { display: flex; align-items: baseline; gap: 0.5rem; margin-left: auto; white-space: nowrap; color: #5e6e7a; }
+.sys-title-price[hidden], .sys-title-price s[hidden] { display: none; }
+.sys-title-price b { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; }
+.sys-title-price s { font-size: 0.85rem; color: #a3aeb5; }
+
 /* Build Your System panel content */
 .bas-desc {
   font-size: 0.85rem;

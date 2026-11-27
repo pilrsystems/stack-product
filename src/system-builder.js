@@ -1836,11 +1836,26 @@ function updateOfferLine(totalQty) {
 
 window.addEventListener('pilr:currency-changed', () => { try { updateCartButton() } catch (_) {} })
 
+// Price beside the "Edit Your System" title: what the system costs now, then (when pods are discounted) what
+// it would cost with no discount, crossed out. Same totals as the rows below; the promo code is not included.
+function updateTitlePrice() {
+  const el = document.getElementById('sys-title-price')
+  if (!el) return
+  const now  = Math.round(currentCartTotal * 100) / 100
+  const full = Math.round(currentCartListTotal * 100) / 100
+  el.hidden = !(now > 0)
+  el.querySelector('b').textContent = formatPrice(now)
+  const strike = el.querySelector('s')
+  strike.textContent = formatPrice(full)
+  strike.hidden = !(full > now)
+}
+
 function updateCartButton() {
   const btn = document.getElementById('system-add-to-cart-btn')
   if (!btn) return
   const totalQty = currentPodCounts.pillPods + currentPodCounts.hybridPods + currentPodCounts.powderPods + addonQtyTotal()
   btn.disabled = totalQty === 0
+  updateTitlePrice()
   updateOfferLine(totalQty)
   offer?.sync()
   // The button just says 'Pre-order'; the price (with the code) is shown on the offer line above it.
@@ -1885,7 +1900,9 @@ function systemSelection() {
 }
 
 // Black Friday button (public/pilr-offer.js)
-offer = document.getElementById('bf-offer-btn') && window.PilrOffer ? window.PilrOffer(systemSelection) : null
+offer = document.getElementById('bf-offer-btn') && window.PilrOffer ? window.PilrOffer(systemSelection, () => ({
+  el: document.getElementById('sys-title-price'), now: currentCartTotal, list: currentCartListTotal,
+})) : null
 
 document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
   const list = systemSelection()
