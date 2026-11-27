@@ -33,6 +33,27 @@
       return rest.length
     }
     var priceBox = null
+    // Where the text baseline of `el` sits on screen.
+    function baseline(el) {
+      var mark = document.createElement('span')
+      mark.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline'
+      el.insertBefore(mark, el.firstChild)
+      var y = mark.getBoundingClientRect().bottom
+      el.removeChild(mark)
+      return y
+    }
+    // Lay the new price exactly over the old one (same right edge, same baseline). The old price stays in
+    // place, invisible, and the new one is out of the page flow, so nothing on the page moves.
+    function place(oldEl) {
+      var parent = priceBox.parentNode
+      parent.style.position = 'relative'
+      var p = parent.getBoundingClientRect(), o = oldEl.getBoundingClientRect()
+      priceBox.style.right = (p.right - o.right) + 'px'
+      priceBox.style.top = (o.top - p.top) + 'px'
+      var oldText = oldEl.querySelector('b') || oldEl
+      var shift = baseline(oldText) - baseline(priceBox.querySelector('b'))
+      priceBox.style.top = (o.top - p.top + shift) + 'px'
+    }
     function showPrice(unlocked) {
       var t = title && title()
       if (!t || !t.el) return
@@ -50,18 +71,26 @@
       var list = cents(Math.max(t.list, t.now))
       priceBox.innerHTML = '<span class="bf-price-line"><b>' + money(now) + '</b><s>' + money(list) + '</s></span>' +
         '<span class="bf-price-save">You saved ' + money(cents(list - now)) + '</span>'
-      // the new price looks exactly like the price it replaces (size, weight, colour) on this page and screen
+      // the new price follows the price it replaces (weight, colour, and size) on this page and screen
       var old = getComputedStyle(t.el.querySelector('b') || t.el)
       var b = priceBox.querySelector('b')
-      b.style.fontSize = old.fontSize
+      b.style.fontSize = (parseFloat(old.fontSize) * 0.85).toFixed(1) + 'px'   // a little smaller: the longer amount (with cents) looks bigger at the same size
       b.style.fontWeight = old.fontWeight
       b.style.color = old.color
       b.style.fontFamily = old.fontFamily
       b.style.letterSpacing = old.letterSpacing
+      // a crossed-out price that was already showing keeps its own size
+      var struck = t.el.querySelector('.bc-price-strike, .pod-add-row-strike, s')
+      if (struck && !struck.hidden) {
+        var was = getComputedStyle(struck)
+        priceBox.querySelector('s').style.fontSize = was.fontSize
+        priceBox.querySelector('s').style.letterSpacing = was.letterSpacing
+      }
+      place(t.el)
     }
-    // "Unlocked" while the code is applied and the selection is in the cart.
+    // "Unlocked" whenever the code is applied, on every product page, whatever is selected.
     function sync() {
-      var on = applied() && missing(wanted()).length === 0
+      var on = applied()
       btn.classList.toggle('is-unlocked', on)
       btn.disabled = on
       showPrice(on)
@@ -79,7 +108,12 @@
     global.addEventListener('storage', sync)
     global.addEventListener('pageshow', sync)
     // the old price changes size with the screen; keep the new one matching it
-    global.addEventListener('resize', function () { showPrice(btn.classList.contains('is-unlocked')) })
+    function redraw() { showPrice(btn.classList.contains('is-unlocked')) }
+    global.addEventListener('resize', redraw)
+    global.addEventListener('load', redraw)
+    if (document.fonts) document.fonts.ready.then(redraw)
+    var shownTitle = title && title()
+    if (shownTitle && shownTitle.el && global.ResizeObserver) new ResizeObserver(redraw).observe(shownTitle.el.parentNode)
     sync()
 
     return {
