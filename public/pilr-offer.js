@@ -3,14 +3,18 @@
    [{ product, quantity }]. A click applies FIRST1000 and adds whatever of that is not in the cart yet.
    `title()` returns { el, now, list }: the page's price at the top, its amount, and its undiscounted amount.
    While the button shows "Unlocked", that price is replaced by the discounted one, the undiscounted one crossed
-   out, and a 'You saved' tag with the difference. */
+   out, and a 'You saved' tag with the difference.
+   `buttons()` lists the page's Pre-order buttons as [{ el, list }]. A button reads "Added to cart", and
+   keeps reading it, while everything in `list` is in the cart. Every click opens the cart; none doubles an item. */
 ;(function (global) {
   var CODE = 'FIRST1000'
 
   function money(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)) }   // US dollars; pilr-currency.js converts the page text
   function cents(n) { return Math.round(n * 100) / 100 }
 
-  global.PilrOffer = function (wanted, title) {
+  var ADDED = 'ADDED TO CART'
+
+  global.PilrOffer = function (wanted, title, buttons) {
     var btn = document.getElementById('bf-offer-btn')
     var msg = document.getElementById('bf-offer-msg')
     var text = msg.textContent
@@ -88,15 +92,31 @@
       }
       place(t.el)
     }
+    function showAdded() {
+      ;(buttons ? buttons() : []).forEach(function (b) {
+        if (!b.el) return
+        var added = b.list.length > 0 && missing(b.list).length === 0
+        if (added && b.el.textContent !== ADDED) {
+          b.el.dataset.label = b.el.innerHTML
+          b.el.textContent = ADDED
+        } else if (!added && b.el.textContent === ADDED) {
+          b.el.innerHTML = b.el.dataset.label
+        }
+      })
+    }
     // "Unlocked" whenever the code is applied, on every product page, whatever is selected.
     function sync() {
       var on = applied()
       btn.classList.toggle('is-unlocked', on)
       btn.disabled = on
+      if (on || wanted().length) msg.textContent = msg.textContent === 'Choose a pod first' ? text : msg.textContent
       showPrice(on)
+      showAdded()
     }
 
     btn.addEventListener('click', async function () {
+      // The code only stays on a cart with something in it (Build Your System with nothing picked yet).
+      if (!wanted().length && !PilrCart.get().items.length) { msg.textContent = 'Choose a pod first'; return }
       btn.disabled = true
       msg.textContent = text
       var error = await PilrCart.applyPromo(CODE)
@@ -118,12 +138,10 @@
 
     return {
       sync: sync,
-      // For the Pre-order buttons. With the code applied: add only what is missing, or just open the cart.
-      // Returns false when the code is not applied, so the button behaves as usual.
+      // For the Pre-order buttons: add only what the cart does not hold yet, then open the cart.
       preorder: function (list) {
-        if (!applied()) return false
-        if (!addMissing(list)) PilrCart.openDrawer()
-        return true
+        addMissing(list)
+        PilrCart.openDrawer()
       },
     }
   }

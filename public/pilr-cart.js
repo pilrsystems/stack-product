@@ -153,6 +153,8 @@
   }
 
   function saveCart(cart) {
+    // Emptying the cart takes the promo code off, so it has to be unlocked again.
+    if (!cart.items.length) dropPromo()
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart))
     global.dispatchEvent(new CustomEvent('pilr:cart-updated', { detail: cart }))
   }
@@ -314,6 +316,10 @@
     return p ? Math.round(getCartTotal() * p.percent) / 100 : 0
   }
   let promoMessage = ''
+  function dropPromo() {
+    promoMessage = ''
+    try { localStorage.removeItem(PROMO_KEY) } catch (_) {}
+  }
   async function applyPromoCode(code) {
     code = String(code || '').trim()
     if (!code) { promoMessage = 'Enter a code.'; return }
@@ -984,6 +990,8 @@
   global.addEventListener('pilr:currency-changed', onCurrencyChanged)
   global.addEventListener('pilr:currency-ready', onCurrencyChanged)
   applyCurrency()
+  // A code left over from an earlier visit does not stay on an empty cart.
+  if (!getCart().items.length && getPromo()) setPromo(null)
 })(window)
 
 // Currency picker + country detection (own file so the rates/picker can change without touching the cart).

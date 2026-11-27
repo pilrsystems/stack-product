@@ -692,8 +692,8 @@
       nextBtn.addEventListener('click', function () { renderSlide((current + 1) % thumbs.length); });
     })();
   </script>
-  <script src="./pilr-cart.js?v=20261126c"></script>
-  <script src="./pilr-offer.js?v=20261126i"></script>
+  <script src="./pilr-cart.js?v=20261126d"></script>
+  <script src="./pilr-offer.js?v=20261126l"></script>
   <script>
     ;(function(){
       // Base prices for this product plus its add-on pods, and the
@@ -712,8 +712,7 @@
       function formatPrice(n) { return '$' + (Number.isInteger(n) ? n : n.toFixed(2)); }
 
       var PRODUCT={id:'pill-pod',title:'Small Pill Pod',price:POD_BASE_PRICE['pill-pod'],image:'images/lifestyle_section/Pill Pod Hero.webp'};
-      function flashBtn(btn,orig){btn.textContent='Added ✓';btn.disabled=true;setTimeout(function(){btn.innerHTML=orig;btn.disabled=false},1200);}
-      document.querySelector('.product-sticky-cta').addEventListener('click',function(){if(offer&&offer.preorder([{product:PRODUCT,quantity:1}]))return;PilrCart.add(PRODUCT,1);flashBtn(this,'ADD TO CART');});
+      document.querySelector('.product-sticky-cta').addEventListener('click',function(){offer.preorder([{product:PRODUCT,quantity:1}]);});
 
       // "Add a Pod" — collapsed by default behind a trigger row
       // ("Add a Pod" + plus icon); opening it reveals the flat list of
@@ -824,16 +823,15 @@
       }
 
       podAddSubmit.addEventListener('click', function() {
-        var list = selection();
-        if (offer.preorder(list)) return;
-        list.forEach(function(w) { PilrCart.add(w.product, w.quantity); });
-        var orig = podAddSubmit.innerHTML;
-        flashBtn(podAddSubmit, orig);
+        offer.preorder(selection());
       });
 
       // Black Friday button (public/pilr-offer.js)
       offer = PilrOffer(selection, function() {
         return { el: titlePriceEl, now: shown ? shown.now : PRODUCT.price, list: shown ? shown.list : PRODUCT.price };
+      }, function() {
+        return [{ el: podAddSubmit, list: selection() },
+                { el: document.querySelector('.product-sticky-cta'), list: [{ product: PRODUCT, quantity: 1 }] }];
       });
 
       updateWidget();

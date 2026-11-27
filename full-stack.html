@@ -637,34 +637,22 @@
     })();
   </script>
   <script type="module" src="./tsa-stack.js"></script>
-  <script src="./pilr-cart.js?v=20261126c"></script>
-  <script src="./pilr-offer.js?v=20261126i"></script>
+  <script src="./pilr-cart.js?v=20261126d"></script>
+  <script src="./pilr-offer.js?v=20261126l"></script>
   <script>
     ;(function() {
       var PRODUCT = { id: 'classic-stack', title: 'Full Stack', price: 68, listPrice: 84, image: 'images/lifestyle_section/Hand Render.webp' }
 
-      function flashBtn(btn, original) {
-        btn.textContent = 'Added ✓'
-        btn.disabled = true
-        setTimeout(function() { btn.textContent = original; btn.disabled = false }, 1200)
-      }
-
-      // Black Friday button, and Pre-order once the code is applied (public/pilr-offer.js)
+      // Black Friday button and the Pre-order buttons (public/pilr-offer.js)
       var WANTED = [{ product: PRODUCT, quantity: 1 }]
       var offer = PilrOffer(function() { return WANTED }, function() {
         return { el: document.querySelector('.product-title-price'), now: PRODUCT.price, list: PRODUCT.listPrice }
+      }, function() {
+        return ['.product-btn-add', '.product-sticky-cta'].map(function(sel) { return { el: document.querySelector(sel), list: WANTED } })
       })
 
-      document.querySelector('.product-btn-add').addEventListener('click', function() {
-        if (offer.preorder(WANTED)) return
-        PilrCart.add(PRODUCT, 1)
-        flashBtn(this, 'ADD TO CART')
-      })
-
-      document.querySelector('.product-sticky-cta').addEventListener('click', function() {
-        if (offer.preorder(WANTED)) return
-        PilrCart.add(PRODUCT, 1)
-        flashBtn(this, 'ADD TO CART')
+      ;['.product-btn-add', '.product-sticky-cta'].forEach(function(sel) {
+        document.querySelector(sel).addEventListener('click', function() { offer.preorder(WANTED) })
       })
     })()
   </script>

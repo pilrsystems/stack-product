@@ -1857,9 +1857,9 @@ function updateCartButton() {
   btn.disabled = totalQty === 0
   updateTitlePrice()
   updateOfferLine(totalQty)
-  offer?.sync()
   // The button just says 'Pre-order'; the price (with the code) is shown on the offer line above it.
   btn.textContent = 'Pre-order'
+  offer?.sync()   // after the label: it may turn into 'Added to cart'
 }
 
 // What the chosen system puts in the cart, for the Pre-order and Black Friday buttons: [{ product, quantity }]
@@ -1902,19 +1902,11 @@ function systemSelection() {
 // Black Friday button (public/pilr-offer.js)
 offer = document.getElementById('bf-offer-btn') && window.PilrOffer ? window.PilrOffer(systemSelection, () => ({
   el: document.getElementById('sys-title-price'), now: currentCartTotal, list: currentCartListTotal,
-})) : null
+}), () => [{ el: document.getElementById('system-add-to-cart-btn'), list: systemSelection() }]) : null
 
 document.getElementById('system-add-to-cart-btn')?.addEventListener('click', function() {
   const list = systemSelection()
-  if (list.length === 0) return
-  if (offer && offer.preorder(list)) return
-  list.forEach(w => window.PilrCart?.add(w.product, w.quantity))
-
-  const btn  = this
-  const orig = btn.innerHTML
-  btn.textContent = 'Added ✓'
-  btn.disabled = true
-  setTimeout(() => { btn.innerHTML = orig; btn.disabled = false }, 1200)
+  if (list.length) offer?.preorder(list)
 })
 
 document.getElementById('system-summary-content')?.addEventListener('click', e => {
