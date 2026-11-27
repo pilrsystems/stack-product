@@ -86,6 +86,21 @@ function build() {
     swipe.scrollTo({ left: i * swipe.clientWidth, behavior: 'smooth' })
   }))
 
+  // the arrows: the page's own gallery code moves the highlight; slide the big photo to match
+  ;['pg-prev', 'pg-next'].forEach((id) => {
+    const arrow = document.getElementById(id)
+    if (!arrow) return
+    arrow.hidden = thumbs.length < 2
+    arrow.addEventListener('click', () => {
+      const i = thumbs.findIndex((t) => t.classList.contains('is-active'))
+      if (i < 0) return
+      const far = Math.abs(i * swipe.clientWidth - swipe.scrollLeft) > swipe.clientWidth * 1.5   // last <-> first: jump
+      fromSwipe = far   // a jump needs no follow-up from the scroll handler
+      swipe.scrollTo({ left: i * swipe.clientWidth, behavior: far ? 'auto' : 'smooth' })
+      fromSwipe = false
+    })
+  })
+
   // videos play only while they are the photo on screen
   const vids = swipe.querySelectorAll('video')
   if (vids.length && 'IntersectionObserver' in window) {

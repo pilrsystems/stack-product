@@ -6955,7 +6955,10 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   body .pg-gallery { flex-direction: column; gap: 0; align-items: stretch; }
   body .pg-main { order: 1; flex: none; width: 100%; max-width: none; }
   body .pg-main-frame { border-radius: 0; width: 100%; }
-  body .pg-arrow { display: none; }   /* swipe instead */
+  /* arrows on the middle left and right of the photo, as well as swiping */
+  body .pg-arrow { z-index: 3; width: 24px; height: 48px; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body .pg-arrow--prev { left: calc(1.5rem + 6px); }     /* on the photo, just inside its edge (1.5rem = the margin beside it) */
+  body .pg-arrow--next { right: calc(1.5rem + 6px); }
   body .pg-thumbs {
     order: 2; width: auto; max-height: none; flex-direction: row; gap: 0.6rem;
     overflow-x: auto; overflow-y: hidden; padding: 0.85rem 1.5rem 0.25rem;
@@ -8303,3 +8306,5 @@ body .sys-panel-body .bf-offer-btn + .system-cta { margin-top: 0; }
 .bf-price-line s { font-size: 0.85rem; color: #a3aeb5; }
 .bf-price-save { background: #E4EDE2; color: #4A6B4F; border-radius: 4px; padding: 2px 6px; font-size: 10px; line-height: 12px; }   /* small enough for the empty space under the price */
 
+/* product photo arrows: no white dot behind them on hover or tap, on any screen */
+body .pg-arrow:hover, body .pg-arrow:active, body .pg-arrow:focus { background: none; }
