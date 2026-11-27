@@ -315,7 +315,8 @@ export default async (req) => {
     }
     const { url, result } = made
     // body.test: while the currency checkout is being tried out, also return what Shopify priced (no card is charged by creating a draft order).
-    return json(200, body && body.test ? { url, priced: result.draftOrder } : { url })
+    const draftOrderId = String(result.draftOrder.id || '').split('/').pop()   // gid://shopify/DraftOrder/123 -> 123
+    return json(200, body && body.test ? { url, draftOrderId, priced: result.draftOrder } : { url, draftOrderId })
   } catch (err) {
     return json(500, { error: 'checkout unavailable', reason: err && err.message })   // reason: temporary, for the first live test
   }

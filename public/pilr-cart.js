@@ -183,6 +183,16 @@
     return { item_id: i.id, item_name: i.title, price: i.price, quantity: qty != null ? qty : i.quantity }
   }
 
+  // Clarity events, sent only when there is a checkout to redirect to. Clarity queues the calls and nothing is
+  // awaited, so a missing, blocked or broken Clarity never holds up the redirect.
+  function trackClarityCheckout(draftOrderId) {
+    try {
+      if (typeof global.clarity !== 'function') return
+      global.clarity('event', 'begin_checkout')
+      if (draftOrderId) global.clarity('set', 'draft_order_id', String(draftOrderId))
+    } catch (_) {}
+  }
+
   async function startCheckout(btn) {
     track('begin_checkout', { currency: global.PilrCurrency ? global.PilrCurrency.get() : 'USD', value: getCartTotal(), items: getCart().items.map(i => gaItem(i)) })
     const label = btn ? (btn.dataset.checkoutLabel || btn.textContent) : ''
@@ -200,7 +210,11 @@
       }
       if (res.status === 503 || res.status === 404) { reset(); alert(CHECKOUT_SOON_MESSAGE); return }
       const data = await res.json()
-      if (res.ok && data && data.url) { global.location.href = data.url; return }
+      if (res.ok && data && data.url) {
+        trackClarityCheckout(data.draftOrderId)
+        global.location.href = data.url
+        return
+      }
       throw new Error('no url')
     } catch (_) {
       reset()
