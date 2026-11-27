@@ -16,7 +16,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://pilrsystems.com/og-share.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=optional" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="./builder.css" />
   <link rel="stylesheet" href="./product-bottom.css" />
@@ -42,7 +42,7 @@
   <nav class="nav">
     <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="images/logov3-cropped.png" alt="pilr" class="nav-logo-img">
+      <img width="317" height="217" src="images/logov3-cropped.png" alt="pilr" class="nav-logo-img">
     </a>
     <ul class="nav-links" id="nav-links">
         <li class="nav-has-dropdown">
@@ -54,49 +54,49 @@
             <div class="nav-dropdown-inner">
               <div class="nav-drop-grid">
                 <a href="./build-your-system.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--large"><img src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
+                  <div class="nav-drop-img nav-drop-img--large"><img width="319" height="400" src="images/lifestyle_section/Build Your System Nav.webp" alt="Build Your System"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Build Your System</span>
                     <span class="nav-drop-desc">Build the stack that fits your entire supplement routine.</span>
                   </div>
                 </a>
                 <a href="./full-stack.html" class="nav-drop-card">
-                  <div class="nav-drop-img nav-drop-img--bottom"><img src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
+                  <div class="nav-drop-img nav-drop-img--bottom"><img width="605" height="708" src="images/lifestyle_section/Hand Render.webp" alt="Full Stack"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Full Stack</span>
                     <span class="nav-drop-desc">One of each pod. Save $16.</span>
                   </div>
                 </a>
                 <a href="./catalog.html#section-single-pods" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Single Pods.png" alt="Single Pods"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img width="500" height="500" src="images/lifestyle_section/Single Pods.png" alt="Single Pods"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Single Pods</span>
                     <span class="nav-drop-desc">Shop each pod individually: powders, big pills, or little pills.</span>
                   </div>
                 </a>
                 <a href="./catalog.html" class="nav-drop-card nav-drop-desktop">
-                  <div class="nav-drop-img"><img src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
+                  <div class="nav-drop-img"><img width="1050" height="1400" src="images/lifestyle_section/Build Your System Hover Cutout 2.webp" alt="All Products"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">All Products</span>
                     <span class="nav-drop-desc">Browse the complete pilr collection.</span>
                   </div>
                 </a>
                 <a href="./powder-pod.html" class="nav-drop-card nav-drop-phone">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Powder Pod Card.webp" alt="Powder Pod" loading="lazy"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img width="797" height="1000" src="images/lifestyle_section/Powder Pod Card.webp" alt="Powder Pod" loading="lazy"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Powder Pod</span>
                     <span class="nav-drop-desc">Built for your daily powders.</span>
                   </div>
                 </a>
                 <a href="./large-pill-pod.html" class="nav-drop-card nav-drop-phone">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Large Pill Pod Card 2.webp" alt="Large Pill Pod" loading="lazy"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img width="858" height="1000" src="images/lifestyle_section/Large Pill Pod Card 2.webp" alt="Large Pill Pod" loading="lazy"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Large Pill Pod</span>
                     <span class="nav-drop-desc">Holds your larger pills.</span>
                   </div>
                 </a>
                 <a href="./small-pill-pod.html" class="nav-drop-card nav-drop-phone">
-                  <div class="nav-drop-img nav-drop-img--small"><img src="images/lifestyle_section/Small Pill Pod Card 2.webp" alt="Small Pill Pod" loading="lazy"></div>
+                  <div class="nav-drop-img nav-drop-img--small"><img width="945" height="1000" src="images/lifestyle_section/Small Pill Pod Card 2.webp" alt="Small Pill Pod" loading="lazy"></div>
                   <div class="nav-drop-text">
                     <span class="nav-drop-title">Small Pill Pod</span>
                     <span class="nav-drop-desc">Holds your smaller pills.</span>
@@ -141,24 +141,53 @@
 
           <p class="bas-section-q">What do you take?</p>
 
+          <!-- The buttons are written here so they hold their space while the 3D script downloads. It attaches to them by
+               data-id: keep this list in step with SUPPLEMENTS in src/system-builder.js. -->
           <div class="bas-category-block">
             <div class="bas-cat-label">POWDERS</div>
-            <div class="supp-chips" id="powders-row"></div>
+            <div class="supp-chips" id="powders-row">
+              <button type="button" class="supp-chip" data-id="creatine">Creatine</button>
+              <button type="button" class="supp-chip" data-id="preworkout">Pre-Workout</button>
+              <button type="button" class="supp-chip" data-id="electrolytes">Electrolytes</button>
+              <button type="button" class="supp-chip" data-id="collagen">Collagen</button>
+              <button type="button" class="supp-chip" data-id="greens">Greens / AG1</button>
+              <button type="button" class="supp-chip" data-id="bcaas">BCAAs</button>
+              <button type="button" class="supp-chip" data-id="other-powders">Other</button>
+            </div>
           </div>
 
           <div class="bas-category-block">
             <div class="bas-cat-label">LARGE CAPSULES &amp; SOFTGELS</div>
-            <div class="supp-chips" id="hybrid-row"></div>
+            <div class="supp-chips" id="hybrid-row">
+              <button type="button" class="supp-chip" data-id="fishoil">Fish Oil / Omega-3</button>
+              <button type="button" class="supp-chip" data-id="magnesium">Magnesium</button>
+              <button type="button" class="supp-chip" data-id="multivitamin">Multivitamin</button>
+              <button type="button" class="supp-chip" data-id="ltheanine">L-Theanine</button>
+              <button type="button" class="supp-chip" data-id="turmeric">Turmeric</button>
+              <button type="button" class="supp-chip" data-id="other-hybrid">Other</button>
+            </div>
           </div>
 
           <div class="bas-category-block">
             <div class="bas-cat-label">PILLS &amp; SMALL CAPSULES</div>
-            <div class="supp-chips" id="pills-row"></div>
+            <div class="supp-chips" id="pills-row">
+              <button type="button" class="supp-chip" data-id="vitamind">Vitamin D3</button>
+              <button type="button" class="supp-chip" data-id="zinc">Zinc</button>
+              <button type="button" class="supp-chip" data-id="coq10">CoQ10</button>
+              <button type="button" class="supp-chip" data-id="probiotic">Probiotic</button>
+              <button type="button" class="supp-chip" data-id="ashwagandha">Ashwagandha</button>
+              <button type="button" class="supp-chip" data-id="b12">B12</button>
+              <button type="button" class="supp-chip" data-id="vitaminc">Vitamin C</button>
+              <button type="button" class="supp-chip" data-id="other-pills">Other</button>
+            </div>
           </div>
 
           <div class="bas-category-block">
             <div class="bas-cat-label">ADD ONS</div>
-            <div class="supp-chips" id="addons-row"></div>
+            <div class="supp-chips" id="addons-row">
+              <button type="button" class="supp-chip" data-id="single-lid">Extra Single Lid</button>
+              <button type="button" class="supp-chip" data-id="travel-scooper">Travel Scooper</button>
+            </div>
           </div>
 
           <div class="bas-footer-row">
@@ -360,7 +389,7 @@
     <div class="popup-card">
       <button class="popup-close" id="bys-popup-close" aria-label="Close">&#x2715;</button>
       <div class="popup-content">
-        <img src="./images/logov3-cropped.png" alt="pilr" class="popup-logo" />
+        <img width="317" height="217" src="./images/logov3-cropped.png" alt="pilr" class="popup-logo" />
         <div class="popup-eyebrow">Early Access Offer</div>
         <h2 class="popup-headline">You've got<br><strong>10% off</strong></h2>
         <p class="popup-sub">Sign up to get early access and 10% off your first order.</p>

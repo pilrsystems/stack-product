@@ -1979,11 +1979,16 @@ function renderChips(category, containerId) {
   const container = document.getElementById(containerId)
   if (!container) return
   SUPPLEMENTS[category].forEach(s => {
-    const btn = document.createElement('button')
-    btn.className   = 'supp-chip'
-    btn.textContent = s.label
-    btn.type        = 'button'
-    btn.dataset.id  = s.id
+    // The button is normally already in build-your-system.html (so it holds its space before this script arrives).
+    let btn = container.querySelector(`.supp-chip[data-id="${s.id}"]`)
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.className   = 'supp-chip'
+      btn.textContent = s.label
+      btn.type        = 'button'
+      btn.dataset.id  = s.id
+      container.appendChild(btn)
+    }
     btn.addEventListener('click', () => {
       if (selected[category].has(s.id)) {
         selected[category].delete(s.id)
@@ -1997,7 +2002,6 @@ function renderChips(category, containerId) {
       }
       updateSystem()
     })
-    container.appendChild(btn)
   })
 }
 
