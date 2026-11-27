@@ -52,7 +52,7 @@ function htmlPartials() {
     transformIndexHtml: {
       order: 'pre',
       handler(html) {
-        return html.replace(INCLUDE, (_, file, attrs) => {
+        const page = html.replace(INCLUDE, (_, file, attrs) => {
           let text = readFileSync(resolve(__dirname, file), 'utf8')
           let product = 'full-stack'
           for (const m of attrs.matchAll(/(\w+)="([^"]*)"/g)) {
@@ -79,6 +79,12 @@ function htmlPartials() {
           text = text.replace(/\{\{pi\.(\w+)\}\}/g, (all, key) => (PRE_ORDER_PRICES(product)[key] ?? all))
           return text
         }).replace(/\{\{pi\.(\w+)\}\}/g, (all, key) => (PRE_ORDER_PRICES()[key] ?? all))
+        // The pre-order banner pushes the header and page down. The class that makes that room is set here, in the
+        // HTML itself: added later by script, it moved the whole page after it had appeared (layout shift).
+        if (!page.includes('class="preorder-bar"')) return page
+        return page.replace(/<body\b([^>]*)>/, (_, a) => /\sclass="/.test(a)
+          ? '<body' + a.replace(/\sclass="/, ' class="has-preorder-bar ') + '>'
+          : '<body class="has-preorder-bar"' + a + '>')
       },
     },
     configureServer(server) {

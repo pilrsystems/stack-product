@@ -1,5 +1,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Every <img>/<video> carries its file's width and height, so the browser knows its shape and keeps its space
+   before it loads. This leaves the displayed size to the CSS below (:where has no specificity, so any rule wins). */
+:where(img[width][height], video[width][height]) { width: auto; height: auto; }
+
 :root {
   --radius: 2px;
   --section-gap: 128px; /* matches .pilr-diff's existing margin-bottom, the

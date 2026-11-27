@@ -11,8 +11,6 @@ const BANNER_MS = 3000   // how long each banner message stays up
 
 const fmt = (n) => n.toLocaleString('en-US')
 
-document.body.classList.add('has-preorder-bar')
-
 // ── Top banner: "Pre-orders now open" <-> the claim count, crossfading (every screen size) ──
 const bar = document.querySelector('.preorder-bar')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
