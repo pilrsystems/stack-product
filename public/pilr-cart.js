@@ -1009,4 +1009,4 @@
 })(window)
 
 // Currency picker + country detection (own file so the rates/picker can change without touching the cart).
-;(function () { var s = document.createElement('script'); s.src = '/pilr-currency.js?v=20261124'; document.head.appendChild(s) })()
+;(function () { var s = document.createElement('script'); s.src = '/pilr-currency.js?v=20261127b'; document.head.appendChild(s) })()

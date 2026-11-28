@@ -413,7 +413,7 @@
       <div class="cart-layout" id="cart-layout" style="display:none;">
         <div>
           <!-- Cart line items injected here by Shopify JS -->
-          <div class="cart-items" id="cart-items"></div>
+          <div class="cart-items" id="cart-items" data-no-currency></div>
         </div>
 
         <!-- Order summary -->
@@ -421,11 +421,11 @@
           <p class="cart-summary-title">Order Summary</p>
           <div class="cart-summary-row">
             <span>Subtotal</span>
-            <span id="cart-subtotal">—</span>
+            <span id="cart-subtotal" data-no-currency>—</span>
           </div>
           <div class="cart-summary-row" id="cart-promo-row" style="display:none;">
             <span id="cart-promo-label">Promo</span>
-            <span id="cart-promo-amount"></span>
+            <span id="cart-promo-amount" data-no-currency></span>
           </div>
           <div class="cart-summary-row">
             <span>Shipping</span>
@@ -433,7 +433,7 @@
           </div>
           <div class="cart-summary-row total">
             <span>Total</span>
-            <span id="cart-total">—</span>
+            <span id="cart-total" data-no-currency>—</span>
           </div>
           <!-- Shopify checkout button — href populated by JS -->
           <button class="cart-checkout-btn" id="cart-checkout-btn">Proceed to Checkout</button>
@@ -460,7 +460,7 @@
   <!-- FOOTER TOP -->
   <!--@include partials/footer.html-->
 
-  <script src="./pilr-cart.js?v=20261127a"></script>
+  <script src="./pilr-cart.js?v=20261127b"></script>
   <script>
     // ── Nav dropdown ──────────────────────────────────────────────────
     const shopAllLi    = document.querySelector('.nav-has-dropdown')
@@ -603,6 +603,10 @@
     })
 
     loadCart()
+    // Redraw when the cart changes without a click here: the shopper's currency or Shopify's prices arrive after
+    // the first draw, or a code is applied. The amounts above are already in that currency (data-no-currency keeps
+    // pilr-currency.js from converting them a second time).
+    window.addEventListener('pilr:cart-updated', loadCart)
   </script>
 
   <script type="module" src="./nav-menu.js"></script>

@@ -204,8 +204,19 @@
     if (state.currency === 'USD' || state.prices[code]) return
     fetch('/api/prices?country=' + encodeURIComponent(code)).then(function (r) { return r.ok ? r.json() : null }).then(function (d) {
       if (!d || !d.prices) return
-      state.prices[code] = d.prices
-      if (code === state.country) { localizePage(); global.dispatchEvent(new CustomEvent('pilr:currency-changed', { detail: { currency: state.currency, prices: true } })) }
+      // Shopify decides the currency. Many countries in our list are charged in US dollars (or another currency),
+      // and its amounts must never be shown under our list's currency (68 US dollars is not "CLP68").
+      // A currency we have no rate for falls back to US dollars.
+      var entry = state.byCode[code]
+      var cur = d.currency === 'USD' || state.rates[d.currency] ? d.currency : 'USD'
+      if (cur === d.currency) state.prices[code] = d.prices
+      if (entry) entry[2] = cur
+      if (code !== state.country) return
+      state.currency = cur
+      refreshBars()
+      document.documentElement.classList.toggle('cur-intl', cur !== 'USD')
+      localizePage()
+      global.dispatchEvent(new CustomEvent('pilr:currency-changed', { detail: { currency: cur, prices: true } }))
     }).catch(function () {})
   }
   function setCountry(code, fromUser) {
