@@ -6853,8 +6853,8 @@ input[type="submit"]:focus:not(:focus-visible) { outline: none; }
   }
 }
 
-/* Colour, every screen size: the lighter slate (the footer's colour) */
-.preorder-bar { background: #818E99; color: #fff; }
+/* Colour, every screen size: a slight left-to-right gradient, darker slate blue to light grey around the footer's slate */
+.preorder-bar { background: linear-gradient(90deg, #6B7F91 0%, #818E99 50%, #A1A7AD 100%); color: #fff; }
 
 /* PHONE / TABLET (under 900px) */
 @media (max-width: 899px) {
@@ -8312,3 +8312,8 @@ body .sys-panel-body .bf-offer-btn + .system-cta { margin-top: 0; }
 
 /* product photo arrows: no white dot behind them on hover or tap, on any screen */
 body .pg-arrow:hover, body .pg-arrow:active, body .pg-arrow:focus { background: none; }
+
+/* Top bar, narrow phones: tighter lettering so the Black Friday perks fit on one line */
+@media (max-width: 359px) {
+  .preorder-bar { padding: 0 0.5rem; letter-spacing: 0.05em; }
+}
